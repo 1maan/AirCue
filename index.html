@@ -1,5 +1,5 @@
 <!-- Main Application Layout Container -->
-<div class="flex h-screen w-full flex-col overflow-hidden bg-[#18181b] font-sans text-zinc-200 select-none">
+<div class="flex h-screen w-full flex-col overflow-hidden bg-[#292929] font-sans text-zinc-200 select-none">
   <!-- Top Bar / Title Bar -->
   <div class="flex h-7 w-full items-center justify-between bg-[#464646] px-2">
     <p class="outfit-Regular text-sm text-white">AirCue 1.7.5</p>
@@ -375,12 +375,12 @@
     </div>
 
     <!-- Dashboard Main Content Grid -->
-    <div class="grid flex-1 grid-cols-12 gap-2 overflow-y-auto p-3 bg-[#202020]">
+    <div class="grid flex-1 grid-cols-12 gap-2 overflow-y-auto p-3">
       <!-- Left Column: Active & Upcoming Bulletins (7 Cols) -->
-      <div class="col-span-12 flex flex-col space-y-2 lg:col-span-7 ">
+      <div class="col-span-12 flex flex-col space-y-2 lg:col-span-7">
         <!-- Panel: Active Bulletin Summary -->
-        <div class="border border-[#3c3e3d]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
+        <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] px-3 py-1.5">
             <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300">Active Broadcast Bulletin</h2>
             <span class="bg-red-700 px-2 py-0.5 outfit-Regular text-[10px] text-white">LIVE ON AIR</span>
           </div>
@@ -406,7 +406,7 @@
         </div>
 
         <!-- Panel: Bulletin Queue Table -->
-        <div class="flex-1 border border-[#3c3e3d] bg-[#1a1a1e]">
+        <div class="flex-1 border border-[#3c3e3d] bg-[#1a1a1a]">
           <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
             <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300 uppercase">Today's Bulletins Schedule</h2>
             <span class="outfit-Regular text-xs text-zinc-400">Date: 2026-06-06</span>
@@ -453,7 +453,7 @@
       <!-- Right Column: System Telemetry & Quick Logs (5 Cols) -->
       <div class="col-span-12 flex flex-col space-y-2 lg:col-span-5">
         <!-- Panel: Hardware & Service Health -->
-        <div class="border border-[#3c3e3d] bg-[#1a1a1e]">
+        <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
           <div class="border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
             <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300 uppercase">Broadcast Hardware Status</h2>
           </div>
@@ -478,7 +478,7 @@
         </div>
 
         <!-- Panel: Live System Audit Log Stream -->
-        <div class="flex flex-1 flex-col border border-[#3c3e3d] bg-[#1a1a1e]">
+        <div class="flex flex-1 flex-col border border-[#3c3e3d] bg-[#1a1a1a]">
           <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
             <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300 uppercase">Live Audit & Action Logs</h2>
             <span class="outfit-Regular text-[10px] text-zinc-500">Auto-refreshing</span>
@@ -497,14 +497,14 @@
     <!-- Bottom Status Bar -->
     <div class="flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] px-3 outfit-Regular text-[11px] text-zinc-400">
       <div class="flex items-center space-x-4">
-        <span class="text-emerald-400">● READY</span>
-        <span>Operator: J. Smith (Producer)</span>
-        <span>Station: Studio Control A</span>
+        <span>Producer: Shama Suaib</span>
+        <span>Studio: Vertual</span>
       </div>
       <div class="flex items-center space-x-4">
         <span>DB: MySQL local</span>
-        <span>Socket.io: Connected</span>
+        <span>Live: Connected</span>
       </div>
     </div>
+    
   </div>
 </div>
