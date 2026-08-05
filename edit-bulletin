@@ -400,175 +400,204 @@
     </div>
   </div>
 
-  <!-- Main Split Layout (Interactive Order Grid + Story Editor Panel) -->
-  <div class="grid flex-1 grid-cols-12 overflow-hidden bg-[#121215]">
+<!-- AirCue Split-Pane Resizable Layout Component -->
+<div class="flex flex-1 overflow-hidden bg-[#121215] relative select-none" id="resizable-container">
+  
+  <!-- Left Section: Rundown Order Editor Grid (Dynamic Width) -->
+  <div class="flex flex-col border-r border-[#3c3e3d] overflow-hidden bg-[#1a1a1e] h-full" id="left-pane" style="width: 66.66%;">
     
-    <!-- Left Section: Rundown Order Editor Grid (8 Cols) -->
-    <div class="col-span-12 flex flex-col border-r border-[#3c3e3d] lg:col-span-8 overflow-hidden bg-[#1a1a1e]">
-      
-      <!-- Grid Header -->
-      <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5 text-xs">
-        <div class="flex items-center space-x-3">
-          <span class="font-bold uppercase tracking-wider text-zinc-300">Runorder Sequence Table</span>
-        </div>
-        <div class="font-mono text-xs text-zinc-400">
-          Stories: <span class="text-white">6</span> | Est: <span class="text-emerald-400">29:45</span>
-        </div>
+    <!-- Grid Header -->
+    <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5 text-xs">
+      <div class="flex items-center space-x-3">
+        <span class="font-bold uppercase tracking-wider text-zinc-300">Runorder Sequence Table</span>
       </div>
-
-      <!-- Interactive Order Table -->
-      <div class="flex-1 overflow-y-auto">
-        <table class="w-full text-left text-xs">
-          <thead class="sticky top-0 z-10 border-b border-[#3c3e3d] bg-[#202025] text-zinc-400">
-            <tr>
-              <th class="p-2 font-medium w-10 text-center">#</th>
-              <th class="p-2 font-medium w-12 text-center">Ord</th>
-              <th class="p-2 font-medium w-24">Type</th>
-              <th class="p-2 font-medium">Story Heading / Title</th>
-              <th class="p-2 font-medium w-20">Type</th>
-              <th class="p-2 font-medium w-16 text-right">Dur</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-[#2a2a31] font-mono cursor-pointer">
-            <!-- Order Item 1 -->
-            <tr class="bg-[#21262d] hover:bg-[#262c36] border-l-2 border-[#0066cc]">
-              <td class="p-2 text-center text-zinc-400">⠿</td>
-              <td class="p-2 text-center font-bold text-emerald-400">1</td>
-              <td class="p-2 font-bold text-white">INTRO</td>
-              <td class="p-2 font-sans font-medium text-white">Opening Sequence & Headlines</td>
-              <td class="p-2 text-zinc-400">VTR</td>
-              <td class="p-2 text-right">01:30</td>
-            </tr>
-            <!-- Order Item 2 -->
-            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
-              <td class="p-2 text-center text-zinc-400">⠿</td>
-              <td class="p-2 text-center text-zinc-300">2</td>
-              <td class="p-2 font-medium text-white">ELECTION</td>
-              <td class="p-2 font-sans text-zinc-200">National Election Polls Open Early</td>
-              <td class="p-2 text-zinc-400">PKG</td>
-              <td class="p-2 text-right">02:45</td>
-            </tr>
-            <!-- Order Item 3 -->
-            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
-              <td class="p-2 text-center text-zinc-400">⠿</td>
-              <td class="p-2 text-center text-zinc-300">3</td>
-              <td class="p-2 font-medium text-white">ECONOMY</td>
-              <td class="p-2 font-sans text-zinc-200">Central Bank Adjusts Interest Rates</td>
-              <td class="p-2 text-zinc-400">VO</td>
-              <td class="p-2 text-right">01:15</td>
-            </tr>
-            <!-- Order Item 4 -->
-            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
-              <td class="p-2 text-center text-zinc-400">⠿</td>
-              <td class="p-2 text-center text-zinc-300">4</td>
-              <td class="p-2 font-medium text-white">TECH</td>
-              <td class="p-2 font-sans text-zinc-200">Global Tech Summit Highlights AI Systems</td>
-              <td class="p-2 text-zinc-400">PKG</td>
-              <td class="p-2 text-right">03:00</td>
-            </tr>
-            <!-- Order Item 5 -->
-            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
-              <td class="p-2 text-center text-zinc-400">⠿</td>
-              <td class="p-2 text-center text-zinc-300">5</td>
-              <td class="p-2 font-medium text-white">WEATHER</td>
-              <td class="p-2 font-sans text-zinc-200">Weekend Storm Tracking & Coastal Alerts</td>
-              <td class="p-2 text-zinc-400">LIVE</td>
-              <td class="p-2 text-right">02:00</td>
-            </tr>
-            <!-- Order Item 6 -->
-            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
-              <td class="p-2 text-center text-zinc-400">⠿</td>
-              <td class="p-2 text-center text-zinc-300">6</td>
-              <td class="p-2 font-medium text-white">SPORTS</td>
-              <td class="p-2 font-sans text-zinc-200">Championship Finals Preview & Analysis</td>
-              <td class="p-2 text-zinc-400">PKG</td>
-              <td class="p-2 text-right">02:30</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="font-mono text-xs text-zinc-400">
+        Stories: <span class="text-white">6</span> | Est: <span class="text-emerald-400">29:45</span>
       </div>
-
     </div>
 
-    <!-- Right Section: Story Item Configuration & Teleprompter Push Panel (4 Cols) -->
-    <div class="col-span-12 flex flex-col lg:col-span-4 overflow-hidden bg-[#18181b]">
-      
-      <!-- Panel Header -->
-      <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5 text-xs">
-        <span class="font-bold uppercase tracking-wider text-zinc-300">Story Order Details & Script</span>
-      </div>
+    <!-- Interactive Order Table -->
+    <div class="flex-1 overflow-y-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="sticky top-0 z-10 border-b border-[#3c3e3d] bg-[#202025] text-zinc-400">
+          <tr>
+            <th class="p-2 font-medium w-10 text-center">#</th>
+            <th class="p-2 font-medium w-12 text-center">Ord</th>
+            <th class="p-2 font-medium w-24">Type</th>
+            <th class="p-2 font-medium">Story Heading / Title</th>
+            <th class="p-2 font-medium w-20">Type</th>
+            <th class="p-2 font-medium w-16 text-right">Dur</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-[#2a2a31] font-mono cursor-pointer">
+          <!-- Order Item 1 -->
+          <tr class="bg-[#21262d] hover:bg-[#262c36] border-l-2 border-[#0066cc]">
+            <td class="p-2 text-center text-zinc-400">⠿</td>
+            <td class="p-2 text-center font-bold text-emerald-400">1</td>
+            <td class="p-2 font-bold text-white">INTRO</td>
+            <td class="p-2 font-sans font-medium text-white">Opening Sequence & Headlines</td>
+            <td class="p-2 text-zinc-400">VTR</td>
+            <td class="p-2 text-right">01:30</td>
+          </tr>
+          <!-- Order Item 2 -->
+          <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+            <td class="p-2 text-center text-zinc-400">⠿</td>
+            <td class="p-2 text-center text-zinc-300">2</td>
+            <td class="p-2 font-medium text-white">ELECTION</td>
+            <td class="p-2 font-sans text-zinc-200">National Election Polls Open Early</td>
+            <td class="p-2 text-zinc-400">PKG</td>
+            <td class="p-2 text-right">02:45</td>
+          </tr>
+          <!-- Order Item 3 -->
+          <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+            <td class="p-2 text-center text-zinc-400">⠿</td>
+            <td class="p-2 text-center text-zinc-300">3</td>
+            <td class="p-2 font-medium text-white">ECONOMY</td>
+            <td class="p-2 font-sans text-zinc-200">Central Bank Adjusts Interest Rates</td>
+            <td class="p-2 text-zinc-400">VO</td>
+            <td class="p-2 text-right">01:15</td>
+          </tr>
+          <!-- Order Item 4 -->
+          <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+            <td class="p-2 text-center text-zinc-400">⠿</td>
+            <td class="p-2 text-center text-zinc-300">4</td>
+            <td class="p-2 font-medium text-white">TECH</td>
+            <td class="p-2 font-sans text-zinc-200">Global Tech Summit Highlights AI Systems</td>
+            <td class="p-2 text-zinc-400">PKG</td>
+            <td class="p-2 text-right">03:00</td>
+          </tr>
+          <!-- Order Item 5 -->
+          <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+            <td class="p-2 text-center text-zinc-400">⠿</td>
+            <td class="p-2 text-center text-zinc-300">5</td>
+            <td class="p-2 font-medium text-white">WEATHER</td>
+            <td class="p-2 font-sans text-zinc-200">Weekend Storm Tracking & Coastal Alerts</td>
+            <td class="p-2 text-zinc-400">LIVE</td>
+            <td class="p-2 text-right">02:00</td>
+          </tr>
+          <!-- Order Item 6 -->
+          <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+            <td class="p-2 text-center text-zinc-400">⠿</td>
+            <td class="p-2 text-center text-zinc-300">6</td>
+            <td class="p-2 font-medium text-white">SPORTS</td>
+            <td class="p-2 font-sans text-zinc-200">Championship Finals Preview & Analysis</td>
+            <td class="p-2 text-zinc-400">PKG</td>
+            <td class="p-2 text-right">02:30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <!-- Editor Content Area -->
-      <div class="flex-1 flex flex-col p-3 space-y-3 overflow-y-auto text-xs">
+  </div>
+
+  <!-- Resizable Divider Bar -->
+  <div id="resize-handle" class="w-1.5 bg-[#222226] hover:bg-[#0066cc] cursor-col-resize flex items-center justify-center transition-colors group z-20">
+    <div class="h-6 w-0.5 bg-[#4e4e58] group-hover:bg-white rounded-full"></div>
+  </div>
+
+  <!-- Right Section: Story Item Configuration & Teleprompter Push Panel (Dynamic Width) -->
+  <div class="flex flex-col flex-1 overflow-hidden bg-[#18181b] h-full" id="right-pane">
+    
+    <!-- Panel Header -->
+    <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5 text-xs">
+      <span class="font-bold uppercase tracking-wider text-zinc-300">Story Order Details & Script</span>
+    </div>
+
+    <!-- Editor Content Area -->
+    <div class="flex-1 flex flex-col p-3 space-y-3 overflow-y-auto text-xs">
+      
+      <!-- Editable Properties Box -->
+      <div class="border border-[#3c3e3d] bg-[#1e1e24] p-3 space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-white font-mono">SELECTED: ITEM #1</span>
+          <span class="bg-[#0066cc] px-2 py-0.5 font-mono text-[10px] text-white">EDITING ORDER</span>
+        </div>
         
-        <!-- Editable Properties Box -->
-        <div class="border border-[#3c3e3d] bg-[#1e1e24] p-3 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="font-bold text-white font-mono">SELECTED: ITEM #1</span>
-            <span class="bg-[#0066cc] px-2 py-0.5 font-mono text-[10px] text-white">EDITING ORDER</span>
-          </div>
-          
-          <div class="grid grid-cols-2 gap-2 pt-1">
-            <div class="space-y-1">
-              <label class="text-[10px] text-zinc-400 uppercase">News Type</label>
-              <select name="" id="" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white font-mono text-xs focus:border-[#0066cc] focus:outline-none">
-                <option value=""">Local</option>
-                <option value=""">Business</option>
-                <option value=""">International</option>
-                <option value=""">Sports</option>
-                <option value=""">Weather</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <label class="text-[10px] text-zinc-400 uppercase">Duration</label>
-              <input type="text" value="01:30" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white font-mono text-xs focus:border-[#0066cc] focus:outline-none">
-            </div>
-          </div>
-
+        <div class="grid grid-cols-2 gap-2 pt-1">
           <div class="space-y-1">
-            <label class="text-[10px] text-zinc-400 uppercase">Story Heading</label>
-            <input type="text" value="Opening Sequence & Headlines" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white text-xs focus:border-[#0066cc] focus:outline-none">
+            <label class="text-[10px] text-zinc-400 uppercase">News Type</label>
+            <select class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white font-mono text-xs focus:border-[#0066cc] focus:outline-none">
+              <option value="">Local</option>
+              <option value="">Business</option>
+              <option value="">International</option>
+              <option value="">Sports</option>
+              <option value="">Weather</option>
+            </select>
+          </div>
+          <div class="space-y-1">
+            <label class="text-[10px] text-zinc-400 uppercase">Duration</label>
+            <input type="text" value="01:30" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white font-mono text-xs focus:border-[#0066cc] focus:outline-none">
           </div>
         </div>
 
-        <!-- Teleprompter / Script Text Preview -->
-        <div class="flex-1 border border-[#3c3e3d] bg-[#141417] p-3 font-mono text-xs leading-relaxed text-zinc-200 flex flex-col justify-between">
-          <div contenteditable="true" class="space-y-2 overflow-y-auto flex flex-col justify-center items-center text-center border-none outline-none">
-            <p class="text-emerald-400 font-bold">[ANCHOR ON CAM 1 - INTRO]</p>
-            <p class="text-white w-full" style="direction: rtl;">
-              ސްޕޭސް އެކްސްގެ ރޮކެޓަކުން ވަކިވި، ސްކޫލް ބަހެއްގެ ބޮޑުމިން ހުރި ހަތަރު ޓަނުގެ ބޮޑު އެތިގަނޑެއް ހަނދަށް ވެއްޓިފައިވާ ކަމަށް ޓްރެކިންގް ޑޭޓާތަކުން ދައްކައިފި އެވެ.
-              މި ހާދިސާގެ ސަބަބުން ހަނދުގެ ސަތަހައިގައި އާ ވަޅުގަނޑެއް އުފެދިފައިވާއިރު، މިއީ ވަރަށް ބާރުމިނުގައި ކައުނުގެ ތެރޭގައި ހިނގާ މިފަދަ ހާދިސާތައް ދިރާސާކުރުމަށް ސައިންސްވެރިންނަށް ލިބުނު މަދު ފުރުސަތުތަކުގެ ތެރެއިން ފުރުސަތެކެވެ.
-            </p>
-          </div>
+        <div class="space-y-1">
+          <label class="text-[10px] text-zinc-400 uppercase">Story Heading</label>
+          <input type="text" value="Opening Sequence & Headlines" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white text-xs focus:border-[#0066cc] focus:outline-none">
         </div>
+      </div>
 
-        <!-- Action Buttons -->
-        <div class="flex space-x-2">
-          <button class="flex-1 border border-[#3f3f4a] bg-[#222228] py-1.5 text-center text-xs hover:bg-[#cc0000] hover:text-white cursor-pointer">
-            Clear
-          </button>
-          <button class="flex-1 border border-[#3f3f4a] bg-[#222228] py-1.5 text-center text-xs hover:bg-[#0066cc] hover:text-white cursor-pointer">
-            Save
-          </button>
+      <!-- Teleprompter / Script Text Preview -->
+      <div class="flex-1 border border-[#3c3e3d] bg-[#141417] p-3 font-mono text-xs leading-relaxed text-zinc-200 flex flex-col justify-between">
+        <div contenteditable="true" class="space-y-2 overflow-y-auto flex flex-col justify-center items-center text-center border-none outline-none">
+          <p class="text-emerald-400 font-bold">[ANCHOR ON CAM 1 - INTRO]</p>
+          <p class="text-white w-full" style="direction: rtl;">
+            ސްޕޭސް އެކްސްގެ ރޮކެޓަކުން ވަކިވި، ސްކޫލް ބަހެއްގެ ބޮޑުމިން ހުރި ހަތަރު ޓަނުގެ ބޮޑު އެތިގަނޑެއް ހަނދަށް ވެއްޓިފައިވާ ކަމަށް ޓްރެކިންގް ޑޭޓާތަކުން ދައްކައިފި އެទេ។
+            މި ހާދިސާގެ ސަބަބުން ހަނދުގެ ސަތަހައިގައި އާ ވަޅުގަނޑެއް އުފެދިފައިވާއިރު، މިއީ ވަރަށް ބާރުމިނުގައި ކައުނުގެ ތެރޭގައި ހިނގާ މިފަދަ ހާދިސާތައް ދިރާސާކުރުމަށް ސައިންސްވެރިންނަށް ލިބުނު މަދު ފުރުސަތުތަކުގެ ތެރެއިން ފުރުސަތެކެވެ.
+          </p>
         </div>
+      </div>
 
+      <!-- Action Buttons -->
+      <div class="flex space-x-2">
+        <button class="flex-1 border border-[#3f3f4a] bg-[#222228] py-1.5 text-center text-xs hover:bg-[#cc0000] hover:text-white cursor-pointer">
+          Clear
+        </button>
+        <button class="flex-1 border border-[#3f3f4a] bg-[#222228] py-1.5 text-center text-xs hover:bg-[#0066cc] hover:text-white cursor-pointer">
+          Save
+        </button>
       </div>
 
     </div>
 
   </div>
 
-  <!-- Bottom Status Bar -->
-  <div class="flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] bg-[#1f1f23] px-3 text-[11px] text-zinc-400 font-mono">
-    <div class="flex items-center space-x-4">
-      <span class="text-emerald-400">● RUNORDER BUILDER READY</span>
-      <span>Sequence Mode: Manual Drag & Drop</span>
-    </div>
-    <div class="flex items-center space-x-4">
-      <span>CasparCG Server: Connected</span>
-    </div>
-  </div>
+</div>
 
+<!-- Interactive Resizer Script -->
+<script>
+  const container = document.getElementById('resizable-container');
+  const leftPane = document.getElementById('left-pane');
+  const resizeHandle = document.getElementById('resize-handle');
+
+  let isResizing = false;
+
+  resizeHandle.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    document.body.style.cursor = 'col-resize';
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  });
+
+  function handleMouseMove(e) {
+    if (!isResizing) return;
+    const containerRect = container.getBoundingClientRect();
+    const offsetX = e.clientX - containerRect.left;
+    let newWidthPercentage = (offsetX / containerRect.width) * 100;
+
+    // Constrain minimum and maximum pane width limits (between 25% and 85%)
+    if (newWidthPercentage < 25) newWidthPercentage = 25;
+    if (newWidthPercentage > 85) newWidthPercentage = 85;
+
+    leftPane.style.width = newWidthPercentage + '%';
+  }
+
+  function handleMouseUp() {
+    isResizing = false;
+    document.body.style.cursor = 'default';
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  }
+</script>
 </div>
 
 
