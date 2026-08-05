@@ -1,0 +1,589 @@
+<!-- Main Application Layout Container -->
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<div class="flex h-screen w-full flex-col overflow-hidden bg-[#292929] font-sans text-zinc-200 select-none">
+  <!-- Top Bar / Title Bar -->
+  <!-- <div class="flex h-7 w-full items-center justify-between bg-[#464646] px-2">
+    <div class="flex items-center gap-1.5">
+      <p class="outfit-Regular text-sm text-white">AirCue 1.7.5 </p>
+      <p class="outfit-Regular text-xs text-zinc-200">by</p>
+      <p class="outfit-Regular text-xs text-zinc-200">NaruLab</p>
+    </div>
+    <div class="flex items-center space-x-2 text-xs text-zinc-400">
+      <span class="cursor-pointer px-2 py-0.5 hover:text-white">🗕</span>
+      <span class="cursor-pointer px-2 py-0.5 hover:text-white">🗖</span>
+      <span class="cursor-pointer px-2 py-0.5 hover:bg-red-600 hover:text-white">✕</span>
+    </div>
+  </div> -->
+
+  <!-- Menu Bar -->
+  <div class="z-50 flex w-full items-center border-t border-[#3C3E3D] bg-[#4b4b4b]">
+    <nav>
+      <div class="flex flex-row">
+        <!-- File Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">File</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>New Bulletin</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400 group-hover:text-white">Ctrl+N</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Open...</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+O</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Recent</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">&gt;</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Save</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+S</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Save As...</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+S</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Export Rundown</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+E</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Print...</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+P</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-red-700 hover:text-white">
+                <span>Exit</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400 group-hover:text-white">Alt+F4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Edit Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Edit</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Undo</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Z</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Redo</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Y</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Cut</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+X</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Copy</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+C</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Paste</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+V</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Find...</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+F</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Replace...</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+H</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View Menu (Includes Dashboard) -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">View</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Dashboard</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F10</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Rundown</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F11</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Story Editor</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+E</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>CG Preview</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F9</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Teleprompter</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F12</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Full Screen</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F11</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Reset Layout</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+R</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rundown Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Rundown</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>New Story</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+N</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Delete Story</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Del</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Duplicate</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+D</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Move Up</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+Up</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Move Down</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+Down</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-red-700 hover:text-white">
+                <span>Breaking News</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+B</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Lock Rundown</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+L</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Story Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Story</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Assign Journalist</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+A</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Approve</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+P</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Reject</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+R</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>History</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Alt+H</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Notes</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Alt+N</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Attachments</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Alt+A</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Broadcast Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Broadcast</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Update Broadcast</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F5</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Refresh All</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+F5</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Send to Teleprompter</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+T</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Send to CG</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+G</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Next Story</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Down</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Previous Story</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Up</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="outfit-Bold flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-red-700 hover:text-white">
+                <span>Go On Air</span>
+                <span class="outfit-Regular text-[10px] text-white">Enter</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Graphics Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Graphics</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Lower Third</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F1</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Full Screen</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F2</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Breaking News Banner</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F3</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Clock</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F4</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Templates</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+T</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tools Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Tools</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Settings</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+,</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>User Management</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+U</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Logs</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+L</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Backup</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+B</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Keyboard Shortcuts</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+K</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Window Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Window</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Dock Panels</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+D</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Floating Windows</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+F</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Reset Workspace</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+W</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help Menu -->
+        <div class="group relative">
+          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Help</p>
+          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
+            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Documentation</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F1</span>
+              </div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>Updates</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+U</span>
+              </div>
+              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
+              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
+                <span>About AirCue</span>
+                <span class="outfit-Regular text-[10px] text-zinc-400">F12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="flex flex-1 flex-col overflow-hidden">
+    <!-- Toolbar / Quick Action Bar -->
+    <div class="flex h-10 w-full items-center justify-between border-b border-[#3c3e3d] px-3">
+      <div class="flex items-center space-x-2">
+        <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
+          <span class="text-nowrap">Back to Dashboard</span>
+        </button>
+      </div>
+      <div class="flex items-center space-x-3 text-xs text-zinc-400">
+        <span class="outfit-Regular">10:31:58</span>
+      </div>
+    </div>
+
+
+
+<div class="flex flex-1 flex-col overflow-hidden bg-[#18181b] text-zinc-200">
+  
+  <!-- Toolbar / Quick Action Bar -->
+  <div class="flex h-10 w-full items-center justify-between border-b border-[#3c3e3d] bg-[#222226] px-3">
+    <div class="flex items-center space-x-2">
+      <span class="bg-[#0066cc] px-2 py-0.5 font-mono text-xs text-white">18:00 Evening News Primary</span>
+      <span class="text-zinc-600">|</span>
+      <button class="flex items-center space-x-1 border border-[#3f3f4a] bg-[#2a2a31] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white cursor-pointer">
+        <span>Add Story Block</span>
+      </button>
+      <button class="flex items-center space-x-1 border border-[#3f3f4a] bg-[#2a2a31] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white cursor-pointer">
+        <span>▲ Move Up</span>
+      </button>
+      <button class="flex items-center space-x-1 border border-[#3f3f4a] bg-[#2a2a31] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white cursor-pointer">
+        <span>▼ Move Down</span>
+      </button>
+      <button class="flex items-center space-x-1 border border-[#3f3f4a] bg-[#2a2a31] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white cursor-pointer">
+        <span>Delete Selected</span>
+      </button>
+    </div>
+    <div class="flex items-center space-x-3 text-xs text-zinc-400">
+      <span class="font-mono">Total Rundown: 29:45 / 30:00</span>
+    </div>
+  </div>
+
+  <!-- Main Split Layout (Interactive Order Grid + Story Editor Panel) -->
+  <div class="grid flex-1 grid-cols-12 overflow-hidden bg-[#121215]">
+    
+    <!-- Left Section: Rundown Order Editor Grid (8 Cols) -->
+    <div class="col-span-12 flex flex-col border-r border-[#3c3e3d] lg:col-span-8 overflow-hidden bg-[#1a1a1e]">
+      
+      <!-- Grid Header -->
+      <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5 text-xs">
+        <div class="flex items-center space-x-3">
+          <span class="font-bold uppercase tracking-wider text-zinc-300">Runorder Sequence Table</span>
+        </div>
+        <div class="font-mono text-xs text-zinc-400">
+          Stories: <span class="text-white">6</span> | Est: <span class="text-emerald-400">29:45</span>
+        </div>
+      </div>
+
+      <!-- Interactive Order Table -->
+      <div class="flex-1 overflow-y-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="sticky top-0 z-10 border-b border-[#3c3e3d] bg-[#202025] text-zinc-400">
+            <tr>
+              <th class="p-2 font-medium w-10 text-center">#</th>
+              <th class="p-2 font-medium w-12 text-center">Ord</th>
+              <th class="p-2 font-medium w-24">Type</th>
+              <th class="p-2 font-medium">Story Heading / Title</th>
+              <th class="p-2 font-medium w-20">Type</th>
+              <th class="p-2 font-medium w-16 text-right">Dur</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#2a2a31] font-mono cursor-pointer">
+            <!-- Order Item 1 -->
+            <tr class="bg-[#21262d] hover:bg-[#262c36] border-l-2 border-[#0066cc]">
+              <td class="p-2 text-center text-zinc-400">⠿</td>
+              <td class="p-2 text-center font-bold text-emerald-400">1</td>
+              <td class="p-2 font-bold text-white">INTRO</td>
+              <td class="p-2 font-sans font-medium text-white">Opening Sequence & Headlines</td>
+              <td class="p-2 text-zinc-400">VTR</td>
+              <td class="p-2 text-right">01:30</td>
+            </tr>
+            <!-- Order Item 2 -->
+            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+              <td class="p-2 text-center text-zinc-400">⠿</td>
+              <td class="p-2 text-center text-zinc-300">2</td>
+              <td class="p-2 font-medium text-white">ELECTION</td>
+              <td class="p-2 font-sans text-zinc-200">National Election Polls Open Early</td>
+              <td class="p-2 text-zinc-400">PKG</td>
+              <td class="p-2 text-right">02:45</td>
+            </tr>
+            <!-- Order Item 3 -->
+            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+              <td class="p-2 text-center text-zinc-400">⠿</td>
+              <td class="p-2 text-center text-zinc-300">3</td>
+              <td class="p-2 font-medium text-white">ECONOMY</td>
+              <td class="p-2 font-sans text-zinc-200">Central Bank Adjusts Interest Rates</td>
+              <td class="p-2 text-zinc-400">VO</td>
+              <td class="p-2 text-right">01:15</td>
+            </tr>
+            <!-- Order Item 4 -->
+            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+              <td class="p-2 text-center text-zinc-400">⠿</td>
+              <td class="p-2 text-center text-zinc-300">4</td>
+              <td class="p-2 font-medium text-white">TECH</td>
+              <td class="p-2 font-sans text-zinc-200">Global Tech Summit Highlights AI Systems</td>
+              <td class="p-2 text-zinc-400">PKG</td>
+              <td class="p-2 text-right">03:00</td>
+            </tr>
+            <!-- Order Item 5 -->
+            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+              <td class="p-2 text-center text-zinc-400">⠿</td>
+              <td class="p-2 text-center text-zinc-300">5</td>
+              <td class="p-2 font-medium text-white">WEATHER</td>
+              <td class="p-2 font-sans text-zinc-200">Weekend Storm Tracking & Coastal Alerts</td>
+              <td class="p-2 text-zinc-400">LIVE</td>
+              <td class="p-2 text-right">02:00</td>
+            </tr>
+            <!-- Order Item 6 -->
+            <tr class="hover:bg-[#22222a] border-l-2 border-transparent">
+              <td class="p-2 text-center text-zinc-400">⠿</td>
+              <td class="p-2 text-center text-zinc-300">6</td>
+              <td class="p-2 font-medium text-white">SPORTS</td>
+              <td class="p-2 font-sans text-zinc-200">Championship Finals Preview & Analysis</td>
+              <td class="p-2 text-zinc-400">PKG</td>
+              <td class="p-2 text-right">02:30</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- Right Section: Story Item Configuration & Teleprompter Push Panel (4 Cols) -->
+    <div class="col-span-12 flex flex-col lg:col-span-4 overflow-hidden bg-[#18181b]">
+      
+      <!-- Panel Header -->
+      <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5 text-xs">
+        <span class="font-bold uppercase tracking-wider text-zinc-300">Story Order Details & Script</span>
+      </div>
+
+      <!-- Editor Content Area -->
+      <div class="flex-1 flex flex-col p-3 space-y-3 overflow-y-auto text-xs">
+        
+        <!-- Editable Properties Box -->
+        <div class="border border-[#3c3e3d] bg-[#1e1e24] p-3 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-white font-mono">SELECTED: ITEM #1</span>
+            <span class="bg-[#0066cc] px-2 py-0.5 font-mono text-[10px] text-white">EDITING ORDER</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 pt-1">
+            <div class="space-y-1">
+              <label class="text-[10px] text-zinc-400 uppercase">News Type</label>
+              <select name="" id="" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white font-mono text-xs focus:border-[#0066cc] focus:outline-none">
+                <option value=""">Local</option>
+                <option value=""">Business</option>
+                <option value=""">International</option>
+                <option value=""">Sports</option>
+                <option value=""">Weather</option>
+              </select>
+            </div>
+            <div class="space-y-1">
+              <label class="text-[10px] text-zinc-400 uppercase">Duration</label>
+              <input type="text" value="01:30" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white font-mono text-xs focus:border-[#0066cc] focus:outline-none">
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-[10px] text-zinc-400 uppercase">Story Heading</label>
+            <input type="text" value="Opening Sequence & Headlines" class="w-full border border-[#3f3f4a] bg-[#141417] px-2 py-1 text-white text-xs focus:border-[#0066cc] focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Teleprompter / Script Text Preview -->
+        <div class="flex-1 border border-[#3c3e3d] bg-[#141417] p-3 font-mono text-xs leading-relaxed text-zinc-200 flex flex-col justify-between">
+          <div contenteditable="true" class="space-y-2 overflow-y-auto flex flex-col justify-center items-center text-center border-none outline-none">
+            <p class="text-emerald-400 font-bold">[ANCHOR ON CAM 1 - INTRO]</p>
+            <p class="text-white w-full" style="direction: rtl;">
+              ސްޕޭސް އެކްސްގެ ރޮކެޓަކުން ވަކިވި، ސްކޫލް ބަހެއްގެ ބޮޑުމިން ހުރި ހަތަރު ޓަނުގެ ބޮޑު އެތިގަނޑެއް ހަނދަށް ވެއްޓިފައިވާ ކަމަށް ޓްރެކިންގް ޑޭޓާތަކުން ދައްކައިފި އެވެ.
+              މި ހާދިސާގެ ސަބަބުން ހަނދުގެ ސަތަހައިގައި އާ ވަޅުގަނޑެއް އުފެދިފައިވާއިރު، މިއީ ވަރަށް ބާރުމިނުގައި ކައުނުގެ ތެރޭގައި ހިނގާ މިފަދަ ހާދިސާތައް ދިރާސާކުރުމަށް ސައިންސްވެރިންނަށް ލިބުނު މަދު ފުރުސަތުތަކުގެ ތެރެއިން ފުރުސަތެކެވެ.
+            </p>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex space-x-2">
+          <button class="flex-1 border border-[#3f3f4a] bg-[#222228] py-1.5 text-center text-xs hover:bg-[#cc0000] hover:text-white cursor-pointer">
+            Clear
+          </button>
+          <button class="flex-1 border border-[#3f3f4a] bg-[#222228] py-1.5 text-center text-xs hover:bg-[#0066cc] hover:text-white cursor-pointer">
+            Save
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Bottom Status Bar -->
+  <div class="flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] bg-[#1f1f23] px-3 text-[11px] text-zinc-400 font-mono">
+    <div class="flex items-center space-x-4">
+      <span class="text-emerald-400">● RUNORDER BUILDER READY</span>
+      <span>Sequence Mode: Manual Drag & Drop</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span>CasparCG Server: Connected</span>
+    </div>
+  </div>
+
+</div>
+
+
+
+</div>
+
+
+    <!-- Bottom Status Bar -->
+    <div class="outfit-Regular flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] px-3 text-[11px] text-zinc-400">
+      <div class="flex items-center space-x-4">
+        <span>Bulletin ID: BLN-2026-0606-02</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span>Live: Connected</span>
+      </div>
+    </div>
+  </div>
+</div>
