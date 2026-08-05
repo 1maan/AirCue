@@ -461,40 +461,40 @@
       <div class="col-span-12 flex flex-col space-y-2 lg:col-span-5">
         <!-- Panel: Hardware & Service Health -->
         <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 uppercase">Broadcast Hardware Status</h2>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Broadcast Hardware Status</h2>
           </div>
           <div class="space-y-2 p-3 text-xs">
             <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
-              <span>CasparCG Playout Server (srv-playout-01)</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ONLINE (2ms)</span>
+              <span>Node.js Process RAM (RSS)</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">142.4 MB</span>
             </div>
             <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
-              <span>Teleprompter Sync Node</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ACTIVE</span>
+              <span>V8 Heap Memory Usage</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">64.8% (88 MB)</span>
             </div>
             <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
-              <span>MySQL Database Cluster</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> SYNCHRONIZED</span>
+              <span>System CPU Load (1m Avg)</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">14.2% (1.15)</span>
             </div>
             <div class="flex items-center justify-between">
-              <span>Video Matrix Switcher (SDI)</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> LOCKED</span>
+              <span>Total Host RAM Available</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">7.2 GB / 16 GB</span>
             </div>
           </div>
         </div>
 
         <!-- Panel: Live System Audit Log Stream -->
         <div class="flex flex-1 flex-col border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 uppercase">Live Audit & Action Logs</h2>
-            <span class="outfit-Regular text-[10px] text-zinc-500">Auto-refreshing</span>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Live Audit & Action Logs</h2>
+            <span class="outfit-Regular text-xs text-zinc-400">Auto-refreshing</span>
           </div>
           <div class="outfit-Regular flex-1 space-y-1 overflow-y-auto p-2 text-[11px] text-zinc-400">
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:31:02</span> - <span class="text-white">j.smith</span> approved Story #04</div>
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:31:02</span> - <span class="text-white">Rafa</span> approved Story #04</div>
             <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:30:15</span> - <span class="text-[#03da32]">system</span> Rundown state updated to LIVE</div>
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:28:40</span> - <span class="text-white">a.jones</span> modified prompt speed</div>
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:25:11</span> - <span class="text-white">r.wilson</span> attached media package #02</div>
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:28:40</span> - <span class="text-white">Control</span> modified prompt speed</div>
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:25:11</span> - <span class="text-white">Laisha</span> attached media package #02</div>
             <div><span class="text-zinc-500">18:20:00</span> - <span class="text-[#03da32]">system</span> Database checkpoint backup completed</div>
           </div>
         </div>
