@@ -240,7 +240,7 @@
                 <span class="outfit-Regular text-[10px] text-zinc-400">Up</span>
               </div>
               <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 outfit-Bold hover:bg-red-700 hover:text-white">
+              <div class="outfit-Bold flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-red-700 hover:text-white">
                 <span>Go On Air</span>
                 <span class="outfit-Regular text-[10px] text-white">Enter</span>
               </div>
@@ -380,23 +380,23 @@
       <div class="col-span-12 flex flex-col space-y-2 lg:col-span-7">
         <!-- Panel: Active Bulletin Summary -->
         <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] px-3 py-1.5">
-            <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300">Active Broadcast Bulletin</h2>
-            <span class="bg-red-700 px-2 py-0.5 outfit-Regular text-[10px] text-white">LIVE ON AIR</span>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Active Broadcast Bulletin</h2>
+            <span class="outfit-Regular bg-red-700 px-2 py-0.5 text-[10px] text-white">LIVE ON AIR</span>
           </div>
           <div class="space-y-3 p-4">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm outfit-Bold text-white">18:00 Evening News Primary</p>
-                <p class="text-xs text-zinc-400">Studio: Studio A | Producer: Sarah Connor</p>
+                <p class="outfit-Bold text-sm text-white">18:00 Evening News Primary</p>
+                <p class="text-xs text-zinc-400">Studio: Vertual | Producer: Sarah Connor</p>
               </div>
               <div class="text-right">
-                <p class="outfit-Regular text-xs text-emerald-400">Elapsed: 14:22 / 30:00</p>
+                <p class="outfit-Regular text-xs text-[#03da32]">Elapsed: 14:22 / 30:00</p>
                 <p class="outfit-Regular text-[10px] text-zinc-500">Stories: 14 Total</p>
               </div>
             </div>
             <div class="h-1.5 w-full bg-[#2a2a31]">
-              <div class="h-full w-[48%] bg-emerald-600"></div>
+              <div class="h-full w-[48%] bg-[#03da32]"></div>
             </div>
             <div class="flex space-x-2 pt-2">
               <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white">Open Live Rundown</button>
@@ -407,42 +407,49 @@
 
         <!-- Panel: Bulletin Queue Table -->
         <div class="flex-1 border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
-            <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300 uppercase">Today's Bulletins Schedule</h2>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Today's Bulletins Schedule</h2>
             <span class="outfit-Regular text-xs text-zinc-400">Date: 2026-06-06</span>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead class="border-b border-[#3c3e3d] bg-[#202025] text-zinc-400">
                 <tr>
-                  <th class="p-2 font-medium">ID</th>
-                  <th class="p-2 font-medium">Bulletin Name</th>
-                  <th class="p-2 font-medium">Air Time</th>
-                  <th class="p-2 font-medium">Status</th>
-                  <th class="p-2 font-medium">Producer</th>
+                  <th class="p-2">ID</th>
+                  <th class="p-2">Bulletin Name</th>
+                  <th class="p-2">Air Time</th>
+                  <th class="p-2">Status</th>
+                  <th class="p-2">Producer</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-[#2a2a31]">
                 <tr class="hover:bg-[#22222a]">
-                  <td class="p-2 outfit-regular">01</td>
-                  <td class="p-2 font-medium text-white">12:00 Noon Express</td>
-                  <td class="p-2 outfit-regular">12:00:00</td>
+                  <td class="outfit-regular p-2">01</td>
+                  <td class="p-2 text-white">FahugeKhabaru</td>
+                  <td class="outfit-regular p-2">10:00:00</td>
                   <td class="p-2"><span class="text-zinc-400">Completed</span></td>
-                  <td class="p-2">J. Smith</td>
+                  <td class="p-2">Rafa</td>
                 </tr>
                 <tr class="bg-[#21262d] hover:bg-[#262c36]">
-                  <td class="p-2 outfit-Regular outfit-Bold text-emerald-400">02</td>
-                  <td class="p-2 outfit-Bold text-white">18:00 Evening News Primary</td>
-                  <td class="p-2 outfit-regular">18:00:00</td>
-                  <td class="p-2"><span class="outfit-Bold text-emerald-400">[LIVE]</span></td>
-                  <td class="p-2">S. Connor</td>
+                  <td class="outfit-Regular outfit-Bold p-2 text-[#03da32]">02</td>
+                  <td class="outfit-Bold p-2 text-white">FahugeKhabaru</td>
+                  <td class="outfit-regular p-2">14:00:00</td>
+                  <td class="p-2"><span class="outfit-Bold text-[#03da32]">[LIVE]</span></td>
+                  <td class="p-2">Rafa</td>
                 </tr>
                 <tr class="hover:bg-[#22222a]">
-                  <td class="p-2 outfit-regular">03</td>
-                  <td class="p-2 font-medium text-white">23:00 Nightly Wrap</td>
-                  <td class="p-2 outfit-regular">23:00:00</td>
+                  <td class="outfit-regular p-2">03</td>
+                  <td class="p-2 text-white">60Minutes</td>
+                  <td class="outfit-regular p-2">20:00:00</td>
                   <td class="p-2"><span class="text-amber-400">Draft / Prep</span></td>
-                  <td class="p-2">R. Wilson</td>
+                  <td class="p-2">Laisha</td>
+                </tr>
+                <tr class="hover:bg-[#22222a]">
+                  <td class="outfit-regular p-2">03</td>
+                  <td class="p-2 text-white">SunGadi</td>
+                  <td class="outfit-regular p-2">20:00:00</td>
+                  <td class="p-2"><span class="text-amber-400">Draft / Prep</span></td>
+                  <td class="p-2">Shain</td>
                 </tr>
               </tbody>
             </table>
@@ -455,24 +462,24 @@
         <!-- Panel: Hardware & Service Health -->
         <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
           <div class="border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
-            <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300 uppercase">Broadcast Hardware Status</h2>
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 uppercase">Broadcast Hardware Status</h2>
           </div>
           <div class="space-y-2 p-3 text-xs">
             <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
               <span>CasparCG Playout Server (srv-playout-01)</span>
-              <span class="flex items-center space-x-1 outfit-Regular text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ONLINE (2ms)</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ONLINE (2ms)</span>
             </div>
             <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
               <span>Teleprompter Sync Node</span>
-              <span class="flex items-center space-x-1 outfit-Regular text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ACTIVE</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ACTIVE</span>
             </div>
             <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
               <span>MySQL Database Cluster</span>
-              <span class="flex items-center space-x-1 outfit-Regular text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> SYNCHRONIZED</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> SYNCHRONIZED</span>
             </div>
             <div class="flex items-center justify-between">
               <span>Video Matrix Switcher (SDI)</span>
-              <span class="flex items-center space-x-1 outfit-Regular text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> LOCKED</span>
+              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> LOCKED</span>
             </div>
           </div>
         </div>
@@ -480,22 +487,22 @@
         <!-- Panel: Live System Audit Log Stream -->
         <div class="flex flex-1 flex-col border border-[#3c3e3d] bg-[#1a1a1a]">
           <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
-            <h2 class="text-xs outfit-Bold tracking-wider text-zinc-300 uppercase">Live Audit & Action Logs</h2>
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 uppercase">Live Audit & Action Logs</h2>
             <span class="outfit-Regular text-[10px] text-zinc-500">Auto-refreshing</span>
           </div>
-          <div class="flex-1 space-y-1 overflow-y-auto p-2 outfit-Regular text-[11px] text-zinc-400">
+          <div class="outfit-Regular flex-1 space-y-1 overflow-y-auto p-2 text-[11px] text-zinc-400">
             <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:31:02</span> - <span class="text-white">j.smith</span> approved Story #04</div>
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:30:15</span> - <span class="text-emerald-400">system</span> Rundown state updated to LIVE</div>
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:30:15</span> - <span class="text-[#03da32]">system</span> Rundown state updated to LIVE</div>
             <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:28:40</span> - <span class="text-white">a.jones</span> modified prompt speed</div>
             <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:25:11</span> - <span class="text-white">r.wilson</span> attached media package #02</div>
-            <div><span class="text-zinc-500">18:20:00</span> - <span class="text-emerald-400">system</span> Database checkpoint backup completed</div>
+            <div><span class="text-zinc-500">18:20:00</span> - <span class="text-[#03da32]">system</span> Database checkpoint backup completed</div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Bottom Status Bar -->
-    <div class="flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] px-3 outfit-Regular text-[11px] text-zinc-400">
+    <div class="outfit-Regular flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] px-3 text-[11px] text-zinc-400">
       <div class="flex items-center space-x-4">
         <span>Producer: Shama Suaib</span>
         <span>Studio: Vertual</span>
@@ -505,6 +512,5 @@
         <span>Live: Connected</span>
       </div>
     </div>
-    
   </div>
 </div>
