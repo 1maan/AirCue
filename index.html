@@ -97,7 +97,7 @@
           </div>
         </div>
 
-        <!-- View Menu -->
+        <!-- View Menu (Includes Dashboard) -->
         <div class="group relative">
           <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">View</p>
           <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
@@ -355,95 +355,160 @@
     </nav>
   </div>
 
-  <!-- Toolbar / Quick Action Bar -->
-  <div class="flex h-10 w-full items-center space-x-2 border-b border-[#2d2d30] bg-[#3c3c3c] px-3 text-xs">
-    <button class="flex items-center space-x-1 rounded bg-[#515155] px-3 py-1 text-white transition-colors hover:bg-[#0066cc]"><span>+ New Story</span></button>
-    <button class="rounded bg-[#515155] px-3 py-1 text-white transition-colors hover:bg-[#0066cc]">Save Rundown</button>
-    <div class="mx-1 h-5 w-[1px] bg-[#5a5a5e]"></div>
-    <button class="rounded bg-[#515155] px-3 py-1 text-white transition-colors hover:bg-[#0066cc]">Prompt</button>
-    <button class="rounded bg-[#515155] px-3 py-1 text-white transition-colors hover:bg-[#0066cc]">CG Preview</button>
-    <div class="mx-1 h-5 w-[1px] bg-[#5a5a5e]"></div>
-    <button class="rounded bg-red-700 px-4 py-1 font-bold text-white shadow transition-colors hover:bg-red-800">🔴 GO ON AIR</button>
-  </div>
-
-  <!-- Main Workspace Layout (Split Panel) -->
-  <div class="flex w-full flex-1 overflow-hidden">
-    <!-- Left Panel: Rundown Grid / Stories List -->
-    <div class="flex w-1/2 flex-col border-r border-[#2d2d30] bg-[#1e1e22]">
-      <div class="flex h-8 items-center justify-between border-b border-[#3f3f4a] bg-[#2d2d30] px-3 text-xs font-bold tracking-wider text-zinc-400 uppercase">
-        <span>Rundown - Evening News 18:00</span>
-        <span class="font-mono text-zinc-300">00:28:45</span>
+  <div class="flex flex-1 flex-col overflow-hidden">
+    <!-- Toolbar / Quick Action Bar -->
+    <div class="flex h-10 w-full items-center justify-between border-b border-[#3c3e3d] bg-[#222226] px-3">
+      <div class="flex items-center space-x-2">
+        <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
+          <span>New Bulletin</span>
+        </button>
+        <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
+          <span>Open Rundown</span>
+        </button>
+        <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
+          <span>Breaking News</span>
+        </button>
       </div>
-      <!-- Table Header -->
-      <div class="grid grid-cols-12 border-b border-[#333338] bg-[#252528] px-3 py-1.5 text-[11px] text-zinc-400">
-        <span class="col-span-1">No.</span>
-        <span class="col-span-6">Story Title</span>
-        <span class="col-span-2">Dur</span>
-        <span class="col-span-3">Status</span>
-      </div>
-      <!-- Table Rows (Mock Wireframe Data) -->
-      <div class="flex-1 overflow-y-auto text-xs">
-        <div class="grid cursor-pointer grid-cols-12 items-center border-b border-[#2d2d30] bg-[#2a2d32] px-3 py-2">
-          <span class="col-span-1 font-mono text-zinc-400">1</span>
-          <span class="col-span-6 font-medium text-white">Opening Intro & Headlines</span>
-          <span class="col-span-2 font-mono">01:30</span>
-          <span class="col-span-3 font-semibold text-emerald-400">Approved</span>
-        </div>
-        <div class="grid cursor-pointer grid-cols-12 items-center border-b border-[#2d2d30] px-3 py-2 hover:bg-[#252528]">
-          <span class="col-span-1 font-mono text-zinc-400">2</span>
-          <span class="col-span-6 text-zinc-200">Global Climate Summit Update</span>
-          <span class="col-span-2 font-mono">03:00</span>
-          <span class="col-span-3 font-semibold text-amber-400">In Editing</span>
-        </div>
-        <div class="grid cursor-pointer grid-cols-12 items-center border-b border-[#2d2d30] px-3 py-2 hover:bg-[#252528]">
-          <span class="col-span-1 font-mono text-zinc-400">3</span>
-          <span class="col-span-6 text-zinc-200">Tech Sector Market Rally</span>
-          <span class="col-span-2 font-mono">02:15</span>
-          <span class="col-span-3 font-semibold text-zinc-400">Draft</span>
-        </div>
+      <div class="flex items-center space-x-3 text-xs text-zinc-400">
+        <span class="flex items-center space-x-1">
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span class="font-mono text-emerald-400">NRCS Core: ONLINE</span>
+        </span>
+        <span class="font-mono">10:31:58 UTC</span>
       </div>
     </div>
 
-    <!-- Right Panel: Story Editor & Preview Container -->
-    <div class="flex w-1/2 flex-col bg-[#18181b]">
-      <div class="flex h-8 items-center border-b border-[#3f3f4a] bg-[#2d2d30] px-3 text-xs font-bold tracking-wider text-zinc-400 uppercase">
-        <span>Story Editor: Global Climate Summit Update</span>
-      </div>
-      <!-- Story Details Area -->
-      <div class="flex flex-1 flex-col space-y-4 overflow-y-auto p-4">
-        <div class="flex flex-col space-y-1">
-          <label class="text-[11px] text-zinc-400">Slug / Title</label>
-          <input type="text" value="Global Climate Summit Update" class="rounded border border-[#3f3f4a] bg-[#252528] px-3 py-1.5 text-xs text-white focus:border-[#0066cc] focus:outline-none" readonly />
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="flex flex-col space-y-1">
-            <label class="text-[11px] text-zinc-400">Assigned Journalist</label>
-            <input type="text" value="Sarah Jenkins" class="rounded border border-[#3f3f4a] bg-[#252528] px-3 py-1.5 text-xs text-white" readonly />
+    <!-- Dashboard Main Content Grid -->
+    <div class="grid flex-1 grid-cols-12 gap-2 overflow-y-auto p-3">
+      <!-- Left Column: Active & Upcoming Bulletins (7 Cols) -->
+      <div class="col-span-12 flex flex-col space-y-2 lg:col-span-7">
+        <!-- Panel: Active Bulletin Summary -->
+        <div class="border border-[#3c3e3d] bg-[#1a1a1e]">
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
+            <h2 class="text-xs font-bold tracking-wider text-zinc-300 uppercase">Active Broadcast Bulletin</h2>
+            <span class="bg-emerald-700 px-2 py-0.5 font-mono text-[10px] text-white">LIVE ON AIR</span>
           </div>
-          <div class="flex flex-col space-y-1">
-            <label class="text-[11px] text-zinc-400">Estimated Duration</label>
-            <input type="text" value="03:00" class="rounded border border-[#3f3f4a] bg-[#252528] px-3 py-1.5 font-mono text-xs text-white" readonly />
+          <div class="space-y-3 p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm font-bold text-white">18:00 Evening News Primary</p>
+                <p class="text-xs text-zinc-400">Studio: Studio A | Producer: Sarah Connor</p>
+              </div>
+              <div class="text-right">
+                <p class="font-mono text-xs text-emerald-400">Elapsed: 14:22 / 30:00</p>
+                <p class="font-mono text-[10px] text-zinc-500">Stories: 14 Total</p>
+              </div>
+            </div>
+            <div class="h-1.5 w-full bg-[#2a2a31]">
+              <div class="h-full w-[48%] bg-emerald-600"></div>
+            </div>
+            <div class="flex space-x-2 pt-2">
+              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white">Open Live Rundown</button>
+              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white">View Prompter</button>
+            </div>
           </div>
         </div>
-        <div class="flex flex-1 flex-col space-y-1">
-          <label class="text-[11px] text-zinc-400">Script Body</label>
-          <textarea class="h-36 w-full resize-none rounded border border-[#3f3f4a] bg-[#252528] p-3 font-mono text-xs text-white focus:outline-none" readonly>Delegates from over 190 countries have gathered today in Geneva for the opening plenary of the annual climate dialogue. Focus remains heavily centered on updated carbon emissions targets and financial frameworks for developing nations...</textarea>
+
+        <!-- Panel: Bulletin Queue Table -->
+        <div class="flex-1 border border-[#3c3e3d] bg-[#1a1a1e]">
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
+            <h2 class="text-xs font-bold tracking-wider text-zinc-300 uppercase">Today's Bulletins Schedule</h2>
+            <span class="font-mono text-xs text-zinc-400">Date: 2026-06-06</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="border-b border-[#3c3e3d] bg-[#202025] text-zinc-400">
+                <tr>
+                  <th class="p-2 font-medium">ID</th>
+                  <th class="p-2 font-medium">Bulletin Name</th>
+                  <th class="p-2 font-medium">Air Time</th>
+                  <th class="p-2 font-medium">Status</th>
+                  <th class="p-2 font-medium">Producer</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#2a2a31]">
+                <tr class="hover:bg-[#22222a]">
+                  <td class="p-2 font-mono">01</td>
+                  <td class="p-2 font-medium text-white">12:00 Noon Express</td>
+                  <td class="p-2 font-mono">12:00:00</td>
+                  <td class="p-2"><span class="text-zinc-400">Completed</span></td>
+                  <td class="p-2">J. Smith</td>
+                </tr>
+                <tr class="bg-[#21262d] hover:bg-[#262c36]">
+                  <td class="p-2 font-mono font-bold text-emerald-400">02</td>
+                  <td class="p-2 font-bold text-white">18:00 Evening News Primary</td>
+                  <td class="p-2 font-mono">18:00:00</td>
+                  <td class="p-2"><span class="font-bold text-emerald-400">[LIVE]</span></td>
+                  <td class="p-2">S. Connor</td>
+                </tr>
+                <tr class="hover:bg-[#22222a]">
+                  <td class="p-2 font-mono">03</td>
+                  <td class="p-2 font-medium text-white">23:00 Nightly Wrap</td>
+                  <td class="p-2 font-mono">23:00:00</td>
+                  <td class="p-2"><span class="text-amber-400">Draft / Prep</span></td>
+                  <td class="p-2">R. Wilson</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: System Telemetry & Quick Logs (5 Cols) -->
+      <div class="col-span-12 flex flex-col space-y-2 lg:col-span-5">
+        <!-- Panel: Hardware & Service Health -->
+        <div class="border border-[#3c3e3d] bg-[#1a1a1e]">
+          <div class="border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
+            <h2 class="text-xs font-bold tracking-wider text-zinc-300 uppercase">Broadcast Hardware Status</h2>
+          </div>
+          <div class="space-y-2 p-3 text-xs">
+            <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
+              <span>CasparCG Playout Server (srv-playout-01)</span>
+              <span class="flex items-center space-x-1 font-mono text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ONLINE (2ms)</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
+              <span>Teleprompter Sync Node</span>
+              <span class="flex items-center space-x-1 font-mono text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ACTIVE</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
+              <span>MySQL Database Cluster</span>
+              <span class="flex items-center space-x-1 font-mono text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> SYNCHRONIZED</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span>Video Matrix Switcher (SDI)</span>
+              <span class="flex items-center space-x-1 font-mono text-emerald-400"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> LOCKED</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel: Live System Audit Log Stream -->
+        <div class="flex flex-1 flex-col border border-[#3c3e3d] bg-[#1a1a1e]">
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#25252b] px-3 py-1.5">
+            <h2 class="text-xs font-bold tracking-wider text-zinc-300 uppercase">Live Audit & Action Logs</h2>
+            <span class="font-mono text-[10px] text-zinc-500">Auto-refreshing</span>
+          </div>
+          <div class="flex-1 space-y-1 overflow-y-auto p-2 font-mono text-[11px] text-zinc-400">
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:31:02</span> - <span class="text-white">j.smith</span> approved Story #04</div>
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:30:15</span> - <span class="text-emerald-400">system</span> Rundown state updated to LIVE</div>
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:28:40</span> - <span class="text-white">a.jones</span> modified prompt speed</div>
+            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:25:11</span> - <span class="text-white">r.wilson</span> attached media package #02</div>
+            <div><span class="text-zinc-500">18:20:00</span> - <span class="text-emerald-400">system</span> Database checkpoint backup completed</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Status Bar -->
-  <div class="flex h-6 w-full items-center justify-between bg-[#007acc] px-3 text-[11px] text-white">
-    <div class="flex items-center space-x-4">
-      <span>Status: Connected to Server</span>
-      <span>•</span>
-      <span>Active Rundown Loaded</span>
-    </div>
-    <div class="flex items-center space-x-3 font-mono">
-      <span>SYS: OK</span>
-      <span>|</span>
-      <span>18:39:14</span>
+    <!-- Bottom Status Bar -->
+    <div class="flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] bg-[#1f1f23] px-3 font-mono text-[11px] text-zinc-400">
+      <div class="flex items-center space-x-4">
+        <span class="text-emerald-400">● READY</span>
+        <span>Operator: J. Smith (Producer)</span>
+        <span>Station: Studio Control A</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span>DB: MySQL local</span>
+        <span>Socket.io: Connected</span>
+      </div>
     </div>
   </div>
 </div>
