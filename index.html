@@ -1,8 +1,13 @@
 <!-- Main Application Layout Container -->
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <div class="flex h-screen w-full flex-col overflow-hidden bg-[#292929] font-sans text-zinc-200 select-none">
   <!-- Top Bar / Title Bar -->
   <div class="flex h-7 w-full items-center justify-between bg-[#464646] px-2">
-    <p class="outfit-Regular text-sm text-white">AirCue 1.7.5</p>
+    <div class="flex items-center gap-1.5">
+      <p class="outfit-Regular text-sm text-white">AirCue 1.7.5 </p>
+      <p class="outfit-Regular text-xs text-zinc-200">by</p>
+      <p class="outfit-Regular text-xs text-zinc-200">NaruLab</p>
+    </div>
     <div class="flex items-center space-x-2 text-xs text-zinc-400">
       <span class="cursor-pointer px-2 py-0.5 hover:text-white">🗕</span>
       <span class="cursor-pointer px-2 py-0.5 hover:text-white">🗖</span>
@@ -360,13 +365,13 @@
     <div class="flex h-10 w-full items-center justify-between border-b border-[#3c3e3d] px-3">
       <div class="flex items-center space-x-2">
         <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
-          <span>New Bulletin</span>
+          <span class="text-nowrap">New Bulletin</span>
         </button>
         <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
-          <span>Open Rundown</span>
+          <span class="text-nowrap">Open Rundown</span>
         </button>
         <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
-          <span>Breaking News</span>
+          <span class="text-nowrap">Breaking News</span>
         </button>
       </div>
       <div class="flex items-center space-x-3 text-xs text-zinc-400">
@@ -380,9 +385,9 @@
       <div class="col-span-12 flex flex-col space-y-2 lg:col-span-7">
         <!-- Panel: Active Bulletin Summary -->
         <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Active Broadcast Bulletin</h2>
-            <span class="outfit-Regular bg-red-700 px-2 py-0.5 text-[10px] text-white">LIVE ON AIR</span>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Active Broadcast Bulletin</h2>
+            <span class="outfit-Bold bg-red-700 px-2 py-0.5 text-[10px] text-white text-nowrap">ON AIR</span>
           </div>
           <div class="space-y-3 p-4">
             <div class="flex items-center justify-between">
@@ -399,17 +404,23 @@
               <div class="h-full w-[48%] bg-[#03da32]"></div>
             </div>
             <div class="flex space-x-2 pt-2">
-              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white">Open Live Rundown</button>
-              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white">View Prompter</button>
+              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white cursor-pointer">Open Live Rundown</button>
+              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white cursor-pointer">View Prompter</button>
             </div>
           </div>
         </div>
 
         <!-- Panel: Bulletin Queue Table -->
         <div class="flex-1 border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Today's Bulletins Schedule</h2>
-            <span class="outfit-Regular text-xs text-zinc-400">Date: 2026-06-06</span>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Today's Bulletins Schedule</h2>
+            <div class="flex items-center gap-2">
+            <span class="outfit-Regular text-xs text-zinc-400 text-nowrap">Date: 2026-06-06</span>
+              <div class="flex items-center">
+              <span class="cursor-pointer">◀</span>
+              <span class="cursor-pointer">▶</span>
+              </div>
+            </div>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-xs">
@@ -424,32 +435,32 @@
               </thead>
               <tbody class="divide-y divide-[#2a2a31]">
                 <tr class="hover:bg-[#22222a]">
-                  <td class="outfit-regular p-2">01</td>
+                  <td class="outfit-regular p-2 text-gray-100">01</td>
                   <td class="p-2 text-white">FahugeKhabaru</td>
-                  <td class="outfit-regular p-2">10:00:00</td>
+                  <td class="outfit-regular p-2 text-gray-100">10:00:00</td>
                   <td class="p-2"><span class="text-zinc-400">Completed</span></td>
-                  <td class="p-2">Rafa</td>
+                  <td class="p-2 text-gray-100">Rafa</td>
                 </tr>
                 <tr class="bg-[#21262d] hover:bg-[#262c36]">
                   <td class="outfit-Regular outfit-Bold p-2 text-[#03da32]">02</td>
                   <td class="outfit-Bold p-2 text-white">FahugeKhabaru</td>
-                  <td class="outfit-regular p-2">14:00:00</td>
+                  <td class="outfit-regular p-2 text-gray-100">14:00:00</td>
                   <td class="p-2"><span class="outfit-Bold text-[#03da32]">[LIVE]</span></td>
-                  <td class="p-2">Rafa</td>
+                  <td class="p-2 text-gray-100">Rafa</td>
                 </tr>
                 <tr class="hover:bg-[#22222a]">
-                  <td class="outfit-regular p-2">03</td>
+                  <td class="outfit-regular p-2 text-gray-100">03</td>
                   <td class="p-2 text-white">60Minutes</td>
-                  <td class="outfit-regular p-2">20:00:00</td>
+                  <td class="outfit-regular p-2 text-gray-100">20:00:00</td>
                   <td class="p-2"><span class="text-amber-400">Draft / Prep</span></td>
-                  <td class="p-2">Laisha</td>
+                  <td class="p-2 text-gray-100">Laisha</td>
                 </tr>
                 <tr class="hover:bg-[#22222a]">
-                  <td class="outfit-regular p-2">03</td>
+                  <td class="outfit-regular p-2 text-gray-100">03</td>
                   <td class="p-2 text-white">SunGadi</td>
-                  <td class="outfit-regular p-2">20:00:00</td>
+                  <td class="outfit-regular p-2 text-gray-100">20:00:00</td>
                   <td class="p-2"><span class="text-amber-400">Draft / Prep</span></td>
-                  <td class="p-2">Shain</td>
+                  <td class="p-2 text-gray-100">Shain</td>
                 </tr>
               </tbody>
             </table>
@@ -461,8 +472,8 @@
       <div class="col-span-12 flex flex-col space-y-2 lg:col-span-5">
         <!-- Panel: Hardware & Service Health -->
         <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Broadcast Hardware Status</h2>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Broadcast Hardware Status</h2>
           </div>
           <div class="space-y-2 p-3 text-xs">
             <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
@@ -486,9 +497,9 @@
 
         <!-- Panel: Live System Audit Log Stream -->
         <div class="flex flex-1 flex-col border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300">Live Audit & Action Logs</h2>
-            <span class="outfit-Regular text-xs text-zinc-400">Auto-refreshing</span>
+          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
+            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Live Audit & Action Logs</h2>
+            <span class="outfit-Regular text-xs text-zinc-400 text-nowrap">Auto-refreshing</span>
           </div>
           <div class="outfit-Regular flex-1 space-y-1 overflow-y-auto p-2 text-[11px] text-zinc-400">
             <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:31:02</span> - <span class="text-white">Rafa</span> approved Story #04</div>
