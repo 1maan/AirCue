@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirCue | Producer Control</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #0d0f10;
+            color: #f4f4f4;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        button,
+        input,
+        select {
+            outline: none;
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #35393b;
+        }
+
+        .mono {
+            font-family: Consolas, monospace;
+        }
+
+        .story-active {
+            background: #24282a;
+            border-left: 3px solid white;
+        }
+
+        .story-live {
+            background: rgba(34, 197, 94, 0.07);
+            border-left: 3px solid #22c55e;
+        }
+
+        input[type="range"] {
+            accent-color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="w-full h-full flex flex-col">
+
+
+    <!-- TOP BAR -->
+
+    <header class="h-[62px] shrink-0 bg-[#151718] border-b border-white/10 flex items-center">
+
+
+        <div class="w-[230px] h-full border-r border-white/10 px-5 flex items-center">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center">
+
+                    <div class="w-3.5 h-3.5 bg-white"></div>
+
+                </div>
+
+                <div>
+
+                    <div class="font-bold text-sm">
+                        AirCue
+                    </div>
+
+                    <div class="text-[7px] text-white/20 uppercase tracking-[2px]">
+                        Producer Control
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="px-6 flex-1 min-w-0">
+
+            <div class="text-[8px] text-white/25 uppercase tracking-[1.5px]">
+                Today's Rundown
+            </div>
+
+            <div class="text-xs font-bold mt-1">
+                Raajje TV News
+            </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-6 px-5">
+
+
+            <div>
+
+                <div class="text-[7px] text-white/20 uppercase tracking-[1px]">
+                    Date
+                </div>
+
+                <div class="text-[9px] mt-1">
+                    10 August 2026
+                </div>
+
+            </div>
+
+
+            <div class="h-7 w-px bg-white/10"></div>
+
+
+            <div class="flex items-center gap-2">
+
+                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+
+                <span class="text-[8px] uppercase tracking-[1px] text-green-500">
+                    Teleprompter
+                </span>
+
+            </div>
+
+
+            <button
+                onclick="toggleSettings()"
+                class="w-8 h-8 border border-white/10 text-white/40 hover:text-white">
+                ⚙
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="flex-1 min-h-0 flex">
+
+
+        <!-- LEFT: RUNDOWN -->
+
+        <section class="w-[310px] shrink-0 bg-[#121415] border-r border-white/10 flex flex-col">
+
+
+            <div class="h-[58px] shrink-0 px-5 border-b border-white/10 flex items-center justify-between">
+
+                <div>
+
+                    <div class="text-[8px] uppercase tracking-[2px] text-white/20">
+                        Run Order
+                    </div>
+
+                    <div class="text-xs font-bold mt-1">
+                        12 Stories
+                    </div>
+
+                </div>
+
+
+                <button
+                    onclick="addStory()"
+                    class="w-8 h-8 bg-white text-black font-bold">
+                    +
+                </button>
+
+            </div>
+
+
+            <!-- RUNDOWN TOOLBAR -->
+
+            <div class="h-[45px] shrink-0 px-3 flex items-center gap-2 border-b border-white/10">
+
+                <button
+                    onclick="moveStory(-1)"
+                    class="flex-1 h-7 border border-white/10 text-[7px] text-white/40 hover:text-white">
+                    ↑ Move
+                </button>
+
+                <button
+                    onclick="moveStory(1)"
+                    class="flex-1 h-7 border border-white/10 text-[7px] text-white/40 hover:text-white">
+                    ↓ Move
+                </button>
+
+                <button
+                    onclick="deleteStory()"
+                    class="w-8 h-7 border border-red-500/20 text-red-400/50 hover:text-red-400">
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- STORIES -->
+
+            <div
+                id="rundown"
+                class="flex-1 overflow-auto scrollbar">
+
+
+                <!-- BREAK -->
+
+                <div class="px-4 py-3 bg-[#0d0f10] border-b border-white/10">
+
+                    <div class="flex items-center gap-2">
+
+                        <span class="text-[9px] text-yellow-500">
+                            BREAK
+                        </span>
+
+                        <span class="text-[7px] text-white/20">
+                            00:00
+                        </span>
+
+                    </div>
+
+                    <div class="text-[7px] text-white/20 mt-1">
+                        Programme start
+                    </div>
+
+                </div>
+
+
+                <!-- STORY -->
+
+                <button
+                    onclick="selectStory(1)"
+                    data-story="1"
+                    class="story-item story-active w-full text-left px-4 py-4 border-b border-white/[0.06]">
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="w-6 text-[9px] text-white/25">
+                            01
+                        </span>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[9px] text-white/25 uppercase">
+                                Lead
+                            </div>
+
+                            <div class="text-[10px] font-semibold truncate mt-1">
+                                Government announces new economic measures
+                            </div>
+
+                        </div>
+
+                        <span class="text-[8px] text-green-500">
+                            ●
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectStory(2)"
+                    data-story="2"
+                    class="story-item w-full text-left px-4 py-4 border-b border-white/[0.06]">
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="w-6 text-[9px] text-white/25">
+                            02
+                        </span>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[9px] text-white/25 uppercase">
+                                Politics
+                            </div>
+
+                            <div class="text-[10px] font-semibold truncate mt-1">
+                                Parliament begins debate on new bill
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectStory(3)"
+                    data-story="3"
+                    class="story-item w-full text-left px-4 py-4 border-b border-white/[0.06]">
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="w-6 text-[9px] text-white/25">
+                            03
+                        </span>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[9px] text-white/25 uppercase">
+                                Local
+                            </div>
+
+                            <div class="text-[10px] font-semibold truncate mt-1">
+                                New development project announced
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <!-- BREAK -->
+
+                <div class="px-4 py-3 bg-[#0d0f10] border-b border-white/10">
+
+                    <div class="flex items-center gap-2">
+
+                        <span class="text-[9px] text-yellow-500">
+                            BREAK
+                        </span>
+
+                        <span class="text-[7px] text-white/20">
+                            01:30
+                        </span>
+
+                    </div>
+
+                    <div class="text-[7px] text-white/20 mt-1">
+                        Commercial break
+                    </div>
+
+                </div>
+
+
+                <button
+                    onclick="selectStory(4)"
+                    data-story="4"
+                    class="story-item w-full text-left px-4 py-4 border-b border-white/[0.06]">
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="w-6 text-[9px] text-white/25">
+                            04
+                        </span>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[9px] text-white/25 uppercase">
+                                Economy
+                            </div>
+
+                            <div class="text-[10px] font-semibold truncate mt-1">
+                                Businesses prepare for upcoming changes
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectStory(5)"
+                    data-story="5"
+                    class="story-item w-full text-left px-4 py-4 border-b border-white/[0.06]">
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="w-6 text-[9px] text-white/25">
+                            05
+                        </span>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[9px] text-white/25 uppercase">
+                                World
+                            </div>
+
+                            <div class="text-[10px] font-semibold truncate mt-1">
+                                Regional leaders meet for annual summit
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectStory(6)"
+                    data-story="6"
+                    class="story-item w-full text-left px-4 py-4 border-b border-white/[0.06]">
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="w-6 text-[9px] text-white/25">
+                            06
+                        </span>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[9px] text-white/25 uppercase">
+                                Sport
+                            </div>
+
+                            <div class="text-[10px] font-semibold truncate mt-1">
+                                National team prepares for tournament
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectStory(7)"
+                    data-story="7"
+                    class="story-item w-full text-left px-4 py-4 border-b border-white/[0.06]">
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="w-6 text-[9px] text-white/25">
+                            07
+                        </span>
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[9px] text-white/25 uppercase">
+                                Weather
+                            </div>
+
+                            <div class="text-[10px] font-semibold truncate mt-1">
+                                Weather forecast for the islands
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <!-- RUNDOWN FOOTER -->
+
+            <div class="h-[52px] shrink-0 border-t border-white/10 px-4 flex items-center justify-between">
+
+                <div class="text-[7px] text-white/20">
+                    Total duration
+                </div>
+
+                <div class="mono text-[9px]">
+                    28:42
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CENTER: SCRIPT -->
+
+        <section class="flex-1 min-w-0 flex flex-col bg-[#0d0f10]">
+
+
+            <!-- STORY HEADER -->
+
+            <div class="h-[70px] shrink-0 border-b border-white/10 px-6 flex items-center">
+
+
+                <div class="flex-1 min-w-0">
+
+                    <div
+                        id="currentCategory"
+                        class="text-[8px] uppercase tracking-[2px] text-white/25">
+                        Lead
+                    </div>
+
+                    <div
+                        id="currentTitle"
+                        class="text-base font-bold truncate mt-2">
+                        Government announces new economic measures
+                    </div>
+
+                </div>
+
+
+                <div class="text-right px-5">
+
+                    <div class="text-[7px] uppercase tracking-[1px] text-white/20">
+                        Presenter Position
+                    </div>
+
+                    <div
+                        id="producerPosition"
+                        class="mono text-sm mt-1">
+                        34%
+                    </div>
+
+                </div>
+
+
+                <div class="h-8 w-px bg-white/10"></div>
+
+
+                <div class="pl-5">
+
+                    <div class="text-[7px] uppercase tracking-[1px] text-white/20">
+                        Story
+                    </div>
+
+                    <div class="mono text-sm mt-1">
+                        01 / 12
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCRIPT PREVIEW -->
+
+            <div
+                id="scriptPreview"
+                class="flex-1 overflow-auto scrollbar px-12 py-10">
+
+
+                <div class="max-w-[850px] mx-auto">
+
+
+                    <div class="text-[8px] uppercase tracking-[2px] text-white/20 mb-6">
+                        SCRIPT
+                    </div>
+
+
+                    <h1
+                        id="previewHeadline"
+                        class="text-4xl font-bold leading-tight mb-10">
+                        Government announces new economic measures
+                    </h1>
+
+
+                    <div
+                        id="previewScript"
+                        class="text-lg leading-[1.8] text-white/65">
+
+                        <p>
+                            The government has announced a new series of economic measures aimed at supporting local businesses and reducing the cost of essential goods.
+                        </p>
+
+                        <p>
+                            The measures were announced during a press briefing held earlier today in Malé.
+                        </p>
+
+                        <p>
+                            According to government officials, the new programme will focus on small and medium-sized businesses.
+                        </p>
+
+                        <p>
+                            Further details are expected to be announced during the upcoming parliamentary session.
+                        </p>
+
+                    </div>
+
+
+                    <!-- CG MARKERS -->
+
+                    <div class="my-12 border border-purple-500/20 bg-purple-500/[0.04] p-4">
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="text-purple-400">
+                                ◆
+                            </span>
+
+                            <div>
+
+                                <div class="text-[8px] uppercase tracking-[1.5px] text-purple-400">
+                                    CG Cue
+                                </div>
+
+                                <div class="text-[10px] mt-1">
+                                    Lower Third: Minister of Finance
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="h-[300px]"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CENTER CONTROLS -->
+
+            <div class="h-[80px] shrink-0 border-t border-white/10 px-6 flex items-center">
+
+
+                <button
+                    onclick="sendCommand('previous')"
+                    class="w-11 h-10 border border-white/10 text-white/40 hover:text-white">
+                    ◀
+                </button>
+
+
+                <button
+                    id="playButton"
+                    onclick="sendCommand('toggle')"
+                    class="w-14 h-10 bg-white text-black mx-2 font-bold">
+                    ▶
+                </button>
+
+
+                <button
+                    onclick="sendCommand('next')"
+                    class="w-11 h-10 border border-white/10 text-white/40 hover:text-white">
+                    ▶
+                </button>
+
+
+                <div class="h-8 w-px bg-white/10 mx-5"></div>
+
+
+                <div class="flex-1">
+
+                    <div class="flex justify-between mb-2">
+
+                        <span class="text-[7px] uppercase tracking-[1px] text-white/20">
+                            Teleprompter Speed
+                        </span>
+
+                        <span
+                            id="speedText"
+                            class="mono text-[8px]">
+                            38
+                        </span>
+
+                    </div>
+
+
+                    <input
+                        id="speed"
+                        type="range"
+                        min="1"
+                        max="100"
+                        value="38"
+                        oninput="changeSpeed(this.value)"
+                        class="w-full"
+                    >
+
+                </div>
+
+
+                <div class="h-8 w-px bg-white/10 mx-5"></div>
+
+
+                <div class="flex gap-2">
+
+                    <button
+                        onclick="nudge(-100)"
+                        class="w-9 h-9 border border-white/10 text-[8px] text-white/40">
+                        ↑
+                    </button>
+
+                    <button
+                        onclick="nudge(100)"
+                        class="w-9 h-9 border border-white/10 text-[8px] text-white/40">
+                        ↓
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT: LIVE CONTROLS -->
+
+        <section class="w-[330px] shrink-0 bg-[#121415] border-l border-white/10 flex flex-col">
+
+
+            <div class="h-[58px] shrink-0 px-5 border-b border-white/10 flex items-center">
+
+                <div>
+
+                    <div class="text-[8px] uppercase tracking-[2px] text-white/20">
+                        Live Control
+                    </div>
+
+                    <div class="text-xs font-bold mt-1">
+                        Studio 1
+                    </div>
+
+                </div>
+
+                <div class="ml-auto flex items-center gap-2">
+
+                    <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+
+                    <span class="text-[7px] uppercase tracking-[1px] text-green-500">
+                        Connected
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- LIVE STATUS -->
+
+            <div class="p-5 border-b border-white/10">
+
+
+                <div class="text-[7px] uppercase tracking-[1.5px] text-white/20 mb-3">
+                    Teleprompter
+                </div>
+
+
+                <div class="border border-green-500/20 bg-green-500/[0.04] p-4">
+
+
+                    <div class="flex items-center justify-between">
+
+                        <div>
+
+                            <div class="text-[9px] text-green-500">
+                                LIVE
+                            </div>
+
+                            <div class="text-[10px] font-semibold mt-2">
+                                PROMPTER-PC-01
+                            </div>
+
+                        </div>
+
+
+                        <div class="text-right">
+
+                            <div class="mono text-lg">
+                                12
+                            </div>
+
+                            <div class="text-[7px] text-white/20">
+                                ms latency
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mt-4">
+
+                        <div class="flex justify-between text-[7px] text-white/20 mb-2">
+
+                            <span>
+                                Script position
+                            </span>
+
+                            <span>
+                                34%
+                            </span>
+
+                        </div>
+
+                        <div class="h-1 bg-white/10">
+
+                            <div
+                                class="h-full bg-green-500"
+                                style="width:34%">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISPLAY -->
+
+            <div class="p-5 border-b border-white/10">
+
+
+                <div class="text-[7px] uppercase tracking-[1.5px] text-white/20 mb-4">
+                    Display
+                </div>
+
+
+                <div class="grid grid-cols-2 gap-2">
+
+
+                    <button
+                        onclick="adjustFont(-2)"
+                        class="h-9 border border-white/10 text-[8px]">
+                        A−
+                    </button>
+
+
+                    <button
+                        onclick="adjustFont(2)"
+                        class="h-9 border border-white/10 text-[8px]">
+                        A+
+                    </button>
+
+
+                    <button
+                        onclick="changeLineHeight(-0.05)"
+                        class="h-9 border border-white/10 text-[8px]">
+                        Line −
+                    </button>
+
+
+                    <button
+                        onclick="changeLineHeight(0.05)"
+                        class="h-9 border border-white/10 text-[8px]">
+                        Line +
+                    </button>
+
+
+                    <button
+                        onclick="adjustMargin(-1)"
+                        class="h-9 border border-white/10 text-[8px]">
+                        Margin −
+                    </button>
+
+
+                    <button
+                        onclick="adjustMargin(1)"
+                        class="h-9 border border-white/10 text-[8px]">
+                        Margin +
+                    </button>
+
+                </div>
+
+
+                <button
+                    onclick="toggleMirror()"
+                    class="w-full h-9 border border-white/10 mt-2 text-[8px]">
+                    Mirror
+                </button>
+
+            </div>
+
+
+            <!-- CG -->
+
+            <div class="p-5 border-b border-white/10">
+
+
+                <div class="flex items-center justify-between mb-4">
+
+                    <div class="text-[7px] uppercase tracking-[1.5px] text-white/20">
+                        Graphics
+                    </div>
+
+                    <span class="text-[7px] text-purple-400">
+                        CG ENGINE ONLINE
+                    </span>
+
+                </div>
+
+
+                <button
+                    onclick="takeCG()"
+                    class="w-full h-10 bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[8px] uppercase tracking-[1px]">
+                    Take Selected CG
+                </button>
+
+
+                <button
+                    onclick="clearCG()"
+                    class="w-full h-9 border border-white/10 mt-2 text-[8px] text-white/40">
+                    Clear CG
+                </button>
+
+
+                <div class="mt-4">
+
+                    <div class="text-[7px] text-white/20 uppercase tracking-[1px] mb-2">
+                        Current CG
+                    </div>
+
+                    <div
+                        id="currentCG"
+                        class="text-[9px] text-white/50">
+                        Lower Third: Minister of Finance
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- NEXT -->
+
+            <div class="flex-1 p-5">
+
+
+                <div class="text-[7px] uppercase tracking-[1.5px] text-white/20 mb-4">
+                    Next
+                </div>
+
+
+                <div class="border border-white/10 p-4">
+
+
+                    <div class="text-[7px] uppercase text-white/20">
+                        Story 02
+                    </div>
+
+                    <div class="text-[10px] font-semibold mt-2">
+                        Parliament begins debate on new bill
+                    </div>
+
+
+                    <button
+                        onclick="previewNext()"
+                        class="w-full h-8 border border-white/10 mt-4 text-[7px] uppercase tracking-[1px] text-white/40">
+                        Preview Next
+                    </button>
+
+                </div>
+
+
+                <button
+                    onclick="goLiveNext()"
+                    class="w-full h-11 bg-green-600 text-white mt-3 text-[8px] uppercase tracking-[1.5px] font-bold">
+                    Take Next Story Live
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- SETTINGS DRAWER -->
+
+    <div
+        id="settings"
+        class="hidden absolute top-[62px] right-0 bottom-0 w-[360px] bg-[#151718] border-l border-white/10 z-50">
+
+        <div class="p-6 border-b border-white/10">
+
+            <div class="text-[8px] uppercase tracking-[2px] text-white/20">
+                AirCue
+            </div>
+
+            <div class="text-lg font-bold mt-2">
+                Control Settings
+            </div>
+
+        </div>
+
+
+        <div class="p-6 space-y-6">
+
+
+            <div>
+
+                <label class="text-[8px] uppercase tracking-[1px] text-white/20">
+                    Default font
+                </label>
+
+                <select
+                    class="w-full h-10 mt-2 bg-[#0e1011] border border-white/10 px-3 text-[9px]">
+
+                    <option>Arial</option>
+                    <option>Helvetica</option>
+                    <option>Roboto</option>
+                    <option>Inter</option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label class="text-[8px] uppercase tracking-[1px] text-white/20">
+                    Default scroll speed
+                </label>
+
+                <input
+                    type="number"
+                    value="38"
+                    class="w-full h-10 mt-2 bg-[#0e1011] border border-white/10 px-3 text-[9px]"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label class="text-[8px] uppercase tracking-[1px] text-white/20">
+                    Reading line
+                </label>
+
+                <select
+                    class="w-full h-10 mt-2 bg-[#0e1011] border border-white/10 px-3 text-[9px]">
+
+                    <option>20%</option>
+                    <option>25%</option>
+                    <option>30%</option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                onclick="toggleSettings()"
+                class="w-full h-10 bg-white text-black text-[8px] uppercase tracking-[1px] font-bold">
+                Save Settings
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let selectedStory = 1;
+
+    let playing = false;
+
+    let fontSize = 18;
+
+    let lineHeight = 1.8;
+
+    let margin = 12;
+
+
+    function selectStory(id) {
+
+        selectedStory = id;
+
+
+        document
+            .querySelectorAll(".story-item")
+            .forEach(item => {
+
+                item.classList.remove("story-active");
+
+            });
+
+
+        const selected =
+            document.querySelector(
+                `[data-story="${id}"]`
+            );
+
+
+        if (selected) {
+
+            selected.classList.add(
+                "story-active"
+            );
+
+        }
+
+
+        /*
+            REAL SOCKET.IO
+
+            socket.emit("rundown:select", {
+                storyId: id
+            });
+
+        */
+
+    }
+
+
+    function sendCommand(command) {
+
+        if (command === "toggle") {
+
+            playing = !playing;
+
+            document.getElementById("playButton")
+                .textContent =
+                playing ? "Ⅱ" : "▶";
+
+        }
+
+
+        /*
+            socket.emit("teleprompter:command", {
+
+                command: command,
+
+                storyId: selectedStory
+
+            });
+
+        */
+
+    }
+
+
+    function changeSpeed(value) {
+
+        document.getElementById("speedText")
+            .textContent = value;
+
+
+        /*
+            socket.emit("teleprompter:speed", {
+                speed: Number(value)
+            });
+        */
+
+    }
+
+
+    function nudge(amount) {
+
+        /*
+            socket.emit("teleprompter:nudge", {
+                amount: amount
+            });
+        */
+
+    }
+
+
+    function adjustFont(amount) {
+
+        fontSize += amount;
+
+        fontSize =
+            Math.max(
+                10,
+                Math.min(
+                    40,
+                    fontSize
+                )
+            );
+
+
+        /*
+            socket.emit("teleprompter:settings", {
+                fontSize
+            });
+        */
+
+    }
+
+
+    function changeLineHeight(amount) {
+
+        lineHeight += amount;
+
+
+        lineHeight =
+            Math.max(
+                1,
+                Math.min(
+                    2.5,
+                    lineHeight
+                )
+            );
+
+
+        /*
+            socket.emit("teleprompter:settings", {
+                lineHeight
+            });
+        */
+
+    }
+
+
+    function adjustMargin(amount) {
+
+        margin += amount;
+
+
+        margin =
+            Math.max(
+                5,
+                Math.min(
+                    30,
+                    margin
+                )
+            );
+
+
+        /*
+            socket.emit("teleprompter:settings", {
+                margin
+            });
+        */
+
+    }
+
+
+    function toggleMirror() {
+
+        /*
+            socket.emit("teleprompter:settings", {
+                mirror: true
+            });
+        */
+
+    }
+
+
+    function takeCG() {
+
+        const cg =
+            document.getElementById("currentCG")
+                .textContent;
+
+
+        /*
+            socket.emit("cg:take", {
+                text: cg,
+                storyId: selectedStory
+            });
+        */
+
+
+        console.log(
+            "TAKE CG:",
+            cg
+        );
+
+    }
+
+
+    function clearCG() {
+
+        /*
+            socket.emit("cg:clear");
+        */
+
+        console.log("CLEAR CG");
+
+    }
+
+
+    function previewNext() {
+
+        /*
+            socket.emit("rundown:previewNext");
+        */
+
+    }
+
+
+    function goLiveNext() {
+
+        selectedStory++;
+
+        /*
+            socket.emit("rundown:takeNext");
+        */
+
+    }
+
+
+    function addStory() {
+
+        /*
+            Open story selector / search
+
+            socket.emit("rundown:addStory", {
+                storyId: ...
+            });
+
+        */
+
+    }
+
+
+    function moveStory(direction) {
+
+        /*
+            socket.emit("rundown:moveStory", {
+                storyId: selectedStory,
+                direction
+            });
+
+        */
+
+    }
+
+
+    function deleteStory() {
+
+        if (!confirm("Remove this story from the rundown?")) {
+            return;
+        }
+
+
+        /*
+            socket.emit("rundown:removeStory", {
+                storyId: selectedStory
+            });
+
+        */
+
+    }
+
+
+    function toggleSettings() {
+
+        document.getElementById("settings")
+            .classList.toggle("hidden");
+
+    }
+
+
+    /*
+        IMPORTANT SOCKET EVENTS
+
+        socket.on("teleprompter:position", data => {
+
+            document.getElementById("producerPosition")
+                .textContent =
+                data.percentage + "%";
+
+        });
+
+
+        socket.on("teleprompter:status", data => {
+
+            playing = data.playing;
+
+            document.getElementById("playButton")
+                .textContent =
+                playing ? "Ⅱ" : "▶";
+
+        });
+
+
+        socket.on("rundown:storyChanged", story => {
+
+            document.getElementById("currentTitle")
+                .textContent = story.title;
+
+            document.getElementById("previewHeadline")
+                .textContent = story.headline;
+
+            document.getElementById("previewScript")
+                .innerHTML = story.script;
+
+        });
+
+
+        socket.on("device:status", device => {
+
+            // Update presenter connection
+            // and latency here.
+
+        });
+
+
+        socket.on("cg:status", data => {
+
+            document.getElementById("currentCG")
+                .textContent =
+                data.text;
+
+        });
+
+    */
+
+
+    /*
+        KEYBOARD SHORTCUTS
+
+        SPACE       Play / Pause
+        RIGHT       Next story
+        LEFT        Previous story
+        UP          Nudge up
+        DOWN        Nudge down
+        CTRL + G    Take CG
+    */
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.code === "Space" &&
+                !event.target.matches("input")
+            ) {
+
+                event.preventDefault();
+
+                sendCommand("toggle");
+
+            }
+
+
+            if (
+                event.code === "ArrowRight" &&
+                !event.target.matches("input")
+            ) {
+
+                sendCommand("next");
+
+            }
+
+
+            if (
+                event.code === "ArrowLeft" &&
+                !event.target.matches("input")
+            ) {
+
+                sendCommand("previous");
+
+            }
+
+
+            if (
+                event.code === "ArrowUp" &&
+                !event.target.matches("input")
+            ) {
+
+                nudge(-100);
+
+            }
+
+
+            if (
+                event.code === "ArrowDown" &&
+                !event.target.matches("input")
+            ) {
+
+                nudge(100);
+
+            }
+
+
+            if (
+                event.ctrlKey &&
+                event.code === "KeyG"
+            ) {
+
+                event.preventDefault();
+
+                takeCG();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

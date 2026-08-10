@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirCue | Teleprompter Controller</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0d0f10;
+            color: #f4f4f4;
+        }
+
+        .mono {
+            font-family: "Courier New", monospace;
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        .scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #34383b;
+        }
+
+        input[type="range"] {
+            appearance: none;
+            width: 100%;
+            height: 3px;
+            background: #303437;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 13px;
+            height: 13px;
+            background: #f4f4f4;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 13px;
+            height: 13px;
+            background: #f4f4f4;
+            border: 0;
+            cursor: pointer;
+        }
+
+        .teleprompter-text {
+            font-size: 28px;
+            line-height: 1.65;
+        }
+    </style>
+</head>
+
+<body class="h-screen overflow-hidden">
+
+<div class="h-screen flex flex-col">
+
+
+    <!-- TOP BAR -->
+    <header class="h-[62px] shrink-0 bg-[#17191b] border-b border-white/10 flex items-center">
+
+        <div class="w-[235px] h-full px-5 border-r border-white/10 flex items-center">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center">
+                    <div class="w-3.5 h-3.5 bg-white"></div>
+                </div>
+
+                <div>
+                    <div class="font-bold text-base">
+                        AirCue
+                    </div>
+
+                    <div class="text-[7px] uppercase tracking-[2px] text-white/25">
+                        Teleprompter Control
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex-1 px-6 flex items-center gap-5">
+
+            <div>
+
+                <div class="text-sm font-bold">
+                    Evening News
+                </div>
+
+                <div class="mono text-[8px] text-white/25 mt-1">
+                    10 AUG 2026 / 18:00
+                </div>
+
+            </div>
+
+            <span class="px-2 py-1 bg-red-500/10 text-red-400 text-[7px] uppercase tracking-[1px]">
+                LIVE
+            </span>
+
+        </div>
+
+
+        <div class="px-5 flex items-center gap-5">
+
+            <div class="flex items-center gap-2">
+
+                <span class="w-2 h-2 bg-green-500"></span>
+
+                <span class="text-[8px] uppercase tracking-[1px] text-green-500">
+                    Prompter Connected
+                </span>
+
+            </div>
+
+            <div class="h-6 w-px bg-white/10"></div>
+
+            <div class="text-right">
+
+                <div class="text-[7px] uppercase tracking-[2px] text-white/20">
+                    Sync
+                </div>
+
+                <div class="mono text-[9px] text-white/50">
+                    18ms
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <div class="flex flex-1 min-h-0">
+
+
+        <!-- LEFT RUNDOWN -->
+        <aside class="w-[280px] shrink-0 bg-[#151719] border-r border-white/10 flex flex-col">
+
+            <div class="h-[58px] shrink-0 px-4 border-b border-white/10 flex items-center justify-between">
+
+                <div>
+
+                    <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Run Order
+                    </div>
+
+                    <div class="text-[10px] text-white/50 mt-1">
+                        08 / 18 · On Air
+                    </div>
+
+                </div>
+
+                <div class="mono text-[9px] text-white/20">
+                    28:42
+                </div>
+
+            </div>
+
+
+            <div class="flex-1 overflow-y-auto scrollbar">
+
+
+                <!-- Completed -->
+                <div class="px-4 py-3 border-b border-white/10">
+
+                    <div class="flex gap-3">
+
+                        <span class="mono text-[9px] text-white/15 w-5">
+                            06
+                        </span>
+
+                        <div>
+
+                            <div class="text-[8px] uppercase tracking-[1px] text-white/20">
+                                Weather
+                            </div>
+
+                            <div class="text-[10px] text-white/25 mt-1">
+                                Weather forecast
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="px-4 py-3 border-b border-white/10">
+
+                    <div class="flex gap-3">
+
+                        <span class="mono text-[9px] text-white/15 w-5">
+                            07
+                        </span>
+
+                        <div>
+
+                            <div class="text-[8px] uppercase tracking-[1px] text-white/20">
+                                Local
+                            </div>
+
+                            <div class="text-[10px] text-white/25 mt-1">
+                                New council development
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CURRENT -->
+                <button
+                    onclick="selectStory(8)"
+                    class="w-full text-left px-4 py-4 border-l-2 border-red-500 border-b border-white/10 bg-white/[0.06]">
+
+                    <div class="flex gap-3">
+
+                        <span class="mono text-[9px] text-red-400 w-5">
+                            08
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex items-center justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-red-400">
+                                    Politics
+                                </span>
+
+                                <span class="w-1.5 h-1.5 bg-red-500 animate-pulse"></span>
+
+                            </div>
+
+                            <div class="text-xs font-semibold mt-1 leading-5">
+                                Government announces new development project
+                            </div>
+
+                            <div class="flex justify-between mt-3">
+
+                                <span class="text-[7px] uppercase tracking-[1px] text-red-400">
+                                    ON AIR
+                                </span>
+
+                                <span class="mono text-[8px] text-white/25">
+                                    01:24
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <!-- Next -->
+                <button
+                    onclick="selectStory(9)"
+                    class="w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/[0.03]">
+
+                    <div class="flex gap-3">
+
+                        <span class="mono text-[9px] text-white/25 w-5">
+                            09
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex items-center justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-white/30">
+                                    Business
+                                </span>
+
+                                <span class="text-[7px] uppercase tracking-[1px] text-green-500">
+                                    READY
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-1 text-white/65 leading-4">
+                                New regulations announced for businesses
+                            </div>
+
+                            <div class="mono text-[8px] text-white/20 mt-2">
+                                01:40
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectStory(10)"
+                    class="w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/[0.03]">
+
+                    <div class="flex gap-3">
+
+                        <span class="mono text-[9px] text-white/25 w-5">
+                            10
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex items-center justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-white/30">
+                                    Sports
+                                </span>
+
+                                <span class="text-[7px] uppercase tracking-[1px] text-green-500">
+                                    READY
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-1 text-white/65 leading-4">
+                                Maldives prepares for regional tournament
+                            </div>
+
+                            <div class="mono text-[8px] text-white/20 mt-2">
+                                02:05
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectStory(11)"
+                    class="w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/[0.03]">
+
+                    <div class="flex gap-3">
+
+                        <span class="mono text-[9px] text-white/25 w-5">
+                            11
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex items-center justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-white/30">
+                                    Weather
+                                </span>
+
+                                <span class="text-[7px] uppercase tracking-[1px] text-green-500">
+                                    READY
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-1 text-white/65 leading-4">
+                                Weather forecast
+                            </div>
+
+                            <div class="mono text-[8px] text-white/20 mt-2">
+                                01:10
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <div class="border-t border-white/10 p-3">
+
+                <button
+                    class="w-full h-9 border border-white/10 text-[8px] uppercase tracking-[1px] text-white/35 hover:text-white">
+
+                    View Full Run Order
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CENTER PROMPTER -->
+        <main class="flex-1 min-w-0 flex flex-col bg-[#0d0f10]">
+
+
+            <!-- Story info -->
+            <div class="h-[72px] shrink-0 px-7 border-b border-white/10 flex items-center justify-between">
+
+                <div>
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="mono text-[9px] text-white/20">
+                            STORY 08
+                        </span>
+
+                        <span class="text-white/15">
+                            /
+                        </span>
+
+                        <span class="text-[9px] uppercase tracking-[1.5px] text-white/35">
+                            Politics
+                        </span>
+
+                    </div>
+
+                    <div class="text-sm font-bold mt-2">
+                        Government announces new development project
+                    </div>
+
+                </div>
+
+
+                <div class="flex items-center gap-8">
+
+                    <div class="text-right">
+
+                        <div class="text-[7px] uppercase tracking-[2px] text-white/20">
+                            Story Time
+                        </div>
+
+                        <div class="mono text-sm mt-1">
+                            01:24
+                            <span class="text-white/20">/ 02:15</span>
+                        </div>
+
+                    </div>
+
+                    <div class="text-right">
+
+                        <div class="text-[7px] uppercase tracking-[2px] text-white/20">
+                            Position
+                        </div>
+
+                        <div id="positionText" class="mono text-sm mt-1">
+                            42%
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Prompter -->
+            <div
+                id="prompter"
+                class="flex-1 overflow-hidden relative">
+
+                <!-- Position marker -->
+                <div class="absolute left-0 right-0 top-[25%] border-t border-red-500/20 pointer-events-none">
+
+                    <div class="absolute left-5 -top-2 w-2 h-2 bg-red-500"></div>
+
+                </div>
+
+
+                <div
+                    id="script"
+                    class="absolute left-0 right-0 top-0 px-[12%] py-20 transition-transform duration-75">
+
+                    <div class="teleprompter-text text-white/90 max-w-[1000px] mx-auto">
+
+                        <p class="font-bold mb-10">
+                            Government announces new development project
+                        </p>
+
+                        <p class="mb-8">
+                            The government has announced a new development
+                            project aimed at improving public services across
+                            the country.
+                        </p>
+
+                        <p class="mb-8">
+                            Officials said the project will focus on upgrading
+                            existing facilities and introducing new services
+                            for communities.
+                        </p>
+
+                        <p class="mb-8">
+                            The announcement was made during a press conference
+                            held in Malé today.
+                        </p>
+
+                        <p class="mb-8">
+                            Authorities said further details about the project
+                            will be released in the coming weeks.
+                        </p>
+
+                        <p>
+                            The government expects the first phase of the project
+                            to begin later this year.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Playback controls -->
+            <div class="h-[86px] shrink-0 border-t border-white/10 bg-[#111315] flex items-center justify-center">
+
+                <div class="flex items-center gap-3">
+
+                    <button
+                        onclick="previousStory()"
+                        class="w-11 h-11 border border-white/10 text-white/40 hover:text-white text-lg">
+                        ⏮
+                    </button>
+
+
+                    <button
+                        onclick="nudge(-1)"
+                        class="w-11 h-11 border border-white/10 text-white/40 hover:text-white text-xs">
+                        −
+                    </button>
+
+
+                    <button
+                        id="playButton"
+                        onclick="togglePlay()"
+                        class="w-14 h-14 bg-white text-black flex items-center justify-center text-lg font-bold">
+                        ▶
+                    </button>
+
+
+                    <button
+                        onclick="nudge(1)"
+                        class="w-11 h-11 border border-white/10 text-white/40 hover:text-white text-xs">
+                        +
+                    </button>
+
+
+                    <button
+                        onclick="nextStory()"
+                        class="w-11 h-11 border border-white/10 text-white/40 hover:text-white text-lg">
+                        ⏭
+                    </button>
+
+                </div>
+
+
+                <div class="absolute right-6 flex items-center gap-2">
+
+                    <button
+                        onclick="resetScroll()"
+                        class="h-9 px-4 border border-white/10 text-[8px] uppercase tracking-[1px] text-white/30 hover:text-white">
+                        Reset
+                    </button>
+
+                    <button
+                        onclick="toggleFullscreen()"
+                        class="w-9 h-9 border border-white/10 text-white/30 hover:text-white">
+                        ⛶
+                    </button>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- RIGHT CONTROLS -->
+        <aside class="w-[320px] shrink-0 bg-[#151719] border-l border-white/10 overflow-y-auto scrollbar">
+
+
+            <!-- LIVE STATE -->
+            <div class="p-5 border-b border-white/10">
+
+                <div class="flex items-center justify-between">
+
+                    <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Control State
+                    </span>
+
+                    <span id="stateLabel" class="text-[8px] uppercase tracking-[1px] text-green-500">
+                        Playing
+                    </span>
+
+                </div>
+
+
+                <div class="mt-5 flex items-center justify-between">
+
+                    <div>
+
+                        <div class="text-[8px] uppercase tracking-[1px] text-white/20">
+                            Current
+                        </div>
+
+                        <div class="text-xs font-semibold mt-2">
+                            Story 08
+                        </div>
+
+                    </div>
+
+
+                    <div class="text-right">
+
+                        <div class="text-[8px] uppercase tracking-[1px] text-white/20">
+                            Speed
+                        </div>
+
+                        <div id="speedValue" class="mono text-lg mt-1">
+                            2.5
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SPEED -->
+            <div class="p-5 border-b border-white/10">
+
+                <div class="flex justify-between items-center mb-5">
+
+                    <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Scroll Speed
+                    </span>
+
+                    <span id="speedLabel" class="mono text-[10px]">
+                        2.5
+                    </span>
+
+                </div>
+
+
+                <input
+                    id="speed"
+                    type="range"
+                    min="0"
+                    max="5"
+                    step="0.1"
+                    value="2.5"
+                    oninput="updateSpeed(this.value)"
+                >
+
+
+                <div class="flex justify-between mt-3">
+
+                    <span class="text-[7px] text-white/20 uppercase">
+                        Slow
+                    </span>
+
+                    <span class="text-[7px] text-white/20 uppercase">
+                        Fast
+                    </span>
+
+                </div>
+
+
+                <div class="grid grid-cols-3 gap-2 mt-5">
+
+                    <button onclick="setSpeed(1)" class="h-8 border border-white/10 text-[8px] text-white/35 hover:text-white">
+                        1.0
+                    </button>
+
+                    <button onclick="setSpeed(2.5)" class="h-8 border border-white/10 text-[8px] text-white/35 hover:text-white">
+                        2.5
+                    </button>
+
+                    <button onclick="setSpeed(4)" class="h-8 border border-white/10 text-[8px] text-white/35 hover:text-white">
+                        4.0
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEXT -->
+            <div class="p-5 border-b border-white/10">
+
+                <div class="text-[9px] uppercase tracking-[2px] text-white/25 mb-5">
+                    Text
+                </div>
+
+
+                <div class="flex justify-between items-center mb-5">
+
+                    <span class="text-[9px] text-white/35">
+                        Font Size
+                    </span>
+
+                    <div class="flex items-center gap-2">
+
+                        <button
+                            onclick="changeFontSize(-2)"
+                            class="w-7 h-7 border border-white/10 text-white/40 hover:text-white">
+                            −
+                        </button>
+
+                        <span id="fontSizeValue" class="mono text-[9px] w-10 text-center">
+                            28px
+                        </span>
+
+                        <button
+                            onclick="changeFontSize(2)"
+                            class="w-7 h-7 border border-white/10 text-white/40 hover:text-white">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flex justify-between items-center mb-5">
+
+                    <span class="text-[9px] text-white/35">
+                        Line Height
+                    </span>
+
+                    <div class="flex items-center gap-2">
+
+                        <button
+                            onclick="changeLineHeight(-0.1)"
+                            class="w-7 h-7 border border-white/10 text-white/40">
+                            −
+                        </button>
+
+                        <span id="lineHeightValue" class="mono text-[9px] w-10 text-center">
+                            1.65
+                        </span>
+
+                        <button
+                            onclick="changeLineHeight(0.1)"
+                            class="w-7 h-7 border border-white/10 text-white/40">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flex justify-between items-center">
+
+                    <span class="text-[9px] text-white/35">
+                        Text Width
+                    </span>
+
+                    <div class="flex items-center gap-2">
+
+                        <button
+                            onclick="changeWidth(-2)"
+                            class="w-7 h-7 border border-white/10 text-white/40">
+                            −
+                        </button>
+
+                        <span id="widthValue" class="mono text-[9px] w-10 text-center">
+                            76%
+                        </span>
+
+                        <button
+                            onclick="changeWidth(2)"
+                            class="w-7 h-7 border border-white/10 text-white/40">
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- POSITION -->
+            <div class="p-5 border-b border-white/10">
+
+                <div class="text-[9px] uppercase tracking-[2px] text-white/25 mb-5">
+                    Position
+                </div>
+
+
+                <div class="flex justify-between items-center mb-5">
+
+                    <span class="text-[9px] text-white/35">
+                        Top Margin
+                    </span>
+
+                    <input
+                        id="topMargin"
+                        type="range"
+                        min="0"
+                        max="200"
+                        value="80"
+                        class="w-28"
+                    >
+
+                </div>
+
+
+                <div class="flex justify-between items-center mb-5">
+
+                    <span class="text-[9px] text-white/35">
+                        Side Margin
+                    </span>
+
+                    <input
+                        id="sideMargin"
+                        type="range"
+                        min="2"
+                        max="25"
+                        value="12"
+                        class="w-28"
+                    >
+
+                </div>
+
+
+                <div class="grid grid-cols-2 gap-2">
+
+                    <button
+                        onclick="moveScript(-20)"
+                        class="h-8 border border-white/10 text-[8px] uppercase tracking-[1px] text-white/35 hover:text-white">
+                        Move Up
+                    </button>
+
+                    <button
+                        onclick="moveScript(20)"
+                        class="h-8 border border-white/10 text-[8px] uppercase tracking-[1px] text-white/35 hover:text-white">
+                        Move Down
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISPLAY -->
+            <div class="p-5 border-b border-white/10">
+
+                <div class="text-[9px] uppercase tracking-[2px] text-white/25 mb-4">
+                    Display
+                </div>
+
+
+                <div class="space-y-3">
+
+                    <label class="flex items-center justify-between">
+
+                        <span class="text-[9px] text-white/35">
+                            Mirror Horizontally
+                        </span>
+
+                        <input
+                            type="checkbox"
+                            class="w-4 h-4 accent-white"
+                        >
+
+                    </label>
+
+
+                    <label class="flex items-center justify-between">
+
+                        <span class="text-[9px] text-white/35">
+                            Mirror Vertically
+                        </span>
+
+                        <input
+                            type="checkbox"
+                            class="w-4 h-4 accent-white"
+                        >
+
+                    </label>
+
+
+                    <label class="flex items-center justify-between">
+
+                        <span class="text-[9px] text-white/35">
+                            Show Safe Area
+                        </span>
+
+                        <input
+                            type="checkbox"
+                            class="w-4 h-4 accent-white"
+                        >
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- CG -->
+            <div class="p-5">
+
+                <div class="flex items-center justify-between mb-4">
+
+                    <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Current CG
+                    </span>
+
+                    <span class="text-[8px] text-green-500 uppercase">
+                        Ready
+                    </span>
+
+                </div>
+
+
+                <div class="border border-white/10 bg-[#111315] p-3">
+
+                    <div class="text-[8px] uppercase tracking-[1px] text-white/20">
+                        Lower Third
+                    </div>
+
+                    <div class="text-xs font-semibold mt-2">
+                        Government announces new project
+                    </div>
+
+                    <div class="text-[8px] text-white/25 mt-1">
+                        ACTIVE
+                    </div>
+
+                </div>
+
+
+                <div class="grid grid-cols-2 gap-2 mt-3">
+
+                    <button class="h-9 border border-white/10 text-[8px] uppercase tracking-[1px] text-white/40 hover:text-white">
+                        Hide CG
+                    </button>
+
+                    <button class="h-9 bg-white text-black text-[8px] uppercase tracking-[1px] font-bold">
+                        Show CG
+                    </button>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let playing = false;
+
+    let speed = 2.5;
+
+    let fontSize = 28;
+
+    let lineHeight = 1.65;
+
+    let textWidth = 76;
+
+    let scriptPosition = 0;
+
+
+    function togglePlay() {
+
+        playing = !playing;
+
+        const button = document.getElementById("playButton");
+        const state = document.getElementById("stateLabel");
+
+        if (playing) {
+
+            button.textContent = "Ⅱ";
+            state.textContent = "Playing";
+            state.className =
+                "text-[8px] uppercase tracking-[1px] text-green-500";
+
+        } else {
+
+            button.textContent = "▶";
+            state.textContent = "Paused";
+            state.className =
+                "text-[8px] uppercase tracking-[1px] text-yellow-500";
+
+        }
+
+    }
+
+
+    function updateSpeed(value) {
+
+        speed = parseFloat(value);
+
+        document.getElementById("speedLabel").textContent =
+            speed.toFixed(1);
+
+        document.getElementById("speedValue").textContent =
+            speed.toFixed(1);
+
+        /*
+            Socket.IO:
+
+            socket.emit("teleprompter:speed", {
+                runOrderId,
+                storyId,
+                speed
+            });
+        */
+
+    }
+
+
+    function setSpeed(value) {
+
+        document.getElementById("speed").value = value;
+
+        updateSpeed(value);
+
+    }
+
+
+    function changeFontSize(amount) {
+
+        fontSize += amount;
+
+        if (fontSize < 18) fontSize = 18;
+        if (fontSize > 60) fontSize = 60;
+
+        document.querySelector(".teleprompter-text").style.fontSize =
+            fontSize + "px";
+
+        document.getElementById("fontSizeValue").textContent =
+            fontSize + "px";
+
+        /*
+            socket.emit("teleprompter:settings", {
+                fontSize
+            });
+        */
+
+    }
+
+
+    function changeLineHeight(amount) {
+
+        lineHeight += amount;
+
+        lineHeight = Math.round(lineHeight * 10) / 10;
+
+        if (lineHeight < 1) lineHeight = 1;
+        if (lineHeight > 2.5) lineHeight = 2.5;
+
+        document.querySelector(".teleprompter-text").style.lineHeight =
+            lineHeight;
+
+        document.getElementById("lineHeightValue").textContent =
+            lineHeight.toFixed(1);
+
+    }
+
+
+    function changeWidth(amount) {
+
+        textWidth += amount;
+
+        if (textWidth < 50) textWidth = 50;
+        if (textWidth > 90) textWidth = 90;
+
+        const padding = (100 - textWidth) / 2;
+
+        document.getElementById("script").style.paddingLeft =
+            padding + "%";
+
+        document.getElementById("script").style.paddingRight =
+            padding + "%";
+
+        document.getElementById("widthValue").textContent =
+            textWidth + "%";
+
+    }
+
+
+    function moveScript(amount) {
+
+        scriptPosition += amount;
+
+        document.getElementById("script").style.transform =
+            `translateY(${scriptPosition}px)`;
+
+    }
+
+
+    function resetScroll() {
+
+        scriptPosition = 0;
+
+        document.getElementById("script").style.transform =
+            "translateY(0)";
+
+        document.getElementById("positionText").textContent =
+            "0%";
+
+    }
+
+
+    function nudge(direction) {
+
+        scriptPosition += direction * 25;
+
+        document.getElementById("script").style.transform =
+            `translateY(${scriptPosition}px)`;
+
+    }
+
+
+    function previousStory() {
+
+        console.log("Previous story");
+
+        /*
+            socket.emit("teleprompter:story-change", {
+                direction: "previous"
+            });
+        */
+
+    }
+
+
+    function nextStory() {
+
+        console.log("Next story");
+
+        /*
+            socket.emit("teleprompter:story-change", {
+                direction: "next"
+            });
+        */
+
+    }
+
+
+    function selectStory(id) {
+
+        console.log("Selected story:", id);
+
+        /*
+            socket.emit("teleprompter:story-change", {
+                storyId: id
+            });
+        */
+
+    }
+
+
+    function toggleFullscreen() {
+
+        const element = document.documentElement;
+
+        if (!document.fullscreenElement) {
+
+            element.requestFullscreen();
+
+        } else {
+
+            document.exitFullscreen();
+
+        }
+
+    }
+
+
+    // Simulated scroll.
+    // Replace this with your synchronized Socket.IO state.
+
+    let lastTime = performance.now();
+
+    function scrollLoop(time) {
+
+        if (playing) {
+
+            const delta = time - lastTime;
+
+            scriptPosition -= speed * delta / 30;
+
+            document.getElementById("script").style.transform =
+                `translateY(${scriptPosition}px)`;
+
+        }
+
+        lastTime = time;
+
+        requestAnimationFrame(scrollLoop);
+
+    }
+
+    requestAnimationFrame(scrollLoop);
+
+
+    /*
+        SOCKET.IO EXAMPLE
+
+        const socket = io();
+
+        socket.emit("controller:join", {
+            runOrderId: 1
+        });
+
+        socket.on("teleprompter:state", (state) => {
+
+            playing = state.playing;
+            speed = state.speed;
+            scriptPosition = state.position;
+
+        });
+
+        socket.on("teleprompter:story", (story) => {
+
+            // Replace script content.
+
+        });
+
+        socket.on("teleprompter:settings", (settings) => {
+
+            // Apply font size, line height,
+            // margins, mirror mode, etc.
+
+        });
+    */
+
+</script>
+
+</body>
+</html>

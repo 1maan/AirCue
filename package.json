@@ -1,0 +1,30 @@
+{
+  "name": "aircue",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "homepage": "https://github.com/1maan/AirCue#readme",
+  "bugs": {
+    "url": "https://github.com/1maan/AirCue/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1maan/AirCue.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "dotenv": "^17.4.2",
+    "ejs": "^6.0.1",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14",
+    "tailwindcss": "^4.3.3"
+  }
+}

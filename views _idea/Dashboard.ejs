@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirCue | Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #111315;
+            color: #f4f4f4;
+        }
+
+        .mono {
+            font-family: "Courier New", monospace;
+        }
+
+        .grain {
+            background-image:
+                radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size: 4px 4px;
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #34383b;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+<div class="min-h-screen flex">
+
+    <!-- SIDEBAR -->
+    <aside class="w-[235px] shrink-0 border-r border-white/10 bg-[#17191b] flex flex-col">
+
+        <!-- Brand -->
+        <div class="h-[76px] px-6 flex items-center border-b border-white/10">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-9 h-9 border border-white/30 flex items-center justify-center">
+                    <div class="w-4 h-4 bg-white"></div>
+                </div>
+
+                <div>
+                    <div class="font-bold text-lg tracking-tight">
+                        AirCue
+                    </div>
+
+                    <div class="text-[8px] uppercase tracking-[2px] text-white/30">
+                        Newsroom System
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+        <nav class="flex-1 px-3 py-6">
+
+            <div class="px-3 mb-3 text-[9px] uppercase tracking-[2px] text-white/25">
+                Workspace
+            </div>
+
+            <a href="/dashboard"
+               class="flex items-center gap-3 px-3 py-2.5 bg-white/[0.07] text-white mb-1">
+
+                <span class="w-1.5 h-1.5 bg-white"></span>
+
+                <span class="text-xs font-semibold">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a href="/runorders"
+               class="flex items-center justify-between px-3 py-2.5 text-white/45 hover:text-white hover:bg-white/[0.04] transition mb-1">
+
+                <div class="flex items-center gap-3">
+
+                    <span class="w-1.5 h-1.5 border border-white/30"></span>
+
+                    <span class="text-xs">
+                        Run Orders
+                    </span>
+
+                </div>
+
+                <span class="mono text-[9px] text-white/20">
+                    04
+                </span>
+
+            </a>
+
+
+            <a href="/stories"
+               class="flex items-center gap-3 px-3 py-2.5 text-white/45 hover:text-white hover:bg-white/[0.04] transition mb-1">
+
+                <span class="w-1.5 h-1.5 border border-white/30"></span>
+
+                <span class="text-xs">
+                    Stories
+                </span>
+
+            </a>
+
+
+            <a href="/breaking-news"
+               class="flex items-center justify-between px-3 py-2.5 text-white/45 hover:text-white hover:bg-white/[0.04] transition mb-1">
+
+                <div class="flex items-center gap-3">
+
+                    <span class="w-1.5 h-1.5 border border-white/30"></span>
+
+                    <span class="text-xs">
+                        Breaking News
+                    </span>
+
+                </div>
+
+                <span class="w-1.5 h-1.5 bg-red-500"></span>
+
+            </a>
+
+
+            <div class="px-3 mt-8 mb-3 text-[9px] uppercase tracking-[2px] text-white/25">
+                Control
+            </div>
+
+
+            <a href="/controller"
+               class="flex items-center gap-3 px-3 py-2.5 text-white/45 hover:text-white hover:bg-white/[0.04] transition mb-1">
+
+                <span class="w-1.5 h-1.5 border border-white/30"></span>
+
+                <span class="text-xs">
+                    Teleprompter
+                </span>
+
+            </a>
+
+
+            <a href="/cg"
+               class="flex items-center gap-3 px-3 py-2.5 text-white/45 hover:text-white hover:bg-white/[0.04] transition mb-1">
+
+                <span class="w-1.5 h-1.5 border border-white/30"></span>
+
+                <span class="text-xs">
+                    Graphics / CG
+                </span>
+
+            </a>
+
+
+            <div class="px-3 mt-8 mb-3 text-[9px] uppercase tracking-[2px] text-white/25">
+                System
+            </div>
+
+
+            <a href="/activity"
+               class="flex items-center gap-3 px-3 py-2.5 text-white/45 hover:text-white hover:bg-white/[0.04] transition mb-1">
+
+                <span class="w-1.5 h-1.5 border border-white/30"></span>
+
+                <span class="text-xs">
+                    Activity
+                </span>
+
+            </a>
+
+
+            <a href="/settings"
+               class="flex items-center gap-3 px-3 py-2.5 text-white/45 hover:text-white hover:bg-white/[0.04] transition">
+
+                <span class="w-1.5 h-1.5 border border-white/30"></span>
+
+                <span class="text-xs">
+                    Settings
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- User -->
+        <div class="border-t border-white/10 p-4">
+
+            <div class="flex items-center justify-between">
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-8 h-8 bg-white/10 flex items-center justify-center text-[10px] font-bold">
+                        HI
+                    </div>
+
+                    <div>
+
+                        <div class="text-xs font-semibold">
+                            Hussain
+                        </div>
+
+                        <div class="text-[9px] text-white/30 uppercase tracking-[1px]">
+                            Producer
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button class="text-white/30 hover:text-white">
+                    •••
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="flex-1 min-w-0 bg-[#111315]">
+
+        <!-- HEADER -->
+        <header class="h-[76px] border-b border-white/10 flex items-center justify-between px-8">
+
+            <div>
+
+                <div class="flex items-center gap-3">
+
+                    <h1 class="text-xl font-bold tracking-tight">
+                        Dashboard
+                    </h1>
+
+                    <span class="text-white/20">
+                        /
+                    </span>
+
+                    <span class="mono text-[10px] text-white/30">
+                        10 AUG 2026
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="flex items-center gap-7">
+
+                <div class="text-right">
+
+                    <div class="text-[8px] uppercase tracking-[2px] text-white/25">
+                        System Time
+                    </div>
+
+                    <div id="clock" class="mono text-xs mt-1">
+                        00:00:00
+                    </div>
+
+                </div>
+
+
+                <div class="h-7 w-px bg-white/10"></div>
+
+
+                <div class="flex items-center gap-2">
+
+                    <span class="w-2 h-2 bg-green-500"></span>
+
+                    <span class="text-[9px] uppercase tracking-[1px] text-white/40">
+                        All Systems Online
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <div class="p-8 max-w-[1600px]">
+
+            <!-- TODAY HEADER -->
+            <div class="flex items-end justify-between mb-6">
+
+                <div>
+
+                    <div class="text-[9px] uppercase tracking-[3px] text-white/25 mb-2">
+                        Today's Newsroom
+                    </div>
+
+                    <h2 class="text-3xl font-black tracking-[-1px]">
+                        Evening News
+                    </h2>
+
+                </div>
+
+
+                <div class="flex gap-2">
+
+                    <button class="h-9 px-4 border border-white/10 text-[10px] uppercase tracking-[1px] text-white/50 hover:text-white hover:border-white/30">
+                        Open Rundown
+                    </button>
+
+                    <button class="h-9 px-4 bg-white text-black text-[10px] uppercase tracking-[1px] font-bold hover:bg-white/90">
+                        Start Control
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOP STATUS -->
+            <div class="grid grid-cols-4 border border-white/10 mb-6">
+
+                <div class="p-5 border-r border-white/10">
+
+                    <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Run Order
+                    </div>
+
+                    <div class="mt-3 flex items-end gap-2">
+
+                        <span class="text-3xl font-black">
+                            18
+                        </span>
+
+                        <span class="text-xs text-white/30 mb-1">
+                            stories
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="p-5 border-r border-white/10">
+
+                    <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Completed
+                    </div>
+
+                    <div class="mt-3 flex items-end gap-2">
+
+                        <span class="text-3xl font-black">
+                            07
+                        </span>
+
+                        <span class="text-xs text-white/30 mb-1">
+                            / 18
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="p-5 border-r border-white/10">
+
+                    <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Estimated Duration
+                    </div>
+
+                    <div class="mt-3 text-3xl font-black mono">
+                        28:42
+                    </div>
+
+                </div>
+
+
+                <div class="p-5">
+
+                    <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        On Air
+                    </div>
+
+                    <div class="mt-3 flex items-center gap-3">
+
+                        <span class="w-2 h-2 bg-red-500 animate-pulse"></span>
+
+                        <span class="text-lg font-bold">
+                            LIVE
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MAIN GRID -->
+            <div class="grid grid-cols-[1.4fr_0.9fr] gap-6">
+
+
+                <!-- RUNDOWN -->
+                <section class="border border-white/10 bg-[#151719]">
+
+                    <div class="h-14 px-5 border-b border-white/10 flex items-center justify-between">
+
+                        <div>
+
+                            <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                                Current Run Order
+                            </span>
+
+                        </div>
+
+                        <span class="mono text-[9px] text-white/25">
+                            18 ITEMS
+                        </span>
+
+                    </div>
+
+
+                    <div class="scrollbar max-h-[530px] overflow-y-auto">
+
+                        <!-- Active -->
+                        <div class="grid grid-cols-[45px_1fr_80px_80px] items-center px-5 py-4 border-b border-white/10 bg-white/[0.05]">
+
+                            <span class="mono text-[10px] text-red-400">
+                                08
+                            </span>
+
+                            <div>
+
+                                <div class="text-xs font-semibold">
+                                    Government announces new development project
+                                </div>
+
+                                <div class="text-[9px] text-white/25 mt-1">
+                                    POLITICS · HUSSAIN
+                                </div>
+
+                            </div>
+
+                            <span class="mono text-[9px] text-white/30">
+                                02:15
+                            </span>
+
+                            <span class="text-[8px] uppercase tracking-[1px] text-red-400">
+                                ON AIR
+                            </span>
+
+                        </div>
+
+
+                        <!-- Ready -->
+                        <div class="grid grid-cols-[45px_1fr_80px_80px] items-center px-5 py-4 border-b border-white/10">
+
+                            <span class="mono text-[10px] text-white/20">
+                                09
+                            </span>
+
+                            <div>
+
+                                <div class="text-xs">
+                                    New regulations announced for businesses
+                                </div>
+
+                                <div class="text-[9px] text-white/25 mt-1">
+                                    BUSINESS · RAAF
+                                </div>
+
+                            </div>
+
+                            <span class="mono text-[9px] text-white/30">
+                                01:40
+                            </span>
+
+                            <span class="text-[8px] uppercase tracking-[1px] text-green-500">
+                                READY
+                            </span>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-[45px_1fr_80px_80px] items-center px-5 py-4 border-b border-white/10">
+
+                            <span class="mono text-[10px] text-white/20">
+                                10
+                            </span>
+
+                            <div>
+
+                                <div class="text-xs">
+                                    Maldives prepares for regional tournament
+                                </div>
+
+                                <div class="text-[9px] text-white/25 mt-1">
+                                    SPORTS · MOHAMED
+                                </div>
+
+                            </div>
+
+                            <span class="mono text-[9px] text-white/30">
+                                02:05
+                            </span>
+
+                            <span class="text-[8px] uppercase tracking-[1px] text-green-500">
+                                READY
+                            </span>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-[45px_1fr_80px_80px] items-center px-5 py-4 border-b border-white/10">
+
+                            <span class="mono text-[10px] text-white/20">
+                                11
+                            </span>
+
+                            <div>
+
+                                <div class="text-xs">
+                                    Weather forecast
+                                </div>
+
+                                <div class="text-[9px] text-white/25 mt-1">
+                                    WEATHER · STUDIO
+                                </div>
+
+                            </div>
+
+                            <span class="mono text-[9px] text-white/30">
+                                01:10
+                            </span>
+
+                            <span class="text-[8px] uppercase tracking-[1px] text-green-500">
+                                READY
+                            </span>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-[45px_1fr_80px_80px] items-center px-5 py-4 border-b border-white/10">
+
+                            <span class="mono text-[10px] text-white/20">
+                                12
+                            </span>
+
+                            <div>
+
+                                <div class="text-xs">
+                                    Local council approves new project
+                                </div>
+
+                                <div class="text-[9px] text-white/25 mt-1">
+                                    LOCAL · AISHATH
+                                </div>
+
+                            </div>
+
+                            <span class="mono text-[9px] text-white/30">
+                                01:35
+                            </span>
+
+                            <span class="text-[8px] uppercase tracking-[1px] text-yellow-500">
+                                HOLD
+                            </span>
+
+                        </div>
+
+
+                        <div class="grid grid-cols-[45px_1fr_80px_80px] items-center px-5 py-4">
+
+                            <span class="mono text-[10px] text-white/20">
+                                13
+                            </span>
+
+                            <div>
+
+                                <div class="text-xs text-white/50">
+                                    Closing headlines
+                                </div>
+
+                                <div class="text-[9px] text-white/20 mt-1">
+                                    CLOSING
+                                </div>
+
+                            </div>
+
+                            <span class="mono text-[9px] text-white/20">
+                                00:45
+                            </span>
+
+                            <span class="text-[8px] uppercase tracking-[1px] text-white/20">
+                                QUEUED
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- RIGHT COLUMN -->
+                <div class="space-y-6">
+
+
+                    <!-- TELEPROMPTER -->
+                    <section class="border border-white/10 bg-[#151719]">
+
+                        <div class="h-14 px-5 border-b border-white/10 flex items-center justify-between">
+
+                            <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                                Teleprompter
+                            </span>
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="w-1.5 h-1.5 bg-green-500"></span>
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-green-500">
+                                    Connected
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="p-5">
+
+                            <div class="text-[9px] uppercase tracking-[2px] text-white/25 mb-2">
+                                Current Story
+                            </div>
+
+                            <div class="text-lg font-bold leading-snug">
+                                Government announces new development project
+                            </div>
+
+
+                            <div class="mt-6 h-20 border border-white/10 bg-[#0d0f10] p-4 overflow-hidden">
+
+                                <div class="text-[11px] leading-5 text-white/55">
+
+                                    The government has announced a new
+                                    development project aimed at improving
+                                    public services across the country...
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="grid grid-cols-3 gap-2 mt-4">
+
+                                <div class="border border-white/10 p-3">
+
+                                    <div class="text-[8px] uppercase text-white/25">
+                                        Speed
+                                    </div>
+
+                                    <div class="mono text-sm mt-1">
+                                        2.5
+                                    </div>
+
+                                </div>
+
+                                <div class="border border-white/10 p-3">
+
+                                    <div class="text-[8px] uppercase text-white/25">
+                                        Position
+                                    </div>
+
+                                    <div class="mono text-sm mt-1">
+                                        42%
+                                    </div>
+
+                                </div>
+
+                                <div class="border border-white/10 p-3">
+
+                                    <div class="text-[8px] uppercase text-white/25">
+                                        CG
+                                    </div>
+
+                                    <div class="text-sm mt-1">
+                                        ON
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <a href="/controller"
+                               class="mt-4 w-full h-10 border border-white/10 flex items-center justify-center text-[9px] uppercase tracking-[2px] text-white/50 hover:text-white hover:border-white/30 transition">
+
+                                Open Controller
+
+                            </a>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- BREAKING -->
+                    <section class="border border-red-500/20 bg-[#151719]">
+
+                        <div class="h-12 px-5 border-b border-red-500/10 flex items-center justify-between">
+
+                            <div class="flex items-center gap-2">
+
+                                <span class="w-1.5 h-1.5 bg-red-500 animate-pulse"></span>
+
+                                <span class="text-[9px] uppercase tracking-[2px] text-red-400">
+                                    Breaking News
+                                </span>
+
+                            </div>
+
+                            <span class="mono text-[8px] text-white/25">
+                                01 ACTIVE
+                            </span>
+
+                        </div>
+
+
+                        <div class="p-5">
+
+                            <div class="text-xs font-bold leading-5">
+                                President announces national address tonight
+                            </div>
+
+                            <div class="mt-2 text-[9px] text-white/30">
+                                Received 12:31:42 · Journalist: Ahmed
+                            </div>
+
+                            <div class="flex gap-2 mt-5">
+
+                                <button class="flex-1 h-9 bg-red-500 text-white text-[9px] uppercase tracking-[1px] font-bold hover:bg-red-600">
+                                    Review
+                                </button>
+
+                                <button class="h-9 px-4 border border-white/10 text-[9px] uppercase tracking-[1px] text-white/40 hover:text-white">
+                                    Dismiss
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- SYSTEM -->
+                    <section class="border border-white/10 bg-[#151719]">
+
+                        <div class="h-12 px-5 border-b border-white/10 flex items-center">
+
+                            <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                                Live Connections
+                            </span>
+
+                        </div>
+
+
+                        <div class="p-5 space-y-4">
+
+                            <div class="flex items-center justify-between">
+
+                                <div class="flex items-center gap-3">
+
+                                    <span class="w-1.5 h-1.5 bg-green-500"></span>
+
+                                    <span class="text-xs">
+                                        Teleprompter 01
+                                    </span>
+
+                                </div>
+
+                                <span class="mono text-[8px] text-white/25">
+                                    18ms
+                                </span>
+
+                            </div>
+
+
+                            <div class="flex items-center justify-between">
+
+                                <div class="flex items-center gap-3">
+
+                                    <span class="w-1.5 h-1.5 bg-green-500"></span>
+
+                                    <span class="text-xs">
+                                        Producer Controller
+                                    </span>
+
+                                </div>
+
+                                <span class="mono text-[8px] text-white/25">
+                                    21ms
+                                </span>
+
+                            </div>
+
+
+                            <div class="flex items-center justify-between">
+
+                                <div class="flex items-center gap-3">
+
+                                    <span class="w-1.5 h-1.5 bg-green-500"></span>
+
+                                    <span class="text-xs">
+                                        CG Controller
+                                    </span>
+
+                                </div>
+
+                                <span class="mono text-[8px] text-white/25">
+                                    19ms
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIVITY -->
+            <section class="mt-6 border border-white/10 bg-[#151719]">
+
+                <div class="h-14 px-5 border-b border-white/10 flex items-center justify-between">
+
+                    <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Recent Activity
+                    </span>
+
+                    <a href="/activity"
+                       class="text-[8px] uppercase tracking-[1px] text-white/25 hover:text-white">
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div class="grid grid-cols-4">
+
+                    <div class="p-5 border-r border-white/10">
+
+                        <div class="mono text-[9px] text-white/20">
+                            12:31:42
+                        </div>
+
+                        <div class="text-xs mt-2">
+                            Breaking news received
+                        </div>
+
+                        <div class="text-[9px] text-white/25 mt-1">
+                            Ahmed
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-5 border-r border-white/10">
+
+                        <div class="mono text-[9px] text-white/20">
+                            12:29:08
+                        </div>
+
+                        <div class="text-xs mt-2">
+                            Story moved to ON AIR
+                        </div>
+
+                        <div class="text-[9px] text-white/25 mt-1">
+                            Hussain
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-5 border-r border-white/10">
+
+                        <div class="mono text-[9px] text-white/20">
+                            12:27:51
+                        </div>
+
+                        <div class="text-xs mt-2">
+                            CG updated
+                        </div>
+
+                        <div class="text-[9px] text-white/25 mt-1">
+                            Raajje TV Graphics
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-5">
+
+                        <div class="mono text-[9px] text-white/20">
+                            12:25:19
+                        </div>
+
+                        <div class="text-xs mt-2">
+                            Run order updated
+                        </div>
+
+                        <div class="text-[9px] text-white/25 mt-1">
+                            Aishath
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function updateClock() {
+
+        const now = new Date();
+
+        const h = String(now.getHours()).padStart(2, "0");
+        const m = String(now.getMinutes()).padStart(2, "0");
+        const s = String(now.getSeconds()).padStart(2, "0");
+
+        document.getElementById("clock").textContent =
+            `${h}:${m}:${s}`;
+    }
+
+    updateClock();
+
+    setInterval(updateClock, 1000);
+
+</script>
+
+</body>
+</html>

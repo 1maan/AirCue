@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirCue | Graphics Control</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #101213;
+            color: #f4f4f4;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .mono {
+            font-family: "Courier New", monospace;
+        }
+
+        input,
+        textarea,
+        select {
+            outline: none;
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #34383b;
+        }
+
+        .preview-lower-third {
+            background: linear-gradient(
+                to right,
+                rgba(0, 0, 0, .96),
+                rgba(0, 0, 0, .82),
+                rgba(0, 0, 0, .15)
+            );
+        }
+    </style>
+</head>
+
+<body class="h-screen overflow-hidden">
+
+<div class="h-screen flex flex-col">
+
+
+    <!-- TOP BAR -->
+
+    <header class="h-[64px] shrink-0 bg-[#17191b] border-b border-white/10 flex items-center">
+
+        <div class="w-[220px] h-full border-r border-white/10 px-5 flex items-center">
+
+            <div class="flex items-center gap-3">
+
+                <div class="w-8 h-8 border border-white/30 flex items-center justify-center">
+
+                    <div class="w-3.5 h-3.5 bg-white"></div>
+
+                </div>
+
+                <div>
+
+                    <div class="font-bold">
+                        AirCue
+                    </div>
+
+                    <div class="text-[7px] uppercase tracking-[2px] text-white/25">
+                        Graphics Control
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="flex-1 px-6">
+
+            <div class="text-sm font-bold">
+                Evening News
+            </div>
+
+            <div class="mono text-[8px] text-white/25 mt-1">
+                10 AUG 2026 / 18:00
+            </div>
+
+        </div>
+
+
+        <div class="px-6 flex items-center gap-6">
+
+            <div class="flex items-center gap-2">
+
+                <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+
+                <span class="text-[8px] uppercase tracking-[1px] text-red-400">
+                    On Air
+                </span>
+
+            </div>
+
+
+            <div class="h-6 w-px bg-white/10"></div>
+
+
+            <div class="flex items-center gap-2">
+
+                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+
+                <span class="text-[8px] uppercase tracking-[1px] text-green-500">
+                    CG Engine
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- WORKSPACE -->
+
+    <div class="flex flex-1 min-h-0">
+
+
+        <!-- LEFT: GRAPHICS QUEUE -->
+
+        <aside class="w-[300px] shrink-0 bg-[#151719] border-r border-white/10 flex flex-col">
+
+
+            <div class="h-[58px] shrink-0 px-5 border-b border-white/10 flex items-center justify-between">
+
+                <div>
+
+                    <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Graphics Queue
+                    </div>
+
+                    <div class="text-[8px] text-white/20 mt-1">
+                        6 items
+                    </div>
+
+                </div>
+
+
+                <button
+                    onclick="newGraphic()"
+                    class="w-8 h-8 border border-white/10 text-white/40 hover:text-white text-lg">
+                    +
+                </button>
+
+            </div>
+
+
+            <div class="flex-1 overflow-y-auto scrollbar">
+
+
+                <!-- ACTIVE -->
+
+                <button
+                    onclick="selectGraphic('lower-third')"
+                    class="w-full text-left px-4 py-4 border-l-2 border-green-500 bg-white/[0.05] border-b border-white/10">
+
+                    <div class="flex items-start gap-3">
+
+                        <span class="w-5 mono text-[8px] text-green-500">
+                            01
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-white/30">
+                                    Lower Third
+                                </span>
+
+                                <span class="text-[7px] uppercase text-green-500">
+                                    On Air
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-2 leading-4">
+                                Government announces new project
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <!-- READY -->
+
+                <button
+                    onclick="selectGraphic('strap')"
+                    class="w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/[0.03]">
+
+                    <div class="flex items-start gap-3">
+
+                        <span class="w-5 mono text-[8px] text-white/20">
+                            02
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-white/30">
+                                    Strap
+                                </span>
+
+                                <span class="text-[7px] uppercase text-green-500">
+                                    Ready
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-2">
+                                Parliament session continues
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectGraphic('breaking')"
+                    class="w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/[0.03]">
+
+                    <div class="flex items-start gap-3">
+
+                        <span class="w-5 mono text-[8px] text-white/20">
+                            03
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-red-400">
+                                    Breaking
+                                </span>
+
+                                <span class="text-[7px] uppercase text-white/20">
+                                    Ready
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-2">
+                                Breaking News
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectGraphic('full-screen')"
+                    class="w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/[0.03]">
+
+                    <div class="flex items-start gap-3">
+
+                        <span class="w-5 mono text-[8px] text-white/20">
+                            04
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-white/30">
+                                    Full Screen
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-2">
+                                Development Project Details
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    onclick="selectGraphic('quote')"
+                    class="w-full text-left px-4 py-4 border-b border-white/10 hover:bg-white/[0.03]">
+
+                    <div class="flex items-start gap-3">
+
+                        <span class="w-5 mono text-[8px] text-white/20">
+                            05
+                        </span>
+
+                        <div class="flex-1">
+
+                            <div class="flex justify-between">
+
+                                <span class="text-[8px] uppercase tracking-[1px] text-white/30">
+                                    Quote
+                                </span>
+
+                            </div>
+
+                            <div class="text-[10px] mt-2">
+                                Minister statement
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <div class="p-4 border-t border-white/10">
+
+                <button
+                    onclick="newGraphic()"
+                    class="w-full h-9 border border-dashed border-white/10 text-[8px] uppercase tracking-[1px] text-white/30 hover:text-white">
+                    + New Graphic
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CENTER EDITOR -->
+
+        <main class="flex-1 min-w-0 flex flex-col">
+
+
+            <div class="h-[62px] shrink-0 px-7 border-b border-white/10 flex items-center justify-between">
+
+                <div>
+
+                    <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                        Graphic Editor
+                    </div>
+
+                    <div
+                        id="graphicType"
+                        class="text-xs font-semibold mt-2">
+                        Lower Third
+                    </div>
+
+                </div>
+
+
+                <div class="flex items-center gap-3">
+
+                    <span class="text-[8px] text-white/20 uppercase tracking-[1px]">
+                        Linked Story
+                    </span>
+
+                    <span class="px-2 py-1 bg-white/[0.05] text-[8px] text-white/50">
+                        STORY 08
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="flex-1 overflow-y-auto scrollbar p-8">
+
+                <div class="max-w-[800px] mx-auto">
+
+
+                    <!-- TEMPLATE -->
+
+                    <div class="mb-8">
+
+                        <label class="block text-[9px] uppercase tracking-[2px] text-white/25 mb-3">
+                            Template
+                        </label>
+
+                        <div class="grid grid-cols-3 gap-3">
+
+
+                            <button
+                                onclick="setTemplate('lower-third')"
+                                class="h-20 border border-white/20 bg-white/[0.05]">
+
+                                <div class="text-[8px] uppercase tracking-[1px] text-white/60">
+                                    Lower Third
+                                </div>
+
+                                <div class="mt-4 h-2 bg-white/20 w-3/4"></div>
+
+                            </button>
+
+
+                            <button
+                                onclick="setTemplate('strap')"
+                                class="h-20 border border-white/10 hover:border-white/30">
+
+                                <div class="text-[8px] uppercase tracking-[1px] text-white/40">
+                                    Strap
+                                </div>
+
+                                <div class="mt-4 h-2 bg-white/10 w-full"></div>
+
+                            </button>
+
+
+                            <button
+                                onclick="setTemplate('breaking')"
+                                class="h-20 border border-red-500/20 hover:border-red-500/40">
+
+                                <div class="text-[8px] uppercase tracking-[1px] text-red-400">
+                                    Breaking
+                                </div>
+
+                                <div class="mt-4 h-2 bg-red-500/30 w-full"></div>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TEXT -->
+
+                    <div class="mb-8">
+
+                        <div class="flex justify-between items-center mb-3">
+
+                            <label class="text-[9px] uppercase tracking-[2px] text-white/25">
+                                Content
+                            </label>
+
+                            <span class="mono text-[8px] text-white/20">
+                                LIVE PREVIEW
+                            </span>
+
+                        </div>
+
+
+                        <div class="space-y-4">
+
+
+                            <div>
+
+                                <label class="block text-[8px] uppercase tracking-[1px] text-white/20 mb-2">
+                                    Primary Text
+                                </label>
+
+                                <input
+                                    id="primaryText"
+                                    value="Government announces new project"
+                                    oninput="updatePreview()"
+                                    class="w-full h-11 px-4 bg-[#17191b] border border-white/10 text-sm focus:border-white/30"
+                                >
+
+                            </div>
+
+
+                            <div>
+
+                                <label class="block text-[8px] uppercase tracking-[1px] text-white/20 mb-2">
+                                    Secondary Text
+                                </label>
+
+                                <input
+                                    id="secondaryText"
+                                    value="Malé"
+                                    oninput="updatePreview()"
+                                    class="w-full h-11 px-4 bg-[#17191b] border border-white/10 text-xs text-white/60 focus:border-white/30"
+                                >
+
+                            </div>
+
+
+                            <div>
+
+                                <label class="block text-[8px] uppercase tracking-[1px] text-white/20 mb-2">
+                                    Category / Label
+                                </label>
+
+                                <input
+                                    id="categoryText"
+                                    value="POLITICS"
+                                    oninput="updatePreview()"
+                                    class="w-full h-11 px-4 bg-[#17191b] border border-white/10 text-xs text-white/60 focus:border-white/30"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIMING -->
+
+                    <div class="mb-8">
+
+                        <div class="text-[9px] uppercase tracking-[2px] text-white/25 mb-4">
+                            Trigger
+                        </div>
+
+
+                        <div class="grid grid-cols-3 gap-3">
+
+
+                            <label class="border border-white/20 bg-white/[0.04] p-4 cursor-pointer">
+
+                                <input
+                                    type="radio"
+                                    name="trigger"
+                                    checked
+                                    class="accent-white"
+                                >
+
+                                <div class="text-[9px] mt-3">
+                                    Manual
+                                </div>
+
+                                <div class="text-[7px] text-white/20 mt-1">
+                                    Producer controls
+                                </div>
+
+                            </label>
+
+
+                            <label class="border border-white/10 p-4 cursor-pointer">
+
+                                <input
+                                    type="radio"
+                                    name="trigger"
+                                    class="accent-white"
+                                >
+
+                                <div class="text-[9px] mt-3">
+                                    Story Start
+                                </div>
+
+                                <div class="text-[7px] text-white/20 mt-1">
+                                    Show automatically
+                                </div>
+
+                            </label>
+
+
+                            <label class="border border-white/10 p-4 cursor-pointer">
+
+                                <input
+                                    type="radio"
+                                    name="trigger"
+                                    class="accent-white"
+                                >
+
+                                <div class="text-[9px] mt-3">
+                                    Story End
+                                </div>
+
+                                <div class="text-[7px] text-white/20 mt-1">
+                                    Show at end
+                                </div>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DURATION -->
+
+                    <div class="mb-8">
+
+                        <div class="grid grid-cols-2 gap-4">
+
+                            <div>
+
+                                <label class="block text-[8px] uppercase tracking-[1px] text-white/20 mb-2">
+                                    In Duration
+                                </label>
+
+                                <input
+                                    type="text"
+                                    value="00:00:12"
+                                    class="w-full h-10 px-3 bg-[#17191b] border border-white/10 mono text-xs text-white/60"
+                                >
+
+                            </div>
+
+
+                            <div>
+
+                                <label class="block text-[8px] uppercase tracking-[1px] text-white/20 mb-2">
+                                    Out Duration
+                                </label>
+
+                                <input
+                                    type="text"
+                                    value="00:00:12"
+                                    class="w-full h-10 px-3 bg-[#17191b] border border-white/10 mono text-xs text-white/60"
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- OPTIONS -->
+
+                    <div class="border-t border-white/10 pt-7">
+
+                        <div class="text-[9px] uppercase tracking-[2px] text-white/25 mb-4">
+                            Options
+                        </div>
+
+
+                        <div class="space-y-4">
+
+
+                            <label class="flex items-center justify-between">
+
+                                <div>
+
+                                    <div class="text-[9px]">
+                                        Keep on screen
+                                    </div>
+
+                                    <div class="text-[7px] text-white/20 mt-1">
+                                        Graphic stays until manually removed.
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    type="checkbox"
+                                    class="w-4 h-4 accent-white"
+                                >
+
+                            </label>
+
+
+                            <label class="flex items-center justify-between">
+
+                                <div>
+
+                                    <div class="text-[9px]">
+                                        Follow story
+                                    </div>
+
+                                    <div class="text-[7px] text-white/20 mt-1">
+                                        Automatically associate with current story.
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                    class="w-4 h-4 accent-white"
+                                >
+
+                            </label>
+
+
+                            <label class="flex items-center justify-between">
+
+                                <div>
+
+                                    <div class="text-[9px]">
+                                        Send to graphics engine
+                                    </div>
+
+                                    <div class="text-[7px] text-white/20 mt-1">
+                                        Push the graphic state through Socket.IO.
+                                    </div>
+
+                                </div>
+
+                                <input
+                                    type="checkbox"
+                                    checked
+                                    class="w-4 h-4 accent-white"
+                                >
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="h-[70px] shrink-0 border-t border-white/10 px-7 flex items-center justify-between">
+
+
+                <div>
+
+                    <div class="text-[8px] uppercase tracking-[1px] text-white/20">
+                        Graphics Engine
+                    </div>
+
+                    <div class="flex items-center gap-2 mt-2">
+
+                        <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+
+                        <span class="text-[9px] text-white/50">
+                            Connected
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flex items-center gap-3">
+
+                    <button
+                        onclick="saveGraphic()"
+                        class="h-10 px-5 border border-white/10 text-[8px] uppercase tracking-[1.5px] text-white/40 hover:text-white">
+                        Save
+                    </button>
+
+
+                    <button
+                        onclick="takeGraphic()"
+                        class="h-10 px-7 bg-white text-black text-[8px] uppercase tracking-[1.5px] font-bold">
+                        Take To Air
+                    </button>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <!-- RIGHT PREVIEW -->
+
+        <aside class="w-[430px] shrink-0 bg-[#151719] border-l border-white/10 flex flex-col">
+
+
+            <div class="h-[58px] shrink-0 px-5 border-b border-white/10 flex items-center justify-between">
+
+                <span class="text-[9px] uppercase tracking-[2px] text-white/25">
+                    Program Preview
+                </span>
+
+                <span class="flex items-center gap-2 text-[8px] text-red-400 uppercase">
+
+                    <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
+
+                    Program
+
+                </span>
+
+            </div>
+
+
+            <div class="flex-1 p-5 flex items-center">
+
+                <div class="w-full aspect-video bg-[#202326] relative overflow-hidden">
+
+
+                    <!-- Fake camera -->
+
+                    <div class="absolute inset-0 flex items-center justify-center">
+
+                        <div class="text-center">
+
+                            <div class="text-[8px] uppercase tracking-[2px] text-white/15">
+                                PROGRAM VIDEO
+                            </div>
+
+                            <div class="text-[7px] text-white/10 mt-2">
+                                Blackmagic / vMix output
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CG -->
+
+                    <div
+                        id="cgPreview"
+                        class="absolute left-0 bottom-8 right-0">
+
+                        <div class="preview-lower-third px-6 py-4">
+
+                            <div
+                                id="previewCategory"
+                                class="text-[7px] uppercase tracking-[2px] text-white/45">
+                                POLITICS
+                            </div>
+
+                            <div
+                                id="previewPrimary"
+                                class="text-sm font-bold mt-1">
+                                Government announces new project
+                            </div>
+
+                            <div
+                                id="previewSecondary"
+                                class="text-[8px] text-white/45 mt-1">
+                                Malé
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Safe area -->
+
+                    <div class="absolute inset-[7%] border border-white/[0.08] pointer-events-none"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIVE CG -->
+
+            <div class="p-5 border-t border-white/10">
+
+
+                <div class="flex items-center justify-between mb-4">
+
+                    <div>
+
+                        <div class="text-[9px] uppercase tracking-[2px] text-white/25">
+                            Current Graphic
+                        </div>
+
+                        <div class="text-[10px] mt-2">
+                            Lower Third
+                        </div>
+
+                    </div>
+
+
+                    <span class="text-[8px] text-green-500 uppercase tracking-[1px]">
+                        On Air
+                    </span>
+
+                </div>
+
+
+                <button
+                    onclick="clearGraphic()"
+                    class="w-full h-9 border border-red-500/20 text-red-400 text-[8px] uppercase tracking-[1.5px] hover:bg-red-500/10">
+                    Take Graphic Off
+                </button>
+
+            </div>
+
+
+            <div class="p-4 border-t border-white/10">
+
+                <div class="flex items-center justify-between">
+
+                    <span class="text-[7px] uppercase tracking-[1px] text-white/20">
+                        Socket
+                    </span>
+
+                    <span class="mono text-[8px] text-green-500">
+                        18ms
+                    </span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    let currentGraphic = "lower-third";
+
+
+    function updatePreview() {
+
+        const primary =
+            document.getElementById("primaryText").value;
+
+        const secondary =
+            document.getElementById("secondaryText").value;
+
+        const category =
+            document.getElementById("categoryText").value;
+
+
+        document.getElementById("previewPrimary").textContent =
+            primary || "Primary text";
+
+        document.getElementById("previewSecondary").textContent =
+            secondary || "Secondary text";
+
+        document.getElementById("previewCategory").textContent =
+            category || "CATEGORY";
+
+    }
+
+
+    function selectGraphic(type) {
+
+        currentGraphic = type;
+
+        const names = {
+
+            "lower-third": "Lower Third",
+
+            "strap": "Strap",
+
+            "breaking": "Breaking News",
+
+            "full-screen": "Full Screen",
+
+            "quote": "Quote"
+
+        };
+
+
+        document.getElementById("graphicType").textContent =
+            names[type] || "Graphic";
+
+
+        /*
+            Socket.IO could load the selected
+            graphic from the server here.
+
+            socket.emit("graphics:select", {
+                graphicId: type
+            });
+        */
+
+    }
+
+
+    function setTemplate(type) {
+
+        currentGraphic = type;
+
+        selectGraphic(type);
+
+    }
+
+
+    function newGraphic() {
+
+        document.getElementById("primaryText").value = "";
+
+        document.getElementById("secondaryText").value = "";
+
+        document.getElementById("categoryText").value = "";
+
+        updatePreview();
+
+    }
+
+
+    function saveGraphic() {
+
+        /*
+            socket.emit("graphics:save", {
+
+                id: currentGraphic,
+
+                primary:
+                    document.getElementById("primaryText").value,
+
+                secondary:
+                    document.getElementById("secondaryText").value,
+
+                category:
+                    document.getElementById("categoryText").value
+
+            });
+        */
+
+        console.log("Graphic saved");
+
+    }
+
+
+    function takeGraphic() {
+
+        /*
+            This is the important live command.
+
+            socket.emit("graphics:take", {
+
+                graphicId: currentGraphic,
+
+                primary:
+                    document.getElementById("primaryText").value,
+
+                secondary:
+                    document.getElementById("secondaryText").value,
+
+                category:
+                    document.getElementById("categoryText").value
+
+            });
+        */
+
+        document.getElementById("cgPreview")
+            .classList.remove("hidden");
+
+    }
+
+
+    function clearGraphic() {
+
+        /*
+            socket.emit("graphics:clear", {
+                graphicId: currentGraphic
+            });
+        */
+
+        document.getElementById("cgPreview")
+            .classList.add("hidden");
+
+    }
+
+
+    /*
+        Example Socket.IO architecture:
+
+        socket.on("graphics:take", data => {
+
+            // Send the graphic command
+            // to your graphics engine.
+
+        });
+
+        socket.on("graphics:clear", data => {
+
+            // Remove graphic from output.
+
+        });
+
+    */
+
+</script>
+
+</body>
+</html>
