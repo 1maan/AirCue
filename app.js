@@ -43,6 +43,7 @@ app.set('views', path.join(__dirname,'views'));
 app.use('/js', express.static('./public/js'))
 app.use('/css', express.static('./public/css'))
 app.use('/fonts', express.static('./public/fonts'))
+app.use('/img', express.static('./public/img'))
 
 app.use('/', pageRoutes);
 app.use('/api', apiRoutes);

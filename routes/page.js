@@ -50,5 +50,12 @@ router.get('/stories', (req, res)=>{
 router.get('/controller', (req, res)=>{
     res.render('controller')
 })
+router.get('/profile', (req, res)=>{
+    res.render('profile')
+})
+router.get('/settings', (req, res)=>{
+    res.render('settings')
+})
+
 
 module.exports = router;
