@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/output.css" />
+  </head>
+  <style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        margin: 0;
+        background: #101213;
+        color: #f4f4f4;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    input,
+    select {
+        outline: none;
+    }
+    .scrollbar::-webkit-scrollbar {
+        width: 5px;
+    }
+    .scrollbar::-webkit-scrollbar-thumb {
+        background: #34383b;
+    }
+  </style>
+  <body>
+    <div id="addUserModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+      <div class="w-[470px] border border-white/10 bg-[#181a1c]">
+        <div class="flex items-center justify-between border-b border-white/10 p-6">
+          <div>
+            <div class="text-[9px] tracking-[2px] text-white/25 uppercase">User Management</div>
+
+            <div class="mt-2 text-lg font-bold">Add User</div>
+          </div>
+
+          <button onclick="closeAddUser()" class="text-white/20 hover:text-white">×</button>
+        </div>
+
+        <div class="space-y-5 p-6">
+          <div>
+            <label class="mb-2 block text-[8px] tracking-[1px] text-white/20 uppercase"> Full Name </label>
+
+            <input value="hussain imaan" type="text" placeholder="Full name" id="fullname" class="h-10 w-full border border-white/10 bg-[#111315] px-3 text-xs" />
+          </div>
+
+          <div>
+            <label class="mb-2 block text-[8px] tracking-[1px] text-white/20 uppercase"> Username </label>
+
+            <input value="A335041" type="text" placeholder="username" id="username" class="h-10 w-full border border-white/10 bg-[#111315] px-3 text-xs" />
+          </div>
+
+          <div>
+            <label class="mb-2 block text-[8px] tracking-[1px] text-white/20 uppercase"> Email </label>
+
+            <input value="imaan.dev@gmail.com" type="email" placeholder="name@company.com" id="email" class="h-10 w-full border border-white/10 bg-[#111315] px-3 text-xs" />
+          </div>
+
+          <div>
+            <label class="mb-2 block text-[8px] tracking-[1px] text-white/20 uppercase"> Role </label>
+
+            <select id="role" class="h-10 w-full border border-white/10 bg-[#111315] px-3 text-xs text-white/60">
+              <option value="journalist">Journalist</option>
+              <option value="producer">Producer</option>
+              <option value="presenter">Presenter</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="mb-2 block text-[8px] tracking-[1px] text-white/20 uppercase"> Temporary Password </label>
+            <input value="Welcome" type="password" id="password" placeholder="Temporary password" class="h-10 w-full border border-white/10 bg-[#111315] px-3 text-xs" />
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-3 border-t border-white/10 p-5">
+          <button onclick="closeAddUser()" class="h-9 border border-white/10 px-5 text-[8px] tracking-[1px] text-white/40 uppercase">Cancel</button>
+
+          <button id="createUser" class="cursor-pointer h-9 bg-white px-6 text-[8px] font-bold tracking-[1px] text-black uppercase">Create User</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/add.js"></script>
+  </body>
+</html>

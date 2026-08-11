@@ -1,0 +1,19 @@
+@font-face {font-family: 'Outfit-Black';src: url(/fonts/Outfit-Black.ttf);}
+@font-face {font-family: 'Outfit-Bold';src: url(/fonts/Outfit-Bold.ttf);}
+@font-face {font-family: 'Outfit-ExtraBold';src: url(/fonts/Outfit-ExtraBold.ttf);}
+@font-face {font-family: 'Outfit-ExtraLight';src: url(/fonts/Outfit-ExtraLight.ttf);}
+@font-face {font-family: 'Outfit-Light';src: url(/fonts/Outfit-Light.ttf);}
+@font-face {font-family: 'Outfit-Medium';src: url(/fonts/Outfit-Medium.ttf);}
+@font-face {font-family: 'Outfit-Regular';src: url(/fonts/Outfit-Regular.ttf);}
+@font-face {font-family: 'Outfit-SemiBold';src: url(/fonts/Outfit-SemiBold.ttf);}
+@font-face {font-family: 'Outfit-Thin';src: url(/fonts/Outfit-Thin.ttf);}
+
+.Outfit-Black{font-family: 'Outfit-Black';}
+.Outfit-Bold{font-family: 'Outfit-Bold';}
+.Outfit-ExtraBold{font-family: 'Outfit-ExtraBold';}
+.Outfit-ExtraLight{font-family: 'Outfit-ExtraLight';}
+.Outfit-Light{font-family: 'Outfit-Light';}
+.Outfit-Medium{font-family: 'Outfit-Medium';}
+.Outfit-Regular{font-family: 'Outfit-Regular';}
+.Outfit-SemiBold{font-family: 'Outfit-SemiBold';}
+.Outfit-Thin{font-family: 'Outfit-Thin';}
