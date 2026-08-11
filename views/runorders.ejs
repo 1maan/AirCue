@@ -4,9 +4,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AirCue | Newsroom</title>
+    <title>AirCue | Run Order</title>
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/output.css" />
+    <link rel="shortcut icon" href="/img/logo.svg" type="image/x-icon">
+
     <style>
       * {
         box-sizing: border-box;
@@ -34,7 +36,933 @@
     <div class="min-h-screen">
 
       <%- include('partials/header') -%>
-     
+
+
+
+<main class="mx-auto max-w-375 p-4 md:p-7">
+
+
+<!-- PAGE HEADER -->
+<div class="mb-7 flex items-end justify-between gap-3">
+    <div>
+      <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Run Orders</h1>
+      <p class="mt-1 text-[12px] text-gray-400 break-all line-clamp-1">Plan and manage today's broadcasts.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="openPresetModal()" class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Use Preset</button>
+      <button onclick="openCreateModal()" class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">New <span class="hidden sm:block">Run</span> Order</button>
+    </div>
+  </div>
+
+<!-- DATE BAR -->
+
+<div class="mb-5 flex items-center gap-3 justify-between overflow-hidden rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
+  <div class="flex justify-between items-center gap-4">
+    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path></svg>
+    </button>
+    <div class="w-32.5">
+      <div class="Outfit-Medium text-[13px]">Tuesday, 11 Aug 2026</div>
+      <div class="mt-0.5 text-[10px] text-gray-400">Today's broadcast schedule</div>
+    </div>
+    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
+    </button>
+  </div>
+  <button class="Outfit-Medium text-[11px] text-gray-500 hover:text-black">Today</button>
+</div>
+
+
+
+<!-- CONTENT -->
+
+<div class="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_350px]">
+
+
+  <!-- TODAY'S RUN ORDERS -->
+
+  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+
+
+    <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+      <div>
+
+        <div class="text-[14px] Outfit-SemiBold">
+          Today's Run Orders
+        </div>
+
+        <div class="mt-0.5 text-[11px] text-gray-400">
+          3 rundowns scheduled
+        </div>
+
+      </div>
+
+
+      <div class="flex items-center gap-2">
+
+        <span class="rounded-full bg-green-50 px-2.5 py-1 text-[9px] Outfit-Medium text-green-600">
+          1 ON AIR
+        </span>
+
+        <span class="rounded-full bg-gray-100 px-2.5 py-1 text-[9px] Outfit-Medium text-gray-500">
+          2 PLANNED
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- RUN ORDER -->
+
+    <div class="border-b border-[#eeeeee] p-5">
+
+
+      <div class="flex items-start justify-between gap-5">
+
+
+        <div class="flex items-start gap-4">
+
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[11px] Outfit-SemiBold text-red-500">
+            19:00
+          </div>
+
+
+          <div>
+
+            <div class="flex items-center gap-2">
+
+              <h2 class="text-[14px] Outfit-SemiBold">
+                Evening News
+              </h2>
+
+              <span class="rounded-full bg-red-50 px-2 py-0.5 text-[8px] Outfit-Medium text-red-500">
+                ON AIR
+              </span>
+
+            </div>
+
+            <div class="mt-1 text-[10px] text-gray-400">
+              Main evening bulletin
+            </div>
+
+            <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+
+              <span>
+                18 stories
+              </span>
+
+              <span>
+                32:45
+              </span>
+
+              <span>
+                Producer: Hussain
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-1">
+
+          <button
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Open
+          </button>
+
+          <button
+            onclick="duplicateRunOrder('Evening News')"
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Duplicate
+          </button>
+
+          <button
+            class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black"
+          >
+            ⋮
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="mt-4 h-1 overflow-hidden rounded-full bg-gray-100">
+
+        <div class="h-full w-[42%] bg-red-500"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RUN ORDER -->
+
+    <div class="border-b border-[#eeeeee] p-5">
+
+
+      <div class="flex items-start justify-between gap-5">
+
+
+        <div class="flex items-start gap-4">
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-[11px] Outfit-SemiBold text-gray-600">
+            21:00
+          </div>
+
+
+          <div>
+
+            <h2 class="text-[14px] Outfit-SemiBold">
+              Night Bulletin
+            </h2>
+
+            <div class="mt-1 text-[10px] text-gray-400">
+              Late evening news
+            </div>
+
+            <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+
+              <span>
+                12 stories
+              </span>
+
+              <span>
+                21:30
+              </span>
+
+              <span>
+                Producer: Ahmed
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-1">
+
+          <button class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black">
+            Open
+          </button>
+
+          <button
+            onclick="duplicateRunOrder('Night Bulletin')"
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Duplicate
+          </button>
+
+          <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">
+            ⋮
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RUN ORDER -->
+
+    <div class="p-5">
+
+
+      <div class="flex items-start justify-between gap-5">
+
+
+        <div class="flex items-start gap-4">
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-[11px] Outfit-SemiBold text-gray-600">
+            23:00
+          </div>
+
+
+          <div>
+
+            <h2 class="text-[14px] Outfit-SemiBold">
+              Late News
+            </h2>
+
+            <div class="mt-1 text-[10px] text-gray-400">
+              Short late-night bulletin
+            </div>
+
+            <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+
+              <span>
+                8 stories
+              </span>
+
+              <span>
+                12:00
+              </span>
+
+              <span>
+                Producer: Mariyam
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-1">
+
+          <button class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black">
+            Open
+          </button>
+
+          <button
+            onclick="duplicateRunOrder('Late News')"
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Duplicate
+          </button>
+
+          <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">
+            ⋮
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- RIGHT PANEL -->
+
+  <aside class="space-y-5">
+
+
+    <!-- CREATE -->
+
+    <section class="rounded-xl border border-[#e3e3e3] bg-white">
+
+
+      <div class="border-b border-[#eeeeee] px-5 py-4">
+
+        <div class="text-[13px] Outfit-SemiBold">
+          Create Run Order
+        </div>
+
+        <div class="mt-0.5 text-[10px] text-gray-400">
+          Start with a blank rundown or a preset.
+        </div>
+
+      </div>
+
+
+      <div class="p-4">
+
+
+        <button
+          onclick="openCreateModal()"
+          class="mb-2 flex w-full items-center gap-3 rounded-lg border border-[#dddddd] p-4 text-left hover:bg-gray-50"
+        >
+
+          <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-lg">
+            +
+          </div>
+
+          <div>
+
+            <div class="text-[12px] Outfit-Medium">
+              Blank Run Order
+            </div>
+
+            <div class="mt-0.5 text-[10px] text-gray-400">
+              Start from an empty rundown
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <button
+          onclick="openPresetModal()"
+          class="flex w-full items-center gap-3 rounded-lg border border-[#dddddd] p-4 text-left hover:bg-gray-50"
+        >
+
+          <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-[11px] Outfit-SemiBold">
+            P
+          </div>
+
+          <div>
+
+            <div class="text-[12px] Outfit-Medium">
+              From Preset
+            </div>
+
+            <div class="mt-0.5 text-[10px] text-gray-400">
+              Use a saved newsroom format
+            </div>
+
+          </div>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRESETS -->
+
+    <section class="rounded-xl border border-[#e3e3e3] bg-white">
+
+
+      <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+        <div>
+
+          <div class="text-[13px] Outfit-SemiBold">
+            Saved Presets
+          </div>
+
+          <div class="mt-0.5 text-[10px] text-gray-400">
+            Your newsroom formats
+          </div>
+
+        </div>
+
+
+        <a
+          href="/settings/presets"
+          class="text-[10px] text-gray-400 hover:text-black"
+        >
+          Manage
+        </a>
+
+      </div>
+
+
+      <div class="p-2">
+
+
+        <button
+          onclick="usePreset('Evening News')"
+          class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50"
+        >
+
+          <div>
+
+            <div class="text-[11px] Outfit-Medium">
+              Evening News
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              18 story slots
+            </div>
+
+          </div>
+
+          <span class="text-gray-300">
+            ›
+          </span>
+
+        </button>
+
+
+        <button
+          onclick="usePreset('Morning Bulletin')"
+          class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50"
+        >
+
+          <div>
+
+            <div class="text-[11px] Outfit-Medium">
+              Morning Bulletin
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              12 story slots
+            </div>
+
+          </div>
+
+          <span class="text-gray-300">
+            ›
+          </span>
+
+        </button>
+
+
+        <button
+          onclick="usePreset('Weekend News')"
+          class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50"
+        >
+
+          <div>
+
+            <div class="text-[11px] Outfit-Medium">
+              Weekend News
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              15 story slots
+            </div>
+
+          </div>
+
+          <span class="text-gray-300">
+            ›
+          </span>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- RECENT -->
+
+    <section class="rounded-xl border border-[#e3e3e3] bg-white">
+
+
+      <div class="border-b border-[#eeeeee] px-5 py-4">
+
+        <div class="text-[13px] Outfit-SemiBold">
+          Recent Run Orders
+        </div>
+
+      </div>
+
+
+      <div class="p-2">
+
+
+        <button class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50">
+
+          <div>
+
+            <div class="text-[11px] Outfit-Medium">
+              Evening News
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              10 Aug • 18 stories
+            </div>
+
+          </div>
+
+          <span class="text-[9px] text-gray-400">
+            Yesterday
+          </span>
+
+        </button>
+
+
+        <button class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50">
+
+          <div>
+
+            <div class="text-[11px] Outfit-Medium">
+              Night Bulletin
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              09 Aug • 11 stories
+            </div>
+
+          </div>
+
+          <span class="text-[9px] text-gray-400">
+            2d ago
+          </span>
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </aside>
+
+</div>
+
+
+  </main>
+
+  <!-- CREATE MODAL -->
+
+  <div
+    id="createModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5"
+  >
+
+
+<div class="w-full max-w-md rounded-xl bg-white shadow-xl">
+
+
+  <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+    <div>
+
+      <div class="text-[14px] Outfit-SemiBold">
+        New Run Order
+      </div>
+
+      <div class="mt-0.5 text-[10px] text-gray-400">
+        Create today's broadcast rundown
+      </div>
+
+    </div>
+
+    <button
+      onclick="closeCreateModal()"
+      class="text-gray-400 hover:text-black"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="space-y-4 p-5">
+
+
+    <div>
+
+      <label class="mb-1.5 block text-[10px] Outfit-Medium text-gray-500">
+        Run Order Name
+      </label>
+
+      <input
+        type="text"
+        placeholder="Example: Evening News"
+        class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black"
+      >
+
+    </div>
+
+
+    <div class="grid grid-cols-2 gap-3">
+
+
+      <div>
+
+        <label class="mb-1.5 block text-[10px] Outfit-Medium text-gray-500">
+          Date
+        </label>
+
+        <input
+          type="date"
+          value="2026-08-11"
+          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label class="mb-1.5 block text-[10px] Outfit-Medium text-gray-500">
+          Air Time
+        </label>
+
+        <input
+          type="time"
+          value="19:00"
+          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <label class="mb-1.5 block text-[10px] Outfit-Medium text-gray-500">
+        Start With
+      </label>
+
+      <select
+        class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[12px] outline-none focus:border-black"
+      >
+
+        <option>Blank rundown</option>
+        <option>Evening News preset</option>
+        <option>Morning Bulletin preset</option>
+        <option>Duplicate yesterday's rundown</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <div class="flex justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
+
+    <button
+      onclick="closeCreateModal()"
+      class="rounded-lg px-4 py-2 text-[11px] text-gray-500 hover:bg-gray-100"
+    >
+      Cancel
+    </button>
+
+    <button
+      class="rounded-lg bg-black px-4 py-2 text-[11px] Outfit-Medium text-white"
+    >
+      Create Run Order
+    </button>
+
+  </div>
+
+</div>
+
+
+  </div>
+
+  <!-- PRESET MODAL -->
+
+  <div
+    id="presetModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5"
+  >
+
+
+<div class="w-full max-w-md rounded-xl bg-white shadow-xl">
+
+
+  <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+    <div>
+
+      <div class="text-[14px] Outfit-SemiBold">
+        Use a Preset
+      </div>
+
+      <div class="mt-0.5 text-[10px] text-gray-400">
+        Select a newsroom format
+      </div>
+
+    </div>
+
+    <button
+      onclick="closePresetModal()"
+      class="text-gray-400 hover:text-black"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="space-y-2 p-4">
+
+
+    <button
+      onclick="usePreset('Evening News')"
+      class="flex w-full items-center justify-between rounded-lg border border-[#e5e5e5] p-4 text-left hover:bg-gray-50"
+    >
+
+      <div>
+
+        <div class="text-[12px] Outfit-Medium">
+          Evening News
+        </div>
+
+        <div class="mt-1 text-[10px] text-gray-400">
+          Main evening format • 18 slots
+        </div>
+
+      </div>
+
+      <span class="text-gray-300">
+        ›
+      </span>
+
+    </button>
+
+
+    <button
+      onclick="usePreset('Morning Bulletin')"
+      class="flex w-full items-center justify-between rounded-lg border border-[#e5e5e5] p-4 text-left hover:bg-gray-50"
+    >
+
+      <div>
+
+        <div class="text-[12px] Outfit-Medium">
+          Morning Bulletin
+        </div>
+
+        <div class="mt-1 text-[10px] text-gray-400">
+          Morning format • 12 slots
+        </div>
+
+      </div>
+
+      <span class="text-gray-300">
+        ›
+      </span>
+
+    </button>
+
+
+    <button
+      onclick="usePreset('Weekend News')"
+      class="flex w-full items-center justify-between rounded-lg border border-[#e5e5e5] p-4 text-left hover:bg-gray-50"
+    >
+
+      <div>
+
+        <div class="text-[12px] Outfit-Medium">
+          Weekend News
+        </div>
+
+        <div class="mt-1 text-[10px] text-gray-400">
+          Weekend format • 15 slots
+        </div>
+
+      </div>
+
+      <span class="text-gray-300">
+        ›
+      </span>
+
+    </button>
+
+  </div>
+
+</div>
+
+
+  </div>
+
+</div>
+
+<script>
+
+  // CREATE MODAL
+
+  function openCreateModal() {
+
+    const modal = document.getElementById("createModal");
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+  }
+
+
+  function closeCreateModal() {
+
+    const modal = document.getElementById("createModal");
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+
+  }
+
+
+  // PRESET MODAL
+
+  function openPresetModal() {
+
+    const modal = document.getElementById("presetModal");
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+  }
+
+
+  function closePresetModal() {
+
+    const modal = document.getElementById("presetModal");
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+
+  }
+
+
+  // PRESET
+
+  function usePreset(name) {
+
+    console.log("Using preset:", name);
+
+    /*
+      Later:
+
+      fetch("/api/runorders", {
+        method: "POST",
+        body: JSON.stringify({
+          preset: name
+        })
+      })
+    */
+
+    closePresetModal();
+
+  }
+
+
+  // DUPLICATE
+
+  function duplicateRunOrder(name) {
+
+    console.log("Duplicating:", name);
+
+    /*
+      Later:
+
+      fetch("/api/runorders/duplicate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: name
+        })
+      })
+    */
+
+  }
+
+
+  // CLOSE MODALS BY CLICKING OUTSIDE
+
+  document.addEventListener("click", function(event) {
+
+    const createModal = document.getElementById("createModal");
+    const presetModal = document.getElementById("presetModal");
+
+    if (event.target === createModal) {
+      closeCreateModal();
+    }
+
+    if (event.target === presetModal) {
+      closePresetModal();
+    }
+
+  });
+
+</script>
+
+
     </div>
   </body>
 </html>

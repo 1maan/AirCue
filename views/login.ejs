@@ -31,6 +31,9 @@
       .mono {
           font-family: "Courier New", monospace;
       }
+      .placeholder-red::placeholder {
+          color: #e7000b;
+      }
     </style>
   </head>
   <body class="min-h-screen overflow-hidden">
@@ -114,13 +117,13 @@
           <div>
             <div class="mb-6">
               <label for="username" class="mb-3 block text-[10px] font-bold tracking-[2px] text-black/45 uppercase"> Username </label>
-              <input id="username" name="username" type="text" autocomplete="username" required placeholder="Enter username" class="h-12 w-full border-b-2 border-black/15 bg-transparent text-sm transition outline-none placeholder:text-black/25 focus:border-black" />
+              <input id="username" name="username" type="text" autocomplete="username" required placeholder="Enter username" class="h-12 w-full border-b-2 border-black/15 bg-transparent text-sm outline-none placeholder:text-black/25 focus:border-black" />
             </div>
             <div class="mb-10">
               <div class="mb-3 flex items-center justify-between">
                 <label for="password" class="block text-[10px] font-bold tracking-[2px] text-black/45 uppercase"> Password </label>
               </div>
-              <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter password" class="h-12 w-full border-b-2 border-black/15 bg-transparent text-sm transition outline-none placeholder:text-black/25 focus:border-black" />
+              <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter password" class="h-12 w-full border-b-2 border-black/15 bg-transparent text-sm outline-none placeholder:text-black/25 focus:border-black" />
             </div>
             <button id="loginButton" class="flex h-12 w-full select-none cursor-pointer items-center justify-center bg-[#17191b] px-5 text-white hover:bg-black active:bg-black/80">
               <span class="animate-spin hidden" id="button_Loading">

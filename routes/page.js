@@ -37,24 +37,24 @@ router.get('/screen', (req, res)=>{
     res.render('screen')
 })
 router.get('/dashboard', authPage, (req, res)=>{
-    res.render('dashboard')
+    res.render('dashboard', { fullname: req.session.fullname, role: req.session.role })
 })
-router.get('/runorders', (req, res)=>{
-    res.render('runorders')
-})
-
-router.get('/stories', (req, res)=>{
-    res.render('stories')
+router.get('/runorders', authPage, (req, res)=>{
+    res.render('runorders', { fullname: req.session.fullname, role: req.session.role })
 })
 
-router.get('/controller', (req, res)=>{
-    res.render('controller')
+router.get('/stories', authPage, (req, res)=>{
+    res.render('stories', { fullname: req.session.fullname, role: req.session.role })
 })
-router.get('/profile', (req, res)=>{
-    res.render('profile')
+
+router.get('/controller', authPage, (req, res)=>{
+    res.render('controller', { fullname: req.session.fullname, role: req.session.role })
 })
-router.get('/settings', (req, res)=>{
-    res.render('settings')
+router.get('/profile', authPage, (req, res)=>{
+    res.render('profile', { fullname: req.session.fullname, role: req.session.role })
+})
+router.get('/settings', authPage, (req, res)=>{
+    res.render('settings', { fullname: req.session.fullname, role: req.session.role })
 })
 
 

@@ -1,527 +1,1159 @@
-<!-- Main Application Layout Container -->
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-<div class="flex h-screen w-full flex-col overflow-hidden bg-[#292929] font-sans text-zinc-200 select-none">
-  <!-- Top Bar / Title Bar -->
-  <!-- <div class="flex h-7 w-full items-center justify-between bg-[#464646] px-2">
-    <div class="flex items-center gap-1.5">
-      <p class="outfit-Regular text-sm text-white">AirCue 1.7.5 </p>
-      <p class="outfit-Regular text-xs text-zinc-200">by</p>
-      <p class="outfit-Regular text-xs text-zinc-200">NaruLab</p>
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AirCue | Run Orders</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            outfit: ["Outfit", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Outfit", sans-serif;
+      background: #f5f5f5;
+      color: #171717;
+    }
+
+    .mono {
+      font-family: "Courier New", monospace;
+    }
+
+    .scrollbar::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: #d4d4d4;
+      border-radius: 10px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="min-h-screen">
+
+  <!-- TOP BAR -->
+
+  <header class="h-[68px] border-b border-[#e5e5e5] bg-white">
+
+
+<div class="flex h-full items-center px-7 gap-2">
+
+
+  <!-- BRAND -->
+
+  <div class="flex items-center gap-3">
+
+    <div class="flex h-9 w-9 items-center justify-center bg-black">
+
+      <div class="h-3.5 w-3.5 bg-white"></div>
+
     </div>
-    <div class="flex items-center space-x-2 text-xs text-zinc-400">
-      <span class="cursor-pointer px-2 py-0.5 hover:text-white">🗕</span>
-      <span class="cursor-pointer px-2 py-0.5 hover:text-white">🗖</span>
-      <span class="cursor-pointer px-2 py-0.5 hover:bg-red-600 hover:text-white">✕</span>
-    </div>
-  </div> -->
 
-  <!-- Menu Bar -->
-  <div class="z-50 flex w-full items-center border-t border-[#3C3E3D] bg-[#4b4b4b]">
-    <nav>
-      <div class="flex flex-row">
-        <!-- File Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">File</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>New Bulletin</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400 group-hover:text-white">Ctrl+N</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Open...</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+O</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Recent</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">&gt;</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Save</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+S</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Save As...</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+S</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Export Rundown</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+E</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Print...</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+P</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-red-700 hover:text-white">
-                <span>Exit</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400 group-hover:text-white">Alt+F4</span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div>
 
-        <!-- Edit Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Edit</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Undo</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Z</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Redo</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Y</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Cut</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+X</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Copy</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+C</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Paste</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+V</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Find...</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+F</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Replace...</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+H</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- View Menu (Includes Dashboard) -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">View</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Dashboard</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F10</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Rundown</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F11</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Story Editor</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+E</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>CG Preview</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F9</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Teleprompter</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F12</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Full Screen</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F11</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Reset Layout</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+R</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Rundown Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Rundown</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>New Story</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+N</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Delete Story</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Del</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Duplicate</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+D</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Move Up</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+Up</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Move Down</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+Down</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-red-700 hover:text-white">
-                <span>Breaking News</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+B</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Lock Rundown</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+L</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Story Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Story</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Assign Journalist</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+A</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Approve</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+P</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Reject</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+R</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>History</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Alt+H</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Notes</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Alt+N</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Attachments</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Alt+A</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Broadcast Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Broadcast</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Update Broadcast</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F5</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Refresh All</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+F5</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Send to Teleprompter</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+T</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Send to CG</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+G</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Next Story</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Down</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Previous Story</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Up</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="outfit-Bold flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-red-700 hover:text-white">
-                <span>Go On Air</span>
-                <span class="outfit-Regular text-[10px] text-white">Enter</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Graphics Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Graphics</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Lower Third</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F1</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Full Screen</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F2</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Breaking News Banner</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F3</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Clock</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F4</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Templates</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+T</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tools Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Tools</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Settings</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+,</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>User Management</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+U</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Logs</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+L</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Backup</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+B</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Keyboard Shortcuts</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+K</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Window Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Window</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Dock Panels</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+D</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Floating Windows</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Alt+F</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Reset Workspace</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+Shift+W</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Help Menu -->
-        <div class="group relative">
-          <p class="outfit-Regular cursor-pointer border border-transparent px-3 py-1 text-[12px] text-white hover:border-[#686868] hover:bg-[#575757]">Help</p>
-          <div class="absolute left-0 hidden text-left font-sans text-xs group-hover:block">
-            <div class="w-56 border border-[#3f3f4a] bg-[#1e1e24] py-1 text-zinc-200 shadow-2xl">
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Documentation</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F1</span>
-              </div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>Updates</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">Ctrl+U</span>
-              </div>
-              <div class="my-1 h-[1px] bg-[#3f3f4a]"></div>
-              <div class="flex cursor-pointer items-center justify-between px-3 py-1.5 hover:bg-[#0066cc] hover:text-white">
-                <span>About AirCue</span>
-                <span class="outfit-Regular text-[10px] text-zinc-400">F12</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="text-[17px] font-semibold tracking-[-0.5px]">
+        AirCue
       </div>
-    </nav>
+
+      <div class="text-[9px] text-gray-400">
+        Newsroom
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="flex flex-1 flex-col overflow-hidden">
-    <!-- Toolbar / Quick Action Bar -->
-    <div class="flex h-10 w-full items-center justify-between border-b border-[#3c3e3d] px-3">
-      <div class="flex items-center space-x-2">
-        <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
-          <span class="text-nowrap">New Bulletin</span>
-        </button>
-        <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
-          <span class="text-nowrap">Open Rundown</span>
-        </button>
-        <button class="flex cursor-pointer items-center space-x-1 border border-[#3f3f4a] bg-[#3c3c3d] px-2.5 py-1 text-xs hover:bg-[#33333d] hover:text-white active:bg-[#1f6feb]">
-          <span class="text-nowrap">Breaking News</span>
-        </button>
-      </div>
-      <div class="flex items-center space-x-3 text-xs text-zinc-400">
-        <span class="outfit-Regular">10:31:58</span>
-      </div>
+
+  <!-- NAV -->
+
+  <nav class="ml-14 hidden items-center gap-1 md:flex">
+
+    <a
+      href="/dashboard"
+      class="rounded-lg px-4 py-2 text-[12px] text-gray-500 hover:bg-gray-100 hover:text-black"
+    >
+      Dashboard
+    </a>
+
+    <a
+      href="/runorders"
+      class="rounded-lg bg-gray-100 px-4 py-2 text-[12px] font-medium text-black"
+    >
+      Run Orders
+    </a>
+
+    <a
+      href="/stories"
+      class="rounded-lg px-4 py-2 text-[12px] text-gray-500 hover:bg-gray-100 hover:text-black"
+    >
+      Stories
+    </a>
+
+    <a
+      href="/controller"
+      class="rounded-lg px-4 py-2 text-[12px] text-gray-500 hover:bg-gray-100 hover:text-black"
+    >
+      Teleprompter
+    </a>
+
+  </nav>
+
+
+  <!-- RIGHT -->
+
+  <div class="ml-auto flex items-center gap-6">
+
+    <div class="mono hidden text-[12px] md:block">
+      <span id="clock">00:00:00</span>
     </div>
 
-    <!-- Dashboard Main Content Grid -->
-    <div class="grid flex-1 grid-cols-12 gap-2 overflow-y-auto p-3">
-      <!-- Left Column: Active & Upcoming Bulletins (7 Cols) -->
-      <div class="col-span-12 flex flex-col space-y-2 lg:col-span-7">
-        <!-- Panel: Active Bulletin Summary -->
-        <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Active Broadcast Bulletin</h2>
-            <span class="outfit-Bold bg-red-700 px-2 py-0.5 text-[10px] text-white text-nowrap">ON AIR</span>
-          </div>
-          <div class="space-y-3 p-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="outfit-Bold text-sm text-white">18:00 Evening News Primary</p>
-                <p class="text-xs text-zinc-400">Studio: Vertual | Producer: Sarah Connor</p>
-              </div>
-              <div class="text-right">
-                <p class="outfit-Regular text-xs text-[#03da32]">Elapsed: 14:22 / 30:00</p>
-                <p class="outfit-Regular text-[10px] text-zinc-500">Stories: 14 Total</p>
-              </div>
-            </div>
-            <div class="h-1.5 w-full bg-[#2a2a31]">
-              <div class="h-full w-[48%] bg-[#03da32]"></div>
-            </div>
-            <div class="flex space-x-2 pt-2">
-              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white cursor-pointer">Open Live Rundown</button>
-              <button class="border border-[#3f3f4a] bg-[#25252b] px-3 py-1 text-xs hover:bg-[#0066cc] hover:text-white cursor-pointer">View Prompter</button>
-            </div>
-          </div>
-        </div>
 
-        <!-- Panel: Bulletin Queue Table -->
-        <div class="flex-1 border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Today's Bulletins Schedule</h2>
-            <div class="flex items-center gap-2">
-            <span class="outfit-Regular text-xs text-zinc-400 text-nowrap">Date: 2026-06-06</span>
-              <div class="flex items-center">
-              <span class="cursor-pointer">◀</span>
-              <span class="cursor-pointer">▶</span>
-              </div>
-            </div>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
-              <thead class="border-b border-[#3c3e3d] bg-[#202025] text-zinc-400">
-                <tr>
-                  <th class="p-2">ID</th>
-                  <th class="p-2">Bulletin Name</th>
-                  <th class="p-2">Air Time</th>
-                  <th class="p-2">Status</th>
-                  <th class="p-2">Producer</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-[#2a2a31]">
-                <tr class="hover:bg-[#22222a]">
-                  <td class="outfit-regular p-2 text-gray-100">01</td>
-                  <td class="p-2 text-white">FahugeKhabaru</td>
-                  <td class="outfit-regular p-2 text-gray-100">10:00:00</td>
-                  <td class="p-2"><span class="text-zinc-400">Completed</span></td>
-                  <td class="p-2 text-gray-100">Rafa</td>
-                </tr>
-                <tr class="bg-[#21262d] hover:bg-[#262c36]">
-                  <td class="outfit-Regular outfit-Bold p-2 text-[#03da32]">02</td>
-                  <td class="outfit-Bold p-2 text-white">FahugeKhabaru</td>
-                  <td class="outfit-regular p-2 text-gray-100">14:00:00</td>
-                  <td class="p-2"><span class="outfit-Bold text-[#03da32]">[LIVE]</span></td>
-                  <td class="p-2 text-gray-100">Rafa</td>
-                </tr>
-                <tr class="hover:bg-[#22222a]">
-                  <td class="outfit-regular p-2 text-gray-100">03</td>
-                  <td class="p-2 text-white">60Minutes</td>
-                  <td class="outfit-regular p-2 text-gray-100">20:00:00</td>
-                  <td class="p-2"><span class="text-amber-400">Draft / Prep</span></td>
-                  <td class="p-2 text-gray-100">Laisha</td>
-                </tr>
-                <tr class="hover:bg-[#22222a]">
-                  <td class="outfit-regular p-2 text-gray-100">03</td>
-                  <td class="p-2 text-white">SunGadi</td>
-                  <td class="outfit-regular p-2 text-gray-100">20:00:00</td>
-                  <td class="p-2"><span class="text-amber-400">Draft / Prep</span></td>
-                  <td class="p-2 text-gray-100">Shain</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    <button
+      class="hidden h-9 w-9 items-center justify-center rounded-full bg-[#1f1f1f] text-[10px] text-white md:flex"
+    >
+      HI
+    </button>
 
-      <!-- Right Column: System Telemetry & Quick Logs (5 Cols) -->
-      <div class="col-span-12 flex flex-col space-y-2 lg:col-span-5">
-        <!-- Panel: Hardware & Service Health -->
-        <div class="border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Broadcast Hardware Status</h2>
-          </div>
-          <div class="space-y-2 p-3 text-xs">
-            <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
-              <span>Node.js Process RAM (RSS)</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">142.4 MB</span>
-            </div>
-            <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
-              <span>V8 Heap Memory Usage</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">64.8% (88 MB)</span>
-            </div>
-            <div class="flex items-center justify-between border-b border-[#25252b] pb-2">
-              <span>System CPU Load (1m Avg)</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">14.2% (1.15)</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <span>Total Host RAM Available</span>
-              <span class="outfit-Regular flex items-center space-x-1 text-[#03da32]">7.2 GB / 16 GB</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- Panel: Live System Audit Log Stream -->
-        <div class="flex flex-1 flex-col border border-[#3c3e3d] bg-[#1a1a1a]">
-          <div class="flex items-center justify-between border-b border-[#3c3e3d] bg-[#0c0c0c] px-3 py-1.5 gap-2">
-            <h2 class="outfit-Bold text-xs tracking-wider text-zinc-300 text-nowrap line-clamp-1 break-all">Live Audit & Action Logs</h2>
-            <span class="outfit-Regular text-xs text-zinc-400 text-nowrap">Auto-refreshing</span>
-          </div>
-          <div class="outfit-Regular flex-1 space-y-1 overflow-y-auto p-2 text-[11px] text-zinc-400">
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:31:02</span> - <span class="text-white">Rafa</span> approved Story #04</div>
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:30:15</span> - <span class="text-[#03da32]">system</span> Rundown state updated to LIVE</div>
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:28:40</span> - <span class="text-white">Control</span> modified prompt speed</div>
-            <div class="border-b border-[#222227] pb-1"><span class="text-zinc-500">18:25:11</span> - <span class="text-white">Laisha</span> attached media package #02</div>
-            <div><span class="text-zinc-500">18:20:00</span> - <span class="text-[#03da32]">system</span> Database checkpoint backup completed</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <button
+      id="mobileNavBtn"
+      class="flex h-9 w-9 items-center justify-center rounded-full bg-[#1f1f1f] text-white md:hidden"
+    >
+      ☰
+    </button>
 
-    <!-- Bottom Status Bar -->
-    <div class="outfit-Regular flex h-6 w-full items-center justify-between border-t border-[#3c3e3d] px-3 text-[11px] text-zinc-400">
-      <div class="flex items-center space-x-4">
-        <span>Producer: Shama Suaib</span>
-        <span>Studio: Vertual</span>
-      </div>
-      <div class="flex items-center space-x-4">
-        <span>DB: MySQL local</span>
-        <span>Live: Connected</span>
-      </div>
-    </div>
   </div>
+
 </div>
+
+
+  </header>
+
+  <!-- PAGE -->
+
+  <main class="mx-auto max-w-[1500px] px-7 py-7">
+
+
+<!-- PAGE HEADER -->
+
+<div class="mb-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+
+  <div>
+
+    <div class="text-[11px] text-gray-400">
+      NEWSROOM / RUN ORDERS
+    </div>
+
+    <h1 class="mt-1 text-[26px] font-semibold tracking-[-0.8px]">
+      Run Orders
+    </h1>
+
+    <p class="mt-1 text-[12px] text-gray-400">
+      Plan and manage today's broadcasts.
+    </p>
+
+  </div>
+
+
+  <div class="flex gap-2">
+
+    <button
+      onclick="openPresetModal()"
+      class="rounded-lg border border-[#dddddd] bg-white px-4 py-2.5 text-[11px] font-medium hover:bg-gray-50"
+    >
+      Use Preset
+    </button>
+
+    <button
+      onclick="openCreateModal()"
+      class="rounded-lg bg-black px-4 py-2.5 text-[11px] font-medium text-white hover:bg-gray-800"
+    >
+      + New Run Order
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- DATE BAR -->
+
+<div class="mb-5 flex items-center justify-between rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
+
+  <div class="flex items-center gap-4">
+
+    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      ‹
+    </button>
+
+    <div>
+
+      <div class="text-[13px] font-medium">
+        Tuesday, 11 August 2026
+      </div>
+
+      <div class="mt-0.5 text-[10px] text-gray-400">
+        Today's broadcast schedule
+      </div>
+
+    </div>
+
+    <button class="flex h-8 w-8 items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      ›
+    </button>
+
+  </div>
+
+
+  <button class="text-[11px] font-medium text-gray-500 hover:text-black">
+    Today
+  </button>
+
+</div>
+
+
+<!-- CONTENT -->
+
+<div class="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_350px]">
+
+
+  <!-- TODAY'S RUN ORDERS -->
+
+  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+
+
+    <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+      <div>
+
+        <div class="text-[14px] font-semibold">
+          Today's Run Orders
+        </div>
+
+        <div class="mt-0.5 text-[11px] text-gray-400">
+          3 rundowns scheduled
+        </div>
+
+      </div>
+
+
+      <div class="flex items-center gap-2">
+
+        <span class="rounded-full bg-green-50 px-2.5 py-1 text-[9px] font-medium text-green-600">
+          1 ON AIR
+        </span>
+
+        <span class="rounded-full bg-gray-100 px-2.5 py-1 text-[9px] font-medium text-gray-500">
+          2 PLANNED
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- RUN ORDER -->
+
+    <div class="border-b border-[#eeeeee] p-5">
+
+
+      <div class="flex items-start justify-between gap-5">
+
+
+        <div class="flex items-start gap-4">
+
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[11px] font-semibold text-red-500">
+            19:00
+          </div>
+
+
+          <div>
+
+            <div class="flex items-center gap-2">
+
+              <h2 class="text-[14px] font-semibold">
+                Evening News
+              </h2>
+
+              <span class="rounded-full bg-red-50 px-2 py-0.5 text-[8px] font-medium text-red-500">
+                ON AIR
+              </span>
+
+            </div>
+
+            <div class="mt-1 text-[10px] text-gray-400">
+              Main evening bulletin
+            </div>
+
+            <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+
+              <span>
+                18 stories
+              </span>
+
+              <span>
+                32:45
+              </span>
+
+              <span>
+                Producer: Hussain
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-1">
+
+          <button
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Open
+          </button>
+
+          <button
+            onclick="duplicateRunOrder('Evening News')"
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Duplicate
+          </button>
+
+          <button
+            class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black"
+          >
+            ⋮
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="mt-4 h-1 overflow-hidden rounded-full bg-gray-100">
+
+        <div class="h-full w-[42%] bg-red-500"></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RUN ORDER -->
+
+    <div class="border-b border-[#eeeeee] p-5">
+
+
+      <div class="flex items-start justify-between gap-5">
+
+
+        <div class="flex items-start gap-4">
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-[11px] font-semibold text-gray-600">
+            21:00
+          </div>
+
+
+          <div>
+
+            <h2 class="text-[14px] font-semibold">
+              Night Bulletin
+            </h2>
+
+            <div class="mt-1 text-[10px] text-gray-400">
+              Late evening news
+            </div>
+
+            <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+
+              <span>
+                12 stories
+              </span>
+
+              <span>
+                21:30
+              </span>
+
+              <span>
+                Producer: Ahmed
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-1">
+
+          <button class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black">
+            Open
+          </button>
+
+          <button
+            onclick="duplicateRunOrder('Night Bulletin')"
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Duplicate
+          </button>
+
+          <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">
+            ⋮
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- RUN ORDER -->
+
+    <div class="p-5">
+
+
+      <div class="flex items-start justify-between gap-5">
+
+
+        <div class="flex items-start gap-4">
+
+          <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-[11px] font-semibold text-gray-600">
+            23:00
+          </div>
+
+
+          <div>
+
+            <h2 class="text-[14px] font-semibold">
+              Late News
+            </h2>
+
+            <div class="mt-1 text-[10px] text-gray-400">
+              Short late-night bulletin
+            </div>
+
+            <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+
+              <span>
+                8 stories
+              </span>
+
+              <span>
+                12:00
+              </span>
+
+              <span>
+                Producer: Mariyam
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="flex items-center gap-1">
+
+          <button class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black">
+            Open
+          </button>
+
+          <button
+            onclick="duplicateRunOrder('Late News')"
+            class="rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black"
+          >
+            Duplicate
+          </button>
+
+          <button class="flex h-8 w-8 items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">
+            ⋮
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- RIGHT PANEL -->
+
+  <aside class="space-y-5">
+
+
+    <!-- CREATE -->
+
+    <section class="rounded-xl border border-[#e3e3e3] bg-white">
+
+
+      <div class="border-b border-[#eeeeee] px-5 py-4">
+
+        <div class="text-[13px] font-semibold">
+          Create Run Order
+        </div>
+
+        <div class="mt-0.5 text-[10px] text-gray-400">
+          Start with a blank rundown or a preset.
+        </div>
+
+      </div>
+
+
+      <div class="p-4">
+
+
+        <button
+          onclick="openCreateModal()"
+          class="mb-2 flex w-full items-center gap-3 rounded-lg border border-[#dddddd] p-4 text-left hover:bg-gray-50"
+        >
+
+          <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-lg">
+            +
+          </div>
+
+          <div>
+
+            <div class="text-[12px] font-medium">
+              Blank Run Order
+            </div>
+
+            <div class="mt-0.5 text-[10px] text-gray-400">
+              Start from an empty rundown
+            </div>
+
+          </div>
+
+        </button>
+
+
+        <button
+          onclick="openPresetModal()"
+          class="flex w-full items-center gap-3 rounded-lg border border-[#dddddd] p-4 text-left hover:bg-gray-50"
+        >
+
+          <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 text-[11px] font-semibold">
+            P
+          </div>
+
+          <div>
+
+            <div class="text-[12px] font-medium">
+              From Preset
+            </div>
+
+            <div class="mt-0.5 text-[10px] text-gray-400">
+              Use a saved newsroom format
+            </div>
+
+          </div>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRESETS -->
+
+    <section class="rounded-xl border border-[#e3e3e3] bg-white">
+
+
+      <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+        <div>
+
+          <div class="text-[13px] font-semibold">
+            Saved Presets
+          </div>
+
+          <div class="mt-0.5 text-[10px] text-gray-400">
+            Your newsroom formats
+          </div>
+
+        </div>
+
+
+        <a
+          href="/settings/presets"
+          class="text-[10px] text-gray-400 hover:text-black"
+        >
+          Manage
+        </a>
+
+      </div>
+
+
+      <div class="p-2">
+
+
+        <button
+          onclick="usePreset('Evening News')"
+          class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50"
+        >
+
+          <div>
+
+            <div class="text-[11px] font-medium">
+              Evening News
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              18 story slots
+            </div>
+
+          </div>
+
+          <span class="text-gray-300">
+            ›
+          </span>
+
+        </button>
+
+
+        <button
+          onclick="usePreset('Morning Bulletin')"
+          class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50"
+        >
+
+          <div>
+
+            <div class="text-[11px] font-medium">
+              Morning Bulletin
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              12 story slots
+            </div>
+
+          </div>
+
+          <span class="text-gray-300">
+            ›
+          </span>
+
+        </button>
+
+
+        <button
+          onclick="usePreset('Weekend News')"
+          class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50"
+        >
+
+          <div>
+
+            <div class="text-[11px] font-medium">
+              Weekend News
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              15 story slots
+            </div>
+
+          </div>
+
+          <span class="text-gray-300">
+            ›
+          </span>
+
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- RECENT -->
+
+    <section class="rounded-xl border border-[#e3e3e3] bg-white">
+
+
+      <div class="border-b border-[#eeeeee] px-5 py-4">
+
+        <div class="text-[13px] font-semibold">
+          Recent Run Orders
+        </div>
+
+      </div>
+
+
+      <div class="p-2">
+
+
+        <button class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50">
+
+          <div>
+
+            <div class="text-[11px] font-medium">
+              Evening News
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              10 Aug • 18 stories
+            </div>
+
+          </div>
+
+          <span class="text-[9px] text-gray-400">
+            Yesterday
+          </span>
+
+        </button>
+
+
+        <button class="flex w-full items-center justify-between rounded-lg p-3 text-left hover:bg-gray-50">
+
+          <div>
+
+            <div class="text-[11px] font-medium">
+              Night Bulletin
+            </div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">
+              09 Aug • 11 stories
+            </div>
+
+          </div>
+
+          <span class="text-[9px] text-gray-400">
+            2d ago
+          </span>
+
+        </button>
+
+      </div>
+
+    </section>
+
+  </aside>
+
+</div>
+
+
+  </main>
+
+  <!-- CREATE MODAL -->
+
+  <div
+    id="createModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5"
+  >
+
+
+<div class="w-full max-w-md rounded-xl bg-white shadow-xl">
+
+
+  <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+    <div>
+
+      <div class="text-[14px] font-semibold">
+        New Run Order
+      </div>
+
+      <div class="mt-0.5 text-[10px] text-gray-400">
+        Create today's broadcast rundown
+      </div>
+
+    </div>
+
+    <button
+      onclick="closeCreateModal()"
+      class="text-gray-400 hover:text-black"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="space-y-4 p-5">
+
+
+    <div>
+
+      <label class="mb-1.5 block text-[10px] font-medium text-gray-500">
+        Run Order Name
+      </label>
+
+      <input
+        type="text"
+        placeholder="Example: Evening News"
+        class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black"
+      >
+
+    </div>
+
+
+    <div class="grid grid-cols-2 gap-3">
+
+
+      <div>
+
+        <label class="mb-1.5 block text-[10px] font-medium text-gray-500">
+          Date
+        </label>
+
+        <input
+          type="date"
+          value="2026-08-11"
+          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label class="mb-1.5 block text-[10px] font-medium text-gray-500">
+          Air Time
+        </label>
+
+        <input
+          type="time"
+          value="19:00"
+          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div>
+
+      <label class="mb-1.5 block text-[10px] font-medium text-gray-500">
+        Start With
+      </label>
+
+      <select
+        class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[12px] outline-none focus:border-black"
+      >
+
+        <option>Blank rundown</option>
+        <option>Evening News preset</option>
+        <option>Morning Bulletin preset</option>
+        <option>Duplicate yesterday's rundown</option>
+
+      </select>
+
+    </div>
+
+  </div>
+
+
+  <div class="flex justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
+
+    <button
+      onclick="closeCreateModal()"
+      class="rounded-lg px-4 py-2 text-[11px] text-gray-500 hover:bg-gray-100"
+    >
+      Cancel
+    </button>
+
+    <button
+      class="rounded-lg bg-black px-4 py-2 text-[11px] font-medium text-white"
+    >
+      Create Run Order
+    </button>
+
+  </div>
+
+</div>
+
+
+  </div>
+
+  <!-- PRESET MODAL -->
+
+  <div
+    id="presetModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5"
+  >
+
+
+<div class="w-full max-w-md rounded-xl bg-white shadow-xl">
+
+
+  <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+
+    <div>
+
+      <div class="text-[14px] font-semibold">
+        Use a Preset
+      </div>
+
+      <div class="mt-0.5 text-[10px] text-gray-400">
+        Select a newsroom format
+      </div>
+
+    </div>
+
+    <button
+      onclick="closePresetModal()"
+      class="text-gray-400 hover:text-black"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <div class="space-y-2 p-4">
+
+
+    <button
+      onclick="usePreset('Evening News')"
+      class="flex w-full items-center justify-between rounded-lg border border-[#e5e5e5] p-4 text-left hover:bg-gray-50"
+    >
+
+      <div>
+
+        <div class="text-[12px] font-medium">
+          Evening News
+        </div>
+
+        <div class="mt-1 text-[10px] text-gray-400">
+          Main evening format • 18 slots
+        </div>
+
+      </div>
+
+      <span class="text-gray-300">
+        ›
+      </span>
+
+    </button>
+
+
+    <button
+      onclick="usePreset('Morning Bulletin')"
+      class="flex w-full items-center justify-between rounded-lg border border-[#e5e5e5] p-4 text-left hover:bg-gray-50"
+    >
+
+      <div>
+
+        <div class="text-[12px] font-medium">
+          Morning Bulletin
+        </div>
+
+        <div class="mt-1 text-[10px] text-gray-400">
+          Morning format • 12 slots
+        </div>
+
+      </div>
+
+      <span class="text-gray-300">
+        ›
+      </span>
+
+    </button>
+
+
+    <button
+      onclick="usePreset('Weekend News')"
+      class="flex w-full items-center justify-between rounded-lg border border-[#e5e5e5] p-4 text-left hover:bg-gray-50"
+    >
+
+      <div>
+
+        <div class="text-[12px] font-medium">
+          Weekend News
+        </div>
+
+        <div class="mt-1 text-[10px] text-gray-400">
+          Weekend format • 15 slots
+        </div>
+
+      </div>
+
+      <span class="text-gray-300">
+        ›
+      </span>
+
+    </button>
+
+  </div>
+
+</div>
+
+
+  </div>
+
+</div>
+
+<script>
+
+
+  // CLOCK
+
+  function updateClock() {
+
+    const now = new Date();
+
+    const h = String(now.getHours()).padStart(2, "0");
+    const m = String(now.getMinutes()).padStart(2, "0");
+    const s = String(now.getSeconds()).padStart(2, "0");
+
+    document.getElementById("clock").textContent =
+      `${h}:${m}:${s}`;
+
+  }
+
+  updateClock();
+
+  setInterval(updateClock, 1000);
+
+
+  // CREATE MODAL
+
+  function openCreateModal() {
+
+    const modal = document.getElementById("createModal");
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+  }
+
+
+  function closeCreateModal() {
+
+    const modal = document.getElementById("createModal");
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+
+  }
+
+
+  // PRESET MODAL
+
+  function openPresetModal() {
+
+    const modal = document.getElementById("presetModal");
+
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+  }
+
+
+  function closePresetModal() {
+
+    const modal = document.getElementById("presetModal");
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+
+  }
+
+
+  // PRESET
+
+  function usePreset(name) {
+
+    console.log("Using preset:", name);
+
+    /*
+      Later:
+
+      fetch("/api/runorders", {
+        method: "POST",
+        body: JSON.stringify({
+          preset: name
+        })
+      })
+    */
+
+    closePresetModal();
+
+  }
+
+
+  // DUPLICATE
+
+  function duplicateRunOrder(name) {
+
+    console.log("Duplicating:", name);
+
+    /*
+      Later:
+
+      fetch("/api/runorders/duplicate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: name
+        })
+      })
+    */
+
+  }
+
+
+  // CLOSE MODALS BY CLICKING OUTSIDE
+
+  document.addEventListener("click", function(event) {
+
+    const createModal = document.getElementById("createModal");
+    const presetModal = document.getElementById("presetModal");
+
+    if (event.target === createModal) {
+      closeCreateModal();
+    }
+
+    if (event.target === presetModal) {
+      closePresetModal();
+    }
+
+  });
+
+</script>
+
+</body>
+</html>

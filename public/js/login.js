@@ -11,12 +11,16 @@ loginButton.addEventListener("click", ()=>{
 
     if(!username.value){
         username.classList.add('border-red-600');
+        username.classList.add("placeholder-red");
+        username.setAttribute('placeholder', 'Enter your username');
         button_Loading.classList.add('hidden')
         button_Text.classList.remove('hidden') 
         return;
     }
     if(!password.value){
         password.classList.add('border-red-600');
+        password.setAttribute("placeholder", "Enter your password");
+        password.classList.add("placeholder-red");
         button_Loading.classList.add('hidden')
         button_Text.classList.remove('hidden') 
         return;
@@ -57,10 +61,28 @@ loginButton.addEventListener("click", ()=>{
 username.addEventListener('input', ()=>{
     if(username.classList.contains('border-red-600')){
         username.classList.remove('border-red-600')
+        username.classList.remove("placeholder-red");
+        username.setAttribute('placeholder', 'Enter username');
+    }
+})
+username.addEventListener('click', ()=>{
+    if(username.classList.contains('placeholder-red')){
+        username.classList.remove('border-red-600')
+        username.classList.remove("placeholder-red");
+        username.setAttribute('placeholder', 'Enter username');
     }
 })
 password.addEventListener('input', ()=>{
     if(password.classList.contains('border-red-600')){
         password.classList.remove('border-red-600')
+        password.classList.remove("placeholder-red");
+        password.setAttribute('placeholder', 'Enter password');
+    }
+})
+password.addEventListener('click', ()=>{
+    if(password.classList.contains('placeholder-red')){
+        password.classList.remove('border-red-600')
+        password.classList.remove("placeholder-red");
+        password.setAttribute('placeholder', 'Enter password');
     }
 })

@@ -77,7 +77,7 @@ router.post('/login', (req, res)=>{
     if(!validatePassword(password)){
         return res.status(400).json({ success: false, message: 'Password does not meet complexity requirements' });
     }
-    const checkDet = "SELECT id, password_hash FROM users WHERE username = ? LIMIT 1"
+    const checkDet = "SELECT id, full_name, role, password_hash FROM users WHERE username = ? LIMIT 1"
     db.query(checkDet, username, (err, result)=>{
         if(err){
             return res.status(500).json({ success: false, message: 'Database error. Please try again later.' });
@@ -94,6 +94,8 @@ router.post('/login', (req, res)=>{
             }
 
             req.session.userID = result[0].id
+            req.session.fullname = result[0].full_name
+            req.session.role = result[0].role
             
             return res.status(200).json({ success: true, message: 'User logged in successfully' });
         })

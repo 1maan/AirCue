@@ -7,6 +7,8 @@
     <title>AirCue | Newsroom</title>
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/output.css" />
+    <link rel="shortcut icon" href="/img/logo.svg" type="image/x-icon">
+
     <style>
       * {
         box-sizing: border-box;
@@ -35,6 +37,303 @@
 
       <%- include('partials/header') -%>
      
+
+
+
+
+
+
+
+
+<main class="mx-auto max-w-375 p-4 md:p-7">
+  <!-- PAGE HEADER -->
+  <div class="mb-7 flex items-end justify-between gap-3">
+    <div>
+      <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px]">60 Minutes</h1>
+      <div class="mt-1 flex items-center gap-2 text-[12px] text-gray-400">
+        <span class="text-nowrap">Today</span>
+        <span>•</span>
+        <span class="text-nowrap">20:00</span>
+        <span>•</span>
+        <span class="text-nowrap">16 stories</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Preview</button>
+      <button class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">Open <span class="hidden sm:block">Run</span> Order</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="grid gap-6 md:grid-cols-[1fr_340px]">
+    <!-- RUNDOWN -->
+    <section class="overflow-hidden overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+      <!-- HEADER -->
+      <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+        <div>
+          <div class="Outfit-SemiBold text-[14px]">Rundown</div>
+          <div class="mt-0.5 text-[11px] text-gray-400">Current bulletin live</div>
+        </div>
+      </div>
+
+      <!-- TABLE HEADER -->
+      <div class="flex gap-5 border-b border-[#eeeeee] bg-[#fafafa] px-5 py-2.5 md:grid md:grid-cols-[50px_1fr_100px_80px_80px] md:gap-0">
+        <div class="Outfit-Medium text-[10px] text-gray-400">#</div>
+
+        <div class="Outfit-Medium text-[10px] text-gray-400">Story</div>
+
+        <div class="Outfit-Medium hidden text-[10px] text-gray-400 md:block">Type</div>
+
+        <div class="Outfit-Medium hidden text-[10px] text-gray-400 md:block">Duration</div>
+
+        <div class="Outfit-Medium hidden text-right text-[10px] text-gray-400 md:block">Status</div>
+      </div>
+
+      <!-- STORIES -->
+      <div class="scrollbar max-h-[580px] overflow-y-auto">
+        <!-- ACTIVE -->
+        <div class="flex grid-cols-[50px_1fr_100px_80px_80px] items-center gap-5 border-b border-l-[3px] border-[#eeeeee] border-l-red-500 bg-red-50/40 px-5 py-4 md:grid md:gap-0">
+          <div class="Outfit-Medium text-[12px] text-gray-400">01</div>
+
+          <div>
+            <div class="Outfit-Medium line-clamp-2 text-[13px] break-all">Government announces new economic measures</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Lead story</div>
+          </div>
+
+          <div class="hidden text-[10px] text-gray-500 md:block">VO / SOT</div>
+
+          <div class="mono hidden text-[10px] text-gray-500 md:block">01:42</div>
+
+          <div class="Outfit-Medium hidden text-right text-[10px] text-red-500 md:block">ON AIR</div>
+        </div>
+
+        <!-- STORY -->
+        <div class="flex grid-cols-[50px_1fr_100px_80px_80px] items-center gap-5 border-b border-[#eeeeee] px-5 py-4 hover:bg-gray-50 md:grid md:gap-0">
+          <div class="text-[12px] text-gray-400">02</div>
+
+          <div>
+            <div class="Outfit-Medium text-[13px]">Weather update for the Maldives</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Weather package</div>
+          </div>
+
+          <div class="hidden text-[10px] text-gray-500 md:block">PKG</div>
+
+          <div class="mono hidden text-[10px] text-gray-500 md:block">02:15</div>
+
+          <div class="Outfit-Medium hidden text-right text-[10px] text-green-600 md:block">READY</div>
+        </div>
+
+        <!-- STORY -->
+        <div class="flex grid-cols-[50px_1fr_100px_80px_80px] items-center gap-5 border-b border-[#eeeeee] px-5 py-4 hover:bg-gray-50 md:grid md:gap-0">
+          <div class="text-[12px] text-gray-400">03</div>
+
+          <div>
+            <div class="Outfit-Medium text-[13px]">Parliament session continues today</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Live report</div>
+          </div>
+
+          <div class="hidden text-[10px] text-gray-500 md:block">LIVE</div>
+
+          <div class="mono hidden text-[10px] text-gray-500 md:block">03:05</div>
+
+          <div class="Outfit-Medium hidden text-right text-[10px] text-blue-600 md:block">NEXT</div>
+        </div>
+
+        <!-- BREAK -->
+        <div class="border-b border-[#eeeeee] bg-[#fafafa] px-5 py-3">
+          <div class="flex items-center gap-3">
+            <div class="h-px flex-1 bg-gray-200"></div>
+
+            <span class="Outfit-Medium text-[9px] text-gray-400"> COMMERCIAL BREAK </span>
+
+            <div class="h-px flex-1 bg-gray-200"></div>
+          </div>
+        </div>
+
+        <!-- STORY -->
+        <div class="flex grid-cols-[50px_1fr_100px_80px_80px] items-center gap-5 border-b border-[#eeeeee] px-5 py-4 hover:bg-gray-50 md:grid md:gap-0">
+          <div class="text-[12px] text-gray-400">04</div>
+
+          <div>
+            <div class="Outfit-Medium text-[13px]">Sports roundup</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Sports desk</div>
+          </div>
+
+          <div class="hidden text-[10px] text-gray-500 md:block">VO</div>
+
+          <div class="mono hidden text-[10px] text-gray-500 md:block">00:58</div>
+
+          <div class="Outfit-Medium hidden text-right text-[10px] text-gray-400 md:block">DRAFT</div>
+        </div>
+
+        <!-- STORY -->
+        <div class="flex grid-cols-[50px_1fr_100px_80px_80px] items-center gap-5 border-b border-[#eeeeee] px-5 py-4 hover:bg-gray-50 md:grid md:gap-0">
+          <div class="text-[12px] text-gray-400">05</div>
+
+          <div>
+            <div class="Outfit-Medium text-[13px]">New developments in local transport</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Reporter package</div>
+          </div>
+
+          <div class="hidden text-[10px] text-gray-500 md:block">PKG</div>
+
+          <div class="mono hidden text-[10px] text-gray-500 md:block">01:36</div>
+
+          <div class="Outfit-Medium hidden text-right text-[10px] text-green-600 md:block">READY</div>
+        </div>
+
+        <!-- STORY -->
+        <div class="flex grid-cols-[50px_1fr_100px_80px_80px] items-center gap-5 px-5 py-4 hover:bg-gray-50 md:grid md:gap-0">
+          <div class="text-[12px] text-gray-400">06</div>
+
+          <div>
+            <div class="Outfit-Medium text-[13px]">Business market update</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Business desk</div>
+          </div>
+
+          <div class="hidden text-[10px] text-gray-500 md:block">VO</div>
+
+          <div class="mono hidden text-[10px] text-gray-500 md:block">01:12</div>
+
+          <div class="Outfit-Medium hidden text-right text-[10px] text-green-600 md:block">READY</div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="flex items-center justify-between border-t border-[#eeeeee] bg-[#fafafa] px-5 py-3">
+        <div class="flex gap-5 text-[10px] text-gray-400">
+          <span> Stories <strong class="ml-1 text-black">06</strong> </span>
+
+          <span> Duration <strong class="mono ml-1 text-black">18:42</strong> </span>
+        </div>
+
+        <span class="text-[10px] text-gray-400"> Saved 18:43 </span>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL -->
+    <aside class="space-y-4">
+      <!-- CURRENT -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div class="Outfit-Medium text-[12px]">Now Playing</div>
+
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-red-500"></span>
+
+            <span class="Outfit-Medium text-[10px] text-red-500"> On Air </span>
+          </div>
+        </div>
+
+        <div class="p-5">
+          <div class="text-[10px] text-gray-400">Story 01</div>
+
+          <div class="Outfit-Medium mt-2 text-[16px] leading-snug">Government announces new economic measures</div>
+
+          <div class="mt-6 flex items-end justify-between">
+            <div>
+              <div class="text-[10px] text-gray-400">Elapsed</div>
+
+              <div class="mono mt-1 text-2xl font-bold">01:42</div>
+            </div>
+
+            <div class="text-right">
+              <div class="text-[10px] text-gray-400">Duration</div>
+
+              <div class="mono Outfit-Medium mt-1 text-sm">02:45</div>
+            </div>
+          </div>
+
+          <div class="mt-5 h-1 rounded-full bg-gray-100">
+            <div class="h-1 w-[62%] rounded-full bg-red-500"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEXT -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="border-b border-[#eeeeee] px-5 py-4">
+          <div class="Outfit-Medium text-[12px]">Up Next</div>
+        </div>
+
+        <div class="p-5">
+          <div class="text-[10px] text-gray-400">Story 02</div>
+
+          <div class="Outfit-Medium mt-2 text-[13px]">Weather update for the Maldives</div>
+
+          <div class="mt-1 text-[10px] text-gray-400">PKG • 02:15</div>
+        </div>
+      </section>
+
+      <!-- CONTROLS -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="border-b border-[#eeeeee] px-5 py-4">
+          <div class="Outfit-Medium text-[12px]">Controls</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-px bg-[#eeeeee]">
+          <a href="/controller" class="bg-white p-5 hover:bg-gray-50">
+            <div class="Outfit-Medium text-[12px]">Teleprompter</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Controller</div>
+          </a>
+
+          <a href="/runorders" class="bg-white p-5 hover:bg-gray-50">
+            <div class="Outfit-Medium text-[12px]">Run Order</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Rundown</div>
+          </a>
+
+          <a href="/breaking-news" class="bg-white p-5 hover:bg-gray-50">
+            <div class="flex items-center gap-2">
+              <div class="Outfit-Medium text-[12px]">Breaking News</div>
+
+              <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+            </div>
+
+            <div class="mt-1 text-[10px] text-gray-400">2 pending</div>
+          </a>
+
+          <a href="/stories/new" class="bg-white p-5 hover:bg-gray-50">
+            <div class="Outfit-Medium text-[12px]">New Story</div>
+
+            <div class="mt-1 text-[10px] text-gray-400">Create story</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- SYSTEM -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="border-b border-[#eeeeee] px-5 py-4">
+          <div class="Outfit-Medium text-[12px]">System</div>
+        </div>
+
+        <div class="px-5 py-2">
+          <div class="flex items-center justify-between py-3">
+            <span class="text-[10px]"> Teleprompter (192.168.10.19)</span>
+            <span class="text-[10px] text-green-600"> Connected </span>
+          </div>
+          <div class="w-full border-b border-gray-100 "></div>
+          <div class="flex items-center justify-between py-3">
+            <span class="text-[10px]"> Teleprompter (192.168.10.251)</span>
+            <span class="text-[10px] text-green-600"> Connected </span>
+          </div>
+        </div>
+      </section>
+    </aside>
+  </div>
+</main>
+
+
+
+
+
     </div>
   </body>
 </html>
