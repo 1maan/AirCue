@@ -37,6 +37,79 @@
 
       <%- include('partials/header') -%>
      
+
+
+<main class="mx-auto max-w-375 p-4 md:p-7">
+
+
+<!-- PAGE HEADER -->
+<div class="mb-7 flex items-end justify-between gap-3">
+    <div>
+      <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Stories</h1>
+      <p class="mt-1 text-[12px] text-gray-400 break-all line-clamp-1">Write and manage today's news stories.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800"> New Story</button>
+    </div>
+  </div>
+
+<!-- DATE BAR -->
+
+<div class="mb-5 flex items-center gap-3 justify-between overflow-hidden rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
+  <div class="flex justify-between items-center gap-4">
+    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path></svg>
+    </button>
+    <div class="w-33.75">
+      <div class="Outfit-Medium text-[13px]">Tuesday, 11 Aug 2026</div>
+      <div class="mt-0.5 text-[10px] text-gray-400">Today’s newsroom story lineup</div>
+    </div>
+    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
+    </button>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <div class="text-right">
+      <div class="text-[9px] text-gray-400">STORIES</div>
+      <div class="text-[13px] font-semibold">14</div>
+    </div>
+    <div class="h-7 w-px bg-gray-200"></div>
+    <div class="text-right">
+      <div class="text-[9px] text-gray-400">READY</div>
+      <div class="text-[13px] font-semibold text-green-600">9</div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+</main>
+
+
+
+
+</div>
+
+<script>
+function toggleRunOrderMenu(button) {
+
+  const menu = button.parentElement.querySelector(".runorder-menu");
+
+  document.querySelectorAll(".runorder-menu").forEach(item => {
+    if (item !== menu) {
+      item.classList.add("hidden");
+    }
+  });
+
+  menu.classList.toggle("hidden");
+}
+
+</script>
+
+
     </div>
   </body>
 </html>

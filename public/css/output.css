@@ -831,6 +831,15 @@
   .w-32\.5 {
     width: calc(var(--spacing) * 32.5);
   }
+  .w-33 {
+    width: calc(var(--spacing) * 33);
+  }
+  .w-33\.75 {
+    width: calc(var(--spacing) * 33.75);
+  }
+  .w-36 {
+    width: calc(var(--spacing) * 36);
+  }
   .w-40 {
     width: calc(var(--spacing) * 40);
   }
@@ -860,6 +869,12 @@
   }
   .w-\[130px\] {
     width: 130px;
+  }
+  .w-\[135px\] {
+    width: 135px;
+  }
+  .w-\[140px\] {
+    width: 140px;
   }
   .w-\[190px\] {
     width: 190px;
