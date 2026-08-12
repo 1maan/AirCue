@@ -20,3 +20,18 @@ CREATE TABLE IF NOT EXISTS users (
 
 INSERT INTO users (full_name, username, email, role, password_hash)
 VALUE ('Hussain imaan', 'A335041', 'imaan.dev@gmail.com', 'admin', '$2b$10$RRhS4brHRykq9FnqnTt5yeG8skFTzHf5gYlO/fdQj2.lo1WQv7UQu');
+
+
+CREATE TABLE stories (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    story_date DATE NOT NULL,
+    slug VARCHAR(100) NOT NULL,
+    language ENUM('dv', 'en') NOT NULL DEFAULT 'dv',
+    cg_text VARCHAR(255) DEFAULT NULL,
+    story_text LONGTEXT NOT NULL,
+    status ENUM( 'draft', 'ready', 'approved', 'archived') NOT NULL DEFAULT 'draft',
+    created_by INT UNSIGNED NOT NULL,
+    updated_by INT UNSIGNED DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

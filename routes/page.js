@@ -56,7 +56,7 @@ router.get('/settings', authPage, (req, res)=>{
 router.get('/breaking', (req, res) => {
   res.render('breaking', { fullname: req.session.fullname, role: req.session.role })
 });
-app.get('/activity', (req, res) => {
+router.get('/activity', (req, res) => {
   res.render('activity');
 });
 router.get('/add', authPage, (req, res)=>{
