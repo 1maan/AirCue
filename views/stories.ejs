@@ -18,9 +18,6 @@
         background: #f5f5f5;
         color: #171717;
       }
-      .mono {
-        font-family: "Courier New", monospace;
-      }
       .scrollbar::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -56,20 +53,20 @@
 <!-- DATE BAR -->
 
 <div class="mb-5 flex items-center gap-3 justify-between overflow-hidden rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
-  <div class="flex justify-between items-center gap-4">
+  <div class="flex max-[470px]:w-full justify-between items-center gap-4">
     <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
       <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path></svg>
     </button>
-    <div class="w-33.75">
-      <div class="Outfit-Medium text-[13px]">Tuesday, 11 Aug 2026</div>
-      <div class="mt-0.5 text-[10px] text-gray-400">Today’s newsroom story lineup</div>
+    <div class="w-33.75 flex flex-col max-[470px]:items-center">
+      <div class="Outfit-Medium max-[470px]:text-center text-[13px] line-clamp-2 break-all">Tuesday, 11 Aug 2026</div>
+      <div class="mt-0.5 max-[470px]:text-center text-[10px] text-gray-400 line-clamp-2 break-all">Today’s newsroom story lineup</div>
     </div>
     <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
       <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
     </button>
   </div>
 
-  <div class="flex items-center gap-4">
+  <div class="hidden min-[470px]:flex items-center gap-4">
     <div class="text-right">
       <div class="text-[9px] text-gray-400">STORIES</div>
       <div class="text-[13px] font-semibold">14</div>
@@ -83,6 +80,565 @@
 
 </div>
 
+<!-- CONTENT -->
+
+<div class="grid min-h-[650px] grid-cols-1 gap-5 xl:grid-cols-[390px_1fr]">
+  <!-- STORY LIST -->
+  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+    <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="text-[13px] font-semibold">Today's Stories</div>
+        <div class="mt-0.5 text-[10px] text-gray-400">14 stories</div>
+      </div>
+      <button class="rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">Filter</button>
+    </div>
+    <!-- SEARCH -->
+    <div class="border-b border-[#eeeeee] p-3">
+      <input type="text" placeholder="Search stories..." class="w-full rounded-lg border border-[#e5e5e5] bg-gray-50 px-3 py-2.5 text-[11px] outline-none focus:border-black focus:bg-white" />
+    </div>
+    <!-- STORIES -->
+    <div class="scrollbar max-h-137.5  xl:max-h-197.5 overflow-y-auto">
+      <!-- STORY -->
+      <button onclick="selectStory('1')" class="story-item w-full border-b border-[#eeeeee] bg-gray-50 p-4 text-left cursor-pointer" data-story="1">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-black text-[9px] text-white">01</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Government announces new policy</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+              ޑީސަލް ގަންނަން އެހީވުމަށް އޭޑީބީން ރާއްޖެއަށް 50 މިލިއަން ޑޮލަރުގެ އިމަޖެންސީ ލޯނެއް ދެނީ
+            </div>
+            <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 09:42 </span>
+              <span> 245 words </span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <!-- STORY -->
+      <button onclick="selectStory('2')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="2">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">02</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Heavy rain expected tonight</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            ޑީސަލް ގަންނަން އެހީވުމަށް އޭޑީބީން ރާއްޖެއަށް 50 މިލިއަން ޑޮލަރުގެ އިމަޖެންސީ ލޯނެއް ދެނީ
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 10:15 </span>
+              <span> 182 words </span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <!-- STORY -->
+      <button onclick="selectStory('3')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="3">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">03</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Local team reaches final</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            މިސަރުކާރުގައި އުޅެނީ މެނޭޖުކުރަން ނޭނގުމުގެ މައްސަލަ ކަމަށް ފައިސަލް ވިދާޅުވެއްޖެ
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 11:20 </span>
+              <span> 310 words </span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <!-- STORY -->
+      <button onclick="selectStory('4')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="4">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">04</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">New development project</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-gray-300"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            ޓްރަމްޕްގެ ކެމްޕޭން ވީޑިއޯތަކުން ޓޭލާ ސުވިފްޓްގެ ލަވަތައް އުނިކޮށްފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:04 </span>
+              <span> Draft </span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <!-- STORY -->
+      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <!-- del STORY -->
+             <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>      <button onclick="selectStory('5')" class="story-item w-full border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50 cursor-pointer" data-story="5">
+        <div class="flex items-start gap-3">
+          <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
+            </div>
+            <div class="mt-1 truncate text-[10px] text-gray-400 Faseyha-Regular">
+            އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި
+            </div>
+              <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
+              <span> 12:40 </span>
+              <span> 201 words </span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <!-- del STORY -->
+
+    </div>
+  </section>
+  <!-- STORY EDITOR -->
+  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+    <!-- EDITOR HEADER -->
+    <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="rounded-md bg-gray-100 px-2 py-1 text-[9px] text-gray-500"> STORY 01 </span>
+          <span class="rounded-full bg-green-50 px-2 py-1 text-[9px] text-green-600"> READY </span>
+        </div>
+        <div class="mt-2 text-[13px] font-semibold">Edit Story</div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="saveStory()" class="rounded-lg bg-black px-4 py-2 text-[10px] font-medium text-white hover:bg-gray-800">Save Story</button>
+      </div>
+    </div>
+    <!-- FORM -->
+    <div class="p-6">
+      <!-- SLUG -->
+      <div class="mb-5">
+        <label class="mb-2 block text-[10px] font-medium text-gray-500"> SLUG </label>
+        <input id="slug" type="text" value="GOVERNMENT-POLICY" placeholder="Enter story slug" class="w-full rounded-lg border border-[#dddddd] px-3 py-3 text-[12px] font-medium uppercase outline-none focus:border-black" />
+        <div class="mt-1.5 text-[9px] text-gray-400">Short identifier used by the newsroom.</div>
+      </div>
+      <!-- CG -->
+      <div class="mb-5">
+        <div class="mb-2 flex items-center justify-between">
+          <label class="text-[10px] font-medium text-gray-500"> CG / LOWER THIRD </label>
+          <span class="text-[9px] text-gray-400"> 0 / 70 </span>
+        </div>
+        <input id="cg" type="text" maxlength="70" value="Government announces new policy" placeholder="Enter CG text" class="w-full rounded-lg border border-[#dddddd] px-3 py-3 text-[12px] outline-none focus:border-black" />
+        <div class="mt-1.5 text-[9px] text-gray-400">This text can be sent directly to the graphics system.</div>
+      </div>
+      <!-- STORY TEXT -->
+      <div class="mb-5">
+        <div class="mb-2 flex items-center justify-between">
+          <label class="text-[10px] font-medium text-gray-500"> STORY TEXT </label>
+          <div class="flex items-center gap-3 text-[9px] text-gray-400">
+            <span id="wordCount">53 words</span>
+            <span> <span id="charCount">336</span> characters </span>
+          </div>
+        </div>
+        <textarea id="storyText" rows="18" placeholder="Write the news story here..." class="w-full rounded-lg border border-[#dddddd] px-4 py-3 text-[12px] leading-6 outline-none focus:border-black">
+The government has announced a new policy following discussions held earlier this week.
+Officials said the new policy will take effect from next month and will introduce several changes to the existing system.
+The announcement was made during a press conference today.
+Further details are expected to be released in the coming days.</textarea
+        >
+      </div>
+      <!-- STORY INFO -->
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div class="rounded-lg bg-gray-50 p-3">
+          <div class="text-[9px] text-gray-400">CREATED BY</div>
+          <div class="mt-1 text-[11px] font-medium">Hussain</div>
+        </div>
+        <div class="rounded-lg bg-gray-50 p-3">
+          <div class="text-[9px] text-gray-400">CREATED</div>
+          <div class="mt-1 text-[11px] font-medium">09:42</div>
+        </div>
+        <div class="rounded-lg bg-gray-50 p-3">
+
+          <div class="mt-1 text-[11px] font-medium text-green-600">Ready</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 
 
 

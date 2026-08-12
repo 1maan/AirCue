@@ -57,21 +57,20 @@
 <!-- DATE BAR -->
 
 <div class="mb-5 flex items-center gap-3 justify-between overflow-hidden rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
-  <div class="flex justify-between items-center gap-4">
+  <div class="flex max-[470px]:w-full justify-between items-center gap-4">
     <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
       <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path></svg>
     </button>
-    <div class="w-32.5">
-      <div class="Outfit-Medium text-[13px]">Tuesday, 11 Aug 2026</div>
-      <div class="mt-0.5 text-[10px] text-gray-400">Today's broadcast schedule</div>
+    <div class="w-33.75 flex flex-col max-[470px]:items-center">
+      <div class="Outfit-Medium max-[470px]:text-center text-[13px] line-clamp-2 break-all">Tuesday, 11 Aug 2026</div>
+      <div class="mt-0.5 max-[470px]:text-center text-[10px] text-gray-400 line-clamp-2 break-all">Today's broadcast schedule</div>
     </div>
     <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
       <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
     </button>
   </div>
-  <button class="Outfit-Medium text-[11px] text-gray-500 hover:text-black">Today</button>
+  <button class="Outfit-Medium text-[11px] text-gray-500 hover:text-black max-[470px]:hidden">Today</button>
 </div>
-
 
 
 <!-- CONTENT -->
@@ -86,7 +85,7 @@
       <div class="mt-0.5 line-clamp-1 text-[11px] text-nowrap break-all text-gray-400">3 rundowns scheduled</div>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="max-[400px]:hidden flex items-center gap-2">
       <span class="Outfit-Medium line-clamp-1 rounded-full bg-green-50 px-2.5 py-1 text-[9px] text-nowrap break-all text-green-600"> 1 ON AIR </span>
 
       <span class="Outfit-Medium line-clamp-1 rounded-full bg-gray-100 px-2.5 py-1 text-[9px] text-nowrap break-all text-gray-500"> 2 PLANNED </span>
@@ -95,16 +94,14 @@
 
 <!-- RUN ORDER -->
 
-<div class="border-b border-[#eeeeee] p-5">
+<div class="border-b border-[#eeeeee] px-5 py-2.5">
   <div class="flex items-start justify-between gap-5">
     <div class="flex items-start gap-4">
       <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-[11px] text-gray-600">16:00</div>
       <div class="min-w-0">
         <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all">Fahuge Khabaru</h2>
-        <div class="mt-1 text-[10px] text-gray-400">evening news</div>
-        <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+        <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
           <span class="text-nowrap"> 12 stories </span>
-          <span class="text-nowrap hidden md:block "> 21:30 </span>
           <span class="text-nowrap hidden md:block "> Producer: Ahmed </span>
         </div>
       </div>
@@ -140,19 +137,17 @@
   </div>
 </div>
 <!-- RUN ORDER -->
-<div class="p-5">
+<div class="px-5 py-2.5">
   <div class="flex items-start justify-between gap-5">
     <div class="flex items-start gap-4">
-      <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[11px] text-red-500">16:00</div>
+      <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[11px] text-red-500">19:00</div>
       <div class="min-w-0">
         <div class="flex items-center gap-2">
           <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all">Local News</h2>
           <span class="Outfit-Medium line-clamp-1 rounded-full bg-red-50 px-2 py-0.5 text-[8px] text-nowrap break-all text-red-500"> ON AIR </span>
         </div>
-        <div class="mt-1 text-[10px] text-gray-400">evening news</div>
-        <div class="mt-3 flex items-center gap-4 text-[10px] text-gray-400">
+        <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
           <span class="text-nowrap"> 12 stories </span>
-          <span class="text-nowrap hidden md:block "> 21:30 </span>
           <span class="text-nowrap hidden md:block "> Producer: Ahmed </span>
         </div>
       </div>
@@ -289,7 +284,6 @@
 </main>
 
   <!-- CREATE MODAL -->
-
 <div id="createModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5">
   <div class="w-full max-w-md rounded-xl bg-white shadow-xl overflow-hidden">
     <div class="flex items-center gap-3 justify-between border-b border-[#eeeeee] px-5 py-4">
@@ -333,9 +327,7 @@
   </div>
 </div>
 
-
   <!-- PRESET MODAL -->
-
 <div id="presetModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5">
   <div class="w-full max-w-md rounded-xl bg-white shadow-xl overflow-hidden">
     <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
@@ -377,19 +369,126 @@
 
 </div>
 
+
+<!-- DUPLICATE MODAL -->
+
+<div id="duplicateModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5">
+  <div class="w-full max-w-md rounded-xl bg-white shadow-xl">
+    
+    <!-- Header -->
+
+    <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4 gap-3">
+      <div>
+        <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Duplicate Run Order</div>
+        <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Create a copy of this rundown</div>
+      </div>
+      <div onclick="closeDuplicateModal()" class="rounded-sm px-2 cursor-pointer w-fit h-fit aspect-square hover:bg-gray-200 text-gray-400 hover:text-black">
+        <p class="cursor-pointer">×</p>
+      </div>
+    </div>
+
+    <!-- Body -->
+
+    <div class="space-y-4 p-5">
+      <!-- Original -->
+
+      <div class="rounded-lg bg-gray-50 p-3">
+        <div class="text-[9px] text-gray-400">DUPLICATING</div>
+
+        <div id="duplicateOriginalName" class="mt-1 text-[12px] font-medium">Fahuge Khabaru</div>
+      </div>
+
+      <!-- Name -->
+
+      <div>
+        <label class="mb-1.5 block text-[10px] font-medium text-gray-500"> NEW RUN ORDER NAME </label>
+
+        <input id="duplicateName" type="text" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black" placeholder="Enter run order name" />
+      </div>
+
+      <!-- Date -->
+
+      <div>
+        <label class="mb-1.5 block text-[10px] font-medium text-gray-500"> DATE </label>
+
+        <input id="duplicateDate" type="date" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black" />
+      </div>
+
+      <!-- Options -->
+
+      <div class="space-y-2">
+        <label class="flex cursor-pointer items-center gap-3 overflow-hidden rounded-lg border border-[#eeeeee] p-3 hover:bg-gray-50">
+          <input id="duplicateStories" type="checkbox" checked class="h-3.5 w-3.5" />
+
+          <div>
+            <div class="text-[11px] font-medium">Copy stories</div>
+
+            <div class="text-[9px] text-gray-400">Include all stories from the original rundown</div>
+          </div>
+        </label>
+
+        <label class="flex cursor-pointer items-center gap-3 overflow-hidden rounded-lg border border-[#eeeeee] p-3 hover:bg-gray-50">
+          <input id="duplicateGraphics" type="checkbox" checked class="h-3.5 w-3.5" />
+
+          <div>
+            <div class="text-[11px] font-medium">Copy graphics</div>
+
+            <div class="text-[9px] text-gray-400">Keep CG and graphics information</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Footer -->
+
+    <div class="flex justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
+      <button onclick="closeDuplicateModal()" class="rounded-lg px-4 py-2 text-[11px] text-gray-500 hover:bg-gray-100 cursor-pointer">Cancel</button>
+
+      <button onclick="confirmDuplicate()" class="rounded-lg bg-black px-4 py-2 text-[11px] font-medium text-white hover:bg-gray-800 cursor-pointer text-nowrap line-clamp-1 break-all">Duplicate Run Order</button>
+    </div>
+    
+  </div>
+</div>
+
 <script>
+
+
+
+function duplicateRunOrder() {
+  document.getElementById("duplicateModal").classList.remove("hidden");
+  document.getElementById("duplicateModal").classList.add("flex");
+}
+
+function closeDuplicateModal() {
+  document.getElementById("duplicateModal").classList.add("hidden");
+  document.getElementById("duplicateModal").classList.remove("flex");
+}
+
+
+
+  // Close when clicking outside
+
+  document
+    .getElementById("duplicateModal")
+    .addEventListener("click", function(event) {
+
+      if (event.target === this) {
+        closeDuplicateModal();
+      }
+
+    });
+
+
 function toggleRunOrderMenu(button) {
 
   const menu = button.parentElement.querySelector(".runorder-menu");
 
-  // Close every other menu
   document.querySelectorAll(".runorder-menu").forEach(item => {
     if (item !== menu) {
       item.classList.add("hidden");
     }
   });
 
-  // Toggle this menu
   menu.classList.toggle("hidden");
 }
 
@@ -471,30 +570,6 @@ document.addEventListener("click", (event) => {
     closePresetModal();
 
   }
-
-
-  // DUPLICATE
-
-  function duplicateRunOrder(name) {
-
-    console.log("Duplicating:", name);
-
-    /*
-      Later:
-
-      fetch("/api/runorders/duplicate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: name
-        })
-      })
-    */
-
-  }
-
 
   // CLOSE MODALS BY CLICKING OUTSIDE
 

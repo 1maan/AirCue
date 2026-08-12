@@ -7,6 +7,7 @@
 @font-face {font-family: 'Outfit-Regular';src: url(/fonts/Outfit-Regular.ttf);}
 @font-face {font-family: 'Outfit-SemiBold';src: url(/fonts/Outfit-SemiBold.ttf);}
 @font-face {font-family: 'Outfit-Thin';src: url(/fonts/Outfit-Thin.ttf);}
+@font-face {font-family: 'Faseyha-Regular';src: url(/fonts/Faseyha-Regular.ttf);}
 
 .Outfit-Black{font-family: 'Outfit-Black';}
 .Outfit-Bold{font-family: 'Outfit-Bold';}
@@ -17,3 +18,4 @@
 .Outfit-Regular{font-family: 'Outfit-Regular';}
 .Outfit-SemiBold{font-family: 'Outfit-SemiBold';}
 .Outfit-Thin{font-family: 'Outfit-Thin';}
+.Faseyha-Regular{font-family: 'Faseyha-Regular';}

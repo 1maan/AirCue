@@ -729,14 +729,26 @@
   .h-svh {
     height: 100svh;
   }
+  .max-h-137 {
+    max-height: calc(var(--spacing) * 137);
+  }
+  .max-h-137\.5 {
+    max-height: calc(var(--spacing) * 137.5);
+  }
   .max-h-\[530px\] {
     max-height: 530px;
+  }
+  .max-h-\[550px\] {
+    max-height: 550px;
   }
   .max-h-\[570px\] {
     max-height: 570px;
   }
   .max-h-\[580px\] {
     max-height: 580px;
+  }
+  .max-h-\[790px\] {
+    max-height: 790px;
   }
   .min-h-0 {
     min-height: 0px;
@@ -1083,6 +1095,9 @@
   }
   .flex-row {
     flex-direction: row;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
   }
   .items-center {
     align-items: center;
@@ -2703,9 +2718,44 @@
       background-color: color-mix(in oklab, var(--color-black) 80%, transparent);
     }
   }
+  @media (width < 470px) {
+    .max-\[470px\]\:hidden {
+      display: none;
+    }
+    .max-\[470px\]\:w-full {
+      width: 100%;
+    }
+    .max-\[470px\]\:items-center {
+      align-items: center;
+    }
+    .max-\[470px\]\:justify-center {
+      justify-content: center;
+    }
+    .max-\[470px\]\:text-center {
+      text-align: center;
+    }
+  }
+  @media (width < 400px) {
+    .max-\[400px\]\:hidden {
+      display: none;
+    }
+  }
+  @media (width >= 470px) {
+    .min-\[470px\]\:flex {
+      display: flex;
+    }
+  }
+  @media (width >= 500px) {
+    .min-\[500px\]\:flex {
+      display: flex;
+    }
+  }
   @media (width >= 40rem) {
     .sm\:block {
       display: block;
+    }
+    .sm\:flex {
+      display: flex;
     }
     .sm\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2764,6 +2814,12 @@
     }
   }
   @media (width >= 80rem) {
+    .xl\:max-h-197\.5 {
+      max-height: calc(var(--spacing) * 197.5);
+    }
+    .xl\:max-h-\[790px\] {
+      max-height: 790px;
+    }
     .xl\:grid-cols-\[1fr_350px\] {
       grid-template-columns: 1fr 350px;
     }
