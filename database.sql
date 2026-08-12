@@ -24,8 +24,8 @@ VALUE ('Hussain imaan', 'A335041', 'imaan.dev@gmail.com', 'admin', '$2b$10$RRhS4
 
 CREATE TABLE stories (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    story_date DATE NOT NULL,
-    slug VARCHAR(100) NOT NULL,
+    story_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+    slug VARCHAR(255) NOT NULL,
     language ENUM('dv', 'en') NOT NULL DEFAULT 'dv',
     cg_text VARCHAR(255) DEFAULT NULL,
     story_text LONGTEXT NOT NULL,

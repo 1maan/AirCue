@@ -111,4 +111,110 @@ router.post('/logout', (req, res)=>{
     }
 })
 
+router.post('/stories', (req, res)=>{
+    const { slug, language, cg_text, story_text } = req.body;
+
+    if(!slug || !language || !cg_text || !story_text){
+        return res.status(400).json({ success: false, message: 'All fields are required' });
+    }
+
+    const created_by = req.session.userID;
+
+    if (!created_by) {
+        return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    const sql = `INSERT INTO stories ( slug, language, cg_text, story_text, created_by ) VALUES (?, ?, ?, ?, ?)`;
+
+     db.query(
+        sql, [ slug.trim(), language, cg_text.trim(), story_text.trim(), created_by], (err, result) => {
+            if (err) {
+                console.error('Story insert error:', err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            return res.status(201).json({ success: true, message: 'Story added successfully', storyId: result.insertId });
+        }
+    );
+})
+
+router.get('/stories', (req, res) => {
+    const date = req.query.date;
+    let language = req.query.lan;
+
+    if(!language){
+        language = 'dv';
+    }
+
+    const sql = `
+        SELECT 
+            id,
+            story_date,
+            slug,
+            language,
+            cg_text,
+            story_text,
+            status,
+            created_by,
+            created_at,
+            updated_at
+        FROM stories
+        WHERE story_date = ?
+        AND language = ?
+        ORDER BY created_at DESC
+    `;
+
+    db.query(sql, [date, language], (err, result) => {
+        if (err) {
+            console.error(err);
+
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        return res.status(200).json({ success: true, stories: result });
+    });
+});
+
+router.get('/stories/search', (req, res) => {
+
+    const { q, date, lan } = req.query;
+
+    if (!date || !date.trim()) {
+        return res.status(400).json({ success: false, message: 'Date is required' });
+    }
+    if(!lan){
+        lan = 'dv';
+    }
+    const search = `%${q.trim()}%`;
+
+    const sql = `
+        SELECT
+            id,
+            story_date,
+            slug,
+            language,
+            cg_text,
+            story_text,
+            status,
+            created_by,
+            created_at,
+            updated_at
+        FROM stories
+        WHERE story_date = ?
+        AND language = ?
+        AND (
+            slug LIKE ?
+            OR cg_text LIKE ?
+        )
+        ORDER BY created_at DESC
+    `;
+
+    db.query(sql, [date, lan, search, search], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        return res.status(200).json({ success: true, stories: result });
+    });
+
+});
+
 module.exports = router;

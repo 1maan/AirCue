@@ -5,67 +5,65 @@
         <div class="h-3.5 w-3.5 bg-white"></div>
       </div>
       <div>
-        <div class="Outfit-Bold text-[17px] tracking-[-0.5px]">AirCue</div>
+        <div class="Outfit-Bold text-[17px] tracking-[-0.5px] select-none">AirCue</div>
         <div id="pageIn" class="w-[55px] text-[9px] text-gray-400">Newsroom</div>
       </div>
     </div>
-        <nav class="ml-14 items-center gap-1 hidden md:flex">
+        <nav class="ml-5 items-center gap-1 hidden md:flex">
         <a data-lktext="Dashboard" data-lk="dashboard" href="/dashboard" class="rounded-lg px-4 py-2 text-[12px] text-nowrap text-gray-500 hover:bg-gray-100 hover:text-black"> Dashboard </a>
         <a data-lktext="Run Orders" data-lk="runorders" href="/runorders" class="rounded-lg px-4 py-2 text-[12px] text-nowrap text-gray-500 hover:bg-gray-100 hover:text-black"> Run Orders </a>
         <a data-lktext="Stories" data-lk="stories" href="/stories" class="rounded-lg px-4 py-2 text-[12px] text-nowrap text-gray-500 hover:bg-gray-100 hover:text-black"> Stories </a>
         <a data-lktext="Teleprompter" data-lk="controller" href="/controller" class="rounded-lg px-4 py-2 text-[12px] text-nowrap text-gray-500 hover:bg-gray-100 hover:text-black"> Teleprompter </a>
         <a data-lktext="Breaking" data-lk="breaking" href="/breaking" class="rounded-lg px-4 py-2 text-[12px] text-nowrap text-gray-500 hover:bg-gray-100 hover:text-black"> Breaking </a>
         </nav>
-    <div class="ml-auto flex items-center gap-6">
-      <div class="mono text-[12px] hidden md:block">
+    <div class="ml-auto flex items-center gap-4">
+      <div class="mono hidden text-[12px] md:block">
         <span id="clock">00:00:00</span>
       </div>
 
-      
-<div class="relative hidden md:block">
-  <button id="profileBtn" type="button" class="hidden h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1f1f1f] text-white transition hover:bg-black md:flex">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" />
-    </svg>
-  </button>
-  <div id="profileMenu" class="absolute top-12 right-0 z-50 hidden w-52 overflow-hidden rounded-xl border border-[#e5e5e5] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
-    <div class="border-b border-[#eeeeee] px-4 py-3">
-      <div class="flex items-center gap-3">
-        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1f1f1f] text-[10px] font-medium text-white">HI</div>
-        <div class="min-w-0">
-          <div class="truncate text-[12px] font-medium text-gray-900"><%= fullname || 'AirCue user' %></div>
-          <div class="truncate text-[10px] text-gray-400"><%= role || 'Newsroom User' %></div>
+      <div class="relative hidden md:block">
+        <button id="profileBtn" type="button" class="hidden h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1f1f1f] text-white transition hover:bg-black md:flex">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" />
+          </svg>
+        </button>
+        <div id="profileMenu" class="absolute top-12 right-0 z-50 hidden w-52 overflow-hidden rounded-xl border border-[#e5e5e5] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+          <div class="border-b border-[#eeeeee] px-4 py-3">
+            <div class="flex items-center gap-3">
+              <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1f1f1f] text-[10px] font-medium text-white">HI</div>
+              <div class="min-w-0">
+                <div class="truncate text-[12px] font-medium text-gray-900"><%= fullname || 'AirCue user' %></div>
+                <div class="truncate text-[10px] text-gray-400"><%= role || 'Newsroom User' %></div>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1 p-2">
+            <a data-lktext="Profile" data-lk="profile" href="/profile" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[12px] text-gray-600 transition hover:bg-gray-100 hover:text-black">
+              <svg width="16" height="16" class="shrink-0 text-gray-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" />
+              </svg>
+              <span>Profile</span>
+            </a>
+            <a data-lktext="Settings" data-lk="settings" href="/settings" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[12px] text-gray-600 transition hover:bg-gray-100 hover:text-black">
+              <svg width="16" height="16" class="shrink-0 text-gray-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.43 12.98C19.47 12.66 19.5 12.34 19.5 12C19.5 11.66 19.47 11.34 19.43 11.02L21.54 9.37L19.54 5.91L17.05 6.91C16.53 6.52 15.95 6.2 15.33 5.97L15 3.32H11L10.67 5.97C10.05 6.2 9.47 6.52 8.95 6.91L6.46 5.91L4.46 9.37L6.57 11.02C6.53 11.34 6.5 11.66 6.5 12C6.5 12.34 6.53 12.66 6.57 12.98L4.46 14.63L6.46 18.09L8.95 17.09C9.47 17.48 10.05 17.8 10.67 18.03L11 20.68H15L15.33 18.03C15.95 17.8 16.53 17.48 17.05 17.09L19.54 18.09L21.54 14.63L19.43 12.98ZM13 15.5C11.07 15.5 9.5 13.93 9.5 12C9.5 10.07 11.07 8.5 13 8.5C14.93 8.5 16.5 10.07 16.5 12C16.5 13.93 14.93 15.5 13 15.5Z" />
+              </svg>
+              <span>Settings</span>
+            </a>
+            <div class="my-2 h-px bg-[#eeeeee]"></div>
+            <button type="button" onclick="logout()" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-[12px] text-red-500 transition hover:bg-red-50">
+              <svg width="16" height="16" class="shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 11H13V13H5V16L0 12L5 8V11ZM3.99927 18H6.70835C8.11862 19.2447 9.97111 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C9.97111 4 8.11862 4.75527 6.70835 6H3.99927C5.82368 3.57111 8.72836 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C8.72836 22 5.82368 20.4289 3.99927 18Z" />
+              </svg>
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="p-2 flex flex-col gap-1">
-      <a data-lktext="Profile" data-lk="profile" href="/profile" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[12px] text-gray-600 transition hover:bg-gray-100 hover:text-black">
-        <svg width="16" height="16" class="shrink-0 text-gray-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 22H18V20C18 18.3431 16.6569 17 15 17H9C7.34315 17 6 18.3431 6 20V22H4V20C4 17.2386 6.23858 15 9 15H15C17.7614 15 20 17.2386 20 20V22ZM12 13C8.68629 13 6 10.3137 6 7C6 3.68629 8.68629 1 12 1C15.3137 1 18 3.68629 18 7C18 10.3137 15.3137 13 12 13ZM12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" />
-        </svg>
-        <span>Profile</span>
-      </a>
-      <a data-lktext="Settings" data-lk="settings" href="/settings" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-[12px] text-gray-600 transition hover:bg-gray-100 hover:text-black">
-        <svg width="16" height="16" class="shrink-0 text-gray-400" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19.43 12.98C19.47 12.66 19.5 12.34 19.5 12C19.5 11.66 19.47 11.34 19.43 11.02L21.54 9.37L19.54 5.91L17.05 6.91C16.53 6.52 15.95 6.2 15.33 5.97L15 3.32H11L10.67 5.97C10.05 6.2 9.47 6.52 8.95 6.91L6.46 5.91L4.46 9.37L6.57 11.02C6.53 11.34 6.5 11.66 6.5 12C6.5 12.34 6.53 12.66 6.57 12.98L4.46 14.63L6.46 18.09L8.95 17.09C9.47 17.48 10.05 17.8 10.67 18.03L11 20.68H15L15.33 18.03C15.95 17.8 16.53 17.48 17.05 17.09L19.54 18.09L21.54 14.63L19.43 12.98ZM13 15.5C11.07 15.5 9.5 13.93 9.5 12C9.5 10.07 11.07 8.5 13 8.5C14.93 8.5 16.5 10.07 16.5 12C16.5 13.93 14.93 15.5 13 15.5Z" />
-        </svg>
-        <span>Settings</span>
-      </a>
-      <div class="my-2 h-px bg-[#eeeeee]"></div>
-      <button type="button" onclick="logout()" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-[12px] text-red-500 transition hover:bg-red-50">
-        <svg width="16" height="16" class="shrink-0" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 11H13V13H5V16L0 12L5 8V11ZM3.99927 18H6.70835C8.11862 19.2447 9.97111 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C9.97111 4 8.11862 4.75527 6.70835 6H3.99927C5.82368 3.57111 8.72836 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C8.72836 22 5.82368 20.4289 3.99927 18Z" />
-        </svg>
-        <span>Logout</span>
+
+      <button id="mobileNavBtn" class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1f1e1e] text-[10px] md:hidden">
+        <svg width="20" class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 18V20H6V18H18ZM21 11V13H3V11H21ZM18 4V6H6V4H18Z"></path></svg>
       </button>
-    </div>
-  </div>
-</div>
-
-
-      <button id="mobileNavBtn" class="flex md:hidden h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#1f1e1e] text-[10px]">
-        <svg width="20" class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 18V20H6V18H18ZM21 11V13H3V11H21ZM18 4V6H6V4H18Z"></path></svg>  
-      </button>  
     </div>
   </div>
 </header>

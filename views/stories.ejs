@@ -38,7 +38,7 @@
     <div class="mb-7 flex items-end justify-between gap-3">
       <div>
         <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Stories</h1>
-        <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Write and manage today's news stories.</p>
+        <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Write and manage news stories</p>
       </div>
       <div class="flex items-center gap-2">
         <button class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">New Story</button>
@@ -48,28 +48,34 @@
     <!-- DATE BAR -->
 
     <div class="mb-5 flex items-center justify-between gap-3 overflow-hidden rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
+     
       <div class="flex items-center justify-between gap-4 max-[470px]:w-full">
-        <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
-          <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path></svg>
+        <button id="prevDate" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+          <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path>
+          </svg>
         </button>
-        <div class="flex w-33.75 flex-col max-[470px]:items-center">
-          <div class="Outfit-Medium line-clamp-2 text-[13px] break-all max-[470px]:text-center">Tuesday, 11 Aug 2026</div>
-          <div class="mt-0.5 line-clamp-2 text-[10px] break-all text-gray-400 max-[470px]:text-center">Today’s newsroom story lineup</div>
-        </div>
-        <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
-          <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
+          <div class="flex w-37.5 flex-col max-[470px]:items-center">
+            <div id="selectedDateText" class="Outfit-Medium line-clamp-2 text-[13px] break-all max-[470px]:text-center"></div>
+            <div id="selectedDateLabel" class="mt-0.5 line-clamp-2 text-[10px] break-all text-gray-400 max-[470px]:text-center"></div>
+          </div>
+        <button id="nextDate" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+          <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path>
+          </svg>
         </button>
       </div>
+
 
       <div class="hidden items-center gap-4 min-[470px]:flex">
         <div class="text-right">
           <div class="text-[9px] text-gray-400">STORIES</div>
-          <div class="text-[13px] font-semibold">14</div>
+          <div id="todaysTotalStories" class="text-[13px] font-semibold">0</div>
         </div>
         <div class="h-7 w-px bg-gray-200"></div>
         <div class="text-right">
           <div class="text-[9px] text-gray-400">READY</div>
-          <div class="text-[13px] font-semibold text-green-600">9</div>
+          <div class="text-[13px] font-semibold text-green-600">0</div>
         </div>
       </div>
     </div>
@@ -81,102 +87,31 @@
       <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
         <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
           <div>
-            <div class="text-[13px] font-semibold">Today's Stories</div>
-            <div class="mt-0.5 text-[10px] text-gray-400">14 stories</div>
+            <div id="titleStories" class="text-[13px] font-semibold">Today's Stories</div>
+            <div id="totalStories" class="mt-0.5 text-[10px] text-gray-400">0 stories</div>
           </div>
-          <button class="rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">Filter</button>
+
+          <div class="relative">
+            <button id="filterBtn" onclick="toggleFilterMenu()" class="cursor-pointer flex items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">
+              <span id="filterText">Dhivehi</span>
+              <svg width="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 10L12 15L17 10H7Z"></path>
+              </svg>
+            </button>
+            <div id="filterMenu" class="absolute top-10 right-0 z-30 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
+              <button onclick="selectLanguageFilter('en', 'English')" class="cursor-pointer w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">English</button>
+              <button onclick="selectLanguageFilter('dv', 'Dhivehi')" class="cursor-pointer w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Dhivehi</button>
+            </div>
+          </div>
+
         </div>
         <!-- SEARCH -->
         <div class="border-b border-[#eeeeee] p-3">
-          <input type="text" placeholder="Search stories..." class="w-full rounded-lg border border-[#e5e5e5] bg-gray-50 px-3 py-2.5 text-[11px] outline-none focus:border-black focus:bg-white" />
+          <input type="text" id="searchStories" placeholder="Search stories..." class="w-full rounded-lg border border-[#e5e5e5] bg-gray-50 px-3 py-2.5 text-[11px] outline-none focus:border-black focus:bg-white" />
         </div>
         <!-- STORIES -->
-        <div class="scrollbar max-h-137.5 overflow-y-auto xl:max-h-197.5">
+        <div id="sideStories" class="scrollbar max-h-137.5 overflow-y-auto xl:max-h-197.5">
           <!-- STORY -->
-          <button onclick="selectStory('1')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] bg-gray-50 p-4 text-left" data-story="1">
-            <div class="flex items-start gap-3">
-              <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-black text-[9px] text-white">01</div>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <div class="truncate text-[12px] font-medium">GOVERNMENT-POLICY</div>
-                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
-                </div>
-                <div class="Faseyha-Regular mt-1 truncate text-[10px] text-gray-400">ޑީސަލް ގަންނަން އެހީވުމަށް އޭޑީބީން ރާއްޖެއަށް 50 މިލިއަން ޑޮލަރުގެ އިމަޖެންސީ ލޯނެއް ދެނީ</div>
-                <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
-                  <span> 09:42 </span>
-                  <span> 245 words </span>
-                </div>
-              </div>
-            </div>
-          </button>
-          <!-- STORY -->
-          <button onclick="selectStory('2')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50" data-story="2">
-            <div class="flex items-start gap-3">
-              <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">02</div>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <div class="truncate text-[12px] font-medium">Heavy rain expected tonight</div>
-                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
-                </div>
-                <div class="Faseyha-Regular mt-1 truncate text-[10px] text-gray-400">ޑީސަލް ގަންނަން އެހީވުމަށް އޭޑީބީން ރާއްޖެއަށް 50 މިލިއަން ޑޮލަރުގެ އިމަޖެންސީ ލޯނެއް ދެނީ</div>
-                <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
-                  <span> 10:15 </span>
-                  <span> 182 words </span>
-                </div>
-              </div>
-            </div>
-          </button>
-          <!-- STORY -->
-          <button onclick="selectStory('3')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50" data-story="3">
-            <div class="flex items-start gap-3">
-              <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">03</div>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <div class="truncate text-[12px] font-medium">Local team reaches final</div>
-                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
-                </div>
-                <div class="Faseyha-Regular mt-1 truncate text-[10px] text-gray-400">މިސަރުކާރުގައި އުޅެނީ މެނޭޖުކުރަން ނޭނގުމުގެ މައްސަލަ ކަމަށް ފައިސަލް ވިދާޅުވެއްޖެ</div>
-                <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
-                  <span> 11:20 </span>
-                  <span> 310 words </span>
-                </div>
-              </div>
-            </div>
-          </button>
-          <!-- STORY -->
-          <button onclick="selectStory('4')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50" data-story="4">
-            <div class="flex items-start gap-3">
-              <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">04</div>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <div class="truncate text-[12px] font-medium">New development project</div>
-                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-gray-300"></span>
-                </div>
-                <div class="Faseyha-Regular mt-1 truncate text-[10px] text-gray-400">ޓްރަމްޕްގެ ކެމްޕޭން ވީޑިއޯތަކުން ޓޭލާ ސުވިފްޓްގެ ލަވަތައް އުނިކޮށްފި</div>
-                <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
-                  <span> 12:04 </span>
-                  <span> Draft </span>
-                </div>
-              </div>
-            </div>
-          </button>
-          <!-- STORY -->
-          <button onclick="selectStory('5')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50" data-story="5">
-            <div class="flex items-start gap-3">
-              <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">05</div>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <div class="truncate text-[12px] font-medium">Airport introduces new service</div>
-                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
-                </div>
-                <div class="Faseyha-Regular mt-1 truncate text-[10px] text-gray-400">އެމެރިކާގެ އަސްކަރިއްޔާގެ އިންޒާރުތަކަށް އިޖާބަ ނުދީ އޮމާން ކަނޑުން ދަތުރުކުރި ބޯޓަކަށް ހަމަލާ ދީފި</div>
-                <div class="mt-2 flex gap-3 text-[9px] text-gray-400">
-                  <span> 12:40 </span>
-                  <span> 201 words </span>
-                </div>
-              </div>
-            </div>
-          </button>
         </div>
       </section>
       <!-- STORY EDITOR -->
