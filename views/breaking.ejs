@@ -1,0 +1,307 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirCue | Profile</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/output.css" />
+    <link rel="shortcut icon" href="/img/logo.svg" type="image/x-icon">
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f5f5f5;
+        color: #171717;
+      }
+      .mono {
+        font-family: "Courier New", monospace;
+      }
+      .scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      .scrollbar::-webkit-scrollbar-thumb {
+        background: #d4d4d4;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body class="Outfit-Regular">
+    <div class="min-h-screen">
+
+      <%- include('partials/header') -%>
+<main class="mx-auto max-w-375 p-4 md:p-7">
+  <!-- PAGE HEADER -->
+  <div class="mb-7 flex items-end justify-between gap-3">
+    <div>
+      <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Breaking News</h1>
+      <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Create and send urgent news directly to broadcast.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="newBreaking()" class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">New Breaking</button>
+    </div>
+  </div>
+
+  <div class="grid gap-5 xl:grid-cols-[1fr_350px]">
+    <!-- LEFT -->
+    <div class="space-y-5">
+      <!-- EDITOR -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div>
+            <div class="text-[13px] font-semibold">Breaking News Editor</div>
+            <div class="mt-0.5 text-[10px] text-gray-400">Prepare urgent newsroom content</div>
+          </div>
+
+          <span class="text-[9px] font-medium text-red-500 max-[470px]:hidden"> BREAKING </span>
+        </div>
+
+        <div class="space-y-5 p-5">
+          <div>
+            <!-- SLUG -->
+            <div class="mb-5">
+              <label class="mb-2 block text-[10px] font-medium text-gray-500"> SLUG </label>
+              <input id="slug" type="text" value="GOVERNMENT-POLICY" placeholder="Enter story slug" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-3 text-[12px] font-medium uppercase outline-none focus:border-black" />
+              <div class="mt-1.5 text-[9px] text-gray-400">Short identifier used by the newsroom.</div>
+            </div>
+            <!-- CG -->
+            <div class="mb-5">
+              <div class="mb-2 flex items-center justify-between">
+                <label class="text-[10px] font-medium text-gray-500"> CG TEXT </label>
+                <div class="flex items-center gap-3 text-[9px] text-gray-400">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input id="cgToggle" type="checkbox" class="peer sr-only" checked="" />
+                    <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
+                    <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></div>
+                    <span class="ml-2 text-[10px] text-gray-500"> EN / DV </span>
+                  </label>
+                </div>
+              </div>
+              <input id="cg" type="text" dir="rtl" value="" placeholder="Enter CG text" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-3 text-sm outline-none focus:border-black" />
+              <div class="mt-1.5 text-[9px] text-gray-400">This text can be sent directly to the graphics system.</div>
+            </div>
+            <!-- STORY TEXT -->
+            <div class="mb-5">
+              <div class="mb-2 flex items-center justify-between">
+                <label class="text-[10px] font-medium text-gray-500"> STORY TEXT </label>
+                <div class="flex items-center gap-3 text-[9px] text-gray-400">
+                  <label class="relative inline-flex cursor-pointer items-center">
+                    <input id="languageToggle" type="checkbox" class="peer sr-only" checked="" />
+                    <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
+                    <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></div>
+                    <span class="ml-2 text-[10px] text-gray-500"> EN / DV </span>
+                  </label>
+                </div>
+              </div>
+              <textarea id="storyText" dir="rtl" rows="18" placeholder="Write the news story here" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-4 py-3 text-sm leading-6 outline-none focus:border-black">
+އީރާނުގެ ބަނދަރުތައް ބަންދުކުރުމަށް (ނޭވަލް ބްލޮކޭޑް) ހަރަކާތްތެރިވާ ފަރާތްތަކުން ދިން އިންޒާރުތަކަށް އެ އުޅަނދުގެ ފަޅުވެރިން އިޖާބަ ނުދިނުމާ ގުޅިގެން، އެމެރިކާގެ އަސްކަރީ ހެލިކޮޕްޓަރަކުން ޕެނަމާގެ ދިދަ ނަގާފައިވާ އުޅަނދެއްގެ ހުންގާނަށް ހަމަލާދީފި ކަމަށް ވޯލް ސްޓްރީޓް ޖާނަލްއިން ރިޕޯޓްކޮށްފި އެވެ. އަންގާރަ ދުވަހު އެ ނޫހުން މި ޚަބަރު ފެތުރީ އެމެރިކާ ސަރުކާރުގެ އޮފިޝަލަކާ ހަވާލާދީ އެވެ.
+
+މި ހާދިސާގައި އެއްވެސް މީހަކަށް އަނިޔާވި ކަމުގެ ރިޕޯޓެއް މިހާތަނަށް ލިބިފައި ނުވާ ކަމަށް އެ ނޫހުން ބުނެ އެވެ. އަދި މި ހަމަލާއަށްފަހު، އެ އުޅަނދުގައި ތިބި ފަޅުވެރިން މަދަނީ އެހެން އުޅަނދަކަށް ބަދަލުވުމަށް މަސައްކަތް ކުރަމުންދާ ކަމަށް ވެސް އެ ރިޕޯޓުގައި ފާހަގަކޮށްފައިވެ އެވެ.
+
+ބްރިޓިޝް މެރިޓައިމް ރިސްކް މެނޭޖްމަންޓް ގްރޫޕް، "ވޭންގާޑް" އާއި ކަނޑުގެ ސަލާމަތީ ކަންކަމާ ގުޅޭ މަސްދަރަކުން މީގެ ކުރިން ބުނެފައިވާ ގޮތުގައި، ފުރަތަމަ ލިބުނު މައުލޫމާތުތަކަށް ބަލާއިރު ޕެނަމާގެ ދިދަ ނަގާފައިވާ "ވޭލާ ނޯވާ" ނަމަކަށް ކިޔާ ކޮންޓެއިނަރު އުޅަނދަށް އޮމާން ކަނޑުން ދަތުރުކުރަނިކޮށް މިސައިލް ހަމަލާއެއް އަމާޒުވެފައިވާ ކަމަށް ބެލެވެ އެވެ.
+
+        </textarea
+              >
+              <div class="flex items-center justify-end gap-1">
+                <button onclick="copyType('PKG')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">PKG</button>
+                <button onclick="copyType('VAR')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">VAR</button>
+                <button onclick="copyType('INT')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">INT</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ACTIONS -->
+          <div class="flex flex-wrap items-center justify-between gap-3 border-t border-[#eeeeee] pt-5">
+            <div class="text-[9px] text-gray-400">Last saved: Not saved</div>
+
+            <div class="flex gap-2">
+              <button onclick="saveBreaking()" class="rounded-lg border border-[#dddddd] px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100 active:hover:bg-gray-200 cursor-pointer">Save Draft</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RECENT BREAKING -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div>
+            <div class="text-[13px] font-semibold">Today's Breaking News</div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">Recent breaking items</div>
+          </div>
+
+          <span class="text-[9px] text-gray-400"> 3 items </span>
+        </div>
+
+        <!-- ITEM -->
+        <div class="border-b border-[#eeeeee] p-4">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex gap-3">
+              <div class="mt-1 h-2 w-2 shrink-0 rounded-full bg-red-500"></div>
+
+              <div>
+                <div class="text-[11px] font-medium">Heavy rain warning issued for central atolls</div>
+
+                <div class="mt-1 text-[9px] text-gray-400">WEATHER • 14:32 • Hussain</div>
+              </div>
+            </div>
+
+            <div class="flex gap-1">
+              <button class="rounded-md px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">Edit</button>
+
+              <button class="rounded-md px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">Load</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM -->
+        <div class="border-b border-[#eeeeee] p-4">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex gap-3">
+              <div class="mt-1 h-2 w-2 shrink-0 rounded-full bg-gray-300"></div>
+
+              <div>
+                <div class="text-[11px] font-medium">Parliament session temporarily suspended</div>
+
+                <div class="mt-1 text-[9px] text-gray-400">PARLIAMENT • 12:18 • Ahmed</div>
+              </div>
+            </div>
+
+            <div class="flex gap-1">
+              <button class="rounded-md px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">Edit</button>
+
+              <button class="rounded-md px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">Load</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ITEM -->
+        <div class="p-4">
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex gap-3">
+              <div class="mt-1 h-2 w-2 shrink-0 rounded-full bg-gray-300"></div>
+
+              <div>
+                <div class="text-[11px] font-medium">Airport operations resume after delay</div>
+
+                <div class="mt-1 text-[9px] text-gray-400">AIRPORT • 10:05 • Mariyam</div>
+              </div>
+            </div>
+
+            <div class="flex gap-1">
+              <button class="rounded-md px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">Edit</button>
+
+              <button class="rounded-md px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">Load</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT -->
+    <aside class="space-y-5">
+      <!-- CG PREVIEW -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div class="text-[12px] font-semibold">CG Preview</div>
+
+          <span class="text-[8px] text-gray-400"> PREVIEW </span>
+        </div>
+
+        <div class="p-4">
+          <div class="relative aspect-video overflow-hidden rounded-lg bg-[#181818]">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="text-[8px] text-white/20"> PROGRAM </span>
+            </div>
+
+            <div class="absolute right-4 bottom-4 left-4">
+              <div class="inline-block bg-red-600 px-2 py-1 text-[7px] font-medium text-white">BREAKING</div>
+
+              <div class="bg-white px-3 py-2">
+                <div id="previewCG" class="text-[10px] leading-tight font-semibold">Breaking news headline</div>
+
+                <div id="previewSub" class="mt-1 text-[7px] text-gray-500">Additional information</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-3 grid grid-cols-2 gap-2">
+            <button onclick="clearBreakingCG()" class="rounded-lg border border-[#dddddd] py-2.5 text-[9px] text-gray-500 hover:bg-gray-50">Clear CG</button>
+
+            <button onclick="takeBreakingCG()" class="rounded-lg bg-red-500 py-2.5 text-[9px] font-medium text-white hover:bg-red-600">Take CG</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROMPTER -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div>
+            <div class="text-[12px] font-semibold">Teleprompter</div>
+
+            <div class="mt-0.5 text-[8px] text-gray-400">Breaking output</div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
+            <span class="text-[8px] text-green-600"> Connected </span>
+          </div>
+        </div>
+
+        <div class="p-4">
+          <div class="rounded-lg bg-black p-4">
+            <div id="prompterMiniPreview" class="line-clamp-6 min-h-[110px] text-[13px] leading-6 text-white">Breaking news text will appear here.</div>
+          </div>
+
+          <button onclick="pushToPrompter()" class="mt-3 w-full rounded-lg bg-black py-2.5 text-[9px] font-medium text-white hover:bg-gray-800">Push to Teleprompter</button>
+        </div>
+      </section>
+
+      <!-- ADD TO RUN ORDER -->
+      <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+        <div class="border-b border-[#eeeeee] px-5 py-4">
+          <div class="text-[12px] font-semibold">Add to Run Order</div>
+
+          <div class="mt-0.5 text-[8px] text-gray-400">Insert breaking news into a rundown</div>
+        </div>
+
+        <div class="space-y-3 p-4">
+          <select id="runOrderSelect" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[9px] outline-none focus:border-black">
+            <option value="12">Fahuge Khabaru • 16:00</option>
+            <option value="13">Night Bulletin • 21:00</option>
+          </select>
+
+          <select id="insertPosition" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[9px] outline-none focus:border-black">
+            <option value="top">Insert at top</option>
+            <option value="next">Insert after current story</option>
+            <option value="bottom">Insert at bottom</option>
+          </select>
+
+          <button onclick="addToRunOrder()" class="w-full rounded-lg border border-[#dddddd] py-2.5 text-[9px] font-medium hover:bg-gray-50">Add to Run Order</button>
+        </div>
+      </section>
+
+      <!-- ALL OUTPUT -->
+      <section class="overflow-hidden rounded-xl border border-red-200 bg-red-50">
+        <div class="p-4">
+          <div class="text-[10px] font-semibold text-red-600">Push Breaking Live</div>
+
+          <div class="mt-1 text-[8px] leading-4 text-red-400">Send the breaking story to both the teleprompter and graphics system.</div>
+
+          <button onclick="pushEverything()" class="mt-4 w-full rounded-lg bg-red-500 py-3 text-[10px] font-medium text-white hover:bg-red-600">Push Prompter + CG</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+</main>
+
+
+    </div>
+  </body>
+</html>

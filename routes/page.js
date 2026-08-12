@@ -21,9 +21,6 @@ router.get('/teleprompter-controller', (req, res)=>{
 router.get('/teleprompter', (req, res)=>{
     res.render('teleprompter')
 })
-router.get('/breaking', (req, res)=>{
-    res.render('breaking')
-})
 router.get('/Graphics', (req, res)=>{
     res.render('Graphics')
 })
@@ -56,6 +53,13 @@ router.get('/profile', authPage, (req, res)=>{
 router.get('/settings', authPage, (req, res)=>{
     res.render('settings', { fullname: req.session.fullname, role: req.session.role })
 })
-
-
+router.get('/breaking', (req, res) => {
+  res.render('breaking', { fullname: req.session.fullname, role: req.session.role })
+});
+app.get('/activity', (req, res) => {
+  res.render('activity');
+});
+router.get('/add', authPage, (req, res)=>{
+    res.render('add', { fullname: req.session.fullname, role: req.session.role })
+})
 module.exports = router;
