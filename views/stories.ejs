@@ -56,7 +56,7 @@
           </svg>
         </button>
           <div class="flex w-37.5 flex-col max-[470px]:items-center">
-            <div id="selectedDateText" class="Outfit-Medium line-clamp-2 text-[13px] break-all max-[470px]:text-center"></div>
+            <div id="selectedDateText" class="Outfit-Medium line-clamp-1 text-[13px] break-all max-[470px]:text-center"></div>
             <div id="selectedDateLabel" class="mt-0.5 line-clamp-2 text-[10px] break-all text-gray-400 max-[470px]:text-center"></div>
           </div>
         <button id="nextDate" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
@@ -144,7 +144,7 @@
                 </label>
               </div>
             </div>
-            <input id="cg" type="text" dir="rtl" value="" placeholder="Enter CG text" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-3 text-sm outline-none focus:border-black" />
+            <input id="cg" type="text" value="" placeholder="Enter CG text" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-3 text-sm outline-none focus:border-black" />
             <div class="mt-1.5 text-[9px] text-gray-400">This text can be sent directly to the graphics system.</div>
           </div>
           <!-- STORY TEXT -->
@@ -160,8 +160,12 @@
                 </label>
               </div>
             </div>
-            <textarea id="storyText" dir="rtl" rows="18" placeholder="Write the news story here" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-4 py-3 text-sm leading-6 outline-none focus:border-black"> </textarea>
-            <div class="flex items-center justify-end gap-1">
+            <textarea
+            id="storyText"
+            class="Outfit-Faseyha-Regular min-h-100 w-full resize-none rounded-lg border border-[#dddddd] px-4 py-3 text-sm leading-6 outline-none focus:border-black"
+            style="font-family: 'Outfit-Regular', 'Faseyha-Regular';"
+            placeholder="..."></textarea>
+            <div class="flex items-center justify-end gap-1 mt-3">
               <button onclick="copyType('PKG')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">PKG</button>
               <button onclick="copyType('VAR')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">VAR</button>
               <button onclick="copyType('INT')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">INT</button>

@@ -13,20 +13,6 @@ const languageToggle = document.getElementById("languageToggle");
 const storyText = document.getElementById("storyText");
 const cgToggle = document.getElementById("cgToggle");
 const cg = document.getElementById("cg");
-languageToggle.addEventListener("change", ()=>{
-  if(languageToggle.checked){
-    storyText.setAttribute('dir', 'rtl')
-  }else{
-    storyText.setAttribute('dir', 'ltr')
-  }
-})
-cgToggle.addEventListener("change", ()=>{
-  if(cgToggle.checked){
-    cg.setAttribute('dir', 'rtl')
-  }else{
-    cg.setAttribute('dir', 'ltr')
-  }
-})
 
 // COPY TEXT
 function copyType(name) {
@@ -62,15 +48,25 @@ function copyType(name) {
 
 
 let selectedLanguage;
-
 const savedLanguage = localStorage.getItem('language');
 const savedLabel = localStorage.getItem('label_language');
 if (savedLanguage) {
     selectedLanguage = savedLanguage;
+    console.log(selectedLanguage)
     document.getElementById('filterText').textContent = savedLabel || (savedLanguage === 'dv' ? 'Dhivehi' : 'English');
+    savedLanguage === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
+    savedLanguage === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
+    cg.dir = cgToggle.checked ? 'rtl' : 'ltr';
+    storyText.dir = languageToggle.checked ? 'rtl' : 'ltr';
 } else {
     selectedLanguage = 'dv';
     document.getElementById('filterText').textContent = 'Dhivehi';
+    savedLanguage === 'dv' ? cgToggle.checked = false : cgToggle.checked = true
+    savedLanguage === 'dv' ? languageToggle.checked = false : languageToggle.checked = true
+    savedLanguage === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
+    savedLanguage === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
+    cg.dir = cgToggle.checked ? 'rtl' : 'ltr';
+    storyText.dir = languageToggle.checked ? 'rtl' : 'ltr';
 }
 function toggleFilterMenu() {
     document.getElementById('filterMenu').classList.toggle('hidden');
@@ -81,20 +77,28 @@ function selectLanguageFilter(language, label) {
     localStorage.setItem('label_language', label);
     document.getElementById('filterText').textContent = label;
     document.getElementById('filterMenu').classList.add('hidden');
+    language === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
+    language === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
+    cg.dir = cgToggle.checked ? 'rtl' : 'ltr';
+    storyText.dir = languageToggle.checked ? 'rtl' : 'ltr';
     updateSelectedDate();
 }
 
+languageToggle.addEventListener("change", ()=>{
+  if(languageToggle.checked){
+    storyText.setAttribute('dir', 'rtl')
+  }else{
+    storyText.setAttribute('dir', 'ltr')
+  }
+})
 
-
-
-
-
-
-
-
-
-
-
+cgToggle.addEventListener("change", ()=>{
+  if(cgToggle.checked){
+    cg.setAttribute('dir', 'rtl')
+  }else{
+    cg.setAttribute('dir', 'ltr')
+  }
+})
 
 
 
@@ -195,7 +199,7 @@ function getStories(date) {
             todaysTotalStories.textContent = `${data.stories.length}`
             sideStories.innerHTML = "";
             if (data.stories.length === 0) { sideStories.innerHTML = `
-              <div class="flex min-h-[300px] flex-col items-center justify-center px-6 py-12 text-center">
+              <div class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
                 <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 3H14L19 8V21H7V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
@@ -204,7 +208,7 @@ function getStories(date) {
                   </svg>
                 </div>
                 <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">No stories yet</div>
-                <div class="mt-1 max-w-[220px] text-[10px] leading-4 text-gray-400">There are no newsroom stories available ${getRelativeDateLabel(selectedDate).toLowerCase()}.</div>
+                <div class="mt-1 max-w-55 text-[10px] leading-4 text-gray-400">There are no newsroom stories available ${getRelativeDateLabel(selectedDate).toLowerCase()}.</div>
                 <button onclick="newStory()" class="Outfit-Medium mt-4 rounded-lg bg-black px-4 py-2 text-[9px] text-white hover:bg-gray-800">Create Story</button>
               </div>
               `; 
@@ -305,4 +309,22 @@ function searchNews(date, input){
 function clearStorySearch(){
   searchStories.value = "";
   searchNews(date, searchStories.value)
+}
+
+
+function selectStory(storyCode){
+  const story = document.querySelector(`[data-story="${storyCode}"]`);
+  const story_text = story.dataset.story_text;
+  storyText.textContent = story_text;
+  console.log(story)
+}
+
+
+
+
+
+
+
+function saveStory(){
+  console.log(storyText.value)
 }
