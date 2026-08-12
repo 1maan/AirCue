@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const db = require('../config/db');
+const { authPage } = require('../config/auth');
 require('dotenv').config();
 
 
@@ -216,5 +217,50 @@ router.get('/stories/search', (req, res) => {
     });
 
 });
+
+
+router.put('/stories/:id', authPage, (req, res) => {
+
+    const id = req.params.id;
+    const { slug, language, cg_text, story_text } = req.body;
+
+    if (!slug || !language || !cg_text || !story_text) {
+        return res.status(400).json({ success: false, message: 'All fields are required'});
+    }
+
+    const sql = `
+        UPDATE stories
+        SET 
+            slug = ?,
+            language = ?,
+            cg_text = ?,
+            story_text = ?
+        WHERE id = ?
+    `;
+
+    db.query(sql, [slug, language, cg_text, story_text, id], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ success: false, message: 'Story not found' });
+            }
+
+            return res.status(200).json({ success: true, message: 'Story updated successfully' });
+        }
+    );
+});
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

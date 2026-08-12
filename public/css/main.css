@@ -8,6 +8,9 @@
 @font-face {font-family: 'Outfit-SemiBold';src: url(/fonts/Outfit-SemiBold.ttf);}
 @font-face {font-family: 'Outfit-Thin';src: url(/fonts/Outfit-Thin.ttf);}
 @font-face {font-family: 'Faseyha-Regular';src: url(/fonts/Faseyha-Regular.ttf);}
+@font-face {font-family: 'aammufk';src: url(/fonts/aammufkF.ttf);}
+@font-face {font-family: 'MVAWaheed';src: url(/fonts/MVAWaheed.ttf);}
+@font-face {font-family: 'AWaheed';src: url(/fonts/AWaheed.ttf) format('truetype');}
 
 .Outfit-Black{font-family: 'Outfit-Black';}
 .Outfit-Bold{font-family: 'Outfit-Bold';}
@@ -20,3 +23,6 @@
 .Outfit-Thin{font-family: 'Outfit-Thin';}
 .Faseyha-Regular{font-family: 'Faseyha-Regular';}
 .Outfit-Faseyha-Regular{font-family: 'Outfit-Regular', 'Faseyha-Regular';}
+.aammufk{font-family: 'aammufk';}
+.MVAWaheed{font-family: 'MVAWaheed';}
+.AWaheed{font-family: 'AWaheed';}
