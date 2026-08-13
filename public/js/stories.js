@@ -558,6 +558,7 @@ function saveStory(date){
               `);
               selectStory(data.storyId)
               todaysTotalStories.textContent = Number(todaysTotalStories.textContent) + 1;
+              totalStories.textContent = `${todaysTotalStories.textContent} stories`
               isSavingStory = false;
               showAlert('success', data.message);
             }

@@ -35,3 +35,24 @@ CREATE TABLE stories (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+
+
+CREATE TABLE run_orders (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    run_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+    air_time TIME DEFAULT NULL,
+    status ENUM(
+        'draft',
+        'ready',
+        'live',
+        'completed',
+        'archived'
+    ) NOT NULL DEFAULT 'draft',
+    producer_id INT UNSIGNED DEFAULT NULL,
+    created_by INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);

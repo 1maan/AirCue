@@ -39,7 +39,9 @@ router.get('/dashboard', authPage, (req, res)=>{
 router.get('/runorders', authPage, (req, res)=>{
     res.render('runorders', { fullname: req.session.fullname, role: req.session.role })
 })
-
+router.get('/runorders-id', authPage, (req, res)=>{
+    res.render('runorders-id', { fullname: req.session.fullname, role: req.session.role })
+})
 router.get('/stories', authPage, (req, res)=>{
     res.render('stories', { fullname: req.session.fullname, role: req.session.role })
 })

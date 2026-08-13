@@ -55,21 +55,35 @@
 </div>
 
 <!-- DATE BAR -->
-
-<div class="mb-5 flex items-center gap-3 justify-between overflow-hidden rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
-  <div class="flex max-[470px]:w-full justify-between items-center gap-4">
-    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
-      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path></svg>
+<div class="mb-5 flex items-center justify-between gap-3 overflow-hidden rounded-xl border border-[#e3e3e3] bg-white px-5 py-4">
+    <div class="flex items-center justify-between gap-4 max-[470px]:w-full">
+    <button id="prevDate" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M11.8284 12.0005L14.6569 14.8289L13.2426 16.2431L9 12.0005L13.2426 7.75781L14.6569 9.17203L11.8284 12.0005Z"></path>
+      </svg>
     </button>
-    <div class="w-33.75 flex flex-col max-[470px]:items-center">
-      <div class="Outfit-Medium max-[470px]:text-center text-[13px] line-clamp-2 break-all">Tuesday, 11 Aug 2026</div>
-      <div class="mt-0.5 max-[470px]:text-center text-[10px] text-gray-400 line-clamp-2 break-all">Today's broadcast schedule</div>
-    </div>
-    <button class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
-      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path></svg>
+      <div class="flex w-37.5 flex-col max-[470px]:items-center">
+    <div id="selectedDateText" class="Outfit-Medium line-clamp-1 text-[13px] break-all max-[470px]:text-center"></div>
+    <div id="selectedDateLabel" class="mt-0.5 line-clamp-2 text-[10px] break-all text-gray-400 max-[470px]:text-center"></div>
+      </div>
+    <button id="nextDate" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-[#dddddd] text-gray-500 hover:bg-gray-50">
+      <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.1717 12.0005L9.34326 9.17203L10.7575 7.75781L15.0001 12.0005L10.7575 16.2431L9.34326 14.8289L12.1717 12.0005Z"></path>
+      </svg>
     </button>
   </div>
-  <button class="Outfit-Medium text-[11px] text-gray-500 hover:text-black max-[470px]:hidden">Today</button>
+
+  <div class="hidden items-center gap-4 min-[470px]:flex">
+    <div class="text-right">
+      <div class="text-[9px] text-gray-400">TOTAL</div>
+      <div id="todaysTotalStories" class="text-[13px] font-semibold">0</div>
+    </div>
+    <div class="h-7 w-px bg-gray-200"></div>
+    <div class="text-right">
+      <div class="text-[9px] text-gray-400">COMPLETED</div>
+      <div class="text-[13px] font-semibold text-green-600">0</div>
+    </div>
+  </div>
 </div>
 
 
@@ -450,7 +464,7 @@
   </div>
 </div>
 
-<script>
+<!-- <script>
 
 
 
@@ -588,9 +602,9 @@ document.addEventListener("click", (event) => {
 
   });
 
-</script>
+</script> -->
 
-
+<script src="/js/runorders.js"></script>
     </div>
   </body>
 </html>
