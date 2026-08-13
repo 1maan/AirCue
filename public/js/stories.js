@@ -314,7 +314,7 @@ function getStories(date) {
                   <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">${stories.id}</div>
                   <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-2">
-                      <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${stories.slug}</div>
+                      <div class="truncate uppercase text-[12px] font-medium Outfit-Faseyha-Regular">${stories.slug}</div>
                       <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
                     </div>
                     <div class="flex gap-3 text-[9px] text-gray-400">
@@ -408,7 +408,7 @@ function searchNews(date, input){
                 <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] ${ storyEditor.dataset.id == stories.id ? 'bg-black text-white' : 'bg-gray-100 text-gray-500' }">${stories.id}</div>
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center justify-between gap-2">
-                    <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${stories.slug}</div>
+                    <div class="truncate uppercase text-[12px] font-medium Outfit-Faseyha-Regular">${stories.slug}</div>
                     <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
                   </div>
                   <div class="flex gap-3 text-[9px] text-gray-400">
@@ -545,7 +545,7 @@ function saveStory(date){
               <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] bg-black text-white">${data.storyId}</div>
               <div class="min-w-0 flex-1">
               <div class="flex items-center justify-between gap-2">
-              <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${slug.value}</div>
+              <div class="truncate uppercase text-[12px] font-medium Outfit-Faseyha-Regular">${slug.value}</div>
               <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
               </div>
               <div class="flex gap-3 text-[9px] text-gray-400">
@@ -629,15 +629,6 @@ function updateStory(selectedStoryId) {
         showAlert( 'error', 'An error occurred. Please try again.');
     });
 }
-
-
-
-
-
-
-
-
-
 
 const transliterationMap = {
     'ް':'c',

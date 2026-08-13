@@ -112,6 +112,8 @@ router.post('/logout', (req, res)=>{
     }
 })
 
+// STORIES PAGE
+
 router.post('/stories', (req, res)=>{
     const { slug, language, cg_text, story_text } = req.body;
     const date = req.query.date;
@@ -256,9 +258,56 @@ router.put('/stories/:id', authPage, (req, res) => {
 });
 
 
+// RUN ORDERS PAGE
 
+router.post('/run-orders', (req, res) => {
+    const { name, run_date, air_time } = req.body;
+    const created_by = req.session.userID;
 
+    console.log(name, run_date, air_time, created_by)
+    if (!name || !run_date || !created_by) {
+        return res.status(400).json({ success: false, message: 'All fields are required' });
+    }
 
+    const sql = `INSERT INTO run_orders ( name, run_date, air_time, created_by ) VALUES (?, ?, ?, ?)`;
+
+    db.query( sql, [ name.trim(), run_date, air_time , created_by ], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            return res.status(201).json({ success: true, message: 'Run order created successfully', runOrderId: result.insertId });
+        }
+    );
+});
+
+router.get('/run-orders', (req, res) => {
+    const date = req.query.date;
+    console.log(date)
+    if (!date) {
+        return res.status(400).json({ success: false, message: 'Date query parameter is required' });
+    }
+    const sql = `
+    SELECT 
+        ro.id AS runorderID,
+        ro.name,
+        ro.run_date,
+        ro.air_time,
+        ro.status,
+        COALESCE(u.full_name, 'No Producer') AS full_name
+    FROM run_orders AS ro
+    LEFT JOIN users AS u 
+        ON u.id = ro.producer_id
+    WHERE ro.run_date = ?
+    ORDER BY air_time
+    `;
+    db.query(sql, [date], (err, result)=>{
+        if(err){
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        return res.status(200).json({ success: true, stories: result })
+    })
+});
 
 
 
