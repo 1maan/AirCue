@@ -19,6 +19,11 @@ const saveStoryBtn = document.getElementById("saveStoryBtn");
 const closeStoryBtn = document.getElementById("closeStoryBtn");
 const storyEditor = document.getElementById("storyEditor");
 const cg_text_preview = document.getElementById("cg_text_preview");
+const sideStories = document.getElementById("sideStories");
+const totalStories = document.getElementById("totalStories");
+const todaysTotalStories = document.getElementById("todaysTotalStories");
+const searchStories = document.getElementById("searchStories");
+
 
 // COPY TEXT
 function copyType(name) {
@@ -123,6 +128,8 @@ const titleStories = document.getElementById('titleStories');
 const prevDate = document.getElementById('prevDate');
 const nextDate = document.getElementById('nextDate');
 let date;
+let getStoriesAb = null;
+
 function formatDisplayDate(date) {
     return date.toLocaleDateString('en-GB', {
         weekday: 'long',
@@ -187,6 +194,60 @@ nextDate.addEventListener('click', () => {
 });
 updateSelectedDate();
 
+function loadingStories() {
+  if(!document.getElementById("loadingStories")){
+    todaysTotalStories.textContent = 0;
+    totalStories.textContent = `0 stories`
+    sideStories.innerHTML = `
+    <div id="loadingStories" class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
+      <div class="relative flex h-12 w-12 items-center justify-center">
+        <div class="absolute h-12 w-12 rounded-full border-2 border-gray-100"></div>
+        <div class="absolute h-12 w-12 animate-spin rounded-full border-2 border-transparent border-t-black"></div>
+      </div>
+      <div class="Outfit-Medium mt-4 text-[12px] text-gray-700">Loading stories</div>
+      <div class="mt-1 text-[10px] text-gray-400">Fetching newsroom stories for the selected date.</div>
+      <div class="mt-6 w-full max-w-65 space-y-3">
+        <div class="animate-pulse rounded-lg border border-[#eeeeee] p-3">
+          <div class="flex items-center gap-3">
+            <div class="h-7 w-7 rounded-md bg-gray-100"></div>
+            <div class="flex-1">
+              <div class="h-2.5 w-2/3 rounded bg-gray-100"></div>
+              <div class="mt-2 h-2 w-full rounded bg-gray-100"></div>
+            </div>
+          </div>
+        </div>
+        <div class="animate-pulse rounded-lg border border-[#eeeeee] p-3">
+          <div class="flex items-center gap-3">
+            <div class="h-7 w-7 rounded-md bg-gray-100"></div>
+            <div class="flex-1">
+              <div class="h-2.5 w-1/2 rounded bg-gray-100"></div>
+              <div class="mt-2 h-2 w-4/5 rounded bg-gray-100"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
+}
+
+function loadingSearchResults() {
+sideStories.innerHTML = `
+<div class="flex min-h-55 flex-col items-center justify-center px-6 py-10 text-center">
+  <div class="relative flex h-10 w-10 items-center justify-center">
+    <div class="absolute h-10 w-10 rounded-full border-2 border-gray-100"></div>
+    <div class="absolute h-10 w-10 animate-spin rounded-full border-2 border-transparent border-t-black"></div>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" class="text-gray-500">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5" />
+      <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  </div>
+  <div class="Outfit-Medium mt-4 text-[12px] text-gray-700">Searching stories</div>
+  <div class="mt-1 text-[10px] text-gray-400">Looking for matching newsroom stories...</div>
+</div>
+`;
+
+}
 
 function formatTime(dateString) {
     const date = new Date(dateString);
@@ -199,15 +260,25 @@ function countWords(text) {
     return text.trim().split(/\s+/).length;
 }
 
-const sideStories = document.getElementById("sideStories");
-const totalStories = document.getElementById("totalStories");
-const todaysTotalStories = document.getElementById("todaysTotalStories");
-const searchStories = document.getElementById("searchStories");
-
 let storyDatabase = {}
 
+
+
 function getStories(date) {
-    fetch(`/api/stories?date=${date}&lan=${selectedLanguage}`)
+    let finished = false;
+    const loadingTimer = setTimeout(() => {
+        if (!finished) {
+            loadingStories();
+        }
+    }, 300);
+    if (getStoriesAb) {
+        getStoriesAb.abort();
+    }
+    getStoriesAb = new AbortController();
+
+    fetch(`/api/stories?date=${date}&lan=${selectedLanguage}`,{
+      signal: getStoriesAb.signal
+    })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
@@ -260,18 +331,30 @@ function getStories(date) {
         }
     })
     .catch(error => {
+        if (error.name === 'AbortError') {
+            console.log('Previous request cancelled');
+            return;
+        }
         console.error('Error fetching stories:', error);
+         showAlert( 'error', 'An error occurred. Please try again.');
     })
     .finally(() => {
-
+      finished = true;
+      clearTimeout(loadingTimer);
     });
 }
-
-searchStories.addEventListener('input', ()=>{
-  searchNews(date, searchStories.value)
-})
+let searchTimer = null;
+searchStories.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+        searchNews(date, searchStories.value);
+    }, 400);
+});
 
 function searchNews(date, input){
+  const loadingTimer = setTimeout(() => {
+    loadingSearchResults();
+  }, 300);
   fetch(`/api/stories/search?date=${date}&q=${input}&lan=${selectedLanguage}`)
   .then(response => response.json())
   .then(data => {
@@ -345,6 +428,7 @@ function searchNews(date, input){
       console.error('Error fetching stories:', error);
   })
   .finally(() => {
+    clearTimeout(loadingTimer);
   });
 }
 
@@ -353,8 +437,6 @@ function clearStorySearch(){
   searchNews(date, searchStories.value)
   resertStoryEditor();
 }
-
-
 
 function selectStory(storyCode){
   const story = document.querySelector(`[data-story="${storyCode}"]`);
@@ -403,8 +485,6 @@ function clearStorySel(){
   })
 }
 
-
-
 function resertStoryEditor(newStory){
   slug.value = "";
   cg.value = "";
@@ -423,93 +503,128 @@ function resertStoryEditor(newStory){
   }
 }
 
-
+let saveStoryController = null; 
 
 function saveStory(date){
-    fetch(`/api/stories?date=${date}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+        saveStoryBtn.disabled = true;
+        if(saveStoryController){
+          saveStoryController.abort();
+        }
+        saveStoryController = new AbortController();
+
+        let dataInput = JSON.stringify({
             slug: slug.value,
             language: selectedLanguage,
             cg_text: cg.value,
             story_text: storyText.value
         })
+    fetch(`/api/stories?date=${date}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        signal: saveStoryController.signal,
+        body: dataInput
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showAlert('success', data.message);
-            storyDatabase[data.storyId] = {
-              slug: slug.value,
-              cg_text: cg.value,
-              content: storyText.value
-            };
-            if(document.getElementById("Nostoriesyet")){
-              document.getElementById("Nostoriesyet").remove();
-            }
-            if(!document.getElementById("Nostoriesfound")){
+          let data_show = JSON.parse(dataInput)
+          storyDatabase[data.storyId] = {
+            slug: data_show.slug,
+            cg_text: data_show.cg_text,
+            content: data_show.story_text
+          };
+          if(document.getElementById("Nostoriesyet")){
+            document.getElementById("Nostoriesyet").remove();
+          }
+          if(!document.getElementById("Nostoriesfound")){
             sideStories.insertAdjacentHTML('afterbegin', `
-            <button onclick="selectStory('${data.storyId}')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left bg-[#f2f2f2]" data-story="${data.storyId}">
+              <button onclick="selectStory('${data.storyId}')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left bg-[#f2f2f2]" data-story="${data.storyId}">
               <div class="flex items-start gap-3">
-                <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] bg-black text-white">${data.storyId}</div>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center justify-between gap-2">
-                    <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${slug.value}</div>
-                    <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
-                  </div>
-                  <div class="flex gap-3 text-[9px] text-gray-400">
-                    <span> ${formatTime(Date.now())} </span>
-                    <span> ${countWords(storyText.value)} words </span>
-                  </div>
-                </div>
+              <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] bg-black text-white">${data.storyId}</div>
+              <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between gap-2">
+              <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${slug.value}</div>
+              <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
               </div>
-            </button>
-            `);
-            selectStory(data.storyId)
+              <div class="flex gap-3 text-[9px] text-gray-400">
+              <span> ${formatTime(Date.now())} </span>
+              <span> ${countWords(storyText.value)} words </span>
+              </div>
+              </div>
+              </div>
+              </button>
+              `);
+              selectStory(data.storyId)
+              todaysTotalStories.textContent = Number(todaysTotalStories.textContent) + 1;
+              isSavingStory = false;
+              showAlert('success', data.message);
             }
           }
           if(!data.success) {
             showAlert('error', data.message);
             return;
           }
-          todaysTotalStories.textContent = Number(todaysTotalStories.textContent) + 1;
     })
     .catch(error => {
-      console.log(error)
+        if (error.name === 'AbortError') {
+        showAlert('error', 'Request was aborted');
+          return;
+        }
         showAlert('error', 'An error occurred. Please try again.');
     })
     .finally(() => {
+        saveStoryBtn.disabled = false;
     });
 }
+
+let updateStoryController = null;
 function updateStory(selectedStoryId) {
+    if(updateStoryController){
+      updateStoryController.abort();
+    }
+    updateStoryController = new AbortController();
     if (!selectedStoryId) {
         showAlert('error', 'Please select a story');
         return;
     }
+    let dataInput = JSON.stringify({
+        slug: slug.value,
+        language: selectedLanguage,
+        cg_text: cg.value,
+        story_text: storyText.value
+    })
     fetch(`/api/stories/${selectedStoryId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            slug: slug.value,
-            language: selectedLanguage,
-            cg_text: cg.value,
-            story_text: storyText.value
-        })
+        signal: updateStoryController.signal,
+        body: dataInput
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            showAlert('success', data.message);
+          const story = document.querySelector(`[data-story="${selectedStoryId}"]`);
+          story.querySelector('.truncate').textContent = JSON.parse(dataInput).slug;
+          let dtInput =  JSON.parse(dataInput)
+          storyStatus.textContent = dtInput.slug;
+          storyDatabase[selectedStoryId] = {
+              slug: dtInput.slug,
+              cg_text: dtInput.cg_text,
+              content: dtInput.story_text
+          };
+          showAlert('success', data.message);
         } else {
-            showAlert('error', data.message);
+          showAlert('error', data.message);
         }
     })
     .catch(error => {
+        if (error.name === 'AbortError') {
+        showAlert( 'error', 'Request was aborted');
+        return;
+        }
         showAlert( 'error', 'An error occurred. Please try again.');
     });
 }
