@@ -141,7 +141,7 @@ function lineups(date){
             <div class="border-b border-[#eeeeee] px-5 py-2.5 select-none ${ element.status == 'live' ? 'bg-black/5' : '' }">
             <div class="flex items-start justify-between gap-5">
                 <div class="flex items-start gap-4">
-                <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${ element.status == 'live' ? 'bg-red-500 text-white' : 'bg-gray-100' } text-[11px] text-gray-600">${element.air_time.slice(0, 5)}</div>
+                <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${ element.status == 'live' ? 'bg-red-500 text-white' : element.status == 'completed' ? 'bg-green-600 text-white' : 'bg-gray-100' } text-[11px] text-gray-600">${ element.air_time.slice(0, 5) }</div>
                 <div class="min-w-0">
                     <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all">${ element.name }</h2>
                     <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
@@ -166,10 +166,6 @@ function lineups(date){
                     <button onclick="activeRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                     <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.4571 9.45711L16.0429 8.04289L11 13.0858L8.20711 10.2929L6.79289 11.7071L11 15.9142L17.4571 9.45711Z"></path></svg>
                     <span>Set Active</span>
-                    </button>
-                    <button onclick="duplicateRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-                    <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6ZM7 11H13V13H7V11ZM7 15H13V17H7V15Z"></path></svg>
-                    <span>Duplicate</span>
                     </button>
                     <button onclick="downloadRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                     <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
@@ -313,9 +309,16 @@ newRunOrder.addEventListener('click', ()=>{
     .then(data => {
         if (data.success) {
             showAlert('success', data.message);
-            console.log(data)
             const allDt = JSON.parse(dataForm)
             closeCreateModal();
+            if(document.getElementById("NoRunorderYet")){
+                document.getElementById("NoRunorderYet").remove();
+            }
+            if(document.getElementById("loadingScreenRundown")){
+                document.getElementById("loadingScreenRundown").remove();
+            }
+            
+            if(allDt.run_date == date){
             sideRunorders.insertAdjacentHTML('afterbegin',`
             <div class="border-b border-[#eeeeee] px-5 py-2.5 select-none ">
                 <div class="flex items-start justify-between gap-5">
@@ -346,10 +349,6 @@ newRunOrder.addEventListener('click', ()=>{
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.4571 9.45711L16.0429 8.04289L11 13.0858L8.20711 10.2929L6.79289 11.7071L11 15.9142L17.4571 9.45711Z"></path></svg>
                         <span>Set Active</span>
                     </button>
-                    <button onclick="duplicateRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6ZM7 11H13V13H7V11ZM7 15H13V17H7V15Z"></path></svg>
-                        <span>Duplicate</span>
-                    </button>
                     <button onclick="downloadRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
                         <span>Download</span>
@@ -368,8 +367,10 @@ newRunOrder.addEventListener('click', ()=>{
                 </div>
             </div>
             `)
-
-
+            }
+            runOrderName.value = "";
+            runOrderDate.value = `${year}-${month}-${day}`;
+            runOrderAirtime.value = `${String(hour).padStart(2, '0')}:00`;
         } else {
             showAlert('error', data.message);
         }
@@ -386,3 +387,53 @@ newRunOrder.addEventListener('click', ()=>{
     })
 })
 
+
+function activeRunOrder(id) {
+    const selScreen = setTimeout(()=>{
+        activatingRunOrder();
+    }, 300);
+    fetch(`/api/run-orders/${id}/active`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('success', data.message);
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        showAlert('error', 'An error occurred. Please try again.');
+    }).finally(()=>{
+        lineups(date);
+        clearTimeout(selScreen);
+    })
+}
+
+function activatingRunOrder() {
+    sideRunorders.innerHTML = `
+    <div id="activatingRundown" class="flex min-h-75 flex-col items-center justify-center px-6 py-10">
+      <div class="relative flex h-11 w-11 items-center justify-center">
+        <div class="absolute h-11 w-11 rounded-full border-2 border-gray-100"></div>
+        <div class="absolute h-11 w-11 animate-spin rounded-full border-2 border-transparent border-t-red-500"></div>
+      </div>
+      <div class="Outfit-Medium mt-4 text-[12px] text-gray-700">Activating rundown</div>
+      <div class="mt-1 text-[10px] text-gray-400">Setting this rundown as the currently active broadcast rundown.</div>
+      <div class="mt-6 w-full max-w-90 space-y-2">
+        <div class="animate-pulse rounded-lg border border-[#ed6f6f] p-3">
+          <div class="flex items-center gap-3">
+            <div class="h-8 w-8 rounded-lg bg-red-100"></div>
+            <div class="flex-1">
+              <div class="h-2.5 w-1/2 rounded bg-red-100"></div>
+              <div class="mt-2 h-2 w-2/3 rounded bg-red-100"></div>
+            </div>
+            <div class="h-5 w-12 rounded bg-red-100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+}

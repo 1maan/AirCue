@@ -309,6 +309,25 @@ router.get('/run-orders', (req, res) => {
     })
 });
 
+router.put('/run-orders/:id/active', (req, res) => {
+    const id = req.params.id;
+    const sql = `
+        UPDATE run_orders
+        SET status = CASE
+            WHEN id = ? THEN 'live'
+            WHEN status = 'live' THEN 'completed'
+            ELSE status
+        END
+        WHERE id = ? OR status = 'live'
+    `;
+    db.query(sql, [id, id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        return res.status(200).json({ success: true, message: 'Rundown is now active' });
+    });
+});
 
 
 

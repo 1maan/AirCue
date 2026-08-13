@@ -94,7 +94,7 @@
     <div id="titleRunOrderScheduled" class="mt-0.5 truncate text-[11px] text-gray-400"><%= runorders.length %> rundowns scheduled</div>
   </div>
   <div class="shrink-0 text-right max-[400px]:hidden">
-    <div class="text-[9px] text-gray-400">NEXT ON AIR</div>
+    <div class="text-[9px] text-gray-400">ACTIVE RUNDOWN</div>
     <div class="Outfit-SemiBold max-w-40 truncate text-[13px] text-red-600">Fahuge Khabaru</div>
     <div class="mt-0.5 text-[9px] text-gray-400">16:00</div>
   </div>
@@ -117,16 +117,8 @@
     </div>
     <div class="relative flex shrink-0 items-center gap-1">
       <button class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Open</button>
-      <button onclick="duplicateRunOrder('Fahuge Khabaru')" class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Duplicate</button>
-      <button onclick="toggleRunOrderMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
-      <div class="runorder-menu absolute top-10 right-0 z-50 hidden w-44 rounded-xl border border-[#e5e5e5] bg-white p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
-        <button class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
           <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z"></path></svg>
           <span>Open Run Order</span>
-        </button>
-        <button onclick="duplicateRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6ZM7 11H13V13H7V11ZM7 15H13V17H7V15Z"></path></svg>
-          <span>Duplicate</span>
         </button>
         <button onclick="downloadRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
           <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
@@ -163,16 +155,8 @@
     </div>
     <div class="relative flex shrink-0 items-center gap-1">
       <button class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Open</button>
-      <button onclick="duplicateRunOrder('Fahuge Khabaru')" class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Duplicate</button>
-      <button onclick="toggleRunOrderMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
-      <div class="runorder-menu absolute top-10 right-0 z-50 hidden w-44 rounded-xl border border-[#e5e5e5] bg-white p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
-        <button class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
           <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z"></path></svg>
           <span>Open Run Order</span>
-        </button>
-        <button onclick="duplicateRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6ZM7 11H13V13H7V11ZM7 15H13V17H7V15Z"></path></svg>
-          <span>Duplicate</span>
         </button>
         <button onclick="downloadRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
           <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
@@ -201,7 +185,7 @@
   <div class="border-b border-[#eeeeee] px-5 py-2.5 select-none <%= order.status == 'live' ? 'bg-black/5' : '' %>">
     <div class="flex items-start justify-between gap-5">
       <div class="flex items-start gap-4">
-        <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg <%= order.status == 'live' ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-600' %>  text-[11px] "><%= order.air_time.slice(0, 5) %></div>
+        <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg <%= order.status === 'live' ? 'bg-red-500 text-white' : order.status === 'completed' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600' %>  text-[11px] "><%= order.air_time.slice(0, 5) %></div>
         <div class="min-w-0">
           <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all"><%= order.name %></h2>
           <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
@@ -226,10 +210,6 @@
           <button onclick="activeRunOrder('<%= order.runorderID %>')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
             <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.4571 9.45711L16.0429 8.04289L11 13.0858L8.20711 10.2929L6.79289 11.7071L11 15.9142L17.4571 9.45711Z"></path></svg>
             <span>Set Active</span>
-          </button>
-          <button onclick="duplicateRunOrder('<%= order.runorderID %>')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-            <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M6.9998 6V3C6.9998 2.44772 7.44752 2 7.9998 2H19.9998C20.5521 2 20.9998 2.44772 20.9998 3V17C20.9998 17.5523 20.5521 18 19.9998 18H16.9998V20.9991C16.9998 21.5519 16.5499 22 15.993 22H4.00666C3.45059 22 3 21.5554 3 20.9991L3.0026 7.00087C3.0027 6.44811 3.45264 6 4.00942 6H6.9998ZM5.00242 8L5.00019 20H14.9998V8H5.00242ZM8.9998 6H16.9998V16H18.9998V4H8.9998V6ZM7 11H13V13H7V11ZM7 15H13V17H7V15Z"></path></svg>
-            <span>Duplicate</span>
           </button>
           <button onclick="downloadRunOrder('<%= order.runorderID %>')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
             <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
@@ -529,10 +509,6 @@
 
 
 
-function duplicateRunOrder() {
-  document.getElementById("duplicateModal").classList.remove("hidden");
-  document.getElementById("duplicateModal").classList.add("flex");
-}
 
 function closeDuplicateModal() {
   document.getElementById("duplicateModal").classList.add("hidden");
