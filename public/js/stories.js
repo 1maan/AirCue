@@ -122,7 +122,6 @@ const selectedDateText = document.getElementById('selectedDateText');
 const titleStories = document.getElementById('titleStories');
 const prevDate = document.getElementById('prevDate');
 const nextDate = document.getElementById('nextDate');
-
 let date;
 function formatDisplayDate(date) {
     return date.toLocaleDateString('en-GB', {
@@ -217,7 +216,7 @@ function getStories(date) {
             sideStories.innerHTML = "";
             if (data.stories.length === 0) {
               sideStories.innerHTML = `
-              <div class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
+              <div id="Nostoriesyet" class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
                 <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M7 3H14L19 8V21H7V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
@@ -244,7 +243,7 @@ function getStories(date) {
                   <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-[9px] text-gray-500">${stories.id}</div>
                   <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-2">
-                      <div class="truncate text-[12px] font-medium">${stories.slug}</div>
+                      <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${stories.slug}</div>
                       <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
                     </div>
                     <div class="flex gap-3 text-[9px] text-gray-400">
@@ -269,20 +268,6 @@ function getStories(date) {
 }
 
 searchStories.addEventListener('input', ()=>{
-if (searchStories.value.length === 0) { sideStories.innerHTML = `
-<div class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
-  <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M7 3H14L19 8V21H7V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-      <path d="M14 3V8H19" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-      <path d="M10 12H16M10 15H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-    </svg>
-  </div>
-  <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">No stories yet</div>
-  <div class="mt-1 max-w-55 text-[10px] leading-4 text-gray-400">There are no newsroom stories available ${getRelativeDateLabel(selectedDate).toLowerCase()}.</div>
-  <button onclick="resertStoryEditor('true')" class="Outfit-Medium cursor-pointer mt-4 rounded-lg bg-black px-4 py-2 text-[9px] text-white hover:bg-gray-800">Create Story</button>
-</div>
-`; return; }
   searchNews(date, searchStories.value)
 })
 
@@ -290,20 +275,37 @@ function searchNews(date, input){
   fetch(`/api/stories/search?date=${date}&q=${input}&lan=${selectedLanguage}`)
   .then(response => response.json())
   .then(data => {
-      if (data.success) {
-          if (data.stories.length === 0) {
+        if (data.success) {
+          if(input.length == 0 && data.stories.length == 0){
             sideStories.innerHTML = `
-              <div class="flex min-h-65 flex-col items-center justify-center px-6 py-10 text-center">
-                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5" />
-                    <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                  </svg>
-                </div>
-                <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">No stories found</div>
-                <div class="mt-1 text-[10px] text-gray-400">No newsroom stories match your search.</div>
-                <button onclick="clearStorySearch()" class="mt-4 rounded-lg border border-[#dddddd] px-4 py-2 text-[9px] text-gray-500  hover:bg-gray-50 cursor-pointer">Clear Search</button>
+            <div id="Nostoriesyet" class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
+              <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 3H14L19 8V21H7V3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                  <path d="M14 3V8H19" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                  <path d="M10 12H16M10 15H16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
               </div>
+              <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">No stories yet</div>
+              <div class="mt-1 max-w-55 text-[10px] leading-4 text-gray-400">There are no newsroom stories available ${getRelativeDateLabel(selectedDate).toLowerCase()}.</div>
+              <button onclick="resertStoryEditor('true')" class="Outfit-Medium cursor-pointer mt-4 rounded-lg bg-black px-4 py-2 text-[9px] text-white hover:bg-gray-800">Create Story</button>
+            </div>
+            `;
+            return;
+          }
+          if (data.stories.length === 0) {
+              sideStories.innerHTML = `
+                <div id="Nostoriesfound" class="flex min-h-65 flex-col items-center justify-center px-6 py-10 text-center">
+                  <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5" />
+                      <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                    </svg>
+                  </div>
+                  <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">No stories found</div>
+                  <div class="mt-1 text-[10px] text-gray-400">No newsroom stories match your search.</div>
+                  <button onclick="clearStorySearch()" class="mt-4 rounded-lg border border-[#dddddd] px-4 py-2 text-[9px] text-gray-500  hover:bg-gray-50 cursor-pointer">Clear Search</button>
+                </div>
               `;
             return;
           } 
@@ -323,7 +325,7 @@ function searchNews(date, input){
                 <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] ${ storyEditor.dataset.id == stories.id ? 'bg-black text-white' : 'bg-gray-100 text-gray-500' }">${stories.id}</div>
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center justify-between gap-2">
-                    <div class="truncate text-[12px] font-medium">${stories.slug}</div>
+                    <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${stories.slug}</div>
                     <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
                   </div>
                   <div class="flex gap-3 text-[9px] text-gray-400">
@@ -384,6 +386,21 @@ function selectStory(storyCode){
   story.classList.remove('hover:bg-gray-50')
   selOne.classList.add('bg-black', 'text-white')
   selOne.classList.remove('bg-gray-100', 'text-gray-500')
+
+
+}
+
+function clearStorySel(){
+  document.querySelectorAll('.selOne').forEach(element => {
+    if(element.classList.contains('bg-black') || element.classList.contains('text-white')){
+      element.classList.add('bg-gray-100', 'text-gray-500')
+      element.classList.remove('bg-black', 'text-white')
+    }
+  })
+  document.querySelectorAll('.selOne').forEach(element => {
+    element.parentElement.parentElement.classList.remove('bg-[#f2f2f2]')
+    element.parentElement.parentElement.classList.add('hover:bg-gray-50')
+  })
 }
 
 
@@ -396,7 +413,8 @@ function resertStoryEditor(newStory){
   storyStatus.textContent = 'New Story';
   storyEditor.dataset.id = "";
   cg_text_preview.textContent = "";
-  saveStoryBtn.setAttribute('onclick', `saveStory()`)
+  saveStoryBtn.setAttribute('onclick', `saveStory('${date}')`)
+  clearStorySel();
   if(newStory == 'true'){
     slug.focus();
   }
@@ -407,8 +425,8 @@ function resertStoryEditor(newStory){
 
 
 
-function saveStory(){
-    fetch('/api/stories', {
+function saveStory(date){
+    fetch(`/api/stories?date=${date}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -429,13 +447,17 @@ function saveStory(){
               cg_text: cg.value,
               content: storyText.value
             };
+            if(document.getElementById("Nostoriesyet")){
+              document.getElementById("Nostoriesyet").remove();
+            }
+            if(!document.getElementById("Nostoriesfound")){
             sideStories.insertAdjacentHTML('afterbegin', `
             <button onclick="selectStory('${data.storyId}')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left bg-[#f2f2f2]" data-story="${data.storyId}">
               <div class="flex items-start gap-3">
                 <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] bg-black text-white">${data.storyId}</div>
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center justify-between gap-2">
-                    <div class="truncate text-[12px] font-medium">${slug.value}</div>
+                    <div class="truncate text-[12px] font-medium Outfit-Faseyha-Regular">${slug.value}</div>
                     <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
                   </div>
                   <div class="flex gap-3 text-[9px] text-gray-400">
@@ -446,12 +468,13 @@ function saveStory(){
               </div>
             </button>
             `);
+            selectStory(data.storyId)
+            }
           }
           if(!data.success) {
             showAlert('error', data.message);
             return;
           }
-          selectStory(data.storyId)
           todaysTotalStories.textContent = Number(todaysTotalStories.textContent) + 1;
     })
     .catch(error => {
