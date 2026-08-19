@@ -263,9 +263,8 @@ router.put('/stories/:id', authPage, (req, res) => {
 router.post('/run-orders', (req, res) => {
     const { name, run_date, air_time } = req.body;
     const created_by = req.session.userID;
-
-    console.log(name, run_date, air_time, created_by)
-    if (!name || !run_date || !created_by) {
+    console.log(run_date)
+    if (!name || !run_date || !air_time || !created_by) {
         return res.status(400).json({ success: false, message: 'All fields are required' });
     }
 
@@ -283,7 +282,6 @@ router.post('/run-orders', (req, res) => {
 
 router.get('/run-orders', (req, res) => {
     const date = req.query.date;
-    console.log(date)
     if (!date) {
         return res.status(400).json({ success: false, message: 'Date query parameter is required' });
     }
@@ -329,6 +327,101 @@ router.put('/run-orders/:id/active', (req, res) => {
     });
 });
 
+router.get('/run-order', (req, res) => {
+    const orderID = req.query.id;
+    if (!orderID) {
+        return res.status(400).json({ success: false, message: 'Date query parameter is required' });
+    }
+    const sql = `
+    SELECT 
+        ro.id AS runorderID,
+        ro.name,
+        ro.run_date,
+        ro.air_time,
+        ro.status,
+        COALESCE(u.full_name, 'No Producer') AS full_name
+    FROM run_orders AS ro
+    LEFT JOIN users AS u 
+        ON u.id = ro.producer_id
+    WHERE ro.id = ?
+    ORDER BY air_time
+    LIMIT 1
+    `;
+    db.query(sql, [orderID], (err, result)=>{
+        if(err){
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+
+        const allUsersPro = "SELECT id, full_name FROM users WHERE role != 'admin'"
+
+        db.query(allUsersPro, (err2, result2)=>{
+            if(err2){
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+
+            return res.status(200).json({ success: true, stories: result, users: result2})
+        })
+
+
+    })
+});
+
+router.put('/run-orders/:id', (req, res) => {
+    const id = req.params.id;
+    const { name, run_date, air_time, producer_id } = req.body;
+    if (!name || !run_date || !air_time) {
+        return res.status(400).json({ success: false, message: 'Name, date and airtime are required' });
+    }
+    const sql = `
+        UPDATE run_orders
+        SET
+            name = ?,
+            run_date = ?,
+            air_time = ?,
+            producer_id = ?
+        WHERE id = ?
+    `;
+    db.query(
+        sql,[ name.trim(), run_date, air_time, producer_id || null, id], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ success: false, message: 'Rundown not found' });
+            }
+            return res.status(200).json({ success: true, message: 'Rundown updated successfully' });
+        }
+    );
+});
+
+router.delete('/run-orders/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `DELETE FROM run_orders WHERE id = ?`;
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Rundown not found' });
+        }
+        return res.status(200).json({ success: true, message: 'Rundown deleted successfully' });
+    });
+});
+
+router.get('/run-order/live', (req, res) => {
+    const sql = `
+        SELECT * FROM run_orders WHERE status = 'live';
+    `;
+    db.query(sql, (err, result)=>{
+        if(err){
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        return res.status(200).json({ success: true, nextNews: result })
+    })
+});
 
 
 

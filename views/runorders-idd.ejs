@@ -1,0 +1,1824 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AirCue | Run Order</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/output.css" />
+    <link rel="shortcut icon" href="/img/logo.svg" type="image/x-icon" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f5f5f5;
+        color: #171717;
+      }
+      .dragging {
+        opacity: .4;
+      }
+
+      .drag-over {
+        border-top: 2px solid #111;
+      }
+      .scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      .scrollbar::-webkit-scrollbar-thumb {
+        background: #d4d4d4;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body class="Outfit-Regular">
+    <div class="min-h-screen">
+      <%- include('partials/header') -%>
+      <main class="mx-auto max-w-[1500px] p-4 md:p-7">
+
+        <!-- PAGE HEADER -->
+<div class="mb-7 flex items-end justify-between gap-3">
+    <div>
+      <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap"><%= runOrder.name %></h1>
+      <p class="mt-1 text-[12px] text-gray-400 break-all line-clamp-1">Broadcast Rundowns</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="addStory()" class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Add Story</button>
+      <button onclick="addBreak()" class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Add Break</button>
+      <button onclick="saveRunOrder('<%= runOrder.id %>')" class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">Save <span class="hidden sm:block">Run</span> Order</button>
+    </div>
+</div>
+
+        <!-- WORKSPACE -->
+
+        <div class="grid gap-5 xl:grid-cols-[1fr_300px]">
+          <!-- RUN ORDER -->
+
+          <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+            <!-- HEADER -->
+
+            <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+              <div>
+                <div class="Outfit-Medium text-[13px]">Rundown</div>
+
+                <div class="mt-0.5 text-[9px] text-gray-400">Drag items or use the arrows to change order.</div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="text-[9px] text-green-600"> Editing </span>
+              </div>
+            </div>
+
+            <!-- TABLE HEADER -->
+
+            <div class="hidden grid-cols-[45px_35px_1fr_90px_80px_100px] border-b border-[#eeeeee] bg-gray-50 px-4 py-2.5 md:grid">
+              <div></div>
+
+              <div class="text-[9px] text-gray-400">#</div>
+
+              <div class="text-[9px] text-gray-400">Story</div>
+
+              <div class="text-[9px] text-gray-400">Type</div>
+
+              <div class="text-[9px] text-gray-400">Time</div>
+
+              <div class="text-right text-[9px] text-gray-400">Actions</div>
+            </div>
+
+            <!-- ITEMS -->
+
+            <div id="runOrderList" class="min-h-[450px]"></div>
+
+            <!-- EMPTY -->
+
+            <div id="emptyRunOrder" class="hidden px-5 py-20 text-center">
+              <div class="text-[13px] font-medium">Run order is empty</div>
+
+              <div class="mt-1 text-[10px] text-gray-400">Add a story or break to get started.</div>
+
+              <div class="mt-4 flex justify-center gap-2">
+                <button onclick="openAddStoryModal()" class="rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Add Story</button>
+
+                <button onclick="openBreakModal()" class="rounded-lg border border-[#dddddd] px-4 py-2.5 text-[10px]">Add Break</button>
+              </div>
+            </div>
+
+            <!-- FOOTER -->
+
+            <div class="flex items-center justify-between border-t border-[#eeeeee] bg-gray-50 px-5 py-3">
+              <div class="flex gap-5 text-[9px] text-gray-400">
+                <span>
+                  Items
+                  <strong id="itemCount" class="ml-1 text-black"> 0 </strong>
+                </span>
+
+                <span>
+                  Stories
+                  <strong id="footerStoryCount" class="ml-1 text-black"> 0 </strong>
+                </span>
+
+                <span>
+                  Duration
+                  <strong id="totalDuration" class=" ml-1 text-black"> 00:00 </strong>
+                </span>
+              </div>
+
+              <span id="saveStatus" class="text-[9px] text-gray-400"> Not saved </span>
+            </div>
+          </section>
+
+          <!-- RIGHT PANEL -->
+
+          <aside class="space-y-4">
+            <!-- QUICK ADD -->
+
+            <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+              <div class="border-b border-[#eeeeee] px-4 py-4">
+                <div class="Outfit-Medium text-[12px]">Quick Add</div>
+              </div>
+
+              <div class="space-y-2 p-3">
+                <button onclick="openAddStoryModal()" class="flex w-full items-center gap-3 rounded-lg p-3 text-left hover:bg-gray-50">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-[15px]">+</div>
+
+                  <div>
+                    <div class="text-[11px] font-medium">Add Story</div>
+
+                    <div class="mt-0.5 text-[9px] text-gray-400">Existing or new story</div>
+                  </div>
+                </button>
+
+                <button onclick="openBreakModal()" class="flex w-full items-center gap-3 rounded-lg p-3 text-left hover:bg-gray-50">
+                  <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-[9px]">BRK</div>
+
+                  <div>
+                    <div class="text-[11px] font-medium">Add Break</div>
+
+                    <div class="mt-0.5 text-[9px] text-gray-400">Commercial or segment break</div>
+                  </div>
+                </button>
+              </div>
+            </section>
+
+            <!-- RUN ORDER INFO -->
+
+            <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+              <div class="border-b border-[#eeeeee] px-4 py-4">
+                <div class="Outfit-Medium text-[12px]">Run Order</div>
+              </div>
+
+              <div class="space-y-3 p-4">
+                <div class="flex justify-between">
+                  <span class="text-[9px] text-gray-400"> Name </span>
+
+                  <span class="text-[10px]"> <%= runOrder.name %> </span>
+                </div>
+
+                <div class="flex justify-between">
+                  <span class="text-[9px] text-gray-400"> Air Time </span>
+
+                  <span class=" text-[10px]"> <%= runOrder.air_time.slice(0, 5) %> </span>
+                </div>
+
+                <div class="flex justify-between">
+                  <span class="text-[9px] text-gray-400"> Producer </span>
+
+                  <span class="text-[10px]"> <%= runOrder.full_name || 'No Producer' %> </span>
+                </div>
+
+                <div class="flex justify-between">
+                  <span class="text-[9px] text-gray-400"> Status </span>
+                  <span class="text-[10px] <%= isActive ? 'text-green-500' : 'text-red-500' %>">
+                      <%= isActive ? 'Active' : 'Not Active' %>
+                  </span>
+                </div>
+              </div>
+            </section>
+
+            <!-- LEGEND -->
+
+            <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+              <div class="border-b border-[#eeeeee] px-4 py-4">
+                <div class="Outfit-Medium text-[12px]">Item Types</div>
+              </div>
+
+              <div class="space-y-3 p-4">
+                <div class="flex items-center gap-2">
+                  <span class="h-2 w-2 rounded-full bg-green-500"></span>
+
+                  <span class="text-[10px] text-gray-500"> Ready Story </span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+
+                  <span class="text-[10px] text-gray-500"> Draft Story </span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <span class="h-2 w-2 rounded-full bg-gray-300"></span>
+
+                  <span class="text-[10px] text-gray-500"> Break </span>
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </main>
+    </div>
+
+    <!-- ========================================
+     ADD STORY MODAL
+========================================= -->
+
+    <div id="addStoryModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+      <div class="flex max-h-[85vh] w-full max-w-[650px] flex-col overflow-hidden rounded-xl bg-white shadow-xl">
+        <!-- HEADER -->
+
+        <div class="flex shrink-0 items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div>
+            <div class="Outfit-Medium text-[14px]">Add Story</div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">Add an existing story or create a new one.</div>
+          </div>
+
+          <button onclick="closeAddStoryModal()" class="text-[18px] text-gray-400 hover:text-black">×</button>
+        </div>
+
+        <!-- TABS -->
+
+        <div class="shrink-0 border-b border-[#eeeeee] p-3">
+          <div class="grid grid-cols-2 rounded-lg bg-gray-100 p-1">
+            <button id="existingStoryTab" onclick="switchStoryTab('existing')" class="rounded-md bg-white py-2 text-[10px] font-medium shadow-sm">Existing Stories</button>
+
+            <button id="newStoryTab" onclick="switchStoryTab('new')" class="rounded-md py-2 text-[10px] text-gray-500">Create New</button>
+          </div>
+        </div>
+
+        <!-- EXISTING STORIES -->
+
+        <div id="existingStoriesPanel" class="min-h-0 flex-1 overflow-hidden">
+          <!-- SEARCH -->
+
+          <div class="border-b border-[#eeeeee] p-4">
+            <input id="storySearch" type="text" placeholder="Search today's stories..." oninput="renderStoryBank()" class="w-full rounded-lg border border-[#dddddd] bg-gray-50 px-3 py-2.5 text-[10px] outline-none focus:border-black focus:bg-white" />
+          </div>
+
+          <div id="storyBank" class="scrollbar max-h-[460px] overflow-y-auto"></div>
+        </div>
+
+        <!-- NEW STORY -->
+
+        <div id="newStoryPanel" class="scrollbar hidden flex-1 overflow-y-auto p-5">
+          <div class="space-y-4">
+            <!-- SLUG -->
+
+            <div>
+              <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> SLUG </label>
+
+              <input id="newStorySlug" type="text" placeholder="Example: WEATHER-UPDATE" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] uppercase outline-none focus:border-black" />
+            </div>
+
+            <!-- TYPE + LANGUAGE -->
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> TYPE </label>
+
+                <select id="newStoryType" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px] outline-none">
+                  <option value="VO">VO</option>
+                  <option value="PKG">PKG</option>
+                  <option value="VAR">VAR</option>
+                  <option value="INT">INT</option>
+                  <option value="LIVE">LIVE</option>
+                  <option value="SOT">SOT</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> LANGUAGE </label>
+
+                <select id="newStoryLanguage" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px] outline-none">
+                  <option value="dv">Dhivehi</option>
+                  <option value="en">English</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- CG -->
+
+            <div>
+              <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> CG </label>
+
+              <input id="newStoryCG" type="text" placeholder="Enter CG text" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+            </div>
+
+            <!-- TEXT -->
+
+            <div>
+              <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> NEWS TEXT </label>
+
+              <textarea id="newStoryText" rows="8" placeholder="Write news text..." class="w-full resize-none rounded-lg border border-[#dddddd] px-3 py-3 text-[11px] leading-5 outline-none focus:border-black"></textarea>
+            </div>
+
+            <!-- DURATION -->
+
+            <div>
+              <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> ESTIMATED DURATION </label>
+
+              <input id="newStoryDuration" type="number" min="0" value="60" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none" />
+
+              <div class="mt-1 text-[8px] text-gray-400">Duration in seconds</div>
+            </div>
+          </div>
+
+          <div class="mt-5 flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
+            <button onclick="closeAddStoryModal()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+
+            <button onclick="createAndAddStory()" class="rounded-lg bg-black px-4 py-2.5 text-[10px] font-medium text-white">Create & Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+     ADD BREAK MODAL
+========================================= -->
+
+    <div id="breakModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+      <div class="w-full max-w-[400px] overflow-hidden rounded-xl bg-white shadow-xl">
+        <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div>
+            <div class="Outfit-Medium text-[13px]">Add Break</div>
+
+            <div class="mt-0.5 text-[9px] text-gray-400">Insert a break into the rundown.</div>
+          </div>
+
+          <button onclick="closeBreakModal()" class="text-[18px] text-gray-400 hover:text-black">×</button>
+        </div>
+
+        <div class="space-y-4 p-5">
+          <div>
+            <label class="mb-1.5 block text-[9px] text-gray-500"> BREAK NAME </label>
+
+            <input id="breakName" type="text" value="Commercial Break" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-[9px] text-gray-500"> DURATION </label>
+
+            <input id="breakDuration" type="number" value="120" min="0" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none" />
+
+            <div class="mt-1 text-[8px] text-gray-400">Seconds</div>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
+          <button onclick="closeBreakModal()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+
+          <button onclick="addBreak()" class="rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Add Break</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================
+     EDIT STORY MODAL
+========================================= -->
+
+    <div id="editStoryModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+      <div class="flex max-h-[90vh] w-full max-w-[650px] flex-col overflow-hidden rounded-xl bg-white shadow-xl">
+        <div class="flex shrink-0 items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+          <div>
+            <div class="Outfit-Medium text-[13px]">Edit Story</div>
+
+            <div id="editStoryNumber" class="mt-0.5 text-[9px] text-gray-400">Story</div>
+          </div>
+
+          <button onclick="closeEditStoryModal()" class="text-[18px] text-gray-400 hover:text-black">×</button>
+        </div>
+
+        <div class="scrollbar flex-1 space-y-4 overflow-y-auto p-5">
+          <input id="editingItemId" type="hidden" />
+
+          <div>
+            <label class="mb-1.5 block text-[9px] text-gray-500"> SLUG </label>
+
+            <input id="editSlug" type="text" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] uppercase outline-none focus:border-black" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="mb-1.5 block text-[9px] text-gray-500"> TYPE </label>
+
+              <select id="editType" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px]">
+                <option>VO</option>
+                <option>PKG</option>
+                <option>VAR</option>
+                <option>INT</option>
+                <option>LIVE</option>
+                <option>SOT</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="mb-1.5 block text-[9px] text-gray-500"> STATUS </label>
+
+              <select id="editStatus" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px]">
+                <option value="draft">Draft</option>
+                <option value="ready">Ready</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-[9px] text-gray-500"> CG </label>
+
+            <input id="editCG" type="text" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-[9px] text-gray-500"> NEWS TEXT </label>
+
+            <textarea id="editText" rows="12" class="w-full resize-none rounded-lg border border-[#dddddd] px-3 py-3 text-[11px] leading-5 outline-none focus:border-black"></textarea>
+          </div>
+
+          <div>
+            <label class="mb-1.5 block text-[9px] text-gray-500"> DURATION </label>
+
+            <input id="editDuration" type="number" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px]" />
+          </div>
+        </div>
+
+        <div class="flex shrink-0 justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
+          <button onclick="closeEditStoryModal()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+
+          <button onclick="saveEditedStory()" class="rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Save Story</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      /*
+      |--------------------------------------------------------------------------
+      | DEMO STORY BANK
+      |--------------------------------------------------------------------------
+      */
+
+      let storyBank = [
+
+        {
+          id: 1,
+          slug: "GOVERNMENT-POLICY",
+          cg: "Government announces new economic measures",
+          text: "The government has announced new economic measures following discussions held earlier this week.",
+          type: "VO",
+          duration: 90,
+          status: "ready"
+        },
+
+        {
+          id: 2,
+          slug: "WEATHER-UPDATE",
+          cg: "Heavy rain expected across Maldives",
+          text: "The meteorological service has forecast heavy rain across several parts of the Maldives.",
+          type: "PKG",
+          duration: 135,
+          status: "ready"
+        },
+
+        {
+          id: 3,
+          slug: "PARLIAMENT",
+          cg: "Parliament session continues today",
+          text: "Members of Parliament continued debate during today's sitting.",
+          type: "LIVE",
+          duration: 180,
+          status: "draft"
+        },
+
+        {
+          id: 4,
+          slug: "SPORTS",
+          cg: "Sports roundup",
+          text: "The latest sports news from across the country.",
+          type: "VO",
+          duration: 60,
+          status: "ready"
+        }
+
+      ];
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | RUN ORDER
+      |--------------------------------------------------------------------------
+      */
+
+      let runOrder = [
+
+        {
+          itemId: 1001,
+          itemType: "story",
+          storyId: 1
+        },
+
+        {
+          itemId: 1002,
+          itemType: "story",
+          storyId: 2
+        },
+
+        {
+          itemId: 1003,
+          itemType: "break",
+          name: "Commercial Break",
+          duration: 120
+        },
+
+        {
+          itemId: 1004,
+          itemType: "story",
+          storyId: 3
+        }
+
+      ];
+
+
+
+      let draggedItemId = null;
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | RENDER RUN ORDER
+      |--------------------------------------------------------------------------
+      */
+
+      function renderRunOrder() {
+
+        const list =
+          document.getElementById("runOrderList");
+
+        list.innerHTML = "";
+
+
+        if (runOrder.length === 0) {
+
+          document
+            .getElementById("emptyRunOrder")
+            .classList.remove("hidden");
+
+        } else {
+
+          document
+            .getElementById("emptyRunOrder")
+            .classList.add("hidden");
+
+        }
+
+
+        let storyNumber = 0;
+
+
+        runOrder.forEach((item, index) => {
+
+
+          /*
+          |------------------------------------------------
+          | BREAK
+          |------------------------------------------------
+          */
+
+          if (item.itemType === "break") {
+
+            const row =
+              document.createElement("div");
+
+
+            row.dataset.itemId =
+              item.itemId;
+
+
+            row.draggable = true;
+
+
+            row.className =
+              "runorder-item border-b border-[#eeeeee] bg-gray-50 px-4 py-3";
+
+
+            row.innerHTML = `
+
+              <div class="flex items-center gap-3">
+
+                <div
+                  class="drag-handle cursor-grab text-[15px] text-gray-300"
+                >
+                  ⋮⋮
+                </div>
+
+
+                <div class="h-px flex-1 bg-gray-200"></div>
+
+
+                <div class="flex items-center gap-3">
+
+                  <span class="rounded-md bg-gray-200 px-2 py-1 text-[8px] font-medium text-gray-500">
+                    BREAK
+                  </span>
+
+                  <span class="text-[10px] font-medium text-gray-500">
+                    ${item.name}
+                  </span>
+
+                  <span class=" text-[9px] text-gray-400">
+                    ${formatDuration(item.duration)}
+                  </span>
+
+                </div>
+
+
+                <div class="h-px flex-1 bg-gray-200"></div>
+
+
+                <div class="flex items-center">
+
+                  <button
+                    onclick="moveItem(${item.itemId}, -1)"
+                    class="flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-200"
+                  >
+                    ↑
+                  </button>
+
+                  <button
+                    onclick="moveItem(${item.itemId}, 1)"
+                    class="flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-200"
+                  >
+                    ↓
+                  </button>
+
+                  <button
+                    onclick="removeRunOrderItem(${item.itemId})"
+                    class="ml-1 flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50"
+                  >
+                    ×
+                  </button>
+
+                </div>
+
+              </div>
+            `;
+
+
+            addDragEvents(row);
+
+            list.appendChild(row);
+
+            return;
+
+          }
+
+
+
+          /*
+          |------------------------------------------------
+          | STORY
+          |------------------------------------------------
+          */
+
+          storyNumber++;
+
+
+          const story =
+            storyBank.find(
+              story => story.id === item.storyId
+            );
+
+
+          if (!story)
+            return;
+
+
+          const statusColor =
+            story.status === "ready"
+              ? "bg-green-500"
+              : "bg-yellow-400";
+
+
+          const row =
+            document.createElement("div");
+
+
+          row.dataset.itemId =
+            item.itemId;
+
+
+          row.draggable = true;
+
+
+          row.className =
+            "runorder-item grid cursor-pointer gap-3 border-b border-[#eeeeee] px-4 py-4 hover:bg-gray-50 md:grid-cols-[45px_35px_1fr_90px_80px_100px] md:items-center md:gap-0";
+
+
+          row.innerHTML = `
+
+            <div class="flex items-center gap-2">
+
+              <span class="drag-handle cursor-grab text-[15px] text-gray-300">
+                ⋮⋮
+              </span>
+
+            </div>
+
+
+            <div class=" text-[10px] text-gray-400">
+              ${String(storyNumber).padStart(2, "0")}
+            </div>
+
+
+            <div
+              onclick="openStoryEditor(${item.itemId})"
+              class="min-w-0"
+            >
+
+              <div class="flex items-center gap-2">
+
+                <span class="h-1.5 w-1.5 shrink-0 rounded-full ${statusColor}"></span>
+
+                <div class="Outfit-Medium truncate text-[11px]">
+                  ${escapeHTML(story.slug)}
+                </div>
+
+              </div>
+
+
+              <div class="mt-1 line-clamp-1 text-[9px] text-gray-400">
+                ${escapeHTML(story.cg || "No CG")}
+              </div>
+
+            </div>
+
+
+            <div class="text-[9px] text-gray-500">
+              ${story.type}
+            </div>
+
+
+            <div class=" text-[9px] text-gray-500">
+              ${formatDuration(story.duration)}
+            </div>
+
+
+            <div class="flex justify-end gap-1">
+
+              <button
+                onclick="event.stopPropagation(); moveItem(${item.itemId}, -1)"
+                class="flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-100"
+              >
+                ↑
+              </button>
+
+              <button
+                onclick="event.stopPropagation(); moveItem(${item.itemId}, 1)"
+                class="flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-100"
+              >
+                ↓
+              </button>
+
+              <button
+                onclick="event.stopPropagation(); removeRunOrderItem(${item.itemId})"
+                class="flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50"
+              >
+                ×
+              </button>
+
+            </div>
+
+          `;
+
+
+          addDragEvents(row);
+
+          list.appendChild(row);
+
+        });
+
+
+        updateRunOrderStats();
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | DRAG AND DROP
+      |--------------------------------------------------------------------------
+      */
+
+      function addDragEvents(element) {
+
+        element.addEventListener(
+          "dragstart",
+          function() {
+
+            draggedItemId =
+              Number(this.dataset.itemId);
+
+            this.classList.add("dragging");
+
+          }
+        );
+
+
+        element.addEventListener(
+          "dragend",
+          function() {
+
+            this.classList.remove("dragging");
+
+            document
+              .querySelectorAll(".runorder-item")
+              .forEach(item => {
+                item.classList.remove("drag-over");
+              });
+
+          }
+        );
+
+
+        element.addEventListener(
+          "dragover",
+          function(event) {
+
+            event.preventDefault();
+
+            this.classList.add("drag-over");
+
+          }
+        );
+
+
+        element.addEventListener(
+          "dragleave",
+          function() {
+
+            this.classList.remove("drag-over");
+
+          }
+        );
+
+
+        element.addEventListener(
+          "drop",
+          function(event) {
+
+            event.preventDefault();
+
+            this.classList.remove("drag-over");
+
+
+            const targetId =
+              Number(this.dataset.itemId);
+
+
+            if (
+              draggedItemId === targetId
+            ) {
+              return;
+            }
+
+
+            const from =
+              runOrder.findIndex(
+                item => item.itemId === draggedItemId
+              );
+
+
+            const to =
+              runOrder.findIndex(
+                item => item.itemId === targetId
+              );
+
+
+            if (
+              from === -1 ||
+              to === -1
+            ) {
+              return;
+            }
+
+
+            const moved =
+              runOrder.splice(from, 1)[0];
+
+
+            runOrder.splice(
+              to,
+              0,
+              moved
+            );
+
+
+            renderRunOrder();
+            markUnsaved();
+
+          }
+        );
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | MOVE ITEM
+      |--------------------------------------------------------------------------
+      */
+
+      function moveItem(itemId, direction) {
+
+        const index =
+          runOrder.findIndex(
+            item => item.itemId === itemId
+          );
+
+
+        const newIndex =
+          index + direction;
+
+
+        if (
+          index === -1 ||
+          newIndex < 0 ||
+          newIndex >= runOrder.length
+        ) {
+          return;
+        }
+
+
+        const item =
+          runOrder.splice(index, 1)[0];
+
+
+        runOrder.splice(
+          newIndex,
+          0,
+          item
+        );
+
+
+        renderRunOrder();
+        markUnsaved();
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | REMOVE
+      |--------------------------------------------------------------------------
+      */
+
+      function removeRunOrderItem(itemId) {
+
+        runOrder =
+          runOrder.filter(
+            item => item.itemId !== itemId
+          );
+
+
+        renderRunOrder();
+        markUnsaved();
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | ADD STORY MODAL
+      |--------------------------------------------------------------------------
+      */
+
+      function openAddStoryModal() {
+
+        const modal =
+          document.getElementById("addStoryModal");
+
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+
+
+        switchStoryTab("existing");
+
+        renderStoryBank();
+
+      }
+
+
+
+      function closeAddStoryModal() {
+
+        const modal =
+          document.getElementById("addStoryModal");
+
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | STORY TABS
+      |--------------------------------------------------------------------------
+      */
+
+      function switchStoryTab(tab) {
+
+        const existingPanel =
+          document.getElementById("existingStoriesPanel");
+
+        const newPanel =
+          document.getElementById("newStoryPanel");
+
+        const existingTab =
+          document.getElementById("existingStoryTab");
+
+        const newTab =
+          document.getElementById("newStoryTab");
+
+
+        existingTab.className =
+          "rounded-md py-2 text-[10px]";
+
+        newTab.className =
+          "rounded-md py-2 text-[10px]";
+
+
+        if (tab === "existing") {
+
+          existingPanel.classList.remove("hidden");
+          newPanel.classList.add("hidden");
+
+          existingTab.classList.add(
+            "bg-white",
+            "font-medium",
+            "shadow-sm"
+          );
+
+          newTab.classList.add(
+            "text-gray-500"
+          );
+
+        } else {
+
+          existingPanel.classList.add("hidden");
+          newPanel.classList.remove("hidden");
+
+          newTab.classList.add(
+            "bg-white",
+            "font-medium",
+            "shadow-sm"
+          );
+
+          existingTab.classList.add(
+            "text-gray-500"
+          );
+
+        }
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | STORY BANK
+      |--------------------------------------------------------------------------
+      */
+
+      function renderStoryBank() {
+
+        const container =
+          document.getElementById("storyBank");
+
+        const search =
+          document
+            .getElementById("storySearch")
+            .value
+            .toLowerCase();
+
+
+        container.innerHTML = "";
+
+
+        storyBank
+          .filter(story => {
+
+            return (
+              story.slug.toLowerCase().includes(search) ||
+              story.cg.toLowerCase().includes(search)
+            );
+
+          })
+          .forEach(story => {
+
+
+            const alreadyAdded =
+              runOrder.some(
+                item =>
+                  item.itemType === "story" &&
+                  item.storyId === story.id
+              );
+
+
+            const row =
+              document.createElement("div");
+
+
+            row.className =
+              "flex items-center justify-between gap-4 border-b border-[#eeeeee] p-4";
+
+
+            row.innerHTML = `
+
+              <div class="min-w-0">
+
+                <div class="flex items-center gap-2">
+
+                  <div class="Outfit-Medium truncate text-[11px]">
+                    ${escapeHTML(story.slug)}
+                  </div>
+
+                  <span class="rounded bg-gray-100 px-1.5 py-0.5 text-[7px] text-gray-500">
+                    ${story.type}
+                  </span>
+
+                </div>
+
+
+                <div class="mt-1 line-clamp-1 text-[9px] text-gray-400">
+                  ${escapeHTML(story.cg)}
+                </div>
+
+
+                <div class="mt-2 flex gap-3 text-[8px] text-gray-400">
+
+                  <span>
+                    ${formatDuration(story.duration)}
+                  </span>
+
+                  <span>
+                    ${story.status.toUpperCase()}
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <button
+                onclick="addExistingStory(${story.id})"
+                ${alreadyAdded ? "disabled" : ""}
+                class="
+                  rounded-lg px-3 py-2 text-[9px]
+                  ${
+                    alreadyAdded
+                      ? "cursor-not-allowed bg-gray-100 text-gray-300"
+                      : "bg-black text-white hover:bg-gray-800"
+                  }
+                "
+              >
+                ${alreadyAdded ? "Added" : "Add"}
+              </button>
+
+            `;
+
+
+            container.appendChild(row);
+
+          });
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | ADD EXISTING STORY
+      |--------------------------------------------------------------------------
+      */
+
+      function addExistingStory(storyId) {
+
+        runOrder.push({
+
+          itemId: Date.now(),
+
+          itemType: "story",
+
+          storyId
+
+        });
+
+
+        renderRunOrder();
+        renderStoryBank();
+        markUnsaved();
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | CREATE NEW STORY
+      |--------------------------------------------------------------------------
+      */
+
+      function createAndAddStory() {
+
+        const slug =
+          document
+            .getElementById("newStorySlug")
+            .value
+            .trim()
+            .toUpperCase();
+
+        const cg =
+          document
+            .getElementById("newStoryCG")
+            .value
+            .trim();
+
+        const text =
+          document
+            .getElementById("newStoryText")
+            .value
+            .trim();
+
+        const type =
+          document
+            .getElementById("newStoryType")
+            .value;
+
+        const language =
+          document
+            .getElementById("newStoryLanguage")
+            .value;
+
+        const duration =
+          Number(
+            document
+              .getElementById("newStoryDuration")
+              .value
+          );
+
+
+        if (!slug) {
+          alert("Enter a story slug.");
+          return;
+        }
+
+
+        if (!text) {
+          alert("Enter the news text.");
+          return;
+        }
+
+
+        const story = {
+
+          id: Date.now(),
+
+          slug,
+
+          cg,
+
+          text,
+
+          type,
+
+          language,
+
+          duration,
+
+          status: "draft"
+
+        };
+
+
+        storyBank.push(story);
+
+
+        runOrder.push({
+
+          itemId: Date.now() + 1,
+
+          itemType: "story",
+
+          storyId: story.id
+
+        });
+
+
+        renderRunOrder();
+
+        closeAddStoryModal();
+
+        markUnsaved();
+
+
+        /*
+        Later:
+
+        POST /api/stories
+        then
+        POST /api/runorders/:id/items
+        */
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | BREAK
+      |--------------------------------------------------------------------------
+      */
+
+      function openBreakModal() {
+
+        const modal =
+          document.getElementById("breakModal");
+
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+
+      }
+
+
+
+      function closeBreakModal() {
+
+        const modal =
+          document.getElementById("breakModal");
+
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+
+      }
+
+
+
+      function addBreak() {
+
+        const name =
+          document
+            .getElementById("breakName")
+            .value
+            .trim();
+
+        const duration =
+          Number(
+            document
+              .getElementById("breakDuration")
+              .value
+          );
+
+
+        if (!name)
+          return;
+
+
+        runOrder.push({
+
+          itemId: Date.now(),
+
+          itemType: "break",
+
+          name,
+
+          duration
+
+        });
+
+
+        renderRunOrder();
+
+        closeBreakModal();
+
+        markUnsaved();
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | STORY EDITOR
+      |--------------------------------------------------------------------------
+      */
+
+      function openStoryEditor(itemId) {
+
+        const item =
+          runOrder.find(
+            item => item.itemId === itemId
+          );
+
+
+        if (
+          !item ||
+          item.itemType !== "story"
+        ) {
+          return;
+        }
+
+
+        const story =
+          storyBank.find(
+            story => story.id === item.storyId
+          );
+
+
+        if (!story)
+          return;
+
+
+        document
+          .getElementById("editingItemId")
+          .value =
+            itemId;
+
+
+        document
+          .getElementById("editSlug")
+          .value =
+            story.slug;
+
+
+        document
+          .getElementById("editCG")
+          .value =
+            story.cg;
+
+
+        document
+          .getElementById("editText")
+          .value =
+            story.text;
+
+
+        document
+          .getElementById("editType")
+          .value =
+            story.type;
+
+
+        document
+          .getElementById("editStatus")
+          .value =
+            story.status;
+
+
+        document
+          .getElementById("editDuration")
+          .value =
+            story.duration;
+
+
+        document
+          .getElementById("editStoryModal")
+          .classList.remove("hidden");
+
+
+        document
+          .getElementById("editStoryModal")
+          .classList.add("flex");
+
+      }
+
+
+
+      function closeEditStoryModal() {
+
+        document
+          .getElementById("editStoryModal")
+          .classList.add("hidden");
+
+
+        document
+          .getElementById("editStoryModal")
+          .classList.remove("flex");
+
+      }
+
+
+
+      function saveEditedStory() {
+
+        const itemId =
+          Number(
+            document
+              .getElementById("editingItemId")
+              .value
+          );
+
+
+        const item =
+          runOrder.find(
+            item => item.itemId === itemId
+          );
+
+
+        if (!item)
+          return;
+
+
+        const story =
+          storyBank.find(
+            story => story.id === item.storyId
+          );
+
+
+        if (!story)
+          return;
+
+
+        story.slug =
+          document
+            .getElementById("editSlug")
+            .value
+            .trim()
+            .toUpperCase();
+
+
+        story.cg =
+          document
+            .getElementById("editCG")
+            .value
+            .trim();
+
+
+        story.text =
+          document
+            .getElementById("editText")
+            .value
+            .trim();
+
+
+        story.type =
+          document
+            .getElementById("editType")
+            .value;
+
+
+        story.status =
+          document
+            .getElementById("editStatus")
+            .value;
+
+
+        story.duration =
+          Number(
+            document
+              .getElementById("editDuration")
+              .value
+          );
+
+
+        renderRunOrder();
+
+        closeEditStoryModal();
+
+        markUnsaved();
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | STATS
+      |--------------------------------------------------------------------------
+      */
+
+      function updateRunOrderStats() {
+
+        const stories =
+          runOrder.filter(
+            item => item.itemType === "story"
+          );
+
+
+        let totalSeconds = 0;
+
+
+        runOrder.forEach(item => {
+
+          if (item.itemType === "break") {
+
+            totalSeconds +=
+              Number(item.duration || 0);
+
+            return;
+
+          }
+
+
+          const story =
+            storyBank.find(
+              story => story.id === item.storyId
+            );
+
+
+          if (story) {
+
+            totalSeconds +=
+              Number(story.duration || 0);
+
+          }
+
+        });
+
+  
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | SAVE
+      |--------------------------------------------------------------------------
+      */
+
+      function saveRunOrder() {
+
+        const payload = {
+
+          runOrderId: 1,
+
+          items:
+            runOrder.map(
+              (item, index) => ({
+
+                ...item,
+
+                position:
+                  index + 1
+
+              })
+            )
+
+        };
+
+
+
+
+        /*
+        fetch("/api/runorders/1/items", {
+
+          method: "PUT",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body:
+            JSON.stringify(payload)
+
+        });
+        */
+
+
+        const now =
+          new Date();
+
+
+        document
+          .getElementById("saveStatus")
+          .textContent =
+            "Saved " +
+            String(now.getHours()).padStart(2, "0") +
+            ":" +
+            String(now.getMinutes()).padStart(2, "0");
+
+      }
+
+
+
+      function markUnsaved() {
+
+        document
+          .getElementById("saveStatus")
+          .textContent =
+            "Unsaved changes";
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | HELPERS
+      |--------------------------------------------------------------------------
+      */
+
+      function formatDuration(seconds) {
+
+        seconds =
+          Number(seconds || 0);
+
+
+        const mins =
+          Math.floor(seconds / 60);
+
+
+        const secs =
+          seconds % 60;
+
+
+        return (
+          String(mins).padStart(2, "0") +
+          ":" +
+          String(secs).padStart(2, "0")
+        );
+
+      }
+
+
+
+      function escapeHTML(value) {
+
+        const div =
+          document.createElement("div");
+
+        div.textContent =
+          value || "";
+
+        return div.innerHTML;
+
+      }
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | CLOSE POPUPS ON BACKGROUND CLICK
+      |--------------------------------------------------------------------------
+      */
+
+      [
+        "addStoryModal",
+        "breakModal",
+        "editStoryModal"
+      ]
+      .forEach(id => {
+
+        document
+          .getElementById(id)
+          .addEventListener(
+            "click",
+            function(event) {
+
+              if (event.target !== this)
+                return;
+
+
+              if (id === "addStoryModal")
+                closeAddStoryModal();
+
+              if (id === "breakModal")
+                closeBreakModal();
+
+              if (id === "editStoryModal")
+                closeEditStoryModal();
+
+            }
+          );
+
+      });
+
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | INITIAL LOAD
+      |--------------------------------------------------------------------------
+      */
+
+      renderRunOrder();
+    </script>
+  </body>
+</html>

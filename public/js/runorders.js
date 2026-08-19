@@ -105,7 +105,6 @@ const now = new Date();
 const year = now.getFullYear();
 const month = String(now.getMonth() + 1).padStart(2, '0');
 const day = String(now.getDate()).padStart(2, '0');
-runOrderDate.value = `${year}-${month}-${day}`;
 let hour = now.getHours();
 if (now.getMinutes() >= 30) {
     hour++;
@@ -141,7 +140,7 @@ function lineups(date){
             <div class="border-b border-[#eeeeee] px-5 py-2.5 select-none ${ element.status == 'live' ? 'bg-black/5' : '' }">
             <div class="flex items-start justify-between gap-5">
                 <div class="flex items-start gap-4">
-                <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${ element.status == 'live' ? 'bg-red-500 text-white' : element.status == 'completed' ? 'bg-green-600 text-white' : 'bg-gray-100' } text-[11px] text-gray-600">${ element.air_time.slice(0, 5) }</div>
+                <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${ element.status == 'live' ? 'bg-red-100 border border-red-500 text-red-700' : element.status == 'completed' ? 'bg-green-100 border border-green-500 text-green-700' : 'bg-gray-100' } text-[11px] text-gray-600">${ element.air_time.slice(0, 5) }</div>
                 <div class="min-w-0">
                     <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all">${ element.name }</h2>
                     <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
@@ -167,6 +166,10 @@ function lineups(date){
                     <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.4571 9.45711L16.0429 8.04289L11 13.0858L8.20711 10.2929L6.79289 11.7071L11 15.9142L17.4571 9.45711Z"></path></svg>
                     <span>Set Active</span>
                     </button>
+                    <button onclick="editRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5 18.89H6.41421L15.7279 9.57627L14.3137 8.16206L5 17.4758V18.89ZM21 20.89H3V16.6473L16.435 3.21231C16.8256 2.82179 17.4587 2.82179 17.8492 3.21231L20.6777 6.04074C21.0682 6.43126 21.0682 7.06443 20.6777 7.45495L9.24264 18.89H21V20.89ZM15.7279 6.74785L17.1421 8.16206L18.5563 6.74785L17.1421 5.33363L15.7279 6.74785Z"></path></svg>
+                        <span>Edit Run Order</span>
+                    </button>
                     <button onclick="downloadRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                     <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
                     <span>Download</span>
@@ -176,7 +179,7 @@ function lineups(date){
                     <span>Save as Preset</span>
                     </button>
                     <div class="my-1 border-t border-[#eeeeee]"></div>
-                    <button onclick="deleteRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
+                    <button ondblclick="deleteRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
                     <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
                     <span>Delete Run Order</span>
                     </button>
@@ -257,7 +260,7 @@ function openCreateModal() {
     const modal = document.getElementById("createModal");
     modal.classList.remove("hidden");
     modal.classList.add("flex");
-
+    runOrderDate.value = date;
 }
 function closeCreateModal() {
     const modal = document.getElementById("createModal");
@@ -294,7 +297,7 @@ newRunOrder.addEventListener('click', ()=>{
     newRunOrder.querySelector('#buttionLoading').classList.remove('hidden')
     newRunOrder.querySelector('#buttionLoading').classList.add('flex')
     let dataForm =  JSON.stringify({
-            name: runOrderName.value,
+            name: runOrderName.value || `News @ ${runOrderAirtime.value}`,
             run_date: runOrderDate.value,
             air_time: runOrderAirtime.value
         })
@@ -349,6 +352,10 @@ newRunOrder.addEventListener('click', ()=>{
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.4571 9.45711L16.0429 8.04289L11 13.0858L8.20711 10.2929L6.79289 11.7071L11 15.9142L17.4571 9.45711Z"></path></svg>
                         <span>Set Active</span>
                     </button>
+                    <button onclick="editRunOrder('${ data.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5 18.89H6.41421L15.7279 9.57627L14.3137 8.16206L5 17.4758V18.89ZM21 20.89H3V16.6473L16.435 3.21231C16.8256 2.82179 17.4587 2.82179 17.8492 3.21231L20.6777 6.04074C21.0682 6.43126 21.0682 7.06443 20.6777 7.45495L9.24264 18.89H21V20.89ZM15.7279 6.74785L17.1421 8.16206L18.5563 6.74785L17.1421 5.33363L15.7279 6.74785Z"></path></svg>
+                        <span>Edit Run Order</span>
+                    </button>
                     <button onclick="downloadRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
                         <span>Download</span>
@@ -358,7 +365,7 @@ newRunOrder.addEventListener('click', ()=>{
                         <span>Save as Preset</span>
                     </button>
                     <div class="my-1 border-t border-[#eeeeee]"></div>
-                    <button onclick="deleteRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
+                    <button ondblclick="deleteRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
                         <span>Delete Run Order</span>
                     </button>
@@ -402,6 +409,7 @@ function activeRunOrder(id) {
     .then(data => {
         if (data.success) {
             showAlert('success', data.message);
+            liveRundownSel();
         }
     })
     .catch(error => {
@@ -436,4 +444,150 @@ function activatingRunOrder() {
       </div>
     </div>
     `;
+}
+
+function OpenUpdateModal(){
+    const modal = document.getElementById("UpdateModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+}
+function CloseUpdateModal(){
+    const modal = document.getElementById("UpdateModal");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+}
+
+let selectedRunOrderId = null;
+let ContAbort = null;
+function editRunOrder(id) {
+    selectedRunOrderId = id;
+    if (ContAbort) {
+        ContAbort.abort();
+    }
+    ContAbort = new AbortController();
+    fetch(`/api/run-order?id=${id}`, {
+        signal: ContAbort.signal
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            OpenUpdateModal();
+            const runorder = data.stories[0];
+            console.log(runorder)
+            document.getElementById("UpdaterunOrderName").dataset.id = runorder.runorderID;
+            document.getElementById("UpdaterunOrderName").value = runorder.name;
+            document.getElementById("UpdaterunOrderDate").value = formatDatabaseDate2(runorder.run_date);
+            document.getElementById("UpdaterunOrderAirtime").value = runorder.air_time.slice(0, 5);
+            const producerSelect = document.getElementById("UpdaterunOrderProducer");
+            producerSelect.innerHTML =
+                `<option value="">No Producer</option>`;
+            data.users.forEach(element => {
+                producerSelect.innerHTML += `
+                    <option value="${element.id}">
+                        ${element.full_name}
+                    </option>
+                `;
+            });
+            if (runorder.producer_id) {
+                producerSelect.value = runorder.producer_id;
+            }
+        }
+    }).catch(error => {
+        if (error.name === 'AbortError') return;
+        console.error(error);
+        showAlert('error','An error occurred. Please try again.');
+    });
+}
+function formatDatabaseDate2(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+let UpdateRunOrder = document.getElementById("UpdateRunOrder");
+UpdateRunOrder.addEventListener("click", () => {
+    const selectedRunOrderId = document.getElementById("UpdaterunOrderName").dataset.id;
+    if (!selectedRunOrderId) return;
+    const name = document.getElementById("UpdaterunOrderName").value;
+    const run_date = document.getElementById("UpdaterunOrderDate").value;
+    const air_time = document.getElementById("UpdaterunOrderAirtime").value;
+    const producer_id = document.getElementById("UpdaterunOrderProducer").value;
+    fetch(`/api/run-orders/${selectedRunOrderId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name,
+            run_date,
+            air_time,
+            producer_id: producer_id || null
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('success', data.message);
+            liveRundownSel();
+            CloseUpdateModal();
+        } else {
+            showAlert('error', data.message);
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        showAlert('error','An error occurred. Please try again.');
+    })
+    .finally(() => {
+        lineups(date);
+    });
+});
+
+function deleteRunOrder(id) {
+    fetch(`/api/run-orders/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showAlert('success', data.message);
+            liveRundownSel();
+        } else {
+            showAlert('error', data.message);
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        showAlert( 'error', 'An error occurred. Please try again.' );
+    })
+    .finally(() => {
+        lineups(date);
+    });
+}
+
+
+function liveRundownSel(){
+    fetch('/api/run-order/live')
+    .then(response => response.json())
+    .then( data => {
+        if(data.success){
+            console.log(data)
+            if(data.nextNews.length > 0){
+                document.getElementById("runDownStatus").innerHTML = `
+                <div class="text-[9px] text-gray-400">ACTIVE RUNDOWN</div>
+                <div class="Outfit-SemiBold max-w-40 truncate text-[13px] text-red-600">${data.nextNews[0].name}</div>
+                <div class="mt-0.5 text-[9px] text-gray-400">${data.nextNews[0].air_time.slice(0, 5)}</div>
+                `
+            }else{
+                document.getElementById("runDownStatus").innerHTML = `
+                <div class="text-[9px] text-gray-400">ACTIVE RUNDOWN</div>
+                <div class="Outfit-Medium mt-0.5 text-[11px] text-gray-500">No active rundown</div>
+                `
+            }
+        }
+    })
+    .catch( error => {
+
+    })
 }

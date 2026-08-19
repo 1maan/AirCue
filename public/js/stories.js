@@ -60,19 +60,19 @@ const savedLanguage = localStorage.getItem('language');
 const savedLabel = localStorage.getItem('label_language');
 if (savedLanguage) {
     selectedLanguage = savedLanguage;
-    document.getElementById('filterText').textContent = savedLabel || (savedLanguage === 'dv' ? 'Dhivehi' : 'English');
-    savedLanguage === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
-    savedLanguage === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
+    document.getElementById('filterText').textContent = savedLabel || (selectedLanguage === 'dv' ? 'Dhivehi' : 'English');
+    selectedLanguage === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
+    selectedLanguage === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
     cg.dir = cgToggle.checked ? 'rtl' : 'ltr';
     cgToggle.checked ? cg_text_preview.classList.add('AWaheed') : cg_text_preview.classList.add('Outfit-Medium');
     storyText.dir = languageToggle.checked ? 'rtl' : 'ltr';
 } else {
     selectedLanguage = 'dv';
     document.getElementById('filterText').textContent = 'Dhivehi';
-    savedLanguage === 'dv' ? cgToggle.checked = false : cgToggle.checked = true
-    savedLanguage === 'dv' ? languageToggle.checked = false : languageToggle.checked = true
-    savedLanguage === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
-    savedLanguage === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
+    selectedLanguage === 'dv' ? cgToggle.checked = false : cgToggle.checked = true
+    selectedLanguage === 'dv' ? languageToggle.checked = false : languageToggle.checked = true
+    selectedLanguage === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
+    selectedLanguage === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
     cg.dir = cgToggle.checked ? 'rtl' : 'ltr';
     cgToggle.checked ? cg_text_preview.classList.add('AWaheed') : cg_text_preview.classList.add('Outfit-Medium');
     storyText.dir = languageToggle.checked ? 'rtl' : 'ltr';
@@ -332,7 +332,6 @@ function getStories(date) {
     })
     .catch(error => {
         if (error.name === 'AbortError') {
-            console.log('Previous request cancelled');
             return;
         }
         console.error('Error fetching stories:', error);
@@ -562,6 +561,9 @@ function saveStory(date){
               isSavingStory = false;
               showAlert('success', data.message);
             }
+          if(!localStorage.getItem('editor_reset_behavior')){
+            resertStoryEditor();
+          }
           }
           if(!data.success) {
             showAlert('error', data.message);

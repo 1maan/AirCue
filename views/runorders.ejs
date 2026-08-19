@@ -93,99 +93,24 @@
     <div id="titleRunOrder" class="Outfit-SemiBold truncate text-[14px]">Broadcast Lineups</div>
     <div id="titleRunOrderScheduled" class="mt-0.5 truncate text-[11px] text-gray-400"><%= runorders.length %> rundowns scheduled</div>
   </div>
-  <div class="shrink-0 text-right max-[400px]:hidden">
-    <div class="text-[9px] text-gray-400">ACTIVE RUNDOWN</div>
-    <div class="Outfit-SemiBold max-w-40 truncate text-[13px] text-red-600">Fahuge Khabaru</div>
-    <div class="mt-0.5 text-[9px] text-gray-400">16:00</div>
+  <div id="runDownStatus" class="shrink-0 text-right max-[400px]:hidden">
+  <% if(nextNews){ %>
+  <div class="text-[9px] text-gray-400">ACTIVE RUNDOWN</div>
+  <div class="Outfit-SemiBold max-w-40 truncate text-[13px] text-red-600"><%= nextNews.name %></div>
+  <div class="mt-0.5 text-[9px] text-gray-400"><%= nextNews.air_time.slice(0, 5) %></div>
+  <% } else { %>
+  <div class="text-[9px] text-gray-400">ACTIVE RUNDOWN</div>
+  <div class="Outfit-Medium mt-0.5 text-[11px] text-gray-500">No active rundown</div>
+  <% } %>
   </div>
 </div>
 
-
-<!-- RUN ORDER -->
-
-<!-- <div class="border-b border-[#eeeeee] px-5 py-2.5">
-  <div class="flex items-start justify-between gap-5">
-    <div class="flex items-start gap-4">
-      <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-[11px] text-gray-600">16:00</div>
-      <div class="min-w-0">
-        <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all">Fahuge Khabaru</h2>
-        <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
-          <span class="text-nowrap"> 12 stories </span>
-          <span class="text-nowrap hidden md:block "> Producer: Ahmed </span>
-        </div>
-      </div>
-    </div>
-    <div class="relative flex shrink-0 items-center gap-1">
-      <button class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Open</button>
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z"></path></svg>
-          <span>Open Run Order</span>
-        </button>
-        <button onclick="downloadRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
-          <span>Download</span>
-        </button>
-        <button onclick="saveAsPreset('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path></svg>
-          <span>Save as Preset</span>
-        </button>
-        <div class="my-1 border-t border-[#eeeeee]"></div>
-        <button onclick="deleteRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
-          <span>Delete Run Order</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div> -->
-<!-- RUN ORDER -->
-<!-- <div class="px-5 py-2.5">
-  <div class="flex items-start justify-between gap-5">
-    <div class="flex items-start gap-4">
-      <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-red-50 text-[11px] text-red-500">19:00</div>
-      <div class="min-w-0">
-        <div class="flex items-center gap-2">
-          <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all">Local News</h2>
-          <span class="Outfit-Medium line-clamp-1 rounded-full bg-red-50 px-2 py-0.5 text-[8px] text-nowrap break-all text-red-500"> ON AIR </span>
-        </div>
-        <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
-          <span class="text-nowrap"> 12 stories </span>
-          <span class="text-nowrap hidden md:block "> Producer: Ahmed </span>
-        </div>
-      </div>
-    </div>
-    <div class="relative flex shrink-0 items-center gap-1">
-      <button class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Open</button>
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z"></path></svg>
-          <span>Open Run Order</span>
-        </button>
-        <button onclick="downloadRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
-          <span>Download</span>
-        </button>
-        <button onclick="saveAsPreset('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path></svg>
-          <span>Save as Preset</span>
-        </button>
-        <div class="my-1 border-t border-[#eeeeee]"></div>
-        <button onclick="deleteRunOrder('Fahuge Khabaru')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
-          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
-          <span>Delete Run Order</span>
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="mt-4 h-1 overflow-hidden rounded-full bg-gray-100">
-    <div class="h-full w-[42%] bg-red-500"></div>
-  </div>
-</div> -->
-
-
-<div id="sideRunorders" class="scrollbar min-h-75 max-h-137.5 overflow-y-auto xl:max-h-175">
+<div id="sideRunorders" class="scrollbar min-h-75 max-h-137.5 overflow-y-auto xl:max-h-175" style="scrollbar-gutter: stable;">
 <% runorders.forEach((order) => { %>
   <div class="border-b border-[#eeeeee] px-5 py-2.5 select-none <%= order.status == 'live' ? 'bg-black/5' : '' %>">
     <div class="flex items-start justify-between gap-5">
       <div class="flex items-start gap-4">
-        <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg <%= order.status === 'live' ? 'bg-red-500 text-white' : order.status === 'completed' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600' %>  text-[11px] "><%= order.air_time.slice(0, 5) %></div>
+        <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg <%= order.status === 'live' ? 'bg-red-100 border border-red-500 text-red-700' : order.status === 'completed' ? 'bg-green-100 border border-green-500 text-green-700' : 'bg-gray-100 text-gray-600' %>  text-[11px] "><%= order.air_time.slice(0, 5) %></div>
         <div class="min-w-0">
           <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all"><%= order.name %></h2>
           <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
@@ -211,6 +136,10 @@
             <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.4571 9.45711L16.0429 8.04289L11 13.0858L8.20711 10.2929L6.79289 11.7071L11 15.9142L17.4571 9.45711Z"></path></svg>
             <span>Set Active</span>
           </button>
+          <button onclick="editRunOrder('<%= order.runorderID %>')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+            <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5 18.89H6.41421L15.7279 9.57627L14.3137 8.16206L5 17.4758V18.89ZM21 20.89H3V16.6473L16.435 3.21231C16.8256 2.82179 17.4587 2.82179 17.8492 3.21231L20.6777 6.04074C21.0682 6.43126 21.0682 7.06443 20.6777 7.45495L9.24264 18.89H21V20.89ZM15.7279 6.74785L17.1421 8.16206L18.5563 6.74785L17.1421 5.33363L15.7279 6.74785Z"></path></svg>
+            <span>Edit Run Order</span>
+          </button>
           <button onclick="downloadRunOrder('<%= order.runorderID %>')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
             <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
             <span>Download</span>
@@ -220,7 +149,7 @@
             <span>Save as Preset</span>
           </button>
           <div class="my-1 border-t border-[#eeeeee]"></div>
-          <button onclick="deleteRunOrder('<%= order.runorderID %>')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
+          <button ondblclick="deleteRunOrder('<%= order.runorderID %>')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
             <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
             <span>Delete Run Order</span>
           </button>
@@ -229,6 +158,20 @@
     </div>
   </div>
 <% }) %>
+<% if(runorders.length === 0 ){ %>
+  <div id="NoRunorderYet" class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
+  <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.5"></rect>
+      <path d="M8 8H16M8 12H16M8 16H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+    </svg>
+  </div>
+  <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">No rundowns scheduled</div>
+  <div class="mt-1 max-w-55 text-[10px] leading-4 text-gray-400">There are no broadcast run orders scheduled for this date.</div>
+  <button onclick="openCreateModal()" class="Outfit-Medium mt-4 cursor-pointer rounded-lg bg-black px-4 py-2 text-[9px] text-white hover:bg-gray-800">Create Run Order</button>
+</div>
+
+<% } %>
 </div>
 
 
@@ -372,7 +315,7 @@
       <button onclick="closeCreateModal()" class="rounded-lg px-4 py-2 text-[11px] cursor-pointer text-gray-500 hover:bg-gray-100">Cancel</button>
       <button id="newRunOrder" class="Outfit-Medium justify-center w-28.75 rounded-lg bg-black px-4 py-2 text-[11px] flex cursor-pointer gap-0.5 text-white text-nowrap">
         <span id="buttonText" class="flex items-center justify-center">
-          Create <span class="hidden sm:block">Run</span> Order
+          Create <span class="hidden sm:block px-0.5">Run</span> Order
         </span>
         <span id="buttionLoading" class="animate-spin hidden">
           <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9995 2C12.5518 2 12.9995 2.44772 12.9995 3V6C12.9995 6.55228 12.5518 7 11.9995 7C11.4472 7 10.9995 6.55228 10.9995 6V3C10.9995 2.44772 11.4472 2 11.9995 2ZM11.9995 17C12.5518 17 12.9995 17.4477 12.9995 18V21C12.9995 21.5523 12.5518 22 11.9995 22C11.4472 22 10.9995 21.5523 10.9995 21V18C10.9995 17.4477 11.4472 17 11.9995 17ZM20.6597 7C20.9359 7.47829 20.772 8.08988 20.2937 8.36602L17.6956 9.86602C17.2173 10.1422 16.6057 9.97829 16.3296 9.5C16.0535 9.02171 16.2173 8.41012 16.6956 8.13398L19.2937 6.63397C19.772 6.35783 20.3836 6.52171 20.6597 7ZM7.66935 14.5C7.94549 14.9783 7.78161 15.5899 7.30332 15.866L4.70525 17.366C4.22695 17.6422 3.61536 17.4783 3.33922 17C3.06308 16.5217 3.22695 15.9101 3.70525 15.634L6.30332 14.134C6.78161 13.8578 7.3932 14.0217 7.66935 14.5ZM20.6597 17C20.3836 17.4783 19.772 17.6422 19.2937 17.366L16.6956 15.866C16.2173 15.5899 16.0535 14.9783 16.3296 14.5C16.6057 14.0217 17.2173 13.8578 17.6956 14.134L20.2937 15.634C20.772 15.9101 20.9359 16.5217 20.6597 17ZM7.66935 9.5C7.3932 9.97829 6.78161 10.1422 6.30332 9.86602L3.70525 8.36602C3.22695 8.08988 3.06308 7.47829 3.33922 7C3.61536 6.52171 4.22695 6.35783 4.70525 6.63397L7.30332 8.13398C7.78161 8.41012 7.94549 9.02171 7.66935 9.5Z"></path></svg>
@@ -415,6 +358,56 @@
           <div class="mt-1 line-clamp-1 text-[10px] break-all text-gray-400">Weekend format • 15 slots</div>
         </div>
         <span class="text-gray-300"> › </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+  <!-- UPDATE MODAL -->
+
+<div id="UpdateModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5">
+  <div class="w-full max-w-md rounded-xl bg-white shadow-xl overflow-hidden">
+    <div class="flex items-center gap-3 justify-between border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="Outfit-SemiBold text-[14px] break-all line-clamp-1">New Run Order</div>
+        <div class="mt-0.5 text-[10px] text-gray-400 break-all line-clamp-1">Create today's broadcast rundown</div>
+      </div>
+      <div onclick="CloseUpdateModal()" class="rounded-sm px-2 cursor-pointer w-fit h-fit aspect-square hover:bg-gray-200 text-gray-400 hover:text-black">
+        <p class="cursor-pointer">×</p>
+      </div>
+    </div>
+    <div class="space-y-4 p-5">
+      <div>
+        <label class="Outfit-Medium mb-1.5 block text-[10px] text-gray-500 break-all line-clamp-1"> Run Order Name </label>
+        <input type="text" name="UpdaterunOrderName" id="UpdaterunOrderName" placeholder="Example: Evening News" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[10px] text-gray-500 break-all line-clamp-1"> Date </label>
+          <input type="date" name="UpdaterunOrderDate" id="UpdaterunOrderDate" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black">
+        </div>
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[10px] text-gray-500 break-all line-clamp-1"> Air Time </label>
+          <input type="time" name="UpdaterunOrderAirtime" id="UpdaterunOrderAirtime" value="20:00" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[12px] outline-none focus:border-black">
+        </div>
+      </div>
+      <div>
+        <label class="Outfit-Medium mb-1.5 block text-[10px] text-gray-500 break-all line-clamp-1"> Producer </label>
+        <select name="UpdaterunOrderProducer" id="UpdaterunOrderProducer" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[12px] outline-none focus:border-black">
+          <option value="0">Select</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
+      <button onclick="CloseUpdateModal()" class="rounded-lg px-4 py-2 text-[11px] cursor-pointer text-gray-500 hover:bg-gray-100">Cancel</button>
+      <button id="UpdateRunOrder" class="Outfit-Medium justify-center w-28.75 rounded-lg bg-black px-4 py-2 text-[11px] flex cursor-pointer gap-0.5 text-white text-nowrap">
+        <span id="buttonText" class="flex items-center justify-center">
+          Update <span class="hidden sm:block px-0.5">Run</span> Order
+        </span>
+        <span id="buttionLoading" class="animate-spin hidden">
+          <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9995 2C12.5518 2 12.9995 2.44772 12.9995 3V6C12.9995 6.55228 12.5518 7 11.9995 7C11.4472 7 10.9995 6.55228 10.9995 6V3C10.9995 2.44772 11.4472 2 11.9995 2ZM11.9995 17C12.5518 17 12.9995 17.4477 12.9995 18V21C12.9995 21.5523 12.5518 22 11.9995 22C11.4472 22 10.9995 21.5523 10.9995 21V18C10.9995 17.4477 11.4472 17 11.9995 17ZM20.6597 7C20.9359 7.47829 20.772 8.08988 20.2937 8.36602L17.6956 9.86602C17.2173 10.1422 16.6057 9.97829 16.3296 9.5C16.0535 9.02171 16.2173 8.41012 16.6956 8.13398L19.2937 6.63397C19.772 6.35783 20.3836 6.52171 20.6597 7ZM7.66935 14.5C7.94549 14.9783 7.78161 15.5899 7.30332 15.866L4.70525 17.366C4.22695 17.6422 3.61536 17.4783 3.33922 17C3.06308 16.5217 3.22695 15.9101 3.70525 15.634L6.30332 14.134C6.78161 13.8578 7.3932 14.0217 7.66935 14.5ZM20.6597 17C20.3836 17.4783 19.772 17.6422 19.2937 17.366L16.6956 15.866C16.2173 15.5899 16.0535 14.9783 16.3296 14.5C16.6057 14.0217 17.2173 13.8578 17.6956 14.134L20.2937 15.634C20.772 15.9101 20.9359 16.5217 20.6597 17ZM7.66935 9.5C7.3932 9.97829 6.78161 10.1422 6.30332 9.86602L3.70525 8.36602C3.22695 8.08988 3.06308 7.47829 3.33922 7C3.61536 6.52171 4.22695 6.35783 4.70525 6.63397L7.30332 8.13398C7.78161 8.41012 7.94549 9.02171 7.66935 9.5Z"></path></svg>
+        </span>
       </button>
     </div>
   </div>

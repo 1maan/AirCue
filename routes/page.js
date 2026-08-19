@@ -65,19 +65,104 @@ router.get('/runorders', authPage, (req, res)=>{
     LEFT JOIN users AS u 
         ON u.id = ro.producer_id
     WHERE ro.run_date = ?
-    ORDER BY air_time
+    ORDER BY air_time;
+
+    SELECT * FROM run_orders WHERE status = 'live';
     `;
     db.query(sql, [formatDatabaseDate(date)], (err, result)=>{
         if(err){
-            return req.redirect('/404')
+            console.log(err)
+            return res.redirect('/500')
         }
-        res.render('runorders', { fullname: req.session.fullname, role: req.session.role, runorders: result })
+        res.render('runorders', { fullname: req.session.fullname, role: req.session.role, runorders: result[0], nextNews: result[1][0] })
     })
 })
 
-router.get('/runorders-id', authPage, (req, res)=>{
-    res.render('runorders-id', { fullname: req.session.fullname, role: req.session.role })
-})
+
+
+
+router.get('/runorder/:id', authPage, (req, res) => {
+
+    const id = req.params.id;
+
+    const sql = `
+        SELECT 
+            ro.*,
+            COALESCE(u.full_name, 'No Producer') AS full_name
+        FROM run_orders ro
+        LEFT JOIN users u 
+            ON ro.producer_id = u.id
+        WHERE ro.id = ?
+        LIMIT 1;
+
+        SELECT *
+        FROM run_orders
+        WHERE id = ?
+        AND status = 'live'
+        LIMIT 1;
+    `;
+
+    db.query(sql, [id, id], (err, result) => {
+
+        if (err) {
+            console.error(err);
+            return res.redirect('/500');
+        }
+
+        if (result[0].length === 0) {
+            return res.redirect('/404');
+        }
+
+        const runOrder = result[0][0];
+        const isActive = result[1].length > 0;
+
+        res.render('runorders-id', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive });
+
+    });
+
+});
+router.get('/runordere/:id', authPage, (req, res) => {
+
+    const id = req.params.id;
+
+    const sql = `
+        SELECT 
+            ro.*,
+            COALESCE(u.full_name, 'No Producer') AS full_name
+        FROM run_orders ro
+        LEFT JOIN users u 
+            ON ro.producer_id = u.id
+        WHERE ro.id = ?
+        LIMIT 1;
+
+        SELECT *
+        FROM run_orders
+        WHERE id = ?
+        AND status = 'live'
+        LIMIT 1;
+    `;
+
+    db.query(sql, [id, id], (err, result) => {
+
+        if (err) {
+            console.error(err);
+            return res.redirect('/500');
+        }
+
+        if (result[0].length === 0) {
+            return res.redirect('/404');
+        }
+
+        const runOrder = result[0][0];
+        const isActive = result[1].length > 0;
+
+        res.render('runorders-idd', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive });
+
+    });
+
+});
+
+
 
 router.get('/stories', authPage, (req, res)=>{
     res.render('stories', { fullname: req.session.fullname, role: req.session.role })
@@ -101,4 +186,8 @@ router.get('/activity', (req, res) => {
 router.get('/add', authPage, (req, res)=>{
     res.render('add', { fullname: req.session.fullname, role: req.session.role })
 })
+router.get('/404', authPage, (req, res)=>{
+    res.render('error_pages/404')
+})
+
 module.exports = router;
