@@ -277,6 +277,9 @@
   .inset-0 {
     inset: 0px;
   }
+  .inset-x-0 {
+    inset-inline: 0px;
+  }
   .top-0 {
     top: 0px;
   }
@@ -312,6 +315,9 @@
   }
   .top-17 {
     top: calc(var(--spacing) * 17);
+  }
+  .top-18 {
+    top: calc(var(--spacing) * 18);
   }
   .top-\[57\%\] {
     top: 57%;
@@ -360,6 +366,9 @@
   }
   .left-10 {
     left: calc(var(--spacing) * 10);
+  }
+  .z-0 {
+    z-index: 0;
   }
   .z-1 {
     z-index: 1;
@@ -450,6 +459,12 @@
   }
   .mt-14 {
     margin-top: calc(var(--spacing) * 14);
+  }
+  .mt-17 {
+    margin-top: calc(var(--spacing) * 17);
+  }
+  .mt-18 {
+    margin-top: calc(var(--spacing) * 18);
   }
   .mb-1 {
     margin-bottom: var(--spacing);
@@ -634,6 +649,9 @@
   .h-svh {
     height: 100svh;
   }
+  .max-h-96 {
+    max-height: calc(var(--spacing) * 96);
+  }
   .max-h-115 {
     max-height: calc(var(--spacing) * 115);
   }
@@ -661,6 +679,9 @@
   .max-h-\[620px\] {
     max-height: 620px;
   }
+  .max-h-full {
+    max-height: 100%;
+  }
   .min-h-0 {
     min-height: 0px;
   }
@@ -672,6 +693,9 @@
   }
   .min-h-75 {
     min-height: calc(var(--spacing) * 75);
+  }
+  .min-h-96 {
+    min-height: calc(var(--spacing) * 96);
   }
   .min-h-100 {
     min-height: calc(var(--spacing) * 100);
@@ -1557,11 +1581,38 @@
   .pt-5 {
     padding-top: calc(var(--spacing) * 5);
   }
+  .pt-8 {
+    padding-top: calc(var(--spacing) * 8);
+  }
+  .pt-10 {
+    padding-top: calc(var(--spacing) * 10);
+  }
+  .pt-18 {
+    padding-top: calc(var(--spacing) * 18);
+  }
+  .pt-20 {
+    padding-top: calc(var(--spacing) * 20);
+  }
+  .pt-30 {
+    padding-top: calc(var(--spacing) * 30);
+  }
+  .pt-40 {
+    padding-top: calc(var(--spacing) * 40);
+  }
   .pr-4 {
     padding-right: calc(var(--spacing) * 4);
   }
   .pr-16 {
     padding-right: calc(var(--spacing) * 16);
+  }
+  .pb-10 {
+    padding-bottom: calc(var(--spacing) * 10);
+  }
+  .pb-20 {
+    padding-bottom: calc(var(--spacing) * 20);
+  }
+  .pb-40 {
+    padding-bottom: calc(var(--spacing) * 40);
   }
   .pl-4 {
     padding-left: calc(var(--spacing) * 4);
@@ -2196,6 +2247,9 @@
     }
     .sm\:justify-between {
       justify-content: space-between;
+    }
+    .sm\:p-4 {
+      padding: calc(var(--spacing) * 4);
     }
   }
   @media (width >= 48rem) {

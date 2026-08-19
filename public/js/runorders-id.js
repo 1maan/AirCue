@@ -250,6 +250,12 @@ rightBtn.onclick = () => {
     });
 };
 
+dateScroller.addEventListener('wheel', (e) => {
+    e.preventDefault();
+
+    dateScroller.scrollLeft += e.deltaY * 4;
+}, { passive: false });
+
 loadDates();
 
 function getRundownItems(date){
@@ -342,7 +348,7 @@ function renderTags(text) {
     const tags = extractTagsWithTotal(text);
 
     return tags.map(item => `
-        <span class="rounded bg-gray-100 px-1.5 py-0.5 text-[9px] text-gray-500">
+        <span class="rounded bg-gray-100 px-1.5 py-0.5 text-[9px] text-gray-500 line-clamp-1">
             ${item.name}
             <span class="ml-1 text-gray-400">${item.total}</span>
         </span>
@@ -431,4 +437,29 @@ storyBank.innerHTML = `
   <div class="mt-1 text-[10px] text-gray-400">Looking for matching newsroom stories...</div>
 </div>
 `;
+}
+
+
+
+function switchStoryTab(tab) {
+    console.log(tab)
+    let newStoryTab = document.getElementById("newStoryTab")
+    let existingStoryTab = document.getElementById("existingStoryTab")
+    let existingStoriesPanel = document.getElementById("existingStoriesPanel")
+    let newStoryPanel = document.getElementById("newStoryPanel")
+    
+    
+    if(tab == 'new'){
+        newStoryTab.classList.add('bg-white', 'shadow-sm');
+        existingStoryTab.classList.remove('bg-white', 'shadow-sm');
+        existingStoriesPanel.classList.add('hidden')
+        newStoryPanel.classList.remove('hidden')
+    }
+
+    if(tab == 'existing'){
+        existingStoryTab.classList.add('bg-white', 'shadow-sm');
+        newStoryTab.classList.remove('bg-white', 'shadow-sm');
+        newStoryPanel.classList.add('hidden')
+        existingStoriesPanel.classList.remove('hidden')
+    }
 }
