@@ -631,6 +631,21 @@ function updateStory(selectedStoryId) {
         showAlert( 'error', 'An error occurred. Please try again.');
     });
 }
+function RunremoveEndWords(){
+  storyText.value = removeEndWords(storyText.value);
+}
+
+// function removeEndWords(text) {
+//     return text
+//         .replace(/\.?(އެވެ|ނެވެ|މެވެ|ށެވެ|ލެވެ|ކެވެ)\.?/g, '')
+//         .trim();
+// }
+
+function removeEndWords(text) {
+    return text
+        .replace(/\.?(އެވެ|ނެވެ|މެވެ|ށެވެ|ލެވެ|ކެވެ|ޔެވެ|ރެވެ)\.?/g, '')
+        .trim();
+}
 
 const transliterationMap = {
     'ް':'c',

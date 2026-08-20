@@ -56,3 +56,22 @@ CREATE TABLE run_orders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
 );
+
+CREATE TABLE run_order_items (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    run_order_id INT UNSIGNED NOT NULL,
+    item_type ENUM('story', 'break') NOT NULL,
+    story_id INT UNSIGNED DEFAULT NULL,
+    break_name VARCHAR(150) DEFAULT NULL,
+    position INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (run_order_id)
+        REFERENCES run_orders(id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (story_id)
+        REFERENCES stories(id)
+        ON DELETE SET NULL,
+    INDEX idx_rundown_position (run_order_id, position)
+);

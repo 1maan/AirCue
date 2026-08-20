@@ -16,9 +16,6 @@ router.get('/run-order', (req, res)=>{
 router.get('/run-order-editor', (req, res)=>{
     res.render('run-order-editor')
 })
-router.get('/teleprompter-controller', (req, res)=>{
-    res.render('teleprompter-controller')
-})
 router.get('/teleprompter', (req, res)=>{
     res.render('teleprompter')
 })
@@ -100,9 +97,17 @@ router.get('/runorder/:id', authPage, (req, res) => {
         WHERE id = ?
         AND status = 'live'
         LIMIT 1;
+
+        SELECT roi.*, s.slug, s.created_at as ca
+        FROM run_order_items roi
+        LEFT JOIN stories s
+        ON 
+        roi.story_id = s.id
+        WHERE run_order_id = ?
+        ORDER BY position ASC;
     `;
 
-    db.query(sql, [id, id], (err, result) => {
+    db.query(sql, [id, id, id], (err, result) => {
 
         if (err) {
             console.error(err);
@@ -115,8 +120,10 @@ router.get('/runorder/:id', authPage, (req, res) => {
 
         const runOrder = result[0][0];
         const isActive = result[1].length > 0;
+        const runDown = result[2];
+        console.log(runDown)
 
-        res.render('runorders-id', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive });
+        res.render('runorders-id', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive, runDown: runDown });
 
     });
 
@@ -156,7 +163,7 @@ router.get('/runordere/:id', authPage, (req, res) => {
         const runOrder = result[0][0];
         const isActive = result[1].length > 0;
 
-        res.render('runorders-idd', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive });
+        res.render('runorders-idd', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive, rundown: 'ts' });
 
     });
 

@@ -52,11 +52,20 @@ function openAddStoryModal() {
         firstTime = false;
     }
 }
-
 function closeAddStoryModal() {
     let model = document.getElementById("addStoryModal");
     model.classList.add('hidden')
     model.classList.remove('flex')
+}
+function openBreakModal() {
+    const modal = document.getElementById("breakModal");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+}
+function closeBreakModal() {
+    const modal = document.getElementById("breakModal");
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
 }
 function formatDatabaseDate(date) {
     const year = date.getFullYear();
@@ -296,7 +305,7 @@ function getRundownItems(date){
     <div class="min-w-0 flex-1">
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2">
-          <div class="Outfit-Faseyha-Regular truncate text-[12px] font-medium uppercase">${ story.slug }</div>
+          <div class="Outfit-Faseyha-Regular text-[12px] break-all line-clamp-1 uppercase">${ story.slug }</div>
           ${ renderTags(story.story_text) }
         </div>
       </div>
@@ -306,7 +315,7 @@ function getRundownItems(date){
       </div>
     </div>
   </div>
-  <button onclick="addStoryToRunDown('${ story.id }', '${ story.slug }')" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
+  <button onclick="addStoryToRunDown('${ story.id }', '${ story.slug }', '${formatTime( story.created_at )}')" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
 </div>
                 `
             })
@@ -411,7 +420,7 @@ storyBank.innerHTML += `
     <div class="min-w-0 flex-1">
       <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2">
-          <div class="Outfit-Faseyha-Regular truncate text-[12px] font-medium uppercase">${ story.slug }</div>
+          <div class="Outfit-Faseyha-Regular text-[12px] break-all line-clamp-1 uppercase">${ story.slug }</div>
           ${ renderTags(story.story_text) }
         </div>
       </div>
@@ -421,7 +430,7 @@ storyBank.innerHTML += `
       </div>
     </div>
   </div>
-  <button onclick="addStoryToRunDown('${ story.id }', '${ story.slug }')" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
+  <button onclick="addStoryToRunDown('${ story.id }', '${ story.slug }', '${formatTime( story.created_at )}')" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
 </div>
 `
 })
@@ -510,57 +519,166 @@ window.addEventListener('dragstart', (e)=>{
     const item = e.target.closest('.runorder-item');
     if(!item) return;
     dragItem = item;
-    item.classList.add('opacity-50')
+    item.classList.add('bg-[#b7ffb799]')
 })
 window.addEventListener('dragover', (e)=>{
+    e.preventDefault();
     const overItem = e.target.closest('.runorder-item');
     if(!overItem || overItem === dragItem) return;
-    e.preventDefault();
-    document.querySelectorAll('.runorder-item').forEach(item =>{
-        item.classList.remove('border-top-red');
-    })
-    overItem.classList.add('border-top-red');
+    overItem.parentNode.insertBefore(dragItem, overItem)
+    runOrderCounter();
 })
 window.addEventListener('drop', (e)=>{
     e.preventDefault();
     const overItem = e.target.closest('.runorder-item');
     if(!overItem || !dragItem || overItem === dragItem) return;
     overItem.parentNode.insertBefore(dragItem, overItem)
-    overItem.classList.remove('border-top-red');
 })
 window.addEventListener('dragend', () => {
     if (dragItem) {
-        dragItem.classList.remove('opacity-50');
+        dragItem.classList.remove('bg-[#b7ffb799]');
     }
-    document.querySelectorAll('.runorder-item').forEach(item => {
-        item.classList.remove('border-top-red');
-    });
     dragItem = null;
     runOrderCounter();
 });
 
 function runOrderCounter(){
     let counter = document.querySelectorAll(".runorder-counter")
+    let runorderStory = document.querySelectorAll(".runorder-story")
+    let footerStoryCount = document.getElementById("footerStoryCount")
     let i = 1;
     counter.forEach(Item =>{
-        i < 9 ? Item.textContent = '0' + i : Item.textContent = i
+        i < 10 ? Item.textContent = '0' + i : Item.textContent = i
         i++
     })
+    footerStoryCount.textContent = runorderStory.length
 }
-runOrderCounter()
+runOrderCounter();
 
 let runOrderList = document.getElementById("runOrderList");
 
-function addStoryToRunDown(id, name){
-    runOrderList.insertAdjacentHTML('beforeend', `
-<div data-item-id="${id}" draggable="true" class="runorder-item border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-4 hover:bg-[#b7ffb799] grid-cols-[45px_35px_1fr_100px] md:gap-0">
+function addStoryToRunDown(id, name, date){
+runOrderList.insertAdjacentHTML('beforeend', `
+<div data-itemid="${id}" draggable="true" class="runorder-item runorder-story border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-2 sm:grid-cols-[45px_35px_1fr_70px_60px] grid-cols-[45px_35px_1fr_60px] md:gap-0">
   <div class="flex items-center gap-2 pointer-events-none">
     <span class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto"> ⋮⋮ </span>
   </div>
-  <div class="text-[10px] flex items-center text-gray-400 runorder-counter">00</div>
-      <div class="Outfit-Medium flex items-center line-clamp-1 text-[11px]">${name}</div>
-</div>     
-    `)
-
+    <div class="text-[10px] flex items-center text-gray-400 runorder-counter">00</div>
+    <div class="min-w-0 flex-1"><p class="Outfit-Faseyha-Medium truncate text-[11px]">${name}</p></div>
+    <p class="Outfit-Regular flex items-center line-clamp-1 text-[10px] max-sm:hidden">${date}</p>
+    <div class="flex justify-end">
+        <button id="deleteRunOrderItem" class="ml-1 cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
+    </div>
+</div>`)
     runOrderCounter();
+}
+
+window.addEventListener('click', (e)=>{
+    let deleteItem = e.target.closest('.runorder-item')
+    let DeleteId = e.target.id === 'deleteRunOrderItem'
+    if(deleteItem && DeleteId){
+        deleteItem.remove();
+        runOrderCounter();
+    }
+})
+
+
+function addBreak(){
+let breakName = document.getElementById("breakName")
+if(breakName.value == '') return;
+runOrderList.insertAdjacentHTML('beforeend', `
+<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-gray-50 px-4 py-2">
+  <div class="flex items-center gap-3 pointer-events-none">
+    <div class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto">⋮⋮</div>
+    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="flex items-center gap-3">
+      <span class="rounded-md bg-gray-200 px-2 py-1 text-[10px] font-medium text-gray-500 uppercase runorder-break-type"> ${breakName.value} </span>
+    </div>
+    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="flex justify-end">
+        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
+    </div>
+  </div>
+</div> `)
+}
+
+let breakToRunorder = document.getElementById("breakToRunorder");
+breakToRunorder.addEventListener('change', ()=>{
+    if(breakToRunorder.value == '') return;
+runOrderList.insertAdjacentHTML('beforeend', `
+<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-gray-50 px-4 py-2">
+  <div class="flex items-center gap-3 pointer-events-none">
+    <div class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto">⋮⋮</div>
+    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="flex items-center gap-3">
+      <span class="rounded-md bg-gray-200 px-2 py-1 text-[10px] font-medium text-gray-500 uppercase runorder-break-type"> ${breakToRunorder.value} </span>
+    </div>
+    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="flex justify-end">
+        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
+    </div>
+  </div>
+</div>`)
+})
+
+
+
+
+
+
+
+
+
+
+
+function saveRunOrder(id){
+    let itemsArray = {};
+    const allItems = runOrderList.querySelectorAll('.runorder-item')
+    let possition = 1;
+    allItems.forEach(item=>{
+        if(item.classList.contains('runorder-story')){
+            itemsArray[possition] = {
+                type: 'STORY',
+                id: item.dataset.itemid
+            }
+        }
+        if(item.classList.contains('runorder-break')){
+            itemsArray[possition] = {
+               type: 'BREAK',
+               text: item.querySelector('.runorder-break-type').textContent.trim()
+            }
+        }
+        possition++
+    })
+    fetch('/api/run-order/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            run_order_id: id,
+            data: itemsArray
+        })
+    })
+    .then(response => response.json())
+    .then(result => {
+
+        if (result.success) {
+            showAlert('success', result.message);
+        } else {
+            showAlert('error', result.message);
+        }
+
+    })
+    .catch(error => {
+
+        console.error(error);
+
+        showAlert(
+            'error',
+            'An error occurred. Please try again.'
+        );
+
+    });
+
 }

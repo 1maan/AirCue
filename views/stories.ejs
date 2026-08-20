@@ -175,10 +175,13 @@
             class="Outfit-Faseyha-Regular scrollbar min-h-100 w-full resize-none rounded-lg border border-[#dddddd] px-4 py-3 text-sm leading-6 outline-none focus:border-black"
             style="font-family: 'Outfit-Regular', 'Faseyha-Regular';"
             placeholder="..."></textarea>
-            <div class="flex items-center justify-end gap-1 mt-3">
-              <button onclick="copyType('PKG')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">PKG</button>
-              <button onclick="copyType('VAR')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">VAR</button>
-              <button onclick="copyType('INT')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">INT</button>
+            <div class="flex items-center justify-between gap-1 mt-3">
+              <button onclick="RunremoveEndWords()" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">Clean Endings</button>
+              <div class="flex items-center gap-1 ">
+                <button onclick="copyType('PKG')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">PKG</button>
+                <button onclick="copyType('INT')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">INT</button>
+                <button onclick="copyType('VAR')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">VAR</button>
+              </div>
             </div>
           </div>
 

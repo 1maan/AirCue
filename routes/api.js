@@ -423,6 +423,193 @@ router.get('/run-order/live', (req, res) => {
     })
 });
 
+router.post('/run-order/save', (req, res) => {
+
+    const { run_order_id, data } = req.body;
+
+    if (!run_order_id || !data) {
+        return res.status(400).json({
+            success: false,
+            message: 'Run order and items are required'
+        });
+    }
+
+    const values = Object.keys(data).map(position => {
+
+        const item = data[position];
+
+        if (item.type === 'STORY') {
+            return [
+                run_order_id,
+                'story',
+                item.id,
+                null,
+                Number(position)
+            ];
+        }
+
+        if (item.type === 'BREAK') {
+            return [
+                run_order_id,
+                'break',
+                null,
+                item.text,
+                Number(position)
+            ];
+        }
+
+    }).filter(Boolean);
+
+
+    db.getConnection((err, connection) => {
+
+        if (err) {
+            console.error(err);
+
+            return res.status(500).json({
+                success: false,
+                message: 'Database connection error'
+            });
+        }
+
+
+        connection.beginTransaction(err => {
+
+            if (err) {
+                connection.release();
+
+                return res.status(500).json({
+                    success: false,
+                    message: 'Database error'
+                });
+            }
+
+
+            connection.query(
+                'DELETE FROM run_order_items WHERE run_order_id = ?',
+                [run_order_id],
+                (err) => {
+
+                    if (err) {
+
+                        return connection.rollback(() => {
+
+                            connection.release();
+
+                            console.error(err);
+
+                            res.status(500).json({
+                                success: false,
+                                message: 'Unable to save rundown'
+                            });
+
+                        });
+
+                    }
+
+
+                    if (values.length === 0) {
+
+                        return connection.commit(err => {
+
+                            if (err) {
+
+                                return connection.rollback(() => {
+
+                                    connection.release();
+
+                                    res.status(500).json({
+                                        success: false,
+                                        message: 'Unable to save rundown'
+                                    });
+
+                                });
+
+                            }
+
+                            connection.release();
+
+                            return res.status(200).json({
+                                success: true,
+                                message: 'Rundown saved successfully'
+                            });
+
+                        });
+
+                    }
+
+
+                    const sql = `
+                        INSERT INTO run_order_items
+                        (
+                            run_order_id,
+                            item_type,
+                            story_id,
+                            break_name,
+                            position
+                        )
+                        VALUES ?
+                    `;
+
+
+                    connection.query(sql, [values], (err) => {
+
+                        if (err) {
+
+                            return connection.rollback(() => {
+
+                                connection.release();
+
+                                console.error(err);
+
+                                res.status(500).json({
+                                    success: false,
+                                    message: 'Unable to save rundown'
+                                });
+
+                            });
+
+                        }
+
+
+                        connection.commit(err => {
+
+                            if (err) {
+
+                                return connection.rollback(() => {
+
+                                    connection.release();
+
+                                    console.error(err);
+
+                                    res.status(500).json({
+                                        success: false,
+                                        message: 'Unable to save rundown'
+                                    });
+
+                                });
+
+                            }
+
+                            connection.release();
+
+                            return res.status(200).json({
+                                success: true,
+                                message: 'Rundown saved successfully'
+                            });
+
+                        });
+
+                    });
+
+                }
+            );
+
+        });
+
+    });
+
+});
 
 
 
