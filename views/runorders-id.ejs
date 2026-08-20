@@ -31,6 +31,9 @@
         background: #d4d4d4;
         border-radius: 10px;
       }
+      .border-top-red{
+        border-top: 1px rgb(255, 42, 124) solid !important;
+      }
     </style>
   </head>
   <body class="Outfit-Regular">
@@ -96,62 +99,25 @@
 
 
 
-<div data-item-id="1001" draggable="true" class="runorder-item grid cursor-pointer border-b border-[#eeeeee] px-4 py-4 hover:bg-[#b7ffb799] grid-cols-[45px_35px_1fr_100px] md:gap-0">
-  <div class="flex items-center gap-2">
-    <span class="drag-handle cursor-grab text-[15px] text-gray-300"> ⋮⋮ </span>
+<div data-item-id="1001" draggable="true" class="runorder-item border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-4 hover:bg-[#b7ffb799] grid-cols-[45px_35px_1fr_100px] md:gap-0">
+  <div class="flex items-center gap-2 pointer-events-none">
+    <span class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto"> ⋮⋮ </span>
   </div>
-  <div class="text-[10px] flex items-center text-gray-400">01</div>
+  <div class="text-[10px] flex items-center text-gray-400 runorder-counter">00</div>
       <div class="Outfit-Medium flex items-center line-clamp-1 text-[11px]">GOVERNMENT-POLICY</div>
-  <div class="flex justify-end gap-1">
-    <button onclick="event.stopPropagation(); moveItem(1001, -1)" class="cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-100">↑</button>
-    <button onclick="event.stopPropagation(); moveItem(1001, 1)" class="cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-100">↓</button>
-    <button onclick="event.stopPropagation(); removeRunOrderItem(1001)" class="cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
-  </div>
 </div>
 
-
-<div data-item-id="1003" draggable="true" class="runorder-item border-b border-[#eeeeee] bg-gray-50 px-4 py-3">
-  <div class="flex items-center gap-3">
-    <div class="drag-handle cursor-grab text-[15px] text-gray-300">⋮⋮</div>
+<!-- 
+<div data-item-id="1003" draggable="true" class="runorder-item border-t border-[#eeeeee] bg-gray-50 px-4 py-3">
+  <div class="flex items-center gap-3 pointer-events-none">
+    <div class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto">⋮⋮</div>
     <div class="h-px flex-1 bg-gray-200"></div>
     <div class="flex items-center gap-3">
       <span class="rounded-md bg-gray-200 px-2 py-1 text-[10px] font-medium text-gray-500 uppercase"> BREAK </span>
     </div>
     <div class="h-px flex-1 bg-gray-200"></div>
-    <div class="flex items-center">
-      <button onclick="moveItem(1003, -1)" class="cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-200">↑</button>
-      <button onclick="moveItem(1003, 1)" class="cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-200">↓</button>
-      <button onclick="removeRunOrderItem(1003)" class="ml-1 cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
-    </div>
   </div>
-</div>
-
-
-<div data-item-id="1003" draggable="true" class="runorder-item border-b border-[#eeeeee] bg-gray-50 px-4 py-3">
-  <div class="flex items-center gap-3">
-    <div class="drag-handle cursor-grab text-[15px] text-gray-300">⋮⋮</div>
-    <div class="h-px flex-1 bg-gray-200"></div>
-    <div class="flex items-center gap-3">
-      <span class="rounded-md bg-gray-200 px-2 py-1 text-[10px] font-medium text-gray-500 uppercase"> Business </span>
-    </div>
-    <div class="h-px flex-1 bg-gray-200"></div>
-    <div class="flex items-center">
-      <button onclick="moveItem(1003, -1)" class="cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-200">↑</button>
-      <button onclick="moveItem(1003, 1)" class="cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[10px] text-gray-400 hover:bg-gray-200">↓</button>
-      <button onclick="removeRunOrderItem(1003)" class="ml-1 cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
+</div> -->
 
 
 

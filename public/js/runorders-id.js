@@ -306,7 +306,7 @@ function getRundownItems(date){
       </div>
     </div>
   </div>
-  <button onclick="addStoryToRunDown(${ story.id })" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
+  <button onclick="addStoryToRunDown('${ story.id }', '${ story.slug }')" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
 </div>
                 `
             })
@@ -421,7 +421,7 @@ storyBank.innerHTML += `
       </div>
     </div>
   </div>
-  <button onclick="addStoryToRunDown(${ story.id })" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
+  <button onclick="addStoryToRunDown('${ story.id }', '${ story.slug }')" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
 </div>
 `
 })
@@ -505,18 +505,62 @@ function copyType(name) {
   }
 }
 
-
-
+let dragItem = null;
 window.addEventListener('dragstart', (e)=>{
-    console.log('started')
+    const item = e.target.closest('.runorder-item');
+    if(!item) return;
+    dragItem = item;
+    item.classList.add('opacity-50')
 })
-
-window.addEventListener('drag', (e)=>{
-    console.log('started')
-})
-
-
 window.addEventListener('dragover', (e)=>{
-    console.log(e)
+    const overItem = e.target.closest('.runorder-item');
+    if(!overItem || overItem === dragItem) return;
+    e.preventDefault();
+    document.querySelectorAll('.runorder-item').forEach(item =>{
+        item.classList.remove('border-top-red');
+    })
+    overItem.classList.add('border-top-red');
 })
+window.addEventListener('drop', (e)=>{
+    e.preventDefault();
+    const overItem = e.target.closest('.runorder-item');
+    if(!overItem || !dragItem || overItem === dragItem) return;
+    overItem.parentNode.insertBefore(dragItem, overItem)
+    overItem.classList.remove('border-top-red');
+})
+window.addEventListener('dragend', () => {
+    if (dragItem) {
+        dragItem.classList.remove('opacity-50');
+    }
+    document.querySelectorAll('.runorder-item').forEach(item => {
+        item.classList.remove('border-top-red');
+    });
+    dragItem = null;
+    runOrderCounter();
+});
 
+function runOrderCounter(){
+    let counter = document.querySelectorAll(".runorder-counter")
+    let i = 1;
+    counter.forEach(Item =>{
+        i < 9 ? Item.textContent = '0' + i : Item.textContent = i
+        i++
+    })
+}
+runOrderCounter()
+
+let runOrderList = document.getElementById("runOrderList");
+
+function addStoryToRunDown(id, name){
+    runOrderList.insertAdjacentHTML('beforeend', `
+<div data-item-id="${id}" draggable="true" class="runorder-item border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-4 hover:bg-[#b7ffb799] grid-cols-[45px_35px_1fr_100px] md:gap-0">
+  <div class="flex items-center gap-2 pointer-events-none">
+    <span class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto"> ⋮⋮ </span>
+  </div>
+  <div class="text-[10px] flex items-center text-gray-400 runorder-counter">00</div>
+      <div class="Outfit-Medium flex items-center line-clamp-1 text-[11px]">${name}</div>
+</div>     
+    `)
+
+    runOrderCounter();
+}
