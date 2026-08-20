@@ -34,6 +34,7 @@
     --color-green-800: oklch(44.8% 0.119 151.328);
     --color-green-900: oklch(39.3% 0.095 152.535);
     --color-blue-50: oklch(97% 0.014 254.604);
+    --color-blue-200: oklch(88.2% 0.059 254.128);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
@@ -652,6 +653,9 @@
   .max-h-96 {
     max-height: calc(var(--spacing) * 96);
   }
+  .max-h-100 {
+    max-height: calc(var(--spacing) * 100);
+  }
   .max-h-115 {
     max-height: calc(var(--spacing) * 115);
   }
@@ -684,6 +688,9 @@
   }
   .min-h-0 {
     min-height: 0px;
+  }
+  .min-h-50 {
+    min-height: calc(var(--spacing) * 50);
   }
   .min-h-55 {
     min-height: calc(var(--spacing) * 55);
@@ -957,11 +964,20 @@
   .grid-cols-\[1fr_140px_110px_100px\] {
     grid-template-columns: 1fr 140px 110px 100px;
   }
+  .grid-cols-\[35px_1fr_100px\] {
+    grid-template-columns: 35px 1fr 100px;
+  }
   .grid-cols-\[45px_1fr_70px\] {
     grid-template-columns: 45px 1fr 70px;
   }
   .grid-cols-\[45px_35px_1fr_90px_80px_100px\] {
     grid-template-columns: 45px 35px 1fr 90px 80px 100px;
+  }
+  .grid-cols-\[45px_35px_1fr_90px_100px\] {
+    grid-template-columns: 45px 35px 1fr 90px 100px;
+  }
+  .grid-cols-\[45px_35px_1fr_100px\] {
+    grid-template-columns: 45px 35px 1fr 100px;
   }
   .grid-cols-\[50px_1fr_100px_80px_80px\] {
     grid-template-columns: 50px 1fr 100px 80px 80px;
@@ -2004,6 +2020,9 @@
   .text-yellow-600 {
     color: var(--color-yellow-600);
   }
+  .capitalize {
+    text-transform: capitalize;
+  }
   .uppercase {
     text-transform: uppercase;
   }
@@ -2115,6 +2134,12 @@
     .hover\:border-gray-500:hover {
       border-color: var(--color-gray-500);
     }
+    .hover\:bg-\[\#7fffd499\]:hover {
+      background-color: #7fffd499;
+    }
+    .hover\:bg-\[\#b7ffb799\]:hover {
+      background-color: #b7ffb799;
+    }
     .hover\:bg-black:hover {
       background-color: var(--color-black);
     }
@@ -2128,6 +2153,9 @@
     }
     .hover\:bg-black\/100:hover {
       background-color: var(--color-black);
+    }
+    .hover\:bg-blue-200:hover {
+      background-color: var(--color-blue-200);
     }
     .hover\:bg-gray-50:hover {
       background-color: var(--color-gray-50);

@@ -42,11 +42,15 @@ function formatTime(dateString) {
 
     return `${day} ${hours}:${minutes}`;
 }
-
+let firstTime = true
 function openAddStoryModal() {
     let model = document.getElementById("addStoryModal");
     model.classList.add('flex')
     model.classList.remove('hidden')
+    if(firstTime){
+        resetDateScroller()
+        firstTime = false;
+    }
 }
 
 function closeAddStoryModal() {
@@ -175,11 +179,8 @@ function loadLeft() {
 }
 
 function loadRight() {
-
     for (let i = 0; i < 10; i++) {
-
         lastDate.setDate(lastDate.getDate() + 1);
-
         dateScroller.append(
             makeDate(new Date(lastDate))
         );
@@ -187,63 +188,46 @@ function loadRight() {
 }
 
 function goToDate(date) {
-
     let btn = document.querySelector(
         `[data-date="${dateValue(date)}"]`
     );
-
     if (!btn) {
         loadDates();
         btn = document.querySelector(
             `[data-date="${dateValue(date)}"]`
         );
     }
-
     if (!btn) return;
-
     selectDate(btn);
-
     btn.scrollIntoView({
         behavior: 'smooth',
         inline: 'center',
         block: 'nearest'
     });
 }
-
 function jumpToDate(days) {
-
     const date = new Date();
-
     date.setDate(date.getDate() + days);
-
     goToDate(date);
 }
-
 function resetDateScroller() {
     goToDate(new Date());
 }
-
 leftBtn.onclick = () => {
-
     if (dateScroller.scrollLeft < 250)
         loadLeft();
-
     dateScroller.scrollBy({
         left: -320,
         behavior: 'smooth'
     });
 };
-
 rightBtn.onclick = () => {
-
     const remaining =
         dateScroller.scrollWidth -
         dateScroller.clientWidth -
         dateScroller.scrollLeft;
-
     if (remaining < 250)
         loadRight();
-
     dateScroller.scrollBy({
         left: 320,
         behavior: 'smooth'
@@ -252,10 +236,8 @@ rightBtn.onclick = () => {
 
 dateScroller.addEventListener('wheel', (e) => {
     e.preventDefault();
-
     dateScroller.scrollLeft += e.deltaY * 4;
 }, { passive: false });
-
 loadDates();
 
 function getRundownItems(date){
@@ -263,15 +245,48 @@ function getRundownItems(date){
     if(getStoriesAb){
         getStoriesAb.abort();
     }
-    console.log(selectedLanguage)
     getStoriesAb = new AbortController();
+    let loadNewsNew = setTimeout(()=>{
+        storyBank.innerHTML = `
+            <div id="loadingStories" class="flex min-h-75 flex-col items-center justify-center px-6 py-12 text-center">
+      <div class="relative flex h-12 w-12 items-center justify-center">
+        <div class="absolute h-12 w-12 rounded-full border-2 border-gray-100"></div>
+        <div class="absolute h-12 w-12 animate-spin rounded-full border-2 border-transparent border-t-black"></div>
+      </div>
+      <div class="Outfit-Medium mt-4 text-[12px] text-gray-700">Loading stories</div>
+      <div class="mt-1 text-[10px] text-gray-400">Fetching newsroom stories for the selected date.</div>
+      <div class="mt-6 w-full max-w-65 space-y-3">
+        <div class="animate-pulse rounded-lg border border-[#eeeeee] p-3">
+          <div class="flex items-center gap-3">
+            <div class="h-7 w-7 rounded-md bg-gray-100"></div>
+            <div class="flex-1">
+              <div class="h-2.5 w-2/3 rounded bg-gray-100"></div>
+              <div class="mt-2 h-2 w-full rounded bg-gray-100"></div>
+            </div>
+          </div>
+        </div>
+        <div class="animate-pulse rounded-lg border border-[#eeeeee] p-3">
+          <div class="flex items-center gap-3">
+            <div class="h-7 w-7 rounded-md bg-gray-100"></div>
+            <div class="flex-1">
+              <div class="h-2.5 w-1/2 rounded bg-gray-100"></div>
+              <div class="mt-2 h-2 w-4/5 rounded bg-gray-100"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        `
+    }, 300)
+
+
+
     fetch(`/api/stories?date=${date}&lan=${selectedLanguage}`,{
       signal: getStoriesAb.signal
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            console.log(data)
             storyBank.innerHTML = "";
             data.stories.forEach(story => {
                 storyBank.innerHTML += `
@@ -325,6 +340,7 @@ function getRundownItems(date){
         showAlert( 'error', 'An error occurred. Please try again.');
     })
     .finally(() => {
+        clearTimeout(loadNewsNew)
     });
 
 }
@@ -440,7 +456,6 @@ storyBank.innerHTML = `
 }
 
 
-
 function switchStoryTab(tab) {
     console.log(tab)
     let newStoryTab = document.getElementById("newStoryTab")
@@ -463,3 +478,45 @@ function switchStoryTab(tab) {
         existingStoriesPanel.classList.remove('hidden')
     }
 }
+
+
+// COPY TEXT
+function copyType(name) {
+  const text = '__'+name.toUpperCase()+'__';
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text);
+  }
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.left = "-999999px";
+  textArea.style.top = "-999999px";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showAlert('success', `Copied "${text}" to clipboard`);
+  } catch (err) {
+    console.error('Failed to copy text: ', err);
+    showAlert('error', 'Failed to copy to clipboard');
+  } finally {
+    document.body.removeChild(textArea);
+  }
+}
+
+
+
+window.addEventListener('dragstart', (e)=>{
+    console.log('started')
+})
+
+window.addEventListener('drag', (e)=>{
+    console.log('started')
+})
+
+
+window.addEventListener('dragover', (e)=>{
+    console.log(e)
+})
+
