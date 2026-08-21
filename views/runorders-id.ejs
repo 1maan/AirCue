@@ -127,16 +127,16 @@ function formatTime(dateString) {
 <% } %>
 
 <% if(item.item_type == 'break'){ %>
-<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-gray-50 px-4 py-2">
+<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-red-500  px-4 py-2">
   <div class="flex items-center gap-3 pointer-events-none">
-    <div class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto">⋮⋮</div>
-    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="drag-handle cursor-grab text-[15px] text-white pointer-events-auto">⋮⋮</div>
+    <div class="h-px flex-1 bg-red-400"></div>
     <div class="flex items-center gap-3">
-      <span class="rounded-md bg-gray-200 px-2 py-1 text-[10px] font-medium text-gray-500 uppercase runorder-break-type"> <%= item.break_name %> </span>
+      <span class="rounded-md bg-red-400 px-2 py-1 text-[10px] font-medium text-white uppercase runorder-break-type"> <%= item.break_name %> </span>
     </div>
-    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="h-px flex-1 bg-red-400"></div>
     <div class="flex justify-end">
-        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
+        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-white hover:bg-red-800">×</button>
     </div>
   </div>
 </div>
@@ -446,131 +446,52 @@ function formatTime(dateString) {
       </div>
     </div>
 
+
     <!-- ========================================
      ADD BREAK MODAL
 ========================================= -->
 
-    <div id="breakModal" class="fixed inset-x-0 top-17 bottom-0 z-50 items-center justify-center overflow-hidden bg-black/30 p-2 sm:p-4 hidden">
-        <div class="flex w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-xl">
-        
-          <!-- HEADER -->
-        <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
-          <div>
-            <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Add Break</div>
-            <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Insert a break into the rundown.</div>
-          </div>
-          <div onclick="closeBreakModal()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
-            <p class="cursor-pointer">×</p>
-          </div>
-        </div>
-
-
-        <div class="space-y-4 p-5">
-          <div>
-            <label class="mb-1.5 block text-[9px] text-gray-500"> BREAK NAME </label>
-            <input id="breakName" type="text" value="Commercial Break" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
-          </div>
-          <div>
-            <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> SELECT BREAK </label>
-            <select id="breakToRunorder" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px] outline-none">
-              <option value="">__SELECT__</option>
-              <option value="LOCAL">LOCAL</option>
-              <option value="BUSINESS">BUSINESS</option>
-              <option value="WORLD">WORLD</option>
-              <option value="SPORTS">SPORTS</option>
-              <option value="WEATHER">WEATHER</option>
-              <option value="BREAKING">BREAKING</option>
-              <option value="NEWS END">NEWS END</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="flex justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
-          <button onclick="closeBreakModal()" class="cursor-pointer rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
-
-          <button onclick="addBreak()" class="cursor-pointer rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Add Break</button>
-        </div>
+<div id="breakModal" class="fixed inset-x-0 top-17 bottom-0 z-50 hidden items-center justify-center bg-black/30 p-2 select-none sm:p-4">
+  <div class="flex w-full max-w-100 flex-col overflow-hidden rounded-xl bg-white shadow-xl">
+    <!-- HEADER -->
+    <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Add Break</div>
+        <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Insert a break into the rundown.</div>
+      </div>
+      <div onclick="closeBreakModal()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
+        <p class="cursor-pointer">×</p>
       </div>
     </div>
 
-    <!-- ========================================
-     EDIT STORY MODAL
-========================================= -->
-
-    <div id="editStoryModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
-      <div class="flex max-h-[90vh] w-full max-w-[650px] flex-col overflow-hidden rounded-xl bg-white shadow-xl">
-        <div class="flex shrink-0 items-center justify-between border-b border-[#eeeeee] px-5 py-4">
-          <div>
-            <div class="Outfit-Medium text-[13px]">Edit Story</div>
-
-            <div id="editStoryNumber" class="mt-0.5 text-[9px] text-gray-400">Story</div>
-          </div>
-
-          <button onclick="closeEditStoryModal()" class="text-[18px] text-gray-400 hover:text-black">×</button>
-        </div>
-
-        <div class="scrollbar flex-1 space-y-4 overflow-y-auto p-5">
-          <input id="editingItemId" type="hidden" />
-
-          <div>
-            <label class="mb-1.5 block text-[9px] text-gray-500"> SLUG </label>
-
-            <input id="editSlug" type="text" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] uppercase outline-none focus:border-black" />
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="mb-1.5 block text-[9px] text-gray-500"> TYPE </label>
-
-              <select id="editType" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px]">
-                <option>VO</option>
-                <option>PKG</option>
-                <option>VAR</option>
-                <option>INT</option>
-                <option>LIVE</option>
-                <option>SOT</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="mb-1.5 block text-[9px] text-gray-500"> STATUS </label>
-
-              <select id="editStatus" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px]">
-                <option value="draft">Draft</option>
-                <option value="ready">Ready</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label class="mb-1.5 block text-[9px] text-gray-500"> CG </label>
-
-            <input id="editCG" type="text" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
-          </div>
-
-          <div>
-            <label class="mb-1.5 block text-[9px] text-gray-500"> NEWS TEXT </label>
-
-            <textarea id="editText" rows="12" class="w-full resize-none rounded-lg border border-[#dddddd] px-3 py-3 text-[11px] leading-5 outline-none focus:border-black"></textarea>
-          </div>
-
-          <div>
-            <label class="mb-1.5 block text-[9px] text-gray-500"> DURATION </label>
-
-            <input id="editDuration" type="number" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px]" />
-          </div>
-        </div>
-
-        <div class="flex shrink-0 justify-end gap-2 border-t border-[#eeeeee] px-5 py-4">
-          <button onclick="closeEditStoryModal()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
-
-          <button onclick="saveEditedStory()" class="rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Save Story</button>
+    <div class="space-y-4 p-5">
+      <div>
+        <label class="mb-1.5 block text-[9px] text-gray-500"> BREAK NAME </label>
+        <input id="breakName" type="text" value="Commercial Break" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+      </div>
+      <div>
+        <label class="mb-1.5 block text-[9px] text-gray-500"> SELECT BREAK </label>
+        <div class="grid grid-cols-3 grid-rows-3 gap-1">
+          <button onclick="addBreaker('LOCAL')" class="cursor-pointer overflow-hidden rounded-md border border-[#e5e5e5] bg-white px-2.5 py-2 text-[11px] text-nowrap text-gray-500 hover:border-gray-300 hover:bg-black hover:text-white">LOCAL</button>
+          <button onclick="addBreaker('BUSINESS')" class="cursor-pointer overflow-hidden rounded-md border border-[#e5e5e5] bg-white px-2.5 py-2 text-[11px] text-nowrap text-gray-500 hover:border-gray-300 hover:bg-black hover:text-white">BUSINESS</button>
+          <button onclick="addBreaker('WORLD')" class="cursor-pointer overflow-hidden rounded-md border border-[#e5e5e5] bg-white px-2.5 py-2 text-[11px] text-nowrap text-gray-500 hover:border-gray-300 hover:bg-black hover:text-white">WORLD</button>
+          <button onclick="addBreaker('SPORTS')" class="cursor-pointer overflow-hidden rounded-md border border-[#e5e5e5] bg-white px-2.5 py-2 text-[11px] text-nowrap text-gray-500 hover:border-gray-300 hover:bg-black hover:text-white">SPORTS</button>
+          <button onclick="addBreaker('WEATHER')" class="cursor-pointer overflow-hidden rounded-md border border-[#e5e5e5] bg-white px-2.5 py-2 text-[11px] text-nowrap text-gray-500 hover:border-gray-300 hover:bg-black hover:text-white">WEATHER</button>
+          <button onclick="addBreaker('BREAKING')" class="cursor-pointer overflow-hidden rounded-md border border-[#e5e5e5] bg-white px-2.5 py-2 text-[11px] text-nowrap text-gray-500 hover:border-gray-300 hover:bg-black hover:text-white">BREAKING</button>
+          <button onclick="addBreaker('NEWS END')" class="cursor-pointer overflow-hidden rounded-md border border-[#e5e5e5] bg-white px-2.5 py-2 text-[11px] text-nowrap text-gray-500 hover:border-gray-300 hover:bg-black hover:text-white">NEWS END</button>
         </div>
       </div>
+      <div class="flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
+        <button onclick="closeBreakModal()" class="cursor-pointer rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+        <button onclick="addBreak()" class="cursor-pointer rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Add Break</button>
+      </div>
     </div>
-
+  </div>
+</div>
 
 <%- include('partials/alert') -%>
+
+
 <script src="/js/runorders-id.js"></script>
 </body>
 </html>

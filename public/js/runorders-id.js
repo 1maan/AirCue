@@ -67,6 +67,16 @@ function closeBreakModal() {
     modal.classList.add("hidden");
     modal.classList.remove("flex");
 }
+document.addEventListener("click", function(event) {
+  const addStoryModal = document.getElementById("addStoryModal");
+  const breakModal = document.getElementById("breakModal");
+  if (event.target === addStoryModal) {
+    closeAddStoryModal();
+  }
+  if (event.target === breakModal) {
+    closeBreakModal();
+  }
+});
 function formatDatabaseDate(date) {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
@@ -587,41 +597,42 @@ function addBreak(){
 let breakName = document.getElementById("breakName")
 if(breakName.value == '') return;
 runOrderList.insertAdjacentHTML('beforeend', `
-<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-gray-50 px-4 py-2">
+<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-red-500  px-4 py-2">
   <div class="flex items-center gap-3 pointer-events-none">
-    <div class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto">⋮⋮</div>
-    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="drag-handle cursor-grab text-[15px] text-white pointer-events-auto">⋮⋮</div>
+    <div class="h-px flex-1 bg-red-400"></div>
     <div class="flex items-center gap-3">
-      <span class="rounded-md bg-gray-200 px-2 py-1 text-[10px] font-medium text-gray-500 uppercase runorder-break-type"> ${breakName.value} </span>
+      <span class="rounded-md bg-red-400 px-2 py-1 text-[10px] font-medium text-white uppercase runorder-break-type"> ${breakName.value} </span>
     </div>
-    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="h-px flex-1 bg-red-400"></div>
     <div class="flex justify-end">
-        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
+        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-white hover:bg-red-800">×</button>
     </div>
   </div>
-</div> `)
+</div>
+`)
+closeBreakModal();
 }
 
-let breakToRunorder = document.getElementById("breakToRunorder");
-breakToRunorder.addEventListener('change', ()=>{
-    if(breakToRunorder.value == '') return;
+
+function addBreaker(value){
+if(value === '') return;
 runOrderList.insertAdjacentHTML('beforeend', `
-<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-gray-50 px-4 py-2">
+<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-red-500  px-4 py-2">
   <div class="flex items-center gap-3 pointer-events-none">
-    <div class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto">⋮⋮</div>
-    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="drag-handle cursor-grab text-[15px] text-white pointer-events-auto">⋮⋮</div>
+    <div class="h-px flex-1 bg-red-400"></div>
     <div class="flex items-center gap-3">
-      <span class="rounded-md bg-gray-200 px-2 py-1 text-[10px] font-medium text-gray-500 uppercase runorder-break-type"> ${breakToRunorder.value} </span>
+      <span class="rounded-md bg-red-400 px-2 py-1 text-[10px] font-medium text-white uppercase runorder-break-type"> ${value} </span>
     </div>
-    <div class="h-px flex-1 bg-gray-200"></div>
+    <div class="h-px flex-1 bg-red-400"></div>
     <div class="flex justify-end">
-        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
+        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-white hover:bg-red-800">×</button>
     </div>
   </div>
-</div>`)
-})
-
-
+</div>
+`)
+}
 
 
 
@@ -662,7 +673,6 @@ function saveRunOrder(id){
     })
     .then(response => response.json())
     .then(result => {
-
         if (result.success) {
             showAlert('success', result.message);
         } else {
@@ -682,3 +692,5 @@ function saveRunOrder(id){
     });
 
 }
+
+

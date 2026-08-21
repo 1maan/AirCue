@@ -49,7 +49,6 @@ function formatDatabaseDate(date) {
 
 router.get('/runorders', authPage, (req, res)=>{
     const date = new Date();
-    console.log(formatDatabaseDate(date))
     const sql = `
     SELECT 
         ro.id AS runorderID,
@@ -121,7 +120,6 @@ router.get('/runorder/:id', authPage, (req, res) => {
         const runOrder = result[0][0];
         const isActive = result[1].length > 0;
         const runDown = result[2];
-        console.log(runDown)
 
         res.render('runorders-id', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive, runDown: runDown });
 

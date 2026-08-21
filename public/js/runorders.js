@@ -473,7 +473,6 @@ function editRunOrder(id) {
         if (data.success) {
             OpenUpdateModal();
             const runorder = data.stories[0];
-            console.log(runorder)
             document.getElementById("UpdaterunOrderName").dataset.id = runorder.runorderID;
             document.getElementById("UpdaterunOrderName").value = runorder.name;
             document.getElementById("UpdaterunOrderDate").value = formatDatabaseDate2(runorder.run_date);
@@ -572,7 +571,6 @@ function liveRundownSel(){
     .then(response => response.json())
     .then( data => {
         if(data.success){
-            console.log(data)
             if(data.nextNews.length > 0){
                 document.getElementById("runDownStatus").innerHTML = `
                 <div class="text-[9px] text-gray-400">ACTIVE RUNDOWN</div>
