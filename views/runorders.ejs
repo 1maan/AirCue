@@ -31,7 +31,7 @@
       }
     </style>
   </head>
-
+<script src="/socket.io/socket.io.js"></script>
   <body class="Outfit-Regular">
     <div class="min-h-screen">
 
@@ -412,14 +412,8 @@
     </div>
   </div>
 </div>
-
-
-
 </div>
-
-
 <!-- DUPLICATE MODAL -->
-
 <div id="duplicateModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-5">
   <div class="w-full max-w-md rounded-xl bg-white shadow-xl">
     
@@ -497,102 +491,7 @@
     
   </div>
 </div>
-
-<!-- <script>
-
-
-
-
-function closeDuplicateModal() {
-  document.getElementById("duplicateModal").classList.add("hidden");
-  document.getElementById("duplicateModal").classList.remove("flex");
-}
-
-
-
-  // Close when clicking outside
-
-  document
-    .getElementById("duplicateModal")
-    .addEventListener("click", function(event) {
-
-      if (event.target === this) {
-        closeDuplicateModal();
-      }
-
-    });
-
-
-function toggleRunOrderMenu(button) {
-
-  const menu = button.parentElement.querySelector(".runorder-menu");
-
-  document.querySelectorAll(".runorder-menu").forEach(item => {
-    if (item !== menu) {
-      item.classList.add("hidden");
-    }
-  });
-
-  menu.classList.toggle("hidden");
-}
-
-
-// Close when clicking outside
-document.addEventListener("click", (event) => {
-
-  if (!event.target.closest(".runorder-menu") &&
-      !event.target.closest("button[onclick^='toggleRunOrderMenu']")) {
-
-    document.querySelectorAll(".runorder-menu").forEach(menu => {
-      menu.classList.add("hidden");
-    });
-
-  }
-
-});
-  
-
-  // PRESET
-
-  function usePreset(name) {
-
-    console.log("Using preset:", name);
-
-    /*
-      Later:
-
-      fetch("/api/runorders", {
-        method: "POST",
-        body: JSON.stringify({
-          preset: name
-        })
-      })
-    */
-
-    closePresetModal();
-
-  }
-
-  // CLOSE MODALS BY CLICKING OUTSIDE
-
-  document.addEventListener("click", function(event) {
-
-    const createModal = document.getElementById("createModal");
-    const presetModal = document.getElementById("presetModal");
-
-    if (event.target === createModal) {
-      closeCreateModal();
-    }
-
-    if (event.target === presetModal) {
-      closePresetModal();
-    }
-
-  });
-
-</script> -->
-    <%- include('partials/alert') -%>
-
+<%- include('partials/alert') -%>
 <script src="/js/runorders.js"></script>
     </div>
   </body>

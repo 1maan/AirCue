@@ -1,3 +1,14 @@
+const socket = io();
+
+window.addEventListener('pagehide', () => {
+    socket.disconnect();
+});
+
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted && !socket.connected) {
+        socket.connect();
+    }
+});
 let selectedDate = new Date();
 const selectedDateText = document.getElementById('selectedDateText');
 const selectedDateLabel = document.getElementById('selectedDateLabel');
@@ -320,7 +331,9 @@ newRunOrder.addEventListener('click', ()=>{
             if(document.getElementById("loadingScreenRundown")){
                 document.getElementById("loadingScreenRundown").remove();
             }
-            
+            allDt.runOrderId = data.runOrderId
+            socket.emit('updateRunOrders', allDt)
+
             if(allDt.run_date == date){
             sideRunorders.insertAdjacentHTML('afterbegin',`
             <div class="border-b border-[#eeeeee] px-5 py-2.5 select-none ">
@@ -589,3 +602,12 @@ function liveRundownSel(){
 
     })
 }
+
+
+
+
+socket.on('updateSentRunOrders', (data)=>{
+    if(data.run_date == date){
+        console.log(data)
+    }
+})

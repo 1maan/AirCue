@@ -1,3 +1,16 @@
+const socket = io();
+
+window.addEventListener('pagehide', () => {
+    socket.disconnect();
+});
+
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted && !socket.connected) {
+        socket.connect();
+    }
+});
+
+
 function toggleRunOrderMenu(button) {
   const menu = button.parentElement.querySelector(".runorder-menu");
   document.querySelectorAll(".runorder-menu").forEach(item => {
@@ -315,7 +328,7 @@ function getStories(date) {
                   <div class="min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-2">
                       <div class="truncate uppercase text-[12px] font-medium Outfit-Faseyha-Regular">${stories.slug}</div>
-                      <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
+                      <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"></span>
                     </div>
                     <div class="flex gap-3 text-[9px] text-gray-400">
                       <span> ${formatTime(stories.created_at)} </span>
@@ -515,7 +528,8 @@ function saveStory(date){
             slug: slug.value,
             language: selectedLanguage,
             cg_text: cg.value,
-            story_text: storyText.value
+            story_text: storyText.value,
+            date: date
         })
     fetch(`/api/stories?date=${date}`, {
         method: 'POST',
@@ -534,6 +548,17 @@ function saveStory(date){
             cg_text: data_show.cg_text,
             content: data_show.story_text
           };
+
+          let SodataInput = {
+              slug: data_show.slug,
+              language: selectedLanguage,
+              cg_text: data_show.cg_text,
+              story_text: data_show.story_text,
+              date: date,
+              dataID: data.storyId
+          }
+
+          socket.emit('sentStory', SodataInput)
           if(document.getElementById("Nostoriesyet")){
             document.getElementById("Nostoriesyet").remove();
           }
@@ -560,7 +585,7 @@ function saveStory(date){
               totalStories.textContent = `${todaysTotalStories.textContent} stories`
               isSavingStory = false;
               showAlert('success', data.message);
-            }
+          }
           if(!localStorage.getItem('editor_reset_behavior')){
             resertStoryEditor();
           }
@@ -762,3 +787,40 @@ function transliterateDhivehiToEnglish(text) {
   let finalOutput = transliteratedResult.join('');
   return finalOutput; 
 }
+
+
+socket.on('recStory', (data)=>{
+    if(data.date == date && data.language == selectedLanguage){
+    console.log(data)
+    if(document.getElementById("Nostoriesyet")){
+      document.getElementById("Nostoriesyet").remove();
+    }
+    if(!document.getElementById("Nostoriesfound")){
+    storyDatabase[data.dataID] = {
+      slug: data.slug,
+      cg_text: data.cg_text,
+      content: data.story_text
+    };
+    sideStories.insertAdjacentHTML('afterbegin', `
+    <button onclick="selectStory('${data.dataID}')" class="story-item w-full cursor-pointer border-b border-[#eeeeee] p-4 text-left hover:bg-gray-50" data-story="${data.dataID}">
+      <div class="flex items-start gap-3">
+        <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] bg-gray-100 text-gray-500">${data.dataID}</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2">
+            <div class="Outfit-Faseyha-Regular truncate text-[12px] font-medium uppercase">${data.slug}</div>
+            <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-red-500"></span>
+          </div>
+          <div class="flex gap-3 text-[9px] text-gray-400">
+            <span> ${formatTime(Date.now())} </span>
+            <span> ${countWords(data.story_text)} words </span>
+          </div>
+        </div>
+      </div>
+    </button>
+    `);
+    todaysTotalStories.textContent = Number(todaysTotalStories.textContent) + 1;
+    totalStories.textContent = `${todaysTotalStories.textContent} stories`
+    showAlert('success', 'A new story was added by another user.');
+    }
+    }
+})

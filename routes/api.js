@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const db = require('../config/db');
 const { authPage } = require('../config/auth');
-require('dotenv').config();
 
 
 

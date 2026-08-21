@@ -3,7 +3,6 @@ const app = express();
 const pageRoutes = require('./routes/page');
 const apiRoutes = require('./routes/api');
 const path = require('path')
-require('dotenv').config();
 
 const cookieSession = require('cookie-session');
 app.use(cookieSession({
