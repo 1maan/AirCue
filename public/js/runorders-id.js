@@ -1,3 +1,18 @@
+const socket = io();
+
+window.addEventListener('pagehide', () => {
+    socket.disconnect();
+});
+
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted && !socket.connected) {
+        socket.connect();
+    }
+});
+
+const runorderID = Number(
+window.location.pathname.split('/').filter(Boolean).pop()
+);
 let getStoriesAb = null;
 let storyBank = document.getElementById("storyBank")
 
@@ -49,7 +64,7 @@ function openAddStoryModal() {
     model.classList.remove('hidden')
     if(firstTime){
         resetDateScroller()
-        firstTime = false;
+        firstTime = true;
     }
 }
 function closeAddStoryModal() {
@@ -476,7 +491,6 @@ storyBank.innerHTML = `
 
 
 function switchStoryTab(tab) {
-    console.log(tab)
     let newStoryTab = document.getElementById("newStoryTab")
     let existingStoryTab = document.getElementById("existingStoryTab")
     let existingStoriesPanel = document.getElementById("existingStoriesPanel")
@@ -675,6 +689,9 @@ function saveRunOrder(id){
     .then(result => {
         if (result.success) {
             showAlert('success', result.message);
+
+        socket.emit('updateRunDown', id)
+
         } else {
             showAlert('error', result.message);
         }
@@ -694,3 +711,65 @@ function saveRunOrder(id){
 }
 
 
+
+
+
+socket.on('updateRunDownUser', (data)=>{
+    if(data == runorderID){
+        loadRunDown(data)
+    }
+})
+
+function loadRunDown(id){
+    fetch(`/api/run-order/${id}`,{
+       method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json())
+    .then(data=>{
+runOrderList.innerHTML = ""
+data.result.forEach(item=>{
+if(item.item_type == 'story'){
+runOrderList.innerHTML += `
+<div data-itemid="${item.story_id}" draggable="true" class="runorder-item runorder-story border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-2 sm:grid-cols-[45px_35px_1fr_70px_60px] grid-cols-[45px_35px_1fr_60px] md:gap-0">
+  <div class="flex items-center gap-2 pointer-events-none">
+    <span class="drag-handle cursor-grab text-[15px] text-gray-300 pointer-events-auto"> ⋮⋮ </span>
+  </div>
+    <p class="text-[10px] flex items-center text-gray-400 runorder-counter">00</p>
+    <div class="min-w-0 flex-1"><p class="Outfit-Faseyha-Medium truncate text-[11px]">${item.slug}</p></div>
+    <p class="Outfit-Regular flex items-center line-clamp-1 text-[10px] max-sm:hidden"> ${formatTime(item.ca)} </p>
+    <div class="flex justify-end">
+        <button id="deleteRunOrderItem" class="ml-1 cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-red-400 hover:bg-red-50">×</button>
+    </div>
+</div>
+`
+}
+if(item.item_type == 'break'){
+runOrderList.innerHTML += `
+<div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-red-500  px-4 py-2">
+  <div class="flex items-center gap-3 pointer-events-none">
+    <div class="drag-handle cursor-grab text-[15px] text-white pointer-events-auto">⋮⋮</div>
+    <div class="h-px flex-1 bg-red-400"></div>
+    <div class="flex items-center gap-3">
+      <span class="rounded-md bg-red-400 px-2 py-1 text-[10px] font-medium text-white uppercase runorder-break-type"> ${item.break_name} </span>
+    </div>
+    <div class="h-px flex-1 bg-red-400"></div>
+    <div class="flex justify-end">
+        <button id="deleteRunOrderItem" class="ml-1 pointer-events-auto cursor-pointer flex h-7 w-7 items-center justify-center rounded-md text-[12px] text-white hover:bg-red-800">×</button>
+    </div>
+  </div>
+</div>
+`
+}
+})
+showAlert('success', 'The runorder was updated by another user.');
+runOrderCounter();
+    }).catch(error=>{
+        console.error(error);
+        showAlert(
+            'error',
+            'An error occurred. Please try again.'
+        );
+    })
+}

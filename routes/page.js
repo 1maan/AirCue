@@ -126,47 +126,6 @@ router.get('/runorder/:id', authPage, (req, res) => {
     });
 
 });
-router.get('/runordere/:id', authPage, (req, res) => {
-
-    const id = req.params.id;
-
-    const sql = `
-        SELECT 
-            ro.*,
-            COALESCE(u.full_name, 'No Producer') AS full_name
-        FROM run_orders ro
-        LEFT JOIN users u 
-            ON ro.producer_id = u.id
-        WHERE ro.id = ?
-        LIMIT 1;
-
-        SELECT *
-        FROM run_orders
-        WHERE id = ?
-        AND status = 'live'
-        LIMIT 1;
-    `;
-
-    db.query(sql, [id, id], (err, result) => {
-
-        if (err) {
-            console.error(err);
-            return res.redirect('/500');
-        }
-
-        if (result[0].length === 0) {
-            return res.redirect('/404');
-        }
-
-        const runOrder = result[0][0];
-        const isActive = result[1].length > 0;
-
-        res.render('runorders-idd', { fullname: req.session.fullname, role: req.session.role, runOrder, isActive, rundown: 'ts' });
-
-    });
-
-});
-
 
 
 router.get('/stories', authPage, (req, res)=>{

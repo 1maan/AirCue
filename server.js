@@ -15,10 +15,15 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('recStory', data)
     })
     socket.on('updateRunOrders', (data)=>{
-        console.log(data)
         socket.broadcast.emit('updateSentRunOrders', data)
         
     })
+    socket.on('activeRunOrder', (data)=>{
+        socket.broadcast.emit('rundownUpdated', data)
+    })
+    socket.on('updateRunDown', (data)=>{
+        socket.broadcast.emit('updateRunDownUser', data)
+    })    
 });
 
 

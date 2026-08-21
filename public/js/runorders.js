@@ -92,16 +92,66 @@ nextDate.addEventListener('click', () => {
 updateSelectedDate();
 
 
-function toggleRunOrderMenu(button) {
-    const menu = button.parentElement.querySelector(".runorder-menu");
-    document.querySelectorAll(".runorder-menu").forEach(item => {
-        if (item !== menu) {
-            item.classList.add("hidden");
-        }
+function closeRunOrderMenus(exceptMenu = null) {
+    document.querySelectorAll('.runorder-menu').forEach((menu) => {
+      if (menu !== exceptMenu) {
+        menu.classList.add('hidden');
+      }
     });
-    menu.classList.toggle("hidden");
 }
 
+  function toggleRunOrderMenu(button) {
+    const menu = button.nextElementSibling;
+    const shouldOpen = menu.classList.contains('hidden');
+
+    closeRunOrderMenus(menu);
+
+    if (!shouldOpen) {
+      menu.classList.add('hidden');
+      return;
+    }
+
+    menu.classList.remove('hidden');
+
+    const buttonRect = button.getBoundingClientRect();
+    const menuRect = menu.getBoundingClientRect();
+    const screenGap = 8;
+
+    let top = buttonRect.bottom + screenGap;
+    let left = buttonRect.right - menuRect.width;
+
+    if (top + menuRect.height > window.innerHeight - screenGap) {
+      top = buttonRect.top - menuRect.height - screenGap;
+    }
+
+    top = Math.max(screenGap, top);
+    left = Math.max(
+      screenGap,
+      Math.min(left, window.innerWidth - menuRect.width - screenGap)
+    );
+
+    menu.style.top = `${top}px`;
+    menu.style.left = `${left}px`;
+  }
+
+document.addEventListener('click', (event) => {
+  const clickedMenuButton = event.target.closest('[onclick^="toggleRunOrderMenu"]');
+  const clickedInsideMenu = event.target.closest('.runorder-menu');
+
+  if (!clickedMenuButton && !clickedInsideMenu) {
+    closeRunOrderMenus();
+  }
+});
+document.getElementById('sideRunorders')?.addEventListener('scroll', () => {
+  closeRunOrderMenus();
+});
+window.addEventListener('scroll', () => {
+  closeRunOrderMenus();
+});
+
+window.addEventListener('resize', () => {
+  closeRunOrderMenus();
+});
 document.addEventListener("click", (event) => {
     if (!event.target.closest(".runorder-menu") &&
         !event.target.closest("button[onclick^='toggleRunOrderMenu']")) {
@@ -166,7 +216,7 @@ function lineups(date){
                 </a>
                 <button onclick="activeRunOrder('${ element.runorderID }')" class="hidden cursor-pointer rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black md:block">Set Active</button>
                 <button onclick="toggleRunOrderMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
-                <div class="runorder-menu absolute top-10 right-0 z-50 hidden w-44 rounded-xl border border-[#e5e5e5] bg-white p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
+                <div class="runorder-menu fixed z-9999 hidden w-44 rounded-xl border border-[#e5e5e5] bg-white p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
                     <a href="/runorder/${ element.runorderID }">
                     <button class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z"></path></svg>
@@ -293,11 +343,16 @@ function closePresetModal() {
 document.addEventListener("click", function(event) {
   const createModal = document.getElementById("createModal");
   const presetModal = document.getElementById("presetModal");
+  const UpdateModal = document.getElementById("UpdateModal");
+  
   if (event.target === createModal) {
     closeCreateModal();
   }
   if (event.target === presetModal) {
     closePresetModal();
+  }
+  if (event.target === UpdateModal) {
+    CloseUpdateModal();
   }
 });
 
@@ -354,7 +409,7 @@ newRunOrder.addEventListener('click', ()=>{
                     </a>
                     <button onclick="activeRunOrder('${data.runOrderId}')" class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Set Active</button>
                     <button onclick="toggleRunOrderMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
-                    <div class="runorder-menu absolute top-10 right-0 z-50 hidden w-44 rounded-xl border border-[#e5e5e5] bg-white p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
+                    <div class="runorder-menu fixed z-9999 hidden w-44 rounded-xl border border-[#e5e5e5] bg-white p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
                     <a href="/runorder/${data.runOrderId}">
                     <button class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z"></path></svg>
@@ -423,6 +478,7 @@ function activeRunOrder(id) {
         if (data.success) {
             showAlert('success', data.message);
             liveRundownSel();
+            socket.emit('activeRunOrder', id)
         }
     })
     .catch(error => {
@@ -473,6 +529,7 @@ function CloseUpdateModal(){
 let selectedRunOrderId = null;
 let ContAbort = null;
 function editRunOrder(id) {
+    closeRunOrderMenus();
     selectedRunOrderId = id;
     if (ContAbort) {
         ContAbort.abort();
@@ -543,6 +600,7 @@ UpdateRunOrder.addEventListener("click", () => {
             showAlert('success', data.message);
             liveRundownSel();
             CloseUpdateModal();
+            socket.emit('activeRunOrder', producer_id)
         } else {
             showAlert('error', data.message);
         }
@@ -565,6 +623,7 @@ function deleteRunOrder(id) {
         if (data.success) {
             showAlert('success', data.message);
             liveRundownSel();
+            socket.emit('activeRunOrder', id)
         } else {
             showAlert('error', data.message);
         }
@@ -599,7 +658,6 @@ function liveRundownSel(){
         }
     })
     .catch( error => {
-
     })
 }
 
@@ -608,6 +666,67 @@ function liveRundownSel(){
 
 socket.on('updateSentRunOrders', (data)=>{
     if(data.run_date == date){
-        console.log(data)
+        if(document.getElementById("NoRunorderYet")){
+            document.getElementById("NoRunorderYet").remove();
+        }
+        sideRunorders.insertAdjacentHTML('afterbegin',`
+            <div class="border-b border-[#eeeeee] px-5 py-2.5 select-none ">
+                <div class="flex items-start justify-between gap-5">
+                <div class="flex items-start gap-4">
+                    <div class="Outfit-SemiBold flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600  text-[11px] ">${ data.air_time }</div>
+                    <div class="min-w-0">
+                    <h2 class="Outfit-SemiBold line-clamp-1 text-[14px] text-nowrap break-all">${ data.name }</h2>
+                    <div class="mt-1 flex items-center gap-4 text-[10px] text-gray-400">
+                        <span class="text-nowrap "> Producer: No Producer </span>
+                        <span class="text-nowrap hidden md:block "> draft </span>
+                    </div>
+                    </div>
+                </div>
+                <div class="relative flex shrink-0 items-center gap-1">
+                    <a href="/runorder/${data.runOrderId}">
+                    <button class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Open</button>
+                    </a>
+                    <button onclick="activeRunOrder('${data.runOrderId}')" class="hidden md:block rounded-lg px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-100 hover:text-black cursor-pointer">Set Active</button>
+                    <button onclick="toggleRunOrderMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
+                    <div class="runorder-menu fixed z-9999 hidden w-44 rounded-xl border border-[#e5e5e5] bg-white p-1.5 shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
+                    <a href="/runorder/${data.runOrderId}">
+                    <button class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M1.18164 12C2.12215 6.87976 6.60812 3 12.0003 3C17.3924 3 21.8784 6.87976 22.8189 12C21.8784 17.1202 17.3924 21 12.0003 21C6.60812 21 2.12215 17.1202 1.18164 12ZM12.0003 17C14.7617 17 17.0003 14.7614 17.0003 12C17.0003 9.23858 14.7617 7 12.0003 7C9.23884 7 7.00026 9.23858 7.00026 12C7.00026 14.7614 9.23884 17 12.0003 17ZM12.0003 15C10.3434 15 9.00026 13.6569 9.00026 12C9.00026 10.3431 10.3434 9 12.0003 9C13.6571 9 15.0003 10.3431 15.0003 12C15.0003 13.6569 13.6571 15 12.0003 15Z"></path></svg>
+                        <span>Open Run Order</span>
+                    </button>
+                    </a>
+                    <button onclick="activeRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12ZM12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM17.4571 9.45711L16.0429 8.04289L11 13.0858L8.20711 10.2929L6.79289 11.7071L11 15.9142L17.4571 9.45711Z"></path></svg>
+                        <span>Set Active</span>
+                    </button>
+                    <button onclick="editRunOrder('${ data.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5 18.89H6.41421L15.7279 9.57627L14.3137 8.16206L5 17.4758V18.89ZM21 20.89H3V16.6473L16.435 3.21231C16.8256 2.82179 17.4587 2.82179 17.8492 3.21231L20.6777 6.04074C21.0682 6.43126 21.0682 7.06443 20.6777 7.45495L9.24264 18.89H21V20.89ZM15.7279 6.74785L17.1421 8.16206L18.5563 6.74785L17.1421 5.33363L15.7279 6.74785Z"></path></svg>
+                        <span>Edit Run Order</span>
+                    </button>
+                    <button onclick="downloadRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
+                        <span>Download</span>
+                    </button>
+                    <button onclick="saveAsPreset('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path></svg>
+                        <span>Save as Preset</span>
+                    </button>
+                    <div class="my-1 border-t border-[#eeeeee]"></div>
+                    <button ondblclick="deleteRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
+                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
+                        <span>Delete Run Order</span>
+                    </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        `)
+        showAlert('success', 'A new runorder was added by another user.');
     }
+})
+
+socket.on('rundownUpdated', (data)=>{
+    liveRundownSel();
+    lineups(date);
+    showAlert('success', 'The selected runorder was changed or deleted by another user.');
 })

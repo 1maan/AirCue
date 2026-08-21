@@ -384,6 +384,12 @@
   .z-1000 {
     z-index: 1000;
   }
+  .z-5000 {
+    z-index: 5000;
+  }
+  .z-9999 {
+    z-index: 9999;
+  }
   .z-10000 {
     z-index: 10000;
   }
@@ -666,6 +672,9 @@
   .max-h-\[620px\] {
     max-height: 620px;
   }
+  .max-h-fit {
+    max-height: fit-content;
+  }
   .max-h-full {
     max-height: 100%;
   }
@@ -830,6 +839,12 @@
   }
   .max-w-100 {
     max-width: calc(var(--spacing) * 100);
+  }
+  .max-w-162 {
+    max-width: calc(var(--spacing) * 162);
+  }
+  .max-w-162\.5 {
+    max-width: calc(var(--spacing) * 162.5);
   }
   .max-w-170 {
     max-width: calc(var(--spacing) * 170);
@@ -1060,6 +1075,9 @@
   }
   .overflow-y-auto {
     overflow-y: auto;
+  }
+  .overflow-y-scroll {
+    overflow-y: scroll;
   }
   .scroll-smooth {
     scroll-behavior: smooth;

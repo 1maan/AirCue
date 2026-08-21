@@ -262,7 +262,6 @@ router.put('/stories/:id', authPage, (req, res) => {
 router.post('/run-orders', (req, res) => {
     const { name, run_date, air_time } = req.body;
     const created_by = req.session.userID;
-    console.log(run_date)
     if (!name || !run_date || !air_time || !created_by) {
         return res.status(400).json({ success: false, message: 'All fields are required' });
     }
@@ -323,6 +322,20 @@ router.put('/run-orders/:id/active', (req, res) => {
             return res.status(500).json({ success: false, message: 'Database error' });
         }
         return res.status(200).json({ success: true, message: 'Rundown is now active' });
+    });
+});
+
+router.get('/run-orders/active', (req, res) => {
+    const id = req.params.id;
+    const sql = `
+        SELECT * FROM run_orders WHEN id = ? OR status = 'live'
+    `;
+    db.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+        return res.status(200).json({ success: true, message: 'Rundown Fetched' });
     });
 });
 
@@ -610,6 +623,34 @@ router.post('/run-order/save', (req, res) => {
 
 });
 
+router.get('/run-order/:id', authPage, (req, res) => {
+
+    const id = req.params.id;
+
+    const sql = `
+        SELECT roi.*, s.slug, s.created_at as ca
+        FROM run_order_items roi
+        LEFT JOIN stories s
+        ON 
+        roi.story_id = s.id
+        WHERE run_order_id = ?
+        ORDER BY position ASC;
+    `;
+
+    db.query(sql, [id], (err, result) => {
+
+        if (err) {
+            console.error(err);
+            return res.redirect('/500');
+        }
+
+        const runDown = result;
+
+        return res.status(200).json({ success: true, message: 'Rundown Updated', result: result });
+
+    });
+
+});
 
 
 module.exports = router;

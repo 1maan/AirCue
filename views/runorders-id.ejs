@@ -36,7 +36,8 @@
       }
     </style>
   </head>
-  <body class="Outfit-Regular">
+<script src="/socket.io/socket.io.js"></script>
+<body class="Outfit-Regular">
     <div class="min-h-screen">
       <%- include('partials/header') -%>
       <main class="mx-auto max-w-[1500px] p-4 md:p-7">
@@ -48,8 +49,8 @@
       <p class="mt-1 text-[12px] text-gray-400 break-all line-clamp-1">Broadcast Rundowns</p>
     </div>
     <div class="flex items-center gap-2">
-      <button onclick="openAddStoryModal()" class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Add Story</button>
-      <button onclick="openBreakModal()" class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Add Break</button>
+      <button onclick="openAddStoryModal()" class="Outfit-Medium max-sm:hidden cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Add Story</button>
+      <button onclick="openBreakModal()" class="Outfit-Medium max-sm:hidden cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Add Break</button>
       <button onclick="saveRunOrder('<%= runOrder.id %>')" class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">Save <span class="hidden sm:block">Run</span> Order</button>
     </div>
 </div>
@@ -233,218 +234,150 @@ function formatTime(dateString) {
      ADD STORY MODAL
 ========================================= -->
 
-<div
-  id="addStoryModal"
-  class="fixed inset-x-0 top-17 bottom-0 z-50 hidden items-start justify-center overflow-hidden bg-black/30 p-2 sm:p-4"
->
-<div class="flex h-full max-h-full w-full max-w-[650px] flex-col overflow-hidden rounded-xl bg-white shadow-xl">
-        <!-- HEADER -->
-
-        <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
-          <div>
-            <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Add Story</div>
-            <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Add an existing story or create a new one.</div>
-          </div>
-          <div onclick="closeAddStoryModal()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
-            <p class="cursor-pointer">×</p>
-          </div>
-        </div>
-
-
-        <!-- TABS -->
-
-        <div class="shrink-0 border-b border-[#eeeeee] p-3">
-          <div class="grid grid-cols-2 rounded-lg bg-gray-100 p-1">
-            <button id="existingStoryTab" onclick="switchStoryTab('existing')" class="rounded-md bg-white py-2 text-[10px] shadow-sm cursor-pointer">Existing Stories</button>
-
-            <button id="newStoryTab" onclick="switchStoryTab('new')" class="rounded-md py-2 text-[10px] text-gray-500 cursor-pointer">Create New</button>
-          </div>
-        </div>
-
-        <!-- EXISTING STORIES -->
-
-       
-       <div id="existingStoriesPanel" class="min-h-0 flex-1 overflow-hidden">
-
-<div class="select-none flex items-center gap-2 border-b border-[#eeeeee] bg-white p-2">
-
-  <!-- LEFT -->
-  <button
-    id="dateScrollLeft"
-    class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[#eeeeee] text-gray-500 hover:bg-gray-100 hover:text-black"
-  >
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M15 18L9 12L15 6"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-  </button>
-
-
-  <!-- DATE SCROLLER -->
-  <div
-    id="dateScroller"
-    class="flex flex-1 gap-2 overflow-x-auto scroll-smooth"
-    style="scrollbar-width:none;"
-  ></div>
-
-
-  <!-- RIGHT -->
-  <button
-    id="dateScrollRight"
-    class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[#eeeeee] text-gray-500 hover:bg-gray-100 hover:text-black"
-  >
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M9 6L15 12L9 18"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </svg>
-  </button>
-
-</div>
-<!-- QUICK DATE BUTTONS -->
-<div class="select-none flex flex-nowrap items-center justify-center gap-1.5 border-b border-[#eeeeee] bg-[#fafafa] px-3 py-2">
-  <button onclick="jumpToDate(-10)" class="text-nowrap cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-gray-500 hover:border-gray-300 hover:text-black">10 days ago</button>
-
-  <button onclick="jumpToDate(-2)" class="text-nowrap cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-gray-500 hover:border-gray-300 hover:text-black">2 days ago</button>
-
-  <button onclick="jumpToDate(0)" class="Outfit-Medium text-nowrap cursor-pointer rounded-md bg-black px-2.5 py-1.5 text-[9px] text-white hover:bg-gray-800">Today</button>
-
-  <button onclick="jumpToDate(1)" class="text-nowrap cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-gray-500 hover:border-gray-300 hover:text-black">Tomorrow</button>
-
-  <button onclick="jumpToDate(7)" class="text-nowrap cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-gray-500 hover:border-gray-300 hover:text-black">7 days from now</button>
-</div>
-
-
-          <!-- SEARCH -->
-          <div class="border-b border-[#eeeeee] p-4 flex gap-2">
-            <input id="storySearch" type="text" placeholder="Search stories..." class="w-full rounded-lg border border-[#dddddd] bg-gray-50 px-3 py-2 text-[10px] outline-none focus:border-black focus:bg-white" />
-           
-            <div class="relative">
-              <button id="filterBtn" onclick="toggleFilterMenu()" class="cursor-pointer flex items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">
-                <span id="filterText">English</span>
-                <svg width="12" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M7 10L12 15L17 10H7Z"></path>
-                </svg>
-              </button>
-              <div id="filterMenu" class="absolute top-10 right-0 z-30 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
-                <button onclick="selectLanguageFilter('en', 'English')" class="cursor-pointer w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">English</button>
-                <button onclick="selectLanguageFilter('dv', 'Dhivehi')" class="cursor-pointer w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Dhivehi</button>
-              </div>
-            </div>
-
-          </div>
-
-
-
-          <div id="storyBank" class="scrollbar min-h-96 max-h-96 overflow-y-auto">
-
-
-
-
-
-
-
-
-          </div>
-
-
-
-
-
-
-        </div>
-
-        <!-- NEW STORY -->
-
-        <div id="newStoryPanel" class="scrollbar hidden flex-1 overflow-y-auto p-5">
-          <div class="space-y-4">
-            <!-- SLUG -->
-
-<div class="mb-5">
-  <label class="mb-2 block text-[10px] font-medium text-gray-500"> SLUG </label>
-  <input id="slug" type="text" value="" placeholder="Enter story slug" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] uppercase outline-none focus:border-black" />
-  <div class="mt-1.5 text-[9px] text-gray-400">Short identifier used by the newsroom.</div>
-</div>
-
-
-            <!-- TYPE + LANGUAGE -->
-
-              <div>
-                <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> LANGUAGE </label>
-                <select id="newStoryLanguage" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px] outline-none">
-                  <option value="dv">Dhivehi</option>
-                  <option value="en">English</option>
-                </select>
-              </div>
-
-<!-- TEXT -->
-
-<div class="mb-5">
-  <div class="mb-2 flex items-center justify-between">
-    <label class="text-[10px] font-medium text-gray-500"> CG TEXT </label>
-    <div class="flex items-center gap-3 text-[9px] text-gray-400">
-      <label class="relative inline-flex cursor-pointer items-center">
-        <input id="cgToggle" type="checkbox" class="peer sr-only" />
-        <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
-        <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></div>
-        <span class="ml-2 text-[10px] text-gray-500"> EN / DV </span>
-      </label>
+<div id="addStoryModal" class="fixed inset-x-0 top-0 bottom-0 z-5000 hidden items-center justify-center overflow-hidden bg-black/30 p-2 sm:p-4">
+  <div class="flex h-full min-h-0 w-full max-w-[650px] flex-col overflow-hidden rounded-xl bg-white shadow-xl">
+    <!-- HEADER -->
+    <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Add Story</div>
+        <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Add an existing story or create a new one.</div>
+      </div>
+      <div onclick="closeAddStoryModal()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
+        <p class="cursor-pointer">×</p>
+      </div>
     </div>
-  </div>
-  <input id="cg" type="text" value="" placeholder="Enter CG text" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-sm outline-none focus:border-black" dir="rtl" />
-  <div class="mt-1.5 text-[9px] text-gray-400">This text can be sent directly to the graphics system.</div>
-</div>
-<!-- CG PREVIEW -->
-
-<div class="mb-5 w-full">
-  <div class="headline-preview relative w-full overflow-hidden" style="container-type: inline-size;">
-    <img src="/img/headlineBarPreview.png" alt="" class="block h-auto w-full" />
-    <div id="cg_text_preview" class="AWaheed absolute top-[57%] right-[8.5%] -translate-y-1/2 text-right text-nowrap text-black" style="font-size: 2.43cqw; font-weight: bold;"></div>
-  </div>
-</div>
-
-
-<!-- STORY TEXT -->
-<div class="mb-5">
-  <div class="mb-2 flex items-center justify-between">
-    <label class="text-[10px] font-medium text-gray-500"> STORY TEXT </label>
-    <div class="flex items-center gap-3 text-[9px] text-gray-400">
-      <label class="relative inline-flex cursor-pointer items-center">
-        <input id="languageToggle" type="checkbox" class="peer sr-only" />
-        <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
-        <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></div>
-        <span class="ml-2 text-[10px] text-gray-500"> EN / DV </span>
-      </label>
+    <!-- TABS -->
+    <div class="shrink-0 border-b border-[#eeeeee] p-3">
+      <div class="grid grid-cols-2 rounded-lg bg-gray-100 p-1">
+        <button id="existingStoryTab" onclick="switchStoryTab('existing')" class="cursor-pointer rounded-md bg-white py-2 text-[10px] shadow-sm">Existing Stories</button>
+        <button id="newStoryTab" onclick="switchStoryTab('new')" class="cursor-pointer rounded-md py-2 text-[10px] text-gray-500">Create New</button>
+      </div>
     </div>
-  </div>
-  <textarea id="storyText" class="Outfit-Faseyha-Regular scrollbar min-h-50 h-full max-h-100 w-full resize-none rounded-lg border border-[#dddddd] px-4 py-3 text-sm leading-6 outline-none focus:border-black" style="font-family: 'Outfit-Regular', 'Faseyha-Regular';" placeholder="..." dir="rtl"></textarea>
-  <div class="mt-3 flex items-center justify-end gap-1">
-    <button onclick="copyType('PKG')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">PKG</button>
-    <button onclick="copyType('VAR')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">VAR</button>
-    <button onclick="copyType('INT')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">INT</button>
-  </div>
-</div>
-
-
-</div>
-
-          <div class="mt-5 flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
-            <button onclick="closeAddStoryModal()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
-
-            <button onclick="createAndAddStory()" class="rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Create & Add</button>
+    <!-- EXISTING STORIES -->
+    <div id="existingStoriesPanel" class="flex min-h-0 flex-1 flex-col overflow-hidden">
+      <div class="flex shrink-0 items-center gap-2 border-b border-[#eeeeee] bg-white p-2 select-none">
+        <!-- LEFT -->
+        <button id="dateScrollLeft" class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[#eeeeee] text-gray-500 hover:bg-gray-100 hover:text-black">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <!-- DATE SCROLLER -->
+        <div id="dateScroller" class="flex flex-1 gap-2 overflow-x-auto scroll-smooth" style="scrollbar-width:none;"></div>
+        <!-- RIGHT -->
+        <button id="dateScrollRight" class="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-[#eeeeee] text-gray-500 hover:bg-gray-100 hover:text-black">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+      <!-- QUICK DATE BUTTONS -->
+      <div class="flex shrink-0 flex-nowrap items-center justify-center gap-1.5 border-b border-[#eeeeee] bg-[#fafafa] px-3 py-2 select-none">
+        <button onclick="jumpToDate(-10)" class="cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-nowrap text-gray-500 hover:border-gray-300 hover:text-black">10 days ago</button>
+        <button onclick="jumpToDate(-2)" class="cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-nowrap text-gray-500 hover:border-gray-300 hover:text-black">2 days ago</button>
+        <button onclick="jumpToDate(0)" class="Outfit-Medium cursor-pointer rounded-md bg-black px-2.5 py-1.5 text-[9px] text-nowrap text-white hover:bg-gray-800">Today</button>
+        <button onclick="jumpToDate(1)" class="cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-nowrap text-gray-500 hover:border-gray-300 hover:text-black">Tomorrow</button>
+        <button onclick="jumpToDate(7)" class="cursor-pointer rounded-md border border-[#e5e5e5] bg-white px-2.5 py-1.5 text-[9px] text-nowrap text-gray-500 hover:border-gray-300 hover:text-black">7 days from now</button>
+      </div>
+      <!-- SEARCH -->
+      <div class="flex shrink-0 gap-2 border-b border-[#eeeeee] p-4">
+        <input id="storySearch" type="text" placeholder="Search stories..." class="w-full rounded-lg border border-[#dddddd] bg-gray-50 px-3 py-2 text-[10px] outline-none focus:border-black focus:bg-white" />
+        <div class="relative">
+          <button id="filterBtn" onclick="toggleFilterMenu()" class="flex cursor-pointer items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">
+            <span id="filterText">English</span>
+            <svg width="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 10L12 15L17 10H7Z"></path>
+            </svg>
+          </button>
+          <div id="filterMenu" class="absolute top-10 right-0 z-30 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
+            <button onclick="selectLanguageFilter('en', 'English')" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">English</button>
+            <button onclick="selectLanguageFilter('dv', 'Dhivehi')" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Dhivehi</button>
           </div>
         </div>
       </div>
+      <div id="storyBank" class="scrollbar min-h-0 flex-1 overflow-y-auto"></div>
     </div>
+
+    <!-- NEW STORY -->
+
+    <div id="newStoryPanel" class="scrollbar hidden flex-1 overflow-y-auto p-5">
+      <div class="space-y-4">
+        <!-- SLUG -->
+
+        <div class="mb-5">
+          <label class="mb-2 block text-[10px] font-medium text-gray-500"> SLUG </label>
+          <input id="slug" type="text" value="" placeholder="Enter story slug" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] uppercase outline-none focus:border-black" />
+          <div class="mt-1.5 text-[9px] text-gray-400">Short identifier used by the newsroom.</div>
+        </div>
+
+        <!-- TYPE + LANGUAGE -->
+
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> LANGUAGE </label>
+          <select id="newStoryLanguage" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px] outline-none">
+            <option value="dv">Dhivehi</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+
+        <!-- TEXT -->
+
+        <div class="mb-5">
+          <div class="mb-2 flex items-center justify-between">
+            <label class="text-[10px] font-medium text-gray-500"> CG TEXT </label>
+            <div class="flex items-center gap-3 text-[9px] text-gray-400">
+              <label class="relative inline-flex cursor-pointer items-center">
+                <input id="cgToggle" type="checkbox" class="peer sr-only" />
+                <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
+                <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></div>
+                <span class="ml-2 text-[10px] text-gray-500"> EN / DV </span>
+              </label>
+            </div>
+          </div>
+          <input id="cg" type="text" value="" placeholder="Enter CG text" class="Outfit-Faseyha-Regular w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-sm outline-none focus:border-black" dir="rtl" />
+          <div class="mt-1.5 text-[9px] text-gray-400">This text can be sent directly to the graphics system.</div>
+        </div>
+        <!-- CG PREVIEW -->
+
+        <div class="mb-5 w-full">
+          <div class="headline-preview relative w-full overflow-hidden" style="container-type: inline-size;">
+            <img src="/img/headlineBarPreview.png" alt="" class="block h-auto w-full" />
+            <div id="cg_text_preview" class="AWaheed absolute top-[57%] right-[8.5%] -translate-y-1/2 text-right text-nowrap text-black" style="font-size: 2.43cqw; font-weight: bold;"></div>
+          </div>
+        </div>
+
+        <!-- STORY TEXT -->
+        <div class="mb-5">
+          <div class="mb-2 flex items-center justify-between">
+            <label class="text-[10px] font-medium text-gray-500"> STORY TEXT </label>
+            <div class="flex items-center gap-3 text-[9px] text-gray-400">
+              <label class="relative inline-flex cursor-pointer items-center">
+                <input id="languageToggle" type="checkbox" class="peer sr-only" />
+                <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
+                <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white shadow-sm transition peer-checked:translate-x-4"></div>
+                <span class="ml-2 text-[10px] text-gray-500"> EN / DV </span>
+              </label>
+            </div>
+          </div>
+          <textarea id="storyText" class="Outfit-Faseyha-Regular scrollbar h-full max-h-100 min-h-50 w-full resize-none rounded-lg border border-[#dddddd] px-4 py-3 text-sm leading-6 outline-none focus:border-black" style="font-family: 'Outfit-Regular', 'Faseyha-Regular';" placeholder="..." dir="rtl"></textarea>
+          <div class="mt-3 flex items-center justify-end gap-1">
+            <button onclick="copyType('PKG')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">PKG</button>
+            <button onclick="copyType('VAR')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">VAR</button>
+            <button onclick="copyType('INT')" class="cursor-pointer rounded-md border border-gray-200 px-3 py-1.5 text-[10px] font-medium text-gray-600 hover:bg-gray-100 hover:text-black">INT</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
+        <button onclick="closeAddStoryModal()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+
+        <button onclick="createAndAddStory()" class="rounded-lg bg-black px-4 py-2.5 text-[10px] text-white">Create & Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
     <!-- ========================================

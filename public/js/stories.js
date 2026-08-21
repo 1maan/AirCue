@@ -791,7 +791,6 @@ function transliterateDhivehiToEnglish(text) {
 
 socket.on('recStory', (data)=>{
     if(data.date == date && data.language == selectedLanguage){
-    console.log(data)
     if(document.getElementById("Nostoriesyet")){
       document.getElementById("Nostoriesyet").remove();
     }
