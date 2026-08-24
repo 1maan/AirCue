@@ -67,7 +67,6 @@ router.get('/runorders', authPage, (req, res)=>{
     `;
     db.query(sql, [formatDatabaseDate(date)], (err, result)=>{
         if(err){
-            console.log(err)
             return res.redirect('/500')
         }
         res.render('runorders', { fullname: req.session.fullname, role: req.session.role, runorders: result[0], nextNews: result[1][0] })
@@ -132,9 +131,50 @@ router.get('/stories', authPage, (req, res)=>{
     res.render('stories', { fullname: req.session.fullname, role: req.session.role })
 })
 
-router.get('/controller', authPage, (req, res)=>{
-    res.render('controller', { fullname: req.session.fullname, role: req.session.role })
-})
+
+router.get('/controller/', authPage, (req, res) => {
+    const sql = `
+        SELECT 
+            roi.*,
+            s.slug,
+            s.story_text,
+            s.created_at AS ca
+        FROM run_orders ro
+
+        INNER JOIN run_order_items roi
+            ON roi.run_order_id = ro.id
+
+        LEFT JOIN stories s
+            ON roi.story_id = s.id
+
+        WHERE ro.status = 'live'
+
+        ORDER BY roi.position ASC
+    `;
+    db.query(sql, (err, result) => {
+
+        if (err) {
+            console.log(err);
+            return res.redirect('/500');
+        }
+        res.render('controller', {
+            fullname: req.session.fullname,
+            role: req.session.role,
+            runDown: result
+        });
+
+    });
+});
+
+
+
+
+
+
+router.get('/controller2/', authPage, (req, res) => {
+    res.render('controller2', { fullname: req.session.fullname, role: req.session.role });
+});
+
 router.get('/profile', authPage, (req, res)=>{
     res.render('profile', { fullname: req.session.fullname, role: req.session.role })
 })

@@ -1,14 +1,12 @@
 <!doctype html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AirCue | Teleprompter</title>
+    <title>AirCue | Run Order</title>
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/output.css" />
     <link rel="shortcut icon" href="/img/logo.svg" type="image/x-icon" />
-
     <style>
       * {
         box-sizing: border-box;
@@ -18,6 +16,13 @@
         background: #f5f5f5;
         color: #171717;
       }
+      .dragging {
+        opacity: .4;
+      }
+
+      .drag-over {
+        border-top: 2px solid #111;
+      }
       .scrollbar::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -26,460 +31,219 @@
         background: #d4d4d4;
         border-radius: 10px;
       }
-      input[type="range"] {
-        accent-color: black;
+      .border-top-red{
+        border-top: 1px rgb(255, 42, 124) solid !important;
       }
     </style>
   </head>
-
+  <script src="/socket.io/socket.io.js"></script>
   <body class="Outfit-Regular">
     <div class="min-h-screen">
       <%- include('partials/header') -%>
-
-      <div class="grid h-full grid-cols-[30%_45%_25%]">
-        <!-- LEFT: RUN ORDER -->
-        <aside class="flex min-h-0 flex-col border-r border-[#e5e5e5] bg-white">
-          <!-- HEADER -->
-          <div class="border-b border-[#eeeeee] p-4">
-            <div class="flex items-center justify-between">
+      <main class="mx-auto max-w-[1500px] p-4 md:p-7">
+        <!-- PAGE HEADER -->
+        <div class="mb-7 flex items-end justify-between gap-3">
+          <div>
+            <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Teleprompter</h1>
+            <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Final on-air story order</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="/teleprompter ">
+              <button class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">Open <span class="hidden sm:block">Teleprompter</span></button>
+            </a>
+          </div>
+        </div>
+        <!-- WORKSPACE -->
+        <div class="grid gap-5 xl:grid-cols-[1fr_300px]">
+         
+          <!-- RUN ORDER -->
+          <section class="overflow-hidden select-none rounded-xl border border-[#e3e3e3] bg-white">
+            <!-- HEADER -->
+            <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
               <div>
-                <div class="text-[13px] font-semibold">Fahuge Khabaru</div>
-
-                <div class="mt-0.5 text-[10px] text-gray-400">Today • 16:00</div>
+                <div class="Outfit-Medium text-[13px]">Teleprompter Rundown</div>
+                <div class="mt-0.5 text-[9px] text-gray-400">Final on-air order for the teleprompter.</div>
               </div>
 
-              <span class="rounded-full bg-red-50 px-2 py-1 text-[8px] font-medium text-red-500"> LIVE </span>
+              <div class="flex items-center gap-2">
+                <span id="toggle_action" class="text-[9px] active:scale-90 hover:bg-black/10 rounded-sm p-1 text-black cursor-pointer">
+                  <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.2073 2.29291L15.793 3.70712L18.0859 6.00002H13.0002V8.00001H18.0859L15.793 10.2929L17.2073 11.7071L21.9144 7.00001L17.2073 2.29291ZM9.50015 7.00001C9.50015 5.6193 8.38086 4.50001 7.00015 4.50001C5.61944 4.50001 4.50015 5.6193 4.50015 7.00001C4.50015 8.38073 5.61944 9.50001 7.00015 9.50001C8.38086 9.50001 9.50015 8.38073 9.50015 7.00001ZM11.5002 7.00001C11.5002 9.4853 9.48543 11.5 7.00015 11.5C4.51487 11.5 2.50015 9.4853 2.50015 7.00001C2.50015 4.51473 4.51487 2.50001 7.00015 2.50001C9.48543 2.50001 11.5002 4.51473 11.5002 7.00001ZM5.91436 18L8.20726 20.2929L6.79304 21.7071L2.08594 17L6.79304 12.2929L8.20726 13.7071L5.91436 16H11.0002V18H5.91436ZM15.0002 19H19.0002V15H15.0002V19ZM13.0002 14C13.0002 13.4477 13.4479 13 14.0002 13H20.0002C20.5524 13 21.0002 13.4477 21.0002 14V20C21.0002 20.5523 20.5524 21 20.0002 21H14.0002C13.4479 21 13.0002 20.5523 13.0002 20V14Z"></path></svg>
+                </span>
+              </div>
             </div>
-          </div>
+            <!-- TABLE HEADER -->
+            <div class="grid grid-cols-[45px_auto_1fr_40px] border-b border-[#eeeeee] bg-gray-50 px-4 py-2.5 sm:grid-cols-[45px_auto_1fr_40px]">
+              <div class="text-[9px] text-gray-400">#</div>
+              <div class="text-[9px] text-gray-400">Story</div>
+              <div class="text-right text-[9px] text-gray-400">Type</div>
+              <div class="text-right text-[9px] text-gray-400">Action</div>
+            </div>
 
-          <!-- SEARCH -->
-          <div class="border-b border-[#eeeeee] p-3">
-            <input type="text" placeholder="Search rundown..." class="w-full rounded-lg border border-[#e5e5e5] bg-gray-50 px-3 py-2 text-[10px] outline-none focus:border-black focus:bg-white" />
-          </div>
+            <!-- ITEMS -->
+<div id="runOrderList" class="min-h-112.5 select-none">
+<%
+function formatTime(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
 
-          <!-- RUNDOWN -->
-          <div class="scrollbar flex-1 overflow-y-auto">
-            <!-- ACTIVE -->
-            <div class="border-b border-l-[3px] border-[#eeeeee] border-l-red-500 bg-red-50/40 px-4 py-2">
-              <div class="flex items-start gap-3">
-                <div class="text-[10px] text-gray-400">01</div>
+    if (isNaN(date.getTime())) return '';
 
-                <div class="min-w-0 flex-1">
-                  <div class="text-[12px] font-medium">Government announces new economic measures</div>
+    const day = date.toLocaleDateString('en-GB', {
+        weekday: 'short'
+    });
 
-                  <div class="mt-1 flex items-center gap-2 text-[9px] text-gray-400">
-                    <span>VO/SOT</span>
-                    <span>•</span>
-                    <span>01:42</span>
-                  </div>
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
 
-                  <div class="mt-3 flex items-center gap-2">
-                    <span class="rounded-md bg-red-100 px-2 py-1 text-[8px] font-medium text-red-500"> ON PROMPTER </span>
-                  </div>
+    return `${day} ${hours}:${minutes}`;
+}
+%>
+<%
+function extractTagsWithTotal(text) {
+    const matches = [...text.matchAll(/__([^_]+)__/g)];
+    const result = {};
+    matches.forEach(match => {
+        const tag = match[1].trim().toUpperCase();
+        result[tag] = (result[tag] || 0) + 1;
+    });
+    return Object.entries(result).map(([name, total]) => ({
+
+        name,
+        total
+    }));
+}
+function renderTags(text) {
+    const tags = extractTagsWithTotal(text);
+    return tags.map(item => `
+        <span class="rounded bg-black w-fit px-1 py-px text-[10px] text-white line-clamp-1">
+            ${item.name}
+            <span class="ml-1 text-white">${item.total}</span>
+        </span>
+    `).join('');
+}
+%>
+<% if(runDown.length === 0){ %>
+<div id="NoRundownItems" class="flex min-h-[450px] flex-col items-center justify-center px-6 py-12 text-center">
+  <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.5" />
+      <path d="M8 8H16M8 12H16M8 16H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  </div>
+  <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">Rundown is empty</div>
+  <div class="mt-1 max-w-55 text-[10px] leading-4 text-gray-400">No stories or breaks have been added to this rundown yet.</div>
+</div>
+<% } %>
+
+<% runDown.forEach(item=>{ %>
+<% if(item.item_type == 'story'){ %>
+<div data-itemid="<%= item.story_id %>" class="runorder-item hover:bg-gray-100 runorder-story border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-2 sm:grid-cols-[45px_1fr_auto_40px] grid-cols-[45px_1fr_auto_40px] md:gap-0">
+    <p class="text-[10px] flex items-center text-gray-400 runorder-counter">00</p>
+    <div class="min-w-0 flex-1"><p class="Outfit-Faseyha-Medium truncate text-[11px]"><%= item.slug %></p></div>
+    <div class="flex justify-center items-center gap-0.5">
+      <%- renderTags(item.story_text) %>
+    </div>
+    <div class="flex items-center gap-1 justify-end ">
+      <div onclick="jumpToStory('<%= item.id %>')" class="hidden action_jump hover:bg-red-200 p-0.5 rounded-full w-fit cursor-pointer transition-all duration-150 hover:scale-110">
+        <svg width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ee4444"><path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path></svg>
+      </div>
+      <div onclick="changeCgStory('<%= item.id %>')" class="action_cgchange hover:bg-violet-200 p-0.5 rounded-full w-fit cursor-pointer transition-all duration-150 hover:scale-110">
+        <svg width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4f3de8"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM10.6219 8.41459L15.5008 11.6672C15.6846 11.7897 15.7343 12.0381 15.6117 12.2219C15.5824 12.2658 15.5447 12.3035 15.5008 12.3328L10.6219 15.5854C10.4381 15.708 10.1897 15.6583 10.0672 15.4745C10.0234 15.4088 10 15.3316 10 15.2526V8.74741C10 8.52649 10.1791 8.34741 10.4 8.34741C10.479 8.34741 10.5562 8.37078 10.6219 8.41459Z"></path></svg>
+      </div>
+    </div>
+</div>
+<% } %>
+<% if(item.item_type == 'break'){ %>
+<div class="runorder-item runorder-break border-t border-[#eeeeee] bg-red-500  px-4 py-2">
+  <div class="flex items-center gap-3 pointer-events-none">
+    <div class="h-px flex-1 bg-red-400"></div>
+    <div class="flex items-center gap-3">
+      <span class="rounded-md bg-red-400 px-2 py-1 text-[10px] font-medium text-white uppercase runorder-break-type"> <%= item.break_name %> </span>
+    </div>
+    <div class="h-px flex-1 bg-red-400"></div>
+  </div>
+</div>
+<% } %>
+<% }) %>
+</div>
+
+          </section>
+
+          <!-- RIGHT PANEL -->
+          <aside class="space-y-4">
+            <!-- QUICK ADD -->
+            <section class="select-none overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+              <div class="border-b border-[#eeeeee] px-4 py-4 flex items-center justify-between">
+                <div class="Outfit-Medium text-[12px]">Text Settings</div>
+                <div class="flex items-center gap-2">
+                  <span id="update_tele_settings" class="text-[9px] hover:bg-black/10 rounded-sm active:scale-90 p-1 text-black cursor-pointer">
+                    <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 19V13H17V19H19V7.82843L16.1716 5H5V19H7ZM4 3H17L21 7V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM9 15V19H15V15H9Z"></path></svg>
+                  </span>
                 </div>
               </div>
-            </div>
 
-            <!-- ITEM -->
-            <div class="border-b border-[#eeeeee] px-4 py-2 hover:bg-gray-50">
-              <div class="flex items-start gap-3">
-                <div class="text-[10px] text-gray-400">02</div>
 
-                <div class="min-w-0 flex-1">
-                  <div class="text-[12px] font-medium">Weather update for the Maldives</div>
-                  <div class="mt-1 text-[9px] text-gray-400">PKG • 02:15</div>
-                  <button ondblclick="jumpToStory(2)" class="mt-3 rounded-md border border-[#dddddd] px-2.5 py-1 text-[9px] text-gray-500 hover:bg-black hover:text-white">Jump</button>
-                  <button onclick="loadStoryCG(2)" class="rounded-md border border-[#dddddd] px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">CG</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- ITEM -->
-            <div class="border-b border-[#eeeeee] px-4 py-2 hover:bg-gray-50">
-              <div class="flex items-start gap-3">
-                <div class="text-[10px] text-gray-400">03</div>
-
-                <div class="min-w-0 flex-1">
-                  <div class="text-[12px] font-medium">Parliament session continues today</div>
-
-                  <div class="mt-1 text-[9px] text-gray-400">LIVE • 03:05</div>
-                  <button ondblclick="jumpToStory(2)" class="mt-3 rounded-md border border-[#dddddd] px-2.5 py-1 text-[9px] text-gray-500 hover:bg-black hover:text-white">Jump</button>
-                  <button onclick="loadStoryCG(2)" class="rounded-md border border-[#dddddd] px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">CG</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- BREAK -->
-            <div class="flex items-center justify-center border-b border-[#eeeeee] bg-red-500 px-4 py-3 text-center">
-              <span class="line-clamp-1 text-xs font-medium break-all text-white"> COMMERCIAL BREAK </span>
-            </div>
-
-            <!-- ITEM -->
-            <div class="border-b border-[#eeeeee] px-4 py-2 hover:bg-gray-50">
-              <div class="flex items-start gap-3">
-                <div class="text-[10px] text-gray-400">04</div>
-
-                <div class="min-w-0 flex-1">
-                  <div class="text-[12px] font-medium">Sports roundup</div>
-
-                  <div class="mt-1 text-[9px] text-gray-400">VO • 00:58</div>
-                  <button ondblclick="jumpToStory(2)" class="mt-3 rounded-md border border-[#dddddd] px-2.5 py-1 text-[9px] text-gray-500 hover:bg-black hover:text-white">Jump</button>
-                  <button onclick="loadStoryCG(2)" class="rounded-md border border-[#dddddd] px-2 py-1 text-[8px] text-gray-500 hover:bg-gray-100">CG</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- BREAK -->
-            <div class="flex items-center justify-center border-b border-[#eeeeee] bg-red-500 px-4 py-3 text-center">
-              <span class="line-clamp-1 text-xs font-medium break-all text-white"> SPORTS </span>
-            </div>
-          </div>
-        </aside>
-
-        <!-- CENTER -->
-        <section class="flex min-w-0 flex-col">
-          <!-- TOP CONTROL BAR -->
-          <div class="flex h-[58px] items-center border-b border-[#e5e5e5] bg-white px-5">
-            <div>
-              <div class="text-[12px] font-semibold">Story 01</div>
-
-              <div class="text-[9px] text-gray-400">Government announces new economic measures</div>
-            </div>
-
-            <div class="ml-auto flex items-center gap-2">
-              <button onclick="previousStory()" class="rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">Previous</button>
-
-              <button onclick="nextStory()" class="rounded-lg bg-black px-3 py-2 text-[10px] font-medium text-white hover:bg-gray-800">Next Story</button>
-            </div>
-          </div>
-
-          <!-- PROMPTER PREVIEW -->
-          <div class="flex min-h-0 flex-1 flex-col p-5">
-            <div class="mb-3 flex items-center justify-between">
-              <div>
-                <div class="text-[12px] font-semibold">Teleprompter Preview</div>
-
-                <div class="mt-0.5 text-[9px] text-gray-400">Live output preview</div>
-              </div>
-
-              <div class="flex gap-2">
-                <button id="pauseBtn" onclick="togglePrompt()" class="rounded-lg border border-[#dddddd] bg-white px-3 py-2 text-[10px] text-gray-600">Pause</button>
-
-                <button onclick="resetPrompt()" class="rounded-lg border border-[#dddddd] bg-white px-3 py-2 text-[10px] text-gray-600">Reset</button>
-              </div>
-            </div>
-
-            <!-- BLACK TELEPROMPTER WINDOW -->
-            <div class="relative flex max-h-[600px] min-h-0 flex-1 overflow-hidden rounded-xl bg-black">
-              <!-- SAFE LINE -->
-              <div class="pointer-events-none absolute top-1/2 right-0 left-0 z-10 border-t border-red-500/60"></div>
-
-              <!-- SCRIPT -->
-              <div id="prompterPreview" class="scrollbar Outfit-Faseyha-Regular h-full w-full overflow-y-auto px-[5%] py-[15%] text-center text-[38px] leading-[1.45] font-medium text-white">ރާއްޖޭގައި އުފައްދާ ކަރަންޓުގެ 94 އިންސައްތައަކީ އިމްޕޯޓްކުރާ ތެލަށް ބަރޯސާވެގެން އުފައްދާ ހަކަތަ ކަމަށްވާއިރު، ބޯފެން އުފެއްދުމަށް ހިންގާ ޑީސެލިނޭޝަން ޕްލާންޓްތައް ހިންގުމަށް ވެސް ތެޔޮ ބޭނުންވެ އެވެ. ނަމަވެސް ދުނިޔޭގެ ބާޒާރުގައި ތެލުގެ އަގު އުފުލުމާއި ފަތުރުވެރިކަމުން ލިބޭ އާމްދަނީ ދަށްވުމުގެ ސަބަބުން، ތެޔޮ ގަތުމަށް ދައުލަތުގެ ބަޖެޓަށް ވަނީ ބޮޑެތި ގޮންޖެހުންތަކެއް ކުރިމަތިވެފަ އެވެ. އޭޑީބީގެ މި އެހީގެ ސަބަބުން ކަރަންޓާއި ފެނުގެ އިތުރުން، ކާބޯތަކެއްޗާއި ސިއްހީ ޚިދުމަތްތަކަށް ބޭނުންވާ ތަކެތި އުފުލުމާއި، ރަށްތަކުގެ މެދުގައި ކުރާ ދަތުރުފަތުރާއި ކުނި މެނޭޖްކުރުމުގެ މަސައްކަތްތަކަށް ވެސް އެހީތެރިކަން ލިބިގެންދާނެ އެވެ. އޭޑީބީން ދޭ 50 މިލިއަން ޑޮލަރުގެ މި އެހީއަކީ ވޯލްޑް ބޭންކުން ރާއްޖެއަށް ދިނުމަށް ނިންމާފައިވާ 40 މިލިއަން ޑޮލަރުގެ އެހީގެ ޕެކޭޖަށް އިތުރުކުރެވޭ އެހީއެކެވެ. އޭޑީބީން ބުނެފައިވަނީ އެ ބޭންކަކީ އޭޝިއާ އަދި ޕެސިފިކް ސަރަހައްދުގެ ގައުމުތަކުގެ ތަރައްގީއަށާއި، ދިމާވާ އެކި ގޮންޖެހުންތަކުން އަރައިގަތުމަށް އެހީތެރިކަން ފޯރުކޮށްދޭ މުހިންމު މާލީ އިދާރާއެއް ކަމަށެވެ. 1966 ވަނަ އަހަރު އުފެއްދި އޭޑީބީގައި މިހާރު 69 މެންބަރު ގައުމު ހިމެނޭއިރު، އޭގެ ތެރެއިން 50 ގައުމަކީ މި ސަރަހައްދުގެ ގައުމުތަކެވެ. އެ ބޭންކުގެ މައިގަނޑު އަމާޒަކީ މެންބަރު ގައުމުތަކުގެ އުމްރާނީ ތަރައްގީއަށް އެހީތެރިވުމާއި، ރައްޔިތުންގެ ދިރިއުޅުމުގެ ފެންވަރު މަތިކޮށް، ރައްކާތެރި މުސްތަގުބަލެއް ބިނާކުރުމަށް މަސައްކަތް ކުރުމެވެ. މިގޮތުން ރާއްޖެއަށް މި ދަނޑިވަޅުގައި ދޭ އެހީއަކީ ގައުމުގެ އަސާސީ ޚިދުމަތްތައް ހުއްޓުމެއް ނެތް ގޮތެއްގައި ކުރިއަށް ގެންދިއުމަށް ލިބޭ ވަރަށް ބޮޑު ބާރެކެވެ.</div>
-
-              <!-- OUTPUT STATUS -->
-              <div class="absolute top-4 left-4 flex items-center gap-2 rounded-md bg-white/10 px-2.5 py-1.5">
-                <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-
-                <span class="text-[9px] text-white/70"> OUTPUT LIVE </span>
-              </div>
-            </div>
-
-            <!-- TRANSPORT -->
-            <div class="mt-4 rounded-xl border border-[#e3e3e3] bg-white p-4">
-              <div class="flex items-center gap-5">
-                <button onclick="scrollUp()" class="flex h-9 w-9 items-center justify-center rounded-lg border border-[#dddddd] text-sm hover:bg-gray-50">↑</button>
-
-                <button onclick="togglePrompt()" class="flex h-10 w-20 items-center justify-center rounded-lg bg-black text-[10px] font-medium text-white">START / STOP</button>
-
-                <button onclick="scrollDown()" class="flex h-9 w-9 items-center justify-center rounded-lg border border-[#dddddd] text-sm hover:bg-gray-50">↓</button>
-
-                <div class="h-8 w-px bg-gray-200"></div>
-
-                <div class="flex flex-1 items-center gap-3">
-                  <span class="w-12 text-[9px] text-gray-400"> Speed </span>
-
-                  <input id="speedControl" type="range" min="0" max="10" value="4" class="w-full" />
-
-                  <span id="speedValue" class="w-6 text-right text-[10px]"> 4 </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- RIGHT CONTROLS -->
-        <aside class="scrollbar overflow-y-auto border-l border-[#e5e5e5] bg-white">
-          <!-- CONTROL TABS -->
-
-          <div class="sticky top-0 z-20 border-b border-[#eeeeee] bg-white p-3">
-            <div class="grid grid-cols-2 rounded-lg bg-gray-100 p-1">
-              <button id="prompterTab" onclick="switchControl('prompter')" class="control-tab rounded-md bg-white py-2 text-[10px] font-medium shadow-sm">Teleprompter</button>
-
-              <button id="graphicsTab" onclick="switchControl('graphics')" class="control-tab rounded-md py-2 text-[10px] text-gray-500">Graphics</button>
-            </div>
-          </div>
-
-          <!-- ===================================== -->
-          <!-- TELEPROMPTER CONTROLS -->
-          <!-- ===================================== -->
-
-          <div id="prompterControls" class="">
-            <!-- TEXT SETTINGS -->
-
-            <section class="border-b border-[#eeeeee]">
-              <div class="border-b border-[#eeeeee] px-5 py-4">
-                <div class="text-[12px] font-semibold">Text Settings</div>
-              </div>
 
               <div class="space-y-5 p-5">
                 <!-- SIZE -->
-
                 <div>
                   <div class="mb-2 flex justify-between">
                     <span class="text-[9px] text-gray-500"> Text Size </span>
-
                     <span id="fontSizeValue" class="mono text-[9px]"> 38px </span>
                   </div>
-
                   <input id="fontSize" type="range" min="20" max="80" value="38" class="w-full" />
                 </div>
-
                 <!-- LINE HEIGHT -->
-
                 <div>
                   <div class="mb-2 flex justify-between">
                     <span class="text-[9px] text-gray-500"> Line Height </span>
-
                     <span id="lineHeightValue" class="mono text-[9px]"> 1.45 </span>
                   </div>
-
                   <input id="lineHeight" type="range" min="1" max="2" step="0.05" value="1.45" class="w-full" />
                 </div>
-
                 <!-- MARGIN -->
-
                 <div>
                   <div class="mb-2 flex justify-between">
                     <span class="text-[9px] text-gray-500"> Side Margin </span>
-
                     <span id="marginValue" class="mono text-[9px]"> 10% </span>
                   </div>
-
                   <input id="margin" type="range" min="0" max="30" value="10" class="w-full" />
                 </div>
-
                 <!-- ALIGN -->
-
                 <div>
                   <div class="mb-2 text-[9px] text-gray-500">Alignment</div>
-
                   <div class="grid grid-cols-3 gap-1">
                     <button onclick="setAlign('left', this)" class="align-btn rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Left</button>
-
                     <button onclick="setAlign('center', this)" class="align-btn rounded-lg border border-black bg-black py-2 text-[9px] text-white">Center</button>
-
                     <button onclick="setAlign('right', this)" class="align-btn rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Right</button>
                   </div>
                 </div>
-
                 <!-- MIRROR -->
-
                 <div class="flex items-center justify-between">
                   <div>
                     <div class="text-[10px] font-medium">Mirror Output</div>
-
                     <div class="mt-0.5 text-[8px] text-gray-400">For teleprompter glass</div>
                   </div>
-
                   <label class="relative inline-flex cursor-pointer items-center">
                     <input id="mirror" type="checkbox" class="peer sr-only" />
-
                     <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
-
                     <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white transition peer-checked:translate-x-4"></div>
                   </label>
                 </div>
               </div>
+
+              
+
             </section>
 
-            <!-- QUICK JUMP -->
 
-            <section class="border-b border-[#eeeeee]">
-              <div class="border-b border-[#eeeeee] px-5 py-4">
-                <div class="text-[12px] font-semibold">Quick Jump</div>
+          </aside>
 
-                <div class="mt-0.5 text-[8px] text-gray-400">Move prompter to another story</div>
-              </div>
-
-              <div class="p-5">
-                <select id="jumpSelect" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[9px] outline-none">
-                  <option value="1">01 • Government measures</option>
-                  <option value="2">02 • Weather update</option>
-                  <option value="3">03 • Parliament session</option>
-                  <option value="4">04 • Sports roundup</option>
-                </select>
-
-                <button onclick="jumpSelected()" class="mt-2 w-full rounded-lg bg-black py-2.5 text-[9px] font-medium text-white">Jump to Story</button>
-              </div>
-            </section>
-
-            <!-- BREAKING PROMPTER -->
-
-            <section>
-              <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
-                <div>
-                  <div class="text-[12px] font-semibold">Breaking News</div>
-
-                  <div class="mt-0.5 text-[8px] text-gray-400">Push directly to prompter</div>
-                </div>
-
-                <span class="h-2 w-2 rounded-full bg-red-500"></span>
-              </div>
-
-              <div class="space-y-3 p-5">
-                <input id="breakingSlug" type="text" placeholder="Slug" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[9px] outline-none" />
-
-                <textarea id="breakingText" rows="5" placeholder="Breaking news script..." class="w-full resize-none rounded-lg border border-[#dddddd] px-3 py-2.5 text-[9px] leading-5 outline-none"></textarea>
-
-                <button onclick="pushBreakingPrompter()" class="w-full rounded-lg bg-red-500 py-2.5 text-[9px] font-medium text-white hover:bg-red-600">Push to Prompter</button>
-              </div>
-            </section>
-          </div>
-
-          <!-- ===================================== -->
-          <!-- GRAPHICS CONTROLS -->
-          <!-- ===================================== -->
-
-          <div id="graphicsControls" class="hidden">
-            <!-- CG PREVIEW -->
-
-            <section class="border-b border-[#eeeeee]">
-              <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
-                <div>
-                  <div class="text-[12px] font-semibold">CG Preview</div>
-
-                  <div class="mt-0.5 text-[8px] text-gray-400">Current story graphic</div>
-                </div>
-
-                <span class="text-[8px] text-green-600"> READY </span>
-              </div>
-
-              <div class="p-5">
-                <!-- VIDEO PREVIEW -->
-
-                <div class="relative aspect-video overflow-hidden rounded-lg bg-[#181818]">
-                  <div class="absolute inset-0 flex items-center justify-center">
-                    <span class="text-[8px] text-white/20"> PROGRAM </span>
-                  </div>
-
-                  <div id="cgPreview" class="absolute right-4 bottom-4 left-4">
-                    <div id="cgTypePreview" class="inline-block bg-red-600 px-2 py-1 text-[7px] font-medium text-white">NEWS</div>
-
-                    <div class="bg-white px-3 py-2">
-                      <div id="cgTitlePreview" class="text-[10px] leading-tight font-semibold text-black">Government announces new economic measures</div>
-
-                      <div id="cgSubPreview" class="mt-1 text-[7px] text-gray-500">New policy will take effect next month</div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- TAKE -->
-
-                <div class="mt-3 grid grid-cols-2 gap-2">
-                  <button onclick="clearCG()" class="rounded-lg border border-[#dddddd] py-2.5 text-[9px] text-gray-500 hover:bg-gray-50">Clear</button>
-
-                  <button onclick="takeCG()" class="rounded-lg bg-black py-2.5 text-[9px] font-medium text-white">Take CG</button>
-                </div>
-              </div>
-            </section>
-
-            <!-- EDIT CG -->
-
-            <section class="border-b border-[#eeeeee]">
-              <div class="border-b border-[#eeeeee] px-5 py-4">
-                <div class="text-[12px] font-semibold">Edit Graphic</div>
-              </div>
-
-              <div class="space-y-4 p-5">
-                <!-- TYPE -->
-
-                <div>
-                  <div class="mb-2 text-[9px] text-gray-500">Type</div>
-
-                  <div class="grid grid-cols-4 gap-1">
-                    <button onclick="setCGType('NEWS', this)" class="cg-type rounded-lg bg-black py-2 text-[8px] text-white">NEWS</button>
-
-                    <button onclick="setCGType('LIVE', this)" class="cg-type rounded-lg border border-[#dddddd] py-2 text-[8px] text-gray-500">LIVE</button>
-
-                    <button onclick="setCGType('BREAKING', this)" class="cg-type rounded-lg border border-[#dddddd] py-2 text-[8px] text-gray-500">BREAK</button>
-
-                    <button onclick="setCGType('SPORT', this)" class="cg-type rounded-lg border border-[#dddddd] py-2 text-[8px] text-gray-500">SPORT</button>
-                  </div>
-                </div>
-
-                <!-- TITLE -->
-
-                <div>
-                  <label class="mb-1.5 block text-[9px] text-gray-500"> Main CG </label>
-
-                  <input id="cgTitle" type="text" maxlength="80" value="Government announces new economic measures" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[9px] outline-none focus:border-black" />
-                </div>
-
-                <!-- SUB -->
-
-                <div>
-                  <label class="mb-1.5 block text-[9px] text-gray-500"> Second Line </label>
-
-                  <input id="cgSub" type="text" maxlength="100" value="New policy will take effect next month" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[9px] outline-none focus:border-black" />
-                </div>
-
-                <button onclick="saveCG()" class="w-full rounded-lg border border-[#dddddd] py-2.5 text-[9px] font-medium hover:bg-gray-50">Save CG</button>
-              </div>
-            </section>
-
-            <!-- QUICK CG -->
-
-            <section class="border-b border-[#eeeeee]">
-              <div class="border-b border-[#eeeeee] px-5 py-4">
-                <div class="text-[12px] font-semibold">Quick Graphics</div>
-              </div>
-
-              <div class="grid grid-cols-2 gap-2 p-5">
-                <button onclick="quickCG('LIVE')" class="rounded-lg border border-[#dddddd] py-3 text-[9px] hover:bg-gray-50">LIVE</button>
-
-                <button onclick="quickCG('BREAKING')" class="rounded-lg border border-red-200 py-3 text-[9px] text-red-500 hover:bg-red-50">BREAKING</button>
-
-                <button onclick="quickCG('COMING UP')" class="rounded-lg border border-[#dddddd] py-3 text-[9px] hover:bg-gray-50">COMING UP</button>
-
-                <button onclick="quickCG('HEADLINES')" class="rounded-lg border border-[#dddddd] py-3 text-[9px] hover:bg-gray-50">HEADLINES</button>
-              </div>
-            </section>
-
-            <!-- BREAKING CG -->
-
-            <section>
-              <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
-                <div>
-                  <div class="text-[12px] font-semibold">Breaking CG</div>
-
-                  <div class="mt-0.5 text-[8px] text-gray-400">Send urgent lower third</div>
-                </div>
-
-                <span class="h-2 w-2 rounded-full bg-red-500"></span>
-              </div>
-
-              <div class="space-y-3 p-5">
-                <input id="breakingCGTitle" type="text" placeholder="Breaking headline" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[9px] outline-none" />
-
-                <input id="breakingCGSub" type="text" placeholder="Second line" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[9px] outline-none" />
-
-                <button onclick="takeBreakingCG()" class="w-full rounded-lg bg-red-500 py-2.5 text-[9px] font-medium text-white hover:bg-red-600">Take Breaking CG</button>
-              </div>
-            </section>
-          </div>
-        </aside>
-      </div>
+        </div>
+      </main>
     </div>
+    <%- include('partials/alert') -%>
+
+<script src="/js/controller.js"></script>
   </body>
 </html>

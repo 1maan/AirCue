@@ -582,6 +582,9 @@ runOrderCounter();
 let runOrderList = document.getElementById("runOrderList");
 
 function addStoryToRunDown(id, name, date){
+if(document.getElementById("NoRundownItems")){
+    document.getElementById("NoRundownItems").remove();
+}
 runOrderList.insertAdjacentHTML('beforeend', `
 <div data-itemid="${id}" draggable="true" class="runorder-item runorder-story border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-2 sm:grid-cols-[45px_35px_1fr_70px_60px] grid-cols-[45px_35px_1fr_60px] md:gap-0">
   <div class="flex items-center gap-2 pointer-events-none">
@@ -610,6 +613,9 @@ window.addEventListener('click', (e)=>{
 function addBreak(){
 let breakName = document.getElementById("breakName")
 if(breakName.value == '') return;
+if(document.getElementById("NoRundownItems")){
+    document.getElementById("NoRundownItems").remove();
+}
 runOrderList.insertAdjacentHTML('beforeend', `
 <div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-red-500  px-4 py-2">
   <div class="flex items-center gap-3 pointer-events-none">
@@ -631,6 +637,9 @@ closeBreakModal();
 
 function addBreaker(value){
 if(value === '') return;
+if(document.getElementById("NoRundownItems")){
+    document.getElementById("NoRundownItems").remove();
+}
 runOrderList.insertAdjacentHTML('beforeend', `
 <div draggable="true" class="runorder-item runorder-break border-t border-[#eeeeee] bg-red-500  px-4 py-2">
   <div class="flex items-center gap-3 pointer-events-none">
