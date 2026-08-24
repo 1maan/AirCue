@@ -44,3 +44,37 @@ toggleAction.addEventListener("mousedown", (event) => {
         console.log("Right click");
     }
 });
+
+const fontSize = document.getElementById("fontSize");
+const fontSizeValue = document.getElementById("fontSizeValue");
+const lineHeight = document.getElementById("lineHeight");
+const lineHeightValue = document.getElementById("lineHeightValue");
+const margin = document.getElementById("margin");
+const marginValue = document.getElementById("marginValue");
+const mirror = document.getElementById("mirror");
+
+
+fontSize.addEventListener('input', () =>{
+    fontSizeValue.textContent = `${fontSize.value}px`
+})
+
+
+lineHeight.addEventListener('input', () =>{
+    lineHeightValue.textContent = `${lineHeight.value}px`
+})
+
+
+margin.addEventListener('input', () =>{
+    marginValue.textContent = `${margin.value}%`
+})
+
+
+
+function setAlign(align){
+    console.log(align)
+}
+
+mirror.addEventListener('change', ()=>{
+    console.log(mirror.checked)
+})
+

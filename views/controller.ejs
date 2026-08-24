@@ -34,6 +34,10 @@
       .border-top-red{
         border-top: 1px rgb(255, 42, 124) solid !important;
       }
+      input[type="range"] {
+          accent-color: black;
+          cursor: pointer;
+      }
     </style>
   </head>
   <script src="/socket.io/socket.io.js"></script>
@@ -189,9 +193,9 @@ function renderTags(text) {
                 <div>
                   <div class="mb-2 flex justify-between">
                     <span class="text-[9px] text-gray-500"> Text Size </span>
-                    <span id="fontSizeValue" class="mono text-[9px]"> 38px </span>
+                    <span id="fontSizeValue" class="mono text-[9px]"> 20px </span>
                   </div>
-                  <input id="fontSize" type="range" min="20" max="80" value="38" class="w-full" />
+                  <input id="fontSize" type="range" min="20" max="500" value="20" class="w-full" />
                 </div>
                 <!-- LINE HEIGHT -->
                 <div>
@@ -213,9 +217,9 @@ function renderTags(text) {
                 <div>
                   <div class="mb-2 text-[9px] text-gray-500">Alignment</div>
                   <div class="grid grid-cols-3 gap-1">
-                    <button onclick="setAlign('left', this)" class="align-btn rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Left</button>
-                    <button onclick="setAlign('center', this)" class="align-btn rounded-lg border border-black bg-black py-2 text-[9px] text-white">Center</button>
-                    <button onclick="setAlign('right', this)" class="align-btn rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Right</button>
+                    <button onclick="setAlign('left', this)" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Left</button>
+                    <button onclick="setAlign('center', this)" class="align-btn cursor-pointer rounded-lg border border-black bg-black py-2 text-[9px] text-white">Center</button>
+                    <button onclick="setAlign('right', this)" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Right</button>
                   </div>
                 </div>
                 <!-- MIRROR -->
