@@ -40,6 +40,7 @@
         <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Write and manage news stories</p>
       </div>
       <div class="flex items-center gap-2">
+        <button id="rtvNewsBtn" class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">RTV News</button>
         <button onclick="resertStoryEditor('true')" class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">New Story</button>
       </div>
     </div>
@@ -184,26 +185,125 @@
               </div>
             </div>
           </div>
-
-          <!-- STORY INFO -->
-          <!-- <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div class="rounded-lg bg-gray-50 p-3">
-              <div class="text-[9px] text-gray-400">CREATED BY</div>
-              <div class="mt-1 text-[11px] font-medium">Hussain</div>
-            </div>
-            <div class="rounded-lg bg-gray-50 p-3">
-              <div class="text-[9px] text-gray-400">CREATED</div>
-              <div class="mt-1 text-[11px] font-medium">09:42</div>
-            </div>
-            <div class="rounded-lg bg-gray-50 p-3">
-              <div class="mt-1 text-[11px] font-medium text-green-600">Ready</div>
-            </div>
-          </div> -->
         </div>
       </section>
     </div>
   </main>
 </div>
+
+<div id="rtvNewsContainer" class="fixed hidden inset-0 z-50 flex items-center justify-center bg-black/30 p-5">
+  <div class="w-full max-w-4xl overflow-hidden rounded-xl bg-white shadow-xl">
+    <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Raajje.mv News</div>
+        <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Select Lastest news from Raajje.mv</div>
+      </div>
+      <div onclick="rtvNewsContainerClose()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
+        <p class="cursor-pointer">×</p>
+      </div>
+    </div>
+
+    <div id="rtvSto" class="grid grid-cols-4 p-2 gap-x-2 gap-y-4 overflow-auto">
+
+    </div>
+  <div class="w-full flex justify-center items-center">
+    <div class="grid grid-cols-2 p-4 w-full max-w-xl gap-1">
+      <button onclick="pageChange('back')" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500 hover:bg-black hover:text-white">Back</button>
+      <button onclick="pageChange('next')" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500 hover:bg-black hover:text-white">Next</button>
+    </div>
+  </div>
+
+
+  </div>
+</div>
+
+
+<script>
+  let rtvSto = document.getElementById("rtvSto")
+  let rtvNewsBtn = document.getElementById("rtvNewsBtn")
+  let rtvNewsContainer = document.getElementById("rtvNewsContainer")
+
+  rtvNewsBtn.addEventListener("click",()=>{
+    rtvNewsContainer.classList.remove('hidden')
+  })
+  function rtvNewsContainerClose(){
+    rtvNewsContainer.classList.add('hidden')
+  }
+
+
+  fetch('https://api.raajje.mv/articles/latest')
+  .then(response => response.json())
+  .then(data=>{
+    console.log(data.data)
+    data.data.forEach(element => {
+        rtvSto.insertAdjacentHTML('beforeend', `
+      <div onclick="addNews('${element.id}')" class="cursor-pointer">
+      <div class="aspect-video w-full bg-gray-300">
+        <img src="${element.main_photo.thumbnail}" alt="" class="aspect-video object-cover">
+      </div>
+        <p class="text-right Outfit-Faseyha-Regular text-[10px] sm:text-sm line-clamp-3">${element.heading}</p>
+      </div>
+      `)
+    });
+  })
+let pageCount = 1
+function pageChange(type){
+  if(type == 'back'){
+    pageCount--
+    if(pageCount < 0){
+      pageCount = 1
+    }
+  }
+  if(type == 'next'){
+    pageCount++
+  }
+  
+  console.log(pageCount)
+  fetch(`https://api.raajje.mv/articles/latest?page=${pageCount}`)
+  .then(response => response.json())
+  .then(data=>{
+    rtvSto.innerHTML = ""
+    data.data.forEach(element => {
+        rtvSto.insertAdjacentHTML('beforeend', `
+      <div class="cursor-pointer">
+      <div class="aspect-video w-full bg-gray-300">
+        <img src="${element.main_photo.thumbnail}" alt="" class="aspect-video object-cover">
+      </div>
+        <p class="text-right Outfit-Faseyha-Regular text-[10px] sm:text-sm line-clamp-3">${element.heading}</p>
+      </div>
+      `)
+    });
+  })
+}
+
+
+
+function addNews(id){
+  fetch(`https://api.raajje.mv/articles/article/${id}`)
+  .then(response => response.json())
+  .then(data=>{
+    rtvNewsContainerClose();
+    cg.value = data.heading
+    if(cgToggle.checked){
+      cg_text_preview.textContent = transliterateDhivehiToEnglish(cg.value);
+    }else{
+      cg_text_preview.textContent = cg.value;
+    }
+    data.content.blocks.forEach(dt =>{
+      if(dt.data.text){
+      if (dt.data.text.includes('&nbsp;')) {
+        storyText.value += dt.data.text.replaceAll('&nbsp;', ' ');
+      } else {
+        storyText.value += dt.data.text;
+      }
+      storyText.value += '\n\n'
+      }
+    })  
+  })
+}
+
+</script>
+
 <%- include('partials/alert') -%>
 <script src="/js/stories.js"></script>
 </body>
