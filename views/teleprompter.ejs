@@ -14,16 +14,103 @@
         color: white;
     }
 </style>
+<script>
+    (() => {
+        const goFullscreen = () => {
+            if (document.fullscreenElement) return;
+            const page = document.documentElement;
+            const requestFullscreen = page.requestFullscreen || page.webkitRequestFullscreen;
+            if (requestFullscreen) {
+                requestFullscreen.call(page).catch(() => {});
+            }
+        };
+        window.addEventListener('load', goFullscreen);
+        document.addEventListener('click', goFullscreen, { once: true });
+        document.addEventListener('keydown', goFullscreen, { once: true });
+    })();
+</script>
+<script src="/socket.io/socket.io.js"></script>
 <body>
-<div id="prompterPreview" style="font-size: 180px; line-height: 300px;" class="scrollbar select-none cursor-none h-full w-full overflow-y-auto px-[10%] py-[15%] text-center leading-[1.45] font-medium text-white Outfit-Faseyha-Regular">
-ރާއްޖޭގައި އުފައްދާ ކަރަންޓުގެ 94 އިންސައްތައަކީ އިމްޕޯޓްކުރާ ތެލަށް ބަރޯސާވެގެން އުފައްދާ ހަކަތަ ކަމަށްވާއިރު، ބޯފެން އުފެއްދުމަށް ހިންގާ ޑީސެލިނޭޝަން ޕްލާންޓްތައް ހިންގުމަށް ވެސް ތެޔޮ ބޭނުންވެ އެވެ. ނަމަވެސް ދުނިޔޭގެ ބާޒާރުގައި ތެލުގެ އަގު އުފުލުމާއި ފަތުރުވެރިކަމުން ލިބޭ އާމްދަނީ ދަށްވުމުގެ ސަބަބުން، ތެޔޮ ގަތުމަށް ދައުލަތުގެ ބަޖެޓަށް ވަނީ ބޮޑެތި ގޮންޖެހުންތަކެއް ކުރިމަތިވެފަ އެވެ. އޭޑީބީގެ މި އެހީގެ ސަބަބުން ކަރަންޓާއި ފެނުގެ އިތުރުން، ކާބޯތަކެއްޗާއި ސިއްހީ ޚިދުމަތްތަކަށް ބޭނުންވާ ތަކެތި އުފުލުމާއި، ރަށްތަކުގެ މެދުގައި ކުރާ ދަތުރުފަތުރާއި ކުނި މެނޭޖްކުރުމުގެ މަސައްކަތްތަކަށް ވެސް އެހީތެރިކަން ލިބިގެންދާނެ އެވެ.
+<div id="prompterPreview" dir="rtl" class="scrollbar select-none cursor-none h-full w-full overflow-y-auto leading-[1.45] text-white Outfit-Faseyha-Regular">
 
-އޭޑީބީން ދޭ 50 މިލިއަން ޑޮލަރުގެ މި އެހީއަކީ ވޯލްޑް ބޭންކުން ރާއްޖެއަށް ދިނުމަށް ނިންމާފައިވާ 40 މިލިއަން ޑޮލަރުގެ އެހީގެ ޕެކޭޖަށް އިތުރުކުރެވޭ އެހީއެކެވެ. 
+<% if(runDown.length === 0){ %>
 
-އޭޑީބީން ބުނެފައިވަނީ އެ ބޭންކަކީ އޭޝިއާ އަދި ޕެސިފިކް ސަރަހައްދުގެ ގައުމުތަކުގެ ތަރައްގީއަށާއި، ދިމާވާ އެކި ގޮންޖެހުންތަކުން އަރައިގަތުމަށް އެހީތެރިކަން ފޯރުކޮށްދޭ މުހިންމު މާލީ އިދާރާއެއް ކަމަށެވެ.
+<% } %>
 
-1966 ވަނަ އަހަރު އުފެއްދި އޭޑީބީގައި މިހާރު 69 މެންބަރު ގައުމު ހިމެނޭއިރު، އޭގެ ތެރެއިން 50 ގައުމަކީ މި ސަރަހައްދުގެ ގައުމުތަކެވެ. އެ ބޭންކުގެ މައިގަނޑު އަމާޒަކީ މެންބަރު ގައުމުތަކުގެ އުމްރާނީ ތަރައްގީއަށް އެހީތެރިވުމާއި، ރައްޔިތުންގެ ދިރިއުޅުމުގެ ފެންވަރު މަތިކޮށް، ރައްކާތެރި މުސްތަގުބަލެއް ބިނާކުރުމަށް މަސައްކަތް ކުރުމެވެ. މިގޮތުން ރާއްޖެއަށް މި ދަނޑިވަޅުގައި ދޭ އެހީއަކީ ގައުމުގެ އަސާސީ ޚިދުމަތްތައް ހުއްޓުމެއް ނެތް ގޮތެއްގައި ކުރިއަށް ގެންދިއުމަށް ލިބޭ ވަރަށް ބޮޑު ބާރެކެވެ.
+<% if (runDownInfo) { %>
+  <div class="py-16">
+        <div class="flex flex-col w-full justify-center items-center">
+            <span class="rounded-md text-[#7460ee] Outfit-Bold px-2 py-1 text-5xl h-fit uppercase"> <%= runDownInfo.name %> </span>
+        </div>
+  </div>
+
+<% } %>
+
+<% runDown.forEach(item => { %>
+
+  <% if (item.item_type === 'story') { %>
+
+    <div class="flex flex-col w-full justify-center items-center">
+        <span class="rounded-md text-[#e9ab2e] Outfit-Regular px-2 text-center py-1 text-[36px] h-fit"> <%= item.slug %> </span>
+    </div>
+<%
+const formattedStory = (item.story_text || '')
+  .replace(/<br\s*\/?>\r?\n?/gi, '\n')
+  .replace(/\r\n?/g, '\n')
+  .replace(/\n{2,}/g, '\n')
+  .replace(/\n/g, '<br>')
+  .replace(/__([^_]+)__/g, (_, text) =>
+    `<span class="flex w-full items-center justify-center rounded-xl border border-[#e9ab2e] text-[#e9ab2e] uppercase">
+${text.trim()}
+    </span>`
+  );
+%>
+
+<div class="Outfit-Faseyha-Regular w-full bg-transparent outline-none"><%- formattedStory %></div>
+
+  <% } else if (item.item_type === 'break') { %>
+    <div class="my-10 flex text-5xl min-h-24 w-full items-center justify-center rounded-xl bg-red-500 Outfit-Medium">
+      <%= item.break_name %>
+    </div>
+  <% } %>
+
+<% }) %>
 
 </div>
+<script>
+const socket = io();
+
+window.addEventListener('pagehide', () => {
+    socket.disconnect();
+});
+
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted && !socket.connected) {
+        socket.connect();
+    }
+});
+
+socket.on('tele-settings-update', (data)=>{
+        prompterPreview.style.fontSize = `${data[0]}px`;
+        prompterPreview.style.lineHeight = `${data[1]}px`;
+        prompterPreview.style.paddingLeft = `${data[2]}%`;
+        prompterPreview.style.paddingRight = `${data[2]}%`;
+        localStorage.setItem('tele-fontSize', data[0])
+        localStorage.setItem('tele-lineHeight', data[1])
+        localStorage.setItem('tele-margin', data[2])
+})
+
+    let prompterPreview = document.getElementById("prompterPreview")
+    if(localStorage.getItem('tele-fontSize')){
+        prompterPreview.style.fontSize = `${localStorage.getItem('tele-fontSize')}px`;
+    }
+    if(localStorage.getItem('tele-lineHeight')){
+        prompterPreview.style.lineHeight = `${localStorage.getItem('tele-lineHeight')}px`;
+    }
+    if(localStorage.getItem('tele-margin')){
+        prompterPreview.style.paddingLeft = `${localStorage.getItem('tele-margin')}%`;
+        prompterPreview.style.paddingRight = `${localStorage.getItem('tele-margin')}%`;
+    }
+</script>
 </body>
 </html>

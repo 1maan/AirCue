@@ -90,15 +90,35 @@ if (savedLanguage) {
     cgToggle.checked ? cg_text_preview.classList.add('AWaheed') : cg_text_preview.classList.add('Outfit-Medium');
     storyText.dir = languageToggle.checked ? 'rtl' : 'ltr';
 }
-function toggleFilterMenu() {
-    document.getElementById('filterMenu').classList.toggle('hidden');
+
+
+let toggleFilterOpen = false;
+let filterMenu = document.getElementById('filterMenu')
+
+function toggleFilterMenuOpen(){
+    filterMenu.classList.remove("top-7", "scale-90", "-right-2", "opacity-0", "pointer-events-none");
+    filterMenu.classList.add("top-10", "scale-100", "right-0", "opacity-100", "pointer-events-auto");
 }
+function toggleFilterMenuClose(){
+    filterMenu.classList.remove("top-10", "scale-100", "right-0", "opacity-100", "pointer-events-auto");
+    filterMenu.classList.add("top-7", "scale-90", "-right-2", "opacity-0", "pointer-events-none");
+}
+
+function toggleFilterMenu() {
+    if(!toggleFilterOpen){
+        toggleFilterMenuOpen();
+        toggleFilterOpen = !toggleFilterOpen;
+    }else{
+        toggleFilterMenuClose();
+        toggleFilterOpen = !toggleFilterOpen;
+    }
+}
+
 function selectLanguageFilter(language, label) {
     selectedLanguage = language;
     localStorage.setItem('language', language);
     localStorage.setItem('label_language', label);
     document.getElementById('filterText').textContent = label;
-    document.getElementById('filterMenu').classList.add('hidden');
     language === 'dv' ? cgToggle.checked = true : cgToggle.checked = false
     language === 'dv' ? languageToggle.checked = true : languageToggle.checked = false
     cg.dir = cgToggle.checked ? 'rtl' : 'ltr';
@@ -106,6 +126,7 @@ function selectLanguageFilter(language, label) {
     cgToggle.checked ? cg_text_preview.classList.remove('Outfit-Medium') : cg_text_preview.classList.remove('AWaheed');
     storyText.dir = languageToggle.checked ? 'rtl' : 'ltr';
     updateSelectedDate();
+    toggleFilterMenu();
 }
 
 languageToggle.addEventListener("change", ()=>{

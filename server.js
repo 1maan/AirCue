@@ -16,7 +16,6 @@ io.on('connection', (socket) => {
     })
     socket.on('updateRunOrders', (data)=>{
         socket.broadcast.emit('updateSentRunOrders', data)
-        
     })
     socket.on('activeRunOrder', (data)=>{
         socket.broadcast.emit('rundownUpdated', data)
@@ -24,6 +23,9 @@ io.on('connection', (socket) => {
     socket.on('updateRunDown', (data)=>{
         socket.broadcast.emit('updateRunDownUser', data)
     })    
+    socket.on('tele-settings', (data)=>{
+        socket.broadcast.emit('tele-settings-update', data)
+    })
 });
 
 

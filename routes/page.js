@@ -10,34 +10,43 @@ router.get('/', (req, res)=>{
 router.get('/login', blockUser , (req, res)=>{
     res.render('login')
 })
-router.get('/run-order', (req, res)=>{
-    res.render('run-order')
-})
-router.get('/run-order-editor', (req, res)=>{
-    res.render('run-order-editor')
-})
+
 router.get('/teleprompter', (req, res)=>{
-    res.render('teleprompter')
+        const sql = `
+        SELECT * FROM run_orders WHERE status = 'live' LIMIT 1;
+
+        SELECT 
+            roi.*,
+            s.slug,
+            s.cg_text,
+            s.story_text,
+            s.created_at AS ca
+        FROM run_orders ro
+        INNER JOIN run_order_items roi
+            ON roi.run_order_id = ro.id
+        LEFT JOIN stories s
+            ON roi.story_id = s.id
+        WHERE ro.status = 'live'
+        ORDER BY roi.position ASC;
+    `;
+    db.query(sql, (err, result) => {
+
+        if (err) {
+            console.log(err);
+            return res.redirect('/500');
+        }
+        console.log(result[0])
+        res.render('teleprompter', {
+            runDownInfo: result[0][0],
+            runDown: result[1]
+        });
+
+    });
 })
-router.get('/Graphics', (req, res)=>{
-    res.render('Graphics')
-})
-router.get('/admin', (req, res)=>{
-    res.render('admin')
-})
-router.get('/Connections', (req, res)=>{
-    res.render('Connections')
-})
-router.get('/screen', (req, res)=>{
-    res.render('screen')
-})
+
 router.get('/dashboard', authPage, (req, res)=>{
     res.render('dashboard', { fullname: req.session.fullname, role: req.session.role })
 })
-
-
-
-
 
 
 function formatDatabaseDate(date) {
@@ -137,6 +146,7 @@ router.get('/controller/', authPage, (req, res) => {
         SELECT 
             roi.*,
             s.slug,
+            s.cg_text,
             s.story_text,
             s.created_at AS ca
         FROM run_orders ro
@@ -174,7 +184,6 @@ router.get('/controller/', authPage, (req, res) => {
 router.get('/controller2/', authPage, (req, res) => {
     res.render('controller2', { fullname: req.session.fullname, role: req.session.role });
 });
-
 router.get('/profile', authPage, (req, res)=>{
     res.render('profile', { fullname: req.session.fullname, role: req.session.role })
 })
@@ -187,9 +196,6 @@ router.get('/breaking', (req, res) => {
 router.get('/activity', (req, res) => {
   res.render('activity');
 });
-router.get('/add', authPage, (req, res)=>{
-    res.render('add', { fullname: req.session.fullname, role: req.session.role })
-})
 router.get('/404', authPage, (req, res)=>{
     res.render('error_pages/404')
 })

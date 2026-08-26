@@ -75,3 +75,17 @@ CREATE TABLE run_order_items (
         ON DELETE SET NULL,
     INDEX idx_rundown_position (run_order_id, position)
 );
+
+
+CREATE TABLE teleprompter_settings (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    text_size INT NULL,
+    line_height INT NULL,
+    side_margin ENUM('left', 'center', 'right') NOT NULL DEFAULT 'center',
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_by INT UNSIGNED NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
+);

@@ -52,7 +52,7 @@
             <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Final on-air story order</p>
           </div>
           <div class="flex items-center gap-2">
-            <a href="/teleprompter ">
+            <a href="/teleprompter" target="_blank">
               <button class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">Open <span class="hidden sm:block">Teleprompter</span></button>
             </a>
           </div>
@@ -70,8 +70,9 @@
               </div>
 
               <div class="flex items-center gap-2">
-                <span id="toggle_action" class="text-[9px] active:scale-90 hover:bg-black/10 rounded-sm p-1 text-black cursor-pointer">
-                  <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.2073 2.29291L15.793 3.70712L18.0859 6.00002H13.0002V8.00001H18.0859L15.793 10.2929L17.2073 11.7071L21.9144 7.00001L17.2073 2.29291ZM9.50015 7.00001C9.50015 5.6193 8.38086 4.50001 7.00015 4.50001C5.61944 4.50001 4.50015 5.6193 4.50015 7.00001C4.50015 8.38073 5.61944 9.50001 7.00015 9.50001C8.38086 9.50001 9.50015 8.38073 9.50015 7.00001ZM11.5002 7.00001C11.5002 9.4853 9.48543 11.5 7.00015 11.5C4.51487 11.5 2.50015 9.4853 2.50015 7.00001C2.50015 4.51473 4.51487 2.50001 7.00015 2.50001C9.48543 2.50001 11.5002 4.51473 11.5002 7.00001ZM5.91436 18L8.20726 20.2929L6.79304 21.7071L2.08594 17L6.79304 12.2929L8.20726 13.7071L5.91436 16H11.0002V18H5.91436ZM15.0002 19H19.0002V15H15.0002V19ZM13.0002 14C13.0002 13.4477 13.4479 13 14.0002 13H20.0002C20.5524 13 21.0002 13.4477 21.0002 14V20C21.0002 20.5523 20.5524 21 20.0002 21H14.0002C13.4479 21 13.0002 20.5523 13.0002 20V14Z"></path></svg>
+                <span id="toggle_action" class="text-[9px] active:scale-90 text-black cursor-pointer">
+                  <svg width="24" class="toggle_action_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 7C5.23858 7 3 9.23858 3 12C3 14.7614 5.23858 17 8 17H16C18.7614 17 21 14.7614 21 12C21 9.23858 18.7614 7 16 7H8ZM8 5H16C19.866 5 23 8.13401 23 12C23 15.866 19.866 19 16 19H8C4.13401 19 1 15.866 1 12C1 8.13401 4.13401 5 8 5ZM8 15C6.34315 15 5 13.6569 5 12C5 10.3431 6.34315 9 8 9C9.65685 9 11 10.3431 11 12C11 13.6569 9.65685 15 8 15Z"></path></svg>
+                  <svg width="24" class="toggle_action_2 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5H16C19.866 5 23 8.13401 23 12C23 15.866 19.866 19 16 19H8C4.13401 19 1 15.866 1 12C1 8.13401 4.13401 5 8 5ZM16 15C17.6569 15 19 13.6569 19 12C19 10.3431 17.6569 9 16 9C14.3431 9 13 10.3431 13 12C13 13.6569 14.3431 15 16 15Z"></path></svg>
                 </span>
               </div>
             </div>
@@ -143,11 +144,11 @@ function renderTags(text) {
 <% if(item.item_type == 'story'){ %>
 <div data-itemid="<%= item.story_id %>" class="runorder-item hover:bg-gray-100 runorder-story border-t grid cursor-pointer border-b border-[#eeeeee] px-4 py-2 sm:grid-cols-[45px_1fr_auto_40px] grid-cols-[45px_1fr_auto_40px] md:gap-0">
     <p class="text-[10px] flex items-center text-gray-400 runorder-counter">00</p>
-    <div class="min-w-0 flex-1"><p class="Outfit-Faseyha-Medium truncate text-[11px]"><%= item.slug %></p></div>
+    <div class="min-w-0 flex-1"><p class="Outfit-Faseyha-Medium truncate text-[11px] teleStoryText"><%= item.cg_text %></p></div>
     <div class="flex justify-center items-center gap-0.5">
       <%- renderTags(item.story_text) %>
     </div>
-    <div class="flex items-center gap-1 justify-end ">
+    <div class="flex items-center gap-1 justify-end" data-cgText="<%= item.cg_text %>" data-slug="<%= item.slug %>">
       <div onclick="jumpToStory('<%= item.id %>')" class="hidden action_jump hover:bg-red-200 p-0.5 rounded-full w-fit cursor-pointer transition-all duration-150 hover:scale-110">
         <svg width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ee4444"><path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path></svg>
       </div>
@@ -180,9 +181,25 @@ function renderTags(text) {
               <div class="border-b border-[#eeeeee] px-4 py-4 flex items-center justify-between">
                 <div class="Outfit-Medium text-[12px]">Text Settings</div>
                 <div class="flex items-center gap-2">
-                  <span id="update_tele_settings" class="text-[9px] hover:bg-black/10 rounded-sm active:scale-90 p-1 text-black cursor-pointer">
-                    <svg width="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7 19V13H17V19H19V7.82843L16.1716 5H5V19H7ZM4 3H17L21 7V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM9 15V19H15V15H9Z"></path></svg>
-                  </span>
+
+
+          <div class="relative flex justify-end">
+            <button id="filterBtn" onclick="toggleFilterMenu()" class="cursor-pointer flex items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">
+              <span id="filterText">Select</span>
+              <svg width="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 10L12 15L17 10H7Z"></path>
+              </svg>
+            </button>
+            <div id="filterMenu" class="pointer-events-none absolute top-7 -right-2 z-30 w-40 scale-90 rounded-lg border border-[#e5e5e5] bg-white p-1.5 opacity-0 shadow-lg transition-all duration-150">
+              
+              <div id="teleSaved" class="flex flex-col max-h-36 overflow-auto scrollbar mb-1 border-b border-[#eeeeee] ">
+              <button onclick="controllerSettings('default')" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Default</button>
+              </div>
+              <button onclick="controllerSettingsSave()" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Save</button>
+              <button onclick="controllerSettingsSaveAs()" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Save as</button>
+            </div>
+          </div>
+
                 </div>
               </div>
 
@@ -193,7 +210,7 @@ function renderTags(text) {
                 <div>
                   <div class="mb-2 flex justify-between">
                     <span class="text-[9px] text-gray-500"> Text Size </span>
-                    <span id="fontSizeValue" class="mono text-[9px]"> 20px </span>
+                    <span id="fontSizeValue" class="text-[9px]"> 20px </span>
                   </div>
                   <input id="fontSize" type="range" min="20" max="500" value="20" class="w-full" />
                 </div>
@@ -201,15 +218,15 @@ function renderTags(text) {
                 <div>
                   <div class="mb-2 flex justify-between">
                     <span class="text-[9px] text-gray-500"> Line Height </span>
-                    <span id="lineHeightValue" class="mono text-[9px]"> 1.45 </span>
+                    <span id="lineHeightValue" class="text-[9px]"> 1.45 </span>
                   </div>
-                  <input id="lineHeight" type="range" min="1" max="2" step="0.05" value="1.45" class="w-full" />
+                  <input id="lineHeight" type="range" min="100" max="500" step="1" value="1.45" class="w-full" />
                 </div>
                 <!-- MARGIN -->
                 <div>
                   <div class="mb-2 flex justify-between">
                     <span class="text-[9px] text-gray-500"> Side Margin </span>
-                    <span id="marginValue" class="mono text-[9px]"> 10% </span>
+                    <span id="marginValue" class="text-[9px]"> 10% </span>
                   </div>
                   <input id="margin" type="range" min="0" max="30" value="10" class="w-full" />
                 </div>
