@@ -50,7 +50,7 @@
 
   <% if (item.item_type === 'story') { %>
 
-    <div class="flex flex-col w-full justify-center items-center">
+    <div id="<%= item.id %>" class="flex flex-col w-full justify-center items-center">
         <span class="rounded-md text-[#e9ab2e] Outfit-Regular px-2 text-center py-1 text-[36px] h-fit"> <%= item.slug %> </span>
     </div>
 <%
@@ -95,6 +95,11 @@ socket.on('tele-settings-update', (data)=>{
         prompterPreview.style.lineHeight = `${data[1]}px`;
         prompterPreview.style.paddingLeft = `${data[2]}%`;
         prompterPreview.style.paddingRight = `${data[2]}%`;
+        if(data[3]){
+            prompterPreview.style.scale = `-1 1`;
+        }else{
+            prompterPreview.style.scale = `1`;
+        }
         localStorage.setItem('tele-fontSize', data[0])
         localStorage.setItem('tele-lineHeight', data[1])
         localStorage.setItem('tele-margin', data[2])
@@ -110,6 +115,12 @@ socket.on('tele-settings-update', (data)=>{
     if(localStorage.getItem('tele-margin')){
         prompterPreview.style.paddingLeft = `${localStorage.getItem('tele-margin')}%`;
         prompterPreview.style.paddingRight = `${localStorage.getItem('tele-margin')}%`;
+    }
+
+    if(localStorage.getItem('tele-mirror') == 'true'){
+        prompterPreview.style.scale = `-1 1`;
+    }else{
+        prompterPreview.style.scale = `1`;
     }
 </script>
 </body>

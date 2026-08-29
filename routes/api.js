@@ -661,7 +661,6 @@ router.post('/controller-settings/save', authPage, (req, res) => {
         mirror,
         is_active = true,
     } = req.body;
-    console.log(text_size, line_height)
     const created_by = req.session?.userID;
 
     if (!created_by) {
@@ -702,6 +701,104 @@ router.post('/controller-settings/save', authPage, (req, res) => {
                 message: 'Settings saved successfully',
                 settingsId: result.insertId
             });
+        });
+    });
+});
+
+
+
+
+
+router.get('/controller-settings', authPage, (req, res) => {
+    const sql = `
+        SELECT
+            id,
+            name,
+            text_size,
+            line_height,
+            side_margin,
+            mirrowed,
+            is_active
+        FROM teleprompter_settings
+        ORDER BY created_at ASC
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Get teleprompter settings error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        return res.status(200).json({
+            success: true,
+            settings: result
+        });
+    });
+});
+
+router.post('/controller-settings/activate', authPage, (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).json({
+            success: false,
+            message: 'Setting id is required'
+        });
+    }
+
+    const sql = `
+        UPDATE teleprompter_settings
+        SET is_active = CASE
+            WHEN id = ? THEN 1
+            ELSE 0
+        END
+        WHERE id = ? OR is_active = 1
+    `;
+
+    db.query(sql, [Number(id), Number(id)], (err, result) => {
+        if (err) {
+            console.error('Activate teleprompter settings error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'Controller setting not found'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Controller setting activated successfully',
+            id: Number(id)
+        });
+    });
+});
+
+router.post('/controller-settings/remove-active', authPage, (req, res) => {
+    const sql = `
+        UPDATE teleprompter_settings
+        SET is_active = 0
+        WHERE is_active = 1
+    `;
+
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Remove active teleprompter settings error:', err);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(200).json({
+                success: true,
+                message: 'No active teleprompter settings found'
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'All active teleprompter settings removed successfully'
         });
     });
 });

@@ -52,7 +52,6 @@ toggleAction.addEventListener("click", (e) => {
 });
 
 toggleAction.addEventListener("mousedown", (event) => {
-    console.log(event.button)
     if (event.button === 0) {
     }
 
@@ -93,7 +92,6 @@ margin.addEventListener('input', () =>{
 
 
 mirror.addEventListener('change', ()=>{
-    console.log(mirror.checked)
 })
 // let alg = 'center'
 // function setAlign(alignment, button) {
@@ -127,7 +125,7 @@ function toggleFilterMenu() {
         toggleFilterOpen = !toggleFilterOpen;
     }
 }
-
+function loadDets(){
 if(localStorage.getItem('tele-fontSize')){
     fontSize.value = localStorage.getItem('tele-fontSize');
     fontSizeValue.textContent = `${fontSize.value}px`
@@ -142,9 +140,11 @@ if(localStorage.getItem('tele-margin')){
 }
 if(localStorage.getItem('tele-mirror') == 'true'){
     mirror.checked = localStorage.getItem('tele-mirror');
+}else{
+    mirror.checked = false;
 }
-
-
+}
+loadDets()
 
 function controllerSettingsSaveAs(){
     const settingName = window.prompt('Enter a name for this controller setting:', 'Default');
@@ -163,7 +163,7 @@ function controllerSettingsSaveAs(){
     localStorage.setItem('tele-lineHeight', settings.line_height);
     localStorage.setItem('tele-margin', settings.side_margin);
     localStorage.setItem('tele-mirror', settings.mirror);
-    let data = [settings.text_size, settings.line_height, settings.side_margin];
+    let data = [settings.text_size, settings.line_height, settings.side_margin, settings.mirror];
     socket.emit('tele-settings', data);
     fetch('/api/controller-settings/save', {
         method: 'POST',
@@ -174,10 +174,143 @@ function controllerSettingsSaveAs(){
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Settings saved:', data);
     })
     .catch(error => {
         console.error('Error saving settings:', error);
     });
 }
+
+function controllerSettings(id, textSize, textHight, sideMargin ,mirrowed) {
+    if (!id) {
+        return;
+    }
+
+    fetch('/api/controller-settings/activate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ id })
+    })
+    .then(async response => {
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Unable to activate controller setting');
+        }
+        let mirrow
+            localStorage.setItem('tele-fontSize', textSize);
+            localStorage.setItem('tele-lineHeight', textHight);
+            localStorage.setItem('tele-margin', sideMargin);
+            if(mirrowed == 1){
+                mirrow = true
+                localStorage.setItem('tele-mirror', true);
+            }else{
+                mirrow = false
+                localStorage.setItem('tele-mirror', false);
+            }
+            let dat = [textSize, textHight, sideMargin, mirrow]
+            socket.emit('tele-settings', dat);
+            loadDets()
+
+        document.querySelectorAll('#teleSaved button[data-id]').forEach(button => {
+            const isActive = Number(button.dataset.id) === Number(id);
+            button.classList.toggle('text-white', isActive);
+            button.classList.toggle('bg-black', isActive);
+            button.classList.toggle('text-gray-600', !isActive);
+            button.classList.toggle('hover:bg-gray-50', !isActive);
+        });
+
+        return data;
+    })
+    .then(data => {
+    })
+    .catch(error => {
+        console.error('Error activating controller setting:', error);
+    });
+}
+
+let teleSaved = document.getElementById("teleSaved")
+
+function fetchControllerSettings() {
+    try {
+        fetch('/api/controller-settings', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => response.json())
+        .then(data=>{
+            if(data.success){
+                data.settings.forEach(element=>{
+                    teleSaved.innerHTML += `
+                    <button data-id="${element.id}" data-line_height="${element.line_height}" data-text_size="${element.text_size}" data-side_margin="${element.side_margin}" onclick="controllerSettings(${element.id}, ${element.text_size}, ${element.line_height}, ${element.side_margin}, ${element.mirrowed})" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] ${element.is_active == 1 ? 'text-white bg-black' : 'text-gray-600 hover:bg-gray-200'}">
+                    ${element.name}
+                    </button>
+                    `
+                })
+            }
+        }).catch(error=>{
+            console.log(error)
+        })
+
+
+    } catch (error) {
+        console.error('Error fetching controller settings:', error);
+    }
+}
+
+fetchControllerSettings();
+
+
+function controllerSettingsSave(){
+    const settings = {
+        text_size: fontSize.value,
+        line_height: lineHeight.value,
+        side_margin: margin.value,
+        mirror: mirror.checked
+    };
+    removeAllActiveTeleprompterSettings();
+    localStorage.setItem('tele-fontSize', settings.text_size);
+    localStorage.setItem('tele-lineHeight', settings.line_height);
+    localStorage.setItem('tele-margin', settings.side_margin);
+    localStorage.setItem('tele-mirror', settings.mirror);
+    let data = [settings.text_size, settings.line_height, settings.side_margin, settings.mirror];
+    socket.emit('tele-settings', data);
+
+
+}
+
+function removeAllActiveTeleprompterSettings() {
+    fetch('/api/controller-settings/remove-active', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(async response => {
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || 'Unable to remove active teleprompter settings');
+        }
+
+        if (teleSaved) {
+            teleSaved.querySelectorAll('button[data-id]').forEach(button => {
+                button.classList.remove('text-white', 'bg-black');
+                button.classList.add('text-gray-600', 'hover:bg-gray-200');
+                button.dataset.active = '0';
+            });
+        }
+    })
+    .then(data => {
+    })
+    .catch(error => {
+        console.error('Error removing active teleprompter settings:', error);
+    });
+}
+
+
+
+
 
