@@ -50,7 +50,7 @@
 
   <% if (item.item_type === 'story') { %>
 
-    <div id="<%= item.id %>" class="flex flex-col w-full justify-center items-center">
+    <div id="<%= item.id %>" class="flex flex-col w-full justify-center items-center mt-32">
         <span class="rounded-md text-[#e9ab2e] Outfit-Regular px-2 text-center py-1 text-[36px] h-fit"> <%= item.slug %> </span>
     </div>
 <%
@@ -60,13 +60,13 @@ const formattedStory = (item.story_text || '')
   .replace(/\n{2,}/g, '\n')
   .replace(/\n/g, '<br>')
   .replace(/__([^_]+)__/g, (_, text) =>
-    `<span class="flex w-full items-center justify-center rounded-xl border border-[#e9ab2e] text-[#e9ab2e] uppercase">
+    `<span class="flex mt-40 w-full items-center justify-center rounded-xl border border-[#e9ab2e] text-[#e9ab2e] uppercase">
 ${text.trim()}
     </span>`
   );
 %>
 
-<div class="Outfit-Faseyha-Regular w-full bg-transparent outline-none border-b border-dashed border-white"><%- formattedStory %></div>
+<div class="Outfit-Faseyha-Regular w-full bg-transparent outline-none border-b border-dashed border-white stoy"><%- formattedStory %></div>
 
   <% } else if (item.item_type === 'break') { %>
     <div class="my-10 flex text-5xl min-h-24 w-full items-center justify-center rounded-xl bg-red-500 Outfit-Medium">
@@ -77,6 +77,15 @@ ${text.trim()}
 <% }) %>
 
 </div>
+<style>
+    .stoy{
+        line-height: var(--line-ht);
+        font-size: var(--line-fz);
+        padding-top: 100px;
+        padding-bottom: 200px;
+        margin-bottom: 200px;
+    }
+</style>
 <script>
 const socket = io();
 
@@ -91,8 +100,10 @@ window.addEventListener('pageshow', (event) => {
 });
 
 socket.on('tele-settings-update', (data)=>{
-        prompterPreview.style.fontSize = `${data[0]}px`;
-        prompterPreview.style.lineHeight = `${data[1]}px`;
+    document.querySelectorAll('.stoy').forEach(element => {
+        element.style.setProperty('--line-fz', `${data[0]}px`);
+        element.style.setProperty('--line-ht', `${data[1]}px`);
+    });
         prompterPreview.style.paddingLeft = `${data[2]}%`;
         prompterPreview.style.paddingRight = `${data[2]}%`;
         if(data[3]){
@@ -107,10 +118,14 @@ socket.on('tele-settings-update', (data)=>{
 
     let prompterPreview = document.getElementById("prompterPreview")
     if(localStorage.getItem('tele-fontSize')){
-        prompterPreview.style.fontSize = `${localStorage.getItem('tele-fontSize')}px`;
+        document.querySelectorAll('.stoy').forEach(element => {
+            element.style.setProperty('--line-fz', `${localStorage.getItem('tele-fontSize')}px`);
+        });
     }
     if(localStorage.getItem('tele-lineHeight')){
-        prompterPreview.style.lineHeight = `${localStorage.getItem('tele-lineHeight')}px`;
+        document.querySelectorAll('.stoy').forEach(element => {
+            element.style.setProperty('--line-ht', `${localStorage.getItem('tele-lineHeight')}px`);
+        });
     }
     if(localStorage.getItem('tele-margin')){
         prompterPreview.style.paddingLeft = `${localStorage.getItem('tele-margin')}%`;

@@ -458,6 +458,12 @@
   .mt-14 {
     margin-top: calc(var(--spacing) * 14);
   }
+  .mt-32 {
+    margin-top: calc(var(--spacing) * 32);
+  }
+  .mt-40 {
+    margin-top: calc(var(--spacing) * 40);
+  }
   .mb-1 {
     margin-bottom: var(--spacing);
   }
@@ -652,6 +658,9 @@
   }
   .min-h-0 {
     min-height: 0px;
+  }
+  .min-h-9 {
+    min-height: calc(var(--spacing) * 9);
   }
   .min-h-24 {
     min-height: calc(var(--spacing) * 24);

@@ -174,6 +174,7 @@ function controllerSettingsSaveAs(){
     })
     .then(response => response.json())
     .then(data => {
+        fetchControllerSettings()
     })
     .catch(error => {
         console.error('Error saving settings:', error);
@@ -218,9 +219,9 @@ function controllerSettings(id, textSize, textHight, sideMargin ,mirrowed) {
             button.classList.toggle('text-white', isActive);
             button.classList.toggle('bg-black', isActive);
             button.classList.toggle('text-gray-600', !isActive);
-            button.classList.toggle('hover:bg-gray-50', !isActive);
+            button.classList.toggle('hover:bg-gray-200', !isActive);
         });
-
+        toggleFilterMenu()
         return data;
     })
     .then(data => {
@@ -242,9 +243,10 @@ function fetchControllerSettings() {
         }).then(response => response.json())
         .then(data=>{
             if(data.success){
+                teleSaved.innerHTML = ""
                 data.settings.forEach(element=>{
                     teleSaved.innerHTML += `
-                    <button data-id="${element.id}" data-line_height="${element.line_height}" data-text_size="${element.text_size}" data-side_margin="${element.side_margin}" onclick="controllerSettings(${element.id}, ${element.text_size}, ${element.line_height}, ${element.side_margin}, ${element.mirrowed})" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] ${element.is_active == 1 ? 'text-white bg-black' : 'text-gray-600 hover:bg-gray-200'}">
+                    <button data-id="${element.id}" data-line_height="${element.line_height}" data-text_size="${element.text_size}" data-side_margin="${element.side_margin}" onclick="controllerSettings(${element.id}, ${element.text_size}, ${element.line_height}, ${element.side_margin}, ${element.mirrowed})" class="w-full min-h-9 cursor-pointer rounded-md text-nowrap overflow-hidden px-3 py-2 text-left text-[10px] ${element.is_active == 1 ? 'text-white bg-black' : 'text-gray-600 hover:bg-gray-200'}">
                     ${element.name}
                     </button>
                     `
@@ -277,7 +279,7 @@ function controllerSettingsSave(){
     localStorage.setItem('tele-mirror', settings.mirror);
     let data = [settings.text_size, settings.line_height, settings.side_margin, settings.mirror];
     socket.emit('tele-settings', data);
-
+    toggleFilterMenu()
 
 }
 
