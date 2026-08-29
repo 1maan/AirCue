@@ -652,5 +652,58 @@ router.get('/run-order/:id', authPage, (req, res) => {
 
 });
 
+router.post('/controller-settings/save', authPage, (req, res) => {
+    const {
+        name,
+        text_size,
+        line_height,
+        side_margin,
+        mirror,
+        is_active = true,
+    } = req.body;
+    console.log(text_size, line_height)
+    const created_by = req.session?.userID;
+
+    if (!created_by) {
+        return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    if (!name || !name.trim()) {
+        return res.status(400).json({ success: false, message: 'Setting name is required' });
+    }
+
+    const insertSql = `
+        INSERT INTO teleprompter_settings (name, text_size, line_height, side_margin, mirrowed, is_active, created_by)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query('UPDATE teleprompter_settings SET is_active = 0 WHERE is_active = 1', (updateErr) => {
+        if (updateErr) {
+            console.error('Deactivate previous teleprompter settings error:', updateErr);
+            return res.status(500).json({ success: false, message: 'Database error' });
+        }
+
+        db.query(insertSql, [
+            name.trim(),
+            text_size ?? null,
+            line_height ?? null,
+            side_margin,
+            mirror,
+            is_active,
+            created_by
+        ], (err, result) => {
+            if (err) {
+                console.error('Save teleprompter settings error:', err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+
+            return res.status(201).json({
+                success: true,
+                message: 'Settings saved successfully',
+                settingsId: result.insertId
+            });
+        });
+    });
+});
 
 module.exports = router;

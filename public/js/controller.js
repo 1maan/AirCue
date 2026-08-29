@@ -95,15 +95,16 @@ margin.addEventListener('input', () =>{
 mirror.addEventListener('change', ()=>{
     console.log(mirror.checked)
 })
-function setAlign(alignment, button) {
-  document.querySelectorAll(".align-btn").forEach((btn) => {
-    btn.classList.remove("border-black", "bg-black", "text-white");
-    btn.classList.add("border-[#dddddd]", "text-gray-500");
-  });
-  button.classList.remove("border-[#dddddd]", "text-gray-500");
-  button.classList.add("border-black", "bg-black", "text-white");
-  console.log("Selected alignment:", alignment);
-}
+// let alg = 'center'
+// function setAlign(alignment, button) {
+//   document.querySelectorAll(".align-btn").forEach((btn) => {
+//     btn.classList.remove("border-black", "bg-black", "text-white");
+//     btn.classList.add("border-[#dddddd]", "text-gray-500");
+//   });
+//   button.classList.remove("border-[#dddddd]", "text-gray-500");
+//   button.classList.add("border-black", "bg-black", "text-white");
+//   alg = alignment
+// }
 
 let toggleFilterOpen = false;
 let filterMenu = document.getElementById('filterMenu')
@@ -127,23 +128,6 @@ function toggleFilterMenu() {
     }
 }
 
-// fetch('/controller-settings/save', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type' : 'application/json'
-//     },
-//     body: JSON.stringify({
-
-//     })
-// }).then(response => response.json())
-// .then(data =>{
-//     console.log(data)
-// }).catch(error =>{
-//     console.log(error)
-// }).finally(()=>{
-
-// })
-
 if(localStorage.getItem('tele-fontSize')){
     fontSize.value = localStorage.getItem('tele-fontSize');
     fontSizeValue.textContent = `${fontSize.value}px`
@@ -156,13 +140,44 @@ if(localStorage.getItem('tele-margin')){
     margin.value = localStorage.getItem('tele-margin');
     marginValue.textContent = `${margin.value}%`
 }
+if(localStorage.getItem('tele-mirror') == 'true'){
+    mirror.checked = localStorage.getItem('tele-mirror');
+}
 
-function controllerSettingsSave(){
+
+
+function controllerSettingsSaveAs(){
+    const settingName = window.prompt('Enter a name for this controller setting:', 'Default');
+    if (settingName === null || settingName.trim() === '') {
+        return;
+    }
     toggleFilterMenu();
-    localStorage.setItem('tele-fontSize',fontSize.value)
-    localStorage.setItem('tele-lineHeight',lineHeight.value)
-    localStorage.setItem('tele-margin',margin.value)
-    let data = [fontSize.value, lineHeight.value, margin.value]
-    socket.emit('tele-settings', data)
+    const settings = {
+        name: settingName.trim(),
+        text_size: fontSize.value,
+        line_height: lineHeight.value,
+        side_margin: margin.value,
+        mirror: mirror.checked
+    };
+    localStorage.setItem('tele-fontSize', settings.text_size);
+    localStorage.setItem('tele-lineHeight', settings.line_height);
+    localStorage.setItem('tele-margin', settings.side_margin);
+    localStorage.setItem('tele-mirror', settings.mirror);
+    let data = [settings.text_size, settings.line_height, settings.side_margin];
+    socket.emit('tele-settings', data);
+    fetch('/api/controller-settings/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(settings)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Settings saved:', data);
+    })
+    .catch(error => {
+        console.error('Error saving settings:', error);
+    });
 }
 

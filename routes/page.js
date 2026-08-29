@@ -5,7 +5,7 @@ const db = require('../config/db');
 const { blockUser , authPage } = require('../config/auth')
 
 router.get('/', (req, res)=>{
-    res.redirect('/dashboard')
+    res.redirect('/stories')
 })
 router.get('/login', blockUser , (req, res)=>{
     res.render('login')
@@ -42,10 +42,6 @@ router.get('/teleprompter', (req, res)=>{
         });
 
     });
-})
-
-router.get('/dashboard', authPage, (req, res)=>{
-    res.render('dashboard', { fullname: req.session.fullname, role: req.session.role })
 })
 
 
@@ -145,6 +141,7 @@ router.get('/controller/', authPage, (req, res) => {
     const sql = `
         SELECT 
             roi.*,
+            ro.id as ro_id,
             s.slug,
             s.cg_text,
             s.story_text,

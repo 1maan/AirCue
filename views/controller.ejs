@@ -52,6 +52,11 @@
             <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Final on-air story order</p>
           </div>
           <div class="flex items-center gap-2">
+            <% if(runDown[0]){ %>
+            <a href="/runorder/<%= runDown[0].ro_id %>" target="_blank">
+              <button class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap gap-0.5  hover:bg-gray-50 flex items-center">Open <span class="hidden sm:block">RunDown</span></button>
+            </a>
+            <% } %>
             <a href="/teleprompter" target="_blank">
               <button class="Outfit-Medium flex cursor-pointer gap-0.5 rounded-lg bg-black px-4 py-2 text-[11px] text-nowrap text-white hover:bg-gray-800">Open <span class="hidden sm:block">Teleprompter</span></button>
             </a>
@@ -231,14 +236,14 @@ function renderTags(text) {
                   <input id="margin" type="range" min="0" max="30" value="10" class="w-full" />
                 </div>
                 <!-- ALIGN -->
-                <div>
+                <!-- <div>
                   <div class="mb-2 text-[9px] text-gray-500">Alignment</div>
                   <div class="grid grid-cols-3 gap-1">
                     <button onclick="setAlign('left', this)" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Left</button>
                     <button onclick="setAlign('center', this)" class="align-btn cursor-pointer rounded-lg border border-black bg-black py-2 text-[9px] text-white">Center</button>
                     <button onclick="setAlign('right', this)" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Right</button>
                   </div>
-                </div>
+                </div> -->
                 <!-- MIRROR -->
                 <div class="flex items-center justify-between">
                   <div>
