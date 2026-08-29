@@ -37,7 +37,6 @@ const totalStories = document.getElementById("totalStories");
 const todaysTotalStories = document.getElementById("todaysTotalStories");
 const searchStories = document.getElementById("searchStories");
 
-
 // COPY TEXT
 function copyType(name) {
   const text = '__'+name.toUpperCase()+'__';
@@ -63,7 +62,14 @@ function copyType(name) {
   }
 }
 
+const pushLiveSlide = document.getElementById("pushLiveSlide")
 
+function closePushLiveSlide(){
+  pushLiveSlide.classList.add("hidden")
+}
+function pushBreaking(){
+  pushLiveSlide.classList.remove("hidden")
+}
 
 
 
@@ -628,6 +634,7 @@ function saveStory(date){
     });
 }
 
+
 let updateStoryController = null;
 function updateStory(selectedStoryId) {
     if(updateStoryController){
@@ -1026,3 +1033,52 @@ const thaanaTransliterator = input => {
     input = input.replace(/(^\s*\w|[\.\!\?]\s*\w)/g, function(c) { return c.toUpperCase(); });
     return input;
 };
+
+let saveBreakingStoryBtn = document.getElementById("saveBreakingStoryBtn")
+let pushBreakingController = null; 
+
+function PushLiveToAir(){
+        saveBreakingStoryBtn.disabled = true;
+        if(pushBreakingController){
+          pushBreakingController.abort();
+        }
+        pushBreakingController = new AbortController();
+
+        let dataInput = JSON.stringify({
+            slug: slug.value,
+            language: selectedLanguage,
+            cg_text: cg.value,
+            story_text: storyText.value,
+            date: date
+        })
+    fetch(`/api/breaking?date=${date}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        signal: pushBreakingController.signal,
+        body: dataInput
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        if (data.success) {
+
+        }
+         
+        if(!data.success) {
+          showAlert('error', data.message);
+          return;
+        }
+    })
+    .catch(error => {
+        if (error.name === 'AbortError') {
+        showAlert('error', 'Request was aborted');
+          return;
+        }
+        showAlert('error', 'An error occurred. Please try again.');
+    })
+    .finally(() => {
+        saveBreakingStoryBtn.disabled = false;
+    });
+}
