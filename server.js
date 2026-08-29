@@ -24,8 +24,10 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('updateRunDownUser', data)
     })    
     socket.on('tele-settings', (data)=>{
-        console.log(data)
         socket.broadcast.emit('tele-settings-update', data)
+    })
+    socket.on('tele-jump', (data)=>{
+        socket.broadcast.emit('tele-jump-to', data)
     })
 });
 

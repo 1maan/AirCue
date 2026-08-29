@@ -179,63 +179,56 @@ function renderTags(text) {
 
           </section>
 
-          <!-- RIGHT PANEL -->
-          <aside class="space-y-4">
-            <!-- QUICK ADD -->
-            <section class="select-none overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
-              <div class="border-b border-[#eeeeee] px-4 py-4 flex items-center justify-between">
-                <div class="Outfit-Medium text-[12px]">Text Settings</div>
-                <div class="flex items-center gap-2">
-
-
-          <div class="relative flex justify-end">
-            <button id="filterBtn" onclick="toggleFilterMenu()" class="cursor-pointer flex items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">
-              <span id="filterText">Select</span>
-              <svg width="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M7 10L12 15L17 10H7Z"></path>
-              </svg>
-            </button>
-            <div id="filterMenu" class="pointer-events-none absolute top-7 -right-2 z-30 w-40 scale-90 rounded-lg border border-[#e5e5e5] bg-white p-1.5 opacity-0 shadow-lg transition-all duration-150">
-              
-              <div id="teleSaved" class="flex flex-col max-h-36 overflow-auto scrollbar pb-1 border-b border-[#eeeeee] ">
-              </div>
-              <button onclick="controllerSettingsSave()" class="w-full mt-1 cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-200">Save</button>
-              <button onclick="controllerSettingsSaveAs()" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-200">Save as</button>
-            </div>
+<!-- RIGHT PANEL -->
+<aside class="space-y-4">
+  <!-- QUICK ADD -->
+  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white select-none">
+    <div class="flex items-center justify-between border-b border-[#eeeeee] px-4 py-4">
+      <div class="Outfit-Medium text-[12px]">Text Settings</div>
+      <div class="flex items-center gap-2">
+        <div class="relative flex justify-end">
+          <button id="filterBtn" onclick="toggleFilterMenu()" class="flex cursor-pointer items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">
+            <span id="filterText">Select</span>
+            <svg width="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 10L12 15L17 10H7Z"></path>
+            </svg>
+          </button>
+          <div id="filterMenu" class="pointer-events-none absolute top-7 -right-2 z-30 w-40 scale-90 rounded-lg border border-[#e5e5e5] bg-white p-1.5 opacity-0 shadow-lg transition-all duration-150">
+            <div id="teleSaved" class="scrollbar flex max-h-36 flex-col overflow-auto border-b border-[#eeeeee] pb-1"></div>
+            <button onclick="controllerSettingsSave()" class="mt-1 w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-200">Save</button>
+            <button onclick="controllerSettingsSaveAs()" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-200">Save as</button>
           </div>
+        </div>
+      </div>
+    </div>
 
-                </div>
-              </div>
-
-
-
-              <div class="space-y-5 p-5">
-                <!-- SIZE -->
-                <div>
-                  <div class="mb-2 flex justify-between">
-                    <span class="text-[9px] text-gray-500"> Text Size </span>
-                    <span id="fontSizeValue" class="text-[9px]"> 20px </span>
-                  </div>
-                  <input id="fontSize" type="range" min="20" max="500" value="20" class="w-full" />
-                </div>
-                <!-- LINE HEIGHT -->
-                <div>
-                  <div class="mb-2 flex justify-between">
-                    <span class="text-[9px] text-gray-500"> Line Height </span>
-                    <span id="lineHeightValue" class="text-[9px]"> 1.45 </span>
-                  </div>
-                  <input id="lineHeight" type="range" min="100" max="500" step="1" value="1.45" class="w-full" />
-                </div>
-                <!-- MARGIN -->
-                <div>
-                  <div class="mb-2 flex justify-between">
-                    <span class="text-[9px] text-gray-500"> Side Margin </span>
-                    <span id="marginValue" class="text-[9px]"> 10% </span>
-                  </div>
-                  <input id="margin" type="range" min="0" max="30" value="10" class="w-full" />
-                </div>
-                <!-- ALIGN -->
-                <!-- <div>
+    <div class="space-y-5 p-5">
+      <!-- SIZE -->
+      <div>
+        <div class="mb-2 flex justify-between">
+          <span class="text-[9px] text-gray-500"> Text Size </span>
+          <span id="fontSizeValue" class="text-[9px]"> 20px </span>
+        </div>
+        <input id="fontSize" type="range" min="20" max="500" value="20" class="w-full" />
+      </div>
+      <!-- LINE HEIGHT -->
+      <div>
+        <div class="mb-2 flex justify-between">
+          <span class="text-[9px] text-gray-500"> Line Height </span>
+          <span id="lineHeightValue" class="text-[9px]"> 1.45 </span>
+        </div>
+        <input id="lineHeight" type="range" min="100" max="500" step="1" value="1.45" class="w-full" />
+      </div>
+      <!-- MARGIN -->
+      <div>
+        <div class="mb-2 flex justify-between">
+          <span class="text-[9px] text-gray-500"> Side Margin </span>
+          <span id="marginValue" class="text-[9px]"> 10% </span>
+        </div>
+        <input id="margin" type="range" min="0" max="30" value="10" class="w-full" />
+      </div>
+      <!-- ALIGN -->
+      <!-- <div>
                   <div class="mb-2 text-[9px] text-gray-500">Alignment</div>
                   <div class="grid grid-cols-3 gap-1">
                     <button onclick="setAlign('left', this)" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Left</button>
@@ -243,26 +236,22 @@ function renderTags(text) {
                     <button onclick="setAlign('right', this)" class="align-btn cursor-pointer rounded-lg border border-[#dddddd] py-2 text-[9px] text-gray-500">Right</button>
                   </div>
                 </div> -->
-                <!-- MIRROR -->
-                <div class="flex items-center justify-between">
-                  <div>
-                    <div class="text-[10px] font-medium">Mirror Output</div>
-                    <div class="mt-0.5 text-[8px] text-gray-400">For teleprompter glass</div>
-                  </div>
-                  <label class="relative inline-flex cursor-pointer items-center">
-                    <input id="mirror" type="checkbox" class="peer sr-only" />
-                    <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
-                    <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white transition peer-checked:translate-x-4"></div>
-                  </label>
-                </div>
-              </div>
+      <!-- MIRROR -->
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-[10px] font-medium">Mirror Output</div>
+          <div class="mt-0.5 text-[8px] text-gray-400">For teleprompter glass</div>
+        </div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input id="mirror" type="checkbox" class="peer sr-only" />
+          <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
+          <div class="absolute top-0.5 left-0.5 h-3 w-3 rounded-full bg-white transition peer-checked:translate-x-4"></div>
+        </label>
+      </div>
+    </div>
+  </section>
+</aside>
 
-              
-
-            </section>
-
-
-          </aside>
 
         </div>
       </main>

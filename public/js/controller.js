@@ -313,6 +313,10 @@ function removeAllActiveTeleprompterSettings() {
 }
 
 
+function jumpToStory(id){
+    socket.emit('tele-jump', id)
+}
+
 
 
 

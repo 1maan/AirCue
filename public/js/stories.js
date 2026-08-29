@@ -844,3 +844,185 @@ socket.on('recStory', (data)=>{
     }
     }
 })
+
+
+
+
+
+
+
+
+  let rtvSto = document.getElementById("rtvSto")
+  let rtvNewsBtn = document.getElementById("rtvNewsBtn")
+  let rtvNewsContainer = document.getElementById("rtvNewsContainer")
+
+  rtvNewsBtn.addEventListener("click",()=>{
+    rtvNewsContainer.classList.remove('hidden')
+  })
+  function rtvNewsContainerClose(){
+    rtvNewsContainer.classList.add('hidden')
+  }
+
+
+  fetch('https://api.raajje.mv/articles/latest')
+  .then(response => response.json())
+  .then(data=>{
+    console.log(data.data)
+    data.data.forEach(element => {
+        rtvSto.insertAdjacentHTML('beforeend', `
+      <div onclick="addNews('${element.id}')" class="cursor-pointer">
+      <div class="aspect-video w-full bg-gray-300">
+        <img src="${element.main_photo.thumbnail}" alt="" class="aspect-video object-cover">
+      </div>
+        <p class="text-right Outfit-Faseyha-Regular text-[10px] sm:text-sm line-clamp-3">${element.heading}</p>
+      </div>
+      `)
+    });
+  })
+let pageCount = 1
+function pageChange(type){
+  if(type == 'back'){
+    pageCount--
+    if(pageCount < 0){
+      pageCount = 1
+    }
+  }
+  if(type == 'next'){
+    pageCount++
+  }
+  
+  console.log(pageCount)
+  fetch(`https://api.raajje.mv/articles/latest?page=${pageCount}`)
+  .then(response => response.json())
+  .then(data=>{
+    rtvSto.innerHTML = ""
+    data.data.forEach(element => {
+        rtvSto.insertAdjacentHTML('beforeend', `
+      <div class="cursor-pointer">
+      <div class="aspect-video w-full bg-gray-300">
+        <img src="${element.main_photo.thumbnail}" alt="" class="aspect-video object-cover">
+      </div>
+        <p class="text-right Outfit-Faseyha-Regular text-[10px] sm:text-sm line-clamp-3">${element.heading}</p>
+      </div>
+      `)
+    });
+  })
+}
+
+
+
+function addNews(id){
+  fetch(`https://api.raajje.mv/articles/article/${id}`)
+  .then(response => response.json())
+  .then(data=>{
+    rtvNewsContainerClose();
+    slug.value = "";
+    cg.value = "";
+    storyText.value = "";
+
+    slug.value = thaanaTransliterator(data.heading)
+    cg.value = data.heading
+    if(cgToggle.checked){
+      cg_text_preview.textContent = transliterateDhivehiToEnglish(cg.value);
+    }else{
+      cg_text_preview.textContent = cg.value;
+    }
+    data.content.blocks.forEach(dt =>{
+      if(dt.data.text){
+      if (dt.data.text.includes('&nbsp;')) {
+        storyText.value += dt.data.text.replaceAll('&nbsp;', ' ');
+      } else {
+        storyText.value += dt.data.text;
+      }
+      storyText.value += '\n\n'
+      }
+    })  
+  })
+}
+
+
+
+// CLOSE MODALS BY CLICKING OUTSIDE
+document.addEventListener("click", function(event) {
+  const rtvNewsContainer = document.getElementById("rtvNewsContainer");
+  if (event.target === rtvNewsContainer) {
+    rtvNewsContainerClose()
+  }
+});
+
+
+const thaanaTransliterator = input => {
+    // fili + punctuations
+    let listOne = {
+        "އަ": "a", "އާ": "aa", "އި": "i", "އީ": "ee", "އު": "u", "އޫ": "oo", "އެ": "e", "އޭ": "ey", "އޮ": "o", "ޢަ": "a", "ޢާ": "aa", "ޢި": "i", "ޢީ": "ee", "ޢު": "u", "ޢޫ": "oo", "ޢެ": "e", "ޢޭ": "ey", "ޢޮ": "o", "އޯ": "oa", "ުއް": "uh", "ިއް": "ih", "ެއް": "eh", "ަށް": "ah", "ައް": "ah", "ށް": "h", "ތް": "i", "ާއް": "aah", "އް": "ih", "އް": "h", "]": "[", "[": "]", "\\": "\\", "\'": "\'", "،": ",", ".": ".", "/": "/", "÷": "", "}": "{", "{": "}", "|": "|", ":": ":", "\"": "\"", ">": "<", "<": ">", "؟": "?", ")": ")", "(": "("
+    };
+    // fili + akuru
+    let listTwo = {
+        "ަ": "a", "ާ": "aa", "ި": "i", "ީ": "ee", "ު": "u", "ޫ": "oo", "ެ": "e", "ޭ": "ey", "ޮ": "o", "ޯ": "oa", "ް": "", "ހ": "h", "ށ": "sh", "ނ": "n", "ރ": "r", "ބ": "b", "ޅ": "lh", "ކ": "k", "އ": "a", "ވ": "v", "މ": "m", "ފ": "f", "ދ": "dh", "ތ": "th", "ލ": "l", "ގ": "g", "ޏ": "y", "ސ": "s", "ޑ": "d", "ޒ": "z", "ޓ": "t", "ޔ": "y", "ޕ": "p", "ޖ": "j", "ޗ": "ch", "ޙ": "h", "ޚ": "kh", "ޛ‎": "z", "ޜ‎": "z", "ޝ‎": "sh", "ޝ": "sh", "ޤ": "q", "ޢ": "a", "ޞ": "s", "ޟ": "dh", "ޡ": "z", "ޠ": "t", "ާާޣ": "gh", "ޘ": "th", "ޛ": "dh", "ާާޜ": "z"
+    };
+    // english words to properly replace
+    // should add more words here
+    let listThree = {
+        "މުހައްމަދު": "Mohamed",
+        "އަހްމަދު": "Ahmed",
+        "އެއާޕޯޓް": "airport",
+        "އިންސްޓިޓިއުޓް": "institute",
+        "އެތުލެޓިކްސ": "athletics",
+        "އެތްލެޓިކްސ": "athletics",
+        "ޖޫނިއާ": "junior",
+        "އެސޯސިއޭޝަނ": "association",
+        "މޯލްޑިވްސ": "Maldives",
+        "މޯލްޑިވުސ": "Maldives",
+        "ޖެނުވަރީ": "january",
+        "ފެބުރުވަރީ": "february",
+        "މާޗް": "march",
+        "މާރިޗ": "march",
+        "އެޕްރީލ": "april",
+        // "": "may",
+        "ޖޫން": "june",
+        "ޖުލައި": "july",
+        "އޮގަސްޓ": "august",
+        "ސެޕްޓެމްބަރ": "september",
+        "އޮކްޓޯބަރ": "october",
+        "ނޮވެމްބަރ": "november",
+        "ޑިސެމްބަރ": "december",
+        "ކަލަންޑަރ": "calendar",
+        "ޗެމްޕިއަންޝިޕ": "championship",
+        "ޓުއަރިޒަމ": "tourism",
+        "ޓޫރިސްޓ": "tourist",
+        "ގުރުއާނ": "quran",
+        "ޤުރުއާނ": "quran",
+        "ރިކޯޑު": "record",
+        "މޭޔަރ": "mayor",
+        "ސިޓީ ކައުންސިލ": "city council",
+        "ކައުންސިލ": "council",
+        "ވޯޓު": "vote",
+        "ޓާމިނަލ": "terminal",
+        "އެވޯޑް": "award",
+        "އިވެންޓ": "event",
+        "ސްޕޮންސަރ": "sponsor",
+        "އދ.": "alif dhaal",
+	};
+    // escape for regexp
+    const escapeRegExp = string => {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    // replace thaana with english
+    const replaceLetters = (input, replacables) => {
+        for (let k in replacables) {
+            if (!replacables.hasOwnProperty(k)) continue;
+            v = replacables[k];
+            input = input.replace(new RegExp(escapeRegExp(k), 'g'), v);
+        }
+        return input;
+    }
+    // replace zero width non joiners
+    input = input.replace(/[\u200B-\u200D\uFEFF]/g, '');
+    // replace letter
+    input = replaceLetters(input, listThree);
+    input = replaceLetters(input, listOne);
+    input = replaceLetters(input, listTwo);
+    // capitalize first letter of sentence
+    input = input.replace(/(^\s*\w|[\.\!\?]\s*\w)/g, function(c) { return c.toUpperCase(); });
+    return input;
+};

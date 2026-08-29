@@ -39,11 +39,6 @@
 <!-- HEADER -->
 
 <div class="mb-7">
-
-  <div class="text-[10px] text-gray-400">
-    SYSTEM / SETTINGS
-  </div>
-
   <h1 class="Outfit-SemiBold mt-1 text-[26px] tracking-[-0.8px]">
     Settings
   </h1>
@@ -60,980 +55,282 @@
 
   <!-- SYSTEM PATHS -->
 
-  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+<section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+  <div class="border-b border-[#eeeeee] px-5 py-4">
+    <div class="Outfit-Medium text-[12px]">Output File Paths</div>
 
+    <div class="mt-0.5 text-[9px] text-gray-400">Set the locations AirCue will use when writing broadcast text files.</div>
+  </div>
 
-    <div class="border-b border-[#eeeeee] px-5 py-4">
+  <div class="space-y-5 p-5">
+    <!-- BREAKING NEWS PATH -->
 
-      <div class="Outfit-Medium text-[12px]">
-        Output File Paths
-      </div>
+    <div>
+      <label for="breakingNewsPath" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> BREAKING NEWS TEXT FILE PATH </label>
 
-      <div class="mt-0.5 text-[9px] text-gray-400">
-        Set the locations AirCue will use when writing broadcast text files.
-      </div>
+      <input id="breakingNewsPath" name="breakingNewsPath" type="text" value="C:\AirCue\output\breaking.txt" placeholder="Example: C:\AirCue\output\breaking.txt" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
 
+      <div class="mt-1.5 text-[9px] text-gray-400">Breaking news text will be written to this file.</div>
     </div>
 
+    <!-- CH PATH -->
 
-    <div class="space-y-5 p-5">
+    <div>
+      <label for="chTextPath" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> CG TEXT FILE PATH </label>
 
+      <input id="chTextPath" name="chTextPath" type="text" value="C:\AirCue\output\ch.txt" placeholder="Example: C:\AirCue\output\ch.txt" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
 
-      <!-- BREAKING NEWS PATH -->
-
-      <div>
-
-        <label
-          for="breakingNewsPath"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          BREAKING NEWS TEXT FILE PATH
-        </label>
-
-        <input
-          id="breakingNewsPath"
-          name="breakingNewsPath"
-          type="text"
-          value="C:\AirCue\output\breaking.txt"
-          placeholder="Example: C:\AirCue\output\breaking.txt"
-          class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-
-        <div class="mt-1.5 text-[9px] text-gray-400">
-          Breaking news text will be written to this file.
-        </div>
-
-      </div>
-
-
-      <!-- CH PATH -->
-
-      <div>
-
-        <label
-          for="chTextPath"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          CH TEXT FILE PATH
-        </label>
-
-        <input
-          id="chTextPath"
-          name="chTextPath"
-          type="text"
-          value="C:\AirCue\output\ch.txt"
-          placeholder="Example: C:\AirCue\output\ch.txt"
-          class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-
-        <div class="mt-1.5 text-[9px] text-gray-400">
-          CH / CG text will be written to this file.
-        </div>
-
-      </div>
-
-
-      <!-- TEST PATHS -->
-
-      <div class="flex justify-end">
-
-        <button
-          type="button"
-          onclick="testPaths()"
-          class="rounded-lg border border-[#dddddd] px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-50 hover:text-black"
-        >
-          Test Paths
-        </button>
-
-      </div>
-
+      <div class="mt-1.5 text-[9px] text-gray-400">CG text will be written to this file.</div>
     </div>
 
-  </section>
+    <!-- TEST PATHS -->
 
-
-
-  <!-- TELEPROMPTER -->
-
-  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
-
-
-    <div class="border-b border-[#eeeeee] px-5 py-4">
-
-      <div class="Outfit-Medium text-[12px]">
-        Teleprompter
-      </div>
-
-      <div class="mt-0.5 text-[9px] text-gray-400">
-        Default teleprompter output settings.
-      </div>
-
+    <div class="flex justify-end">
+      <button type="button" onclick="testPaths()" class="rounded-lg border border-[#dddddd] px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-50 hover:text-black">Test Paths</button>
     </div>
+  </div>
+</section>
 
-
-    <div class="grid gap-5 p-5 sm:grid-cols-2">
-
-
-      <div>
-
-        <label
-          for="prompterIp"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          TELEPROMPTER IP
-        </label>
-
-        <input
-          id="prompterIp"
-          type="text"
-          value="192.168.10.19"
-          placeholder="192.168.10.19"
-          class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label
-          for="prompterPort"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          PORT
-        </label>
-
-        <input
-          id="prompterPort"
-          type="number"
-          value="3001"
-          class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label
-          for="defaultTextSize"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          DEFAULT TEXT SIZE
-        </label>
-
-        <div class="flex items-center gap-3">
-
-          <input
-            id="defaultTextSize"
-            type="range"
-            min="20"
-            max="80"
-            value="38"
-            class="flex-1 accent-black"
-          >
-
-          <span
-            id="textSizeValue"
-            class="mono w-10 text-right text-[10px]"
-          >
-            38px
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <label
-          for="defaultLineHeight"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          DEFAULT LINE HEIGHT
-        </label>
-
-        <div class="flex items-center gap-3">
-
-          <input
-            id="defaultLineHeight"
-            type="range"
-            min="1"
-            max="2"
-            step="0.05"
-            value="1.45"
-            class="flex-1 accent-black"
-          >
-
-          <span
-            id="lineHeightValue"
-            class="mono w-10 text-right text-[10px]"
-          >
-            1.45
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <!-- MIRROR -->
-
-      <div class="flex items-center justify-between rounded-lg border border-[#eeeeee] p-3 sm:col-span-2">
-
-        <div>
-
-          <div class="text-[10px] font-medium">
-            Mirror Output
-          </div>
-
-          <div class="mt-0.5 text-[9px] text-gray-400">
-            Mirror teleprompter output for reflector glass.
-          </div>
-
-        </div>
-
-
-        <label class="relative inline-flex cursor-pointer items-center">
-
-          <input
-            id="defaultMirror"
-            type="checkbox"
-            class="peer sr-only"
-          >
-
-          <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
-
-          <div class="absolute left-0.5 top-0.5 h-3 w-3 rounded-full bg-white transition peer-checked:translate-x-4"></div>
-
-        </label>
-
-      </div>
-
-    </div>
-
-  </section>
 
 
 
   <!-- GRAPHICS -->
 
-  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+<section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+  <div class="border-b border-[#eeeeee] px-5 py-4">
+    <div class="Outfit-Medium text-[12px]">Graphics / Jump</div>
 
+    <div class="mt-0.5 text-[9px] text-gray-400">Graphics/Jump engine connection settings.</div>
+  </div>
 
-    <div class="border-b border-[#eeeeee] px-5 py-4">
-
-      <div class="Outfit-Medium text-[12px]">
-        Graphics / CG
-      </div>
-
-      <div class="mt-0.5 text-[9px] text-gray-400">
-        Graphics engine connection settings.
-      </div>
-
+  <div class="grid gap-5 p-5 sm:grid-cols-2">
+    <div>
+      <label for="graphicsIp" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> GRAPHICS ENGINE IP </label>
+      <input id="graphicsIp" type="text" value="192.168.10.20" placeholder="192.168.10.20" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
     </div>
-
-
-    <div class="grid gap-5 p-5 sm:grid-cols-2">
-
-
-      <div>
-
-        <label
-          for="graphicsIp"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          GRAPHICS ENGINE IP
-        </label>
-
-        <input
-          id="graphicsIp"
-          type="text"
-          value="192.168.10.20"
-          placeholder="192.168.10.20"
-          class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label
-          for="graphicsPort"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          PORT
-        </label>
-
-        <input
-          id="graphicsPort"
-          type="number"
-          value="5250"
-          class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label
-          for="cgChannel"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          CG CHANNEL
-        </label>
-
-        <input
-          id="cgChannel"
-          type="text"
-          value="CG-01"
-          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div class="flex items-end">
-
-        <button
-          type="button"
-          onclick="testGraphics()"
-          class="w-full rounded-lg border border-[#dddddd] px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-50 hover:text-black"
-        >
-          Test Graphics Connection
-        </button>
-
-      </div>
-
+    <div class="flex items-end">
+      <button type="button" onclick="testGraphics()" class="w-full rounded-lg border border-[#dddddd] px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-50 hover:text-black cursor-pointer">Test Connection</button>
     </div>
-
-  </section>
-
-
-
-  <!-- NEWSROOM -->
-
-  <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
+  </div>
+</section>
 
 
-    <div class="border-b border-[#eeeeee] px-5 py-4">
 
-      <div class="Outfit-Medium text-[12px]">
-        Newsroom
-      </div>
-
-      <div class="mt-0.5 text-[9px] text-gray-400">
-        General newsroom defaults.
-      </div>
-
-    </div>
-
-
-    <div class="grid gap-5 p-5 sm:grid-cols-2">
-
-
-      <!-- LANGUAGE -->
-
-      <div>
-
-        <label
-          for="defaultLanguage"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          DEFAULT LANGUAGE
-        </label>
-
-        <select
-          id="defaultLanguage"
-          class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-          <option value="dv">Dhivehi</option>
-          <option value="en">English</option>
-        </select>
-
-      </div>
-
-
-      <!-- DEFAULT RUNDOWN -->
-
-      <div>
-
-        <label
-          for="defaultPreset"
-          class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"
-        >
-          DEFAULT RUN ORDER PRESET
-        </label>
-
-        <select
-          id="defaultPreset"
-          class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[10px] outline-none focus:border-black"
-        >
-          <option value="">None</option>
-          <option value="evening">Fahuge Khabaru</option>
-          <option value="night">Night Bulletin</option>
-          <option value="morning">Morning Bulletin</option>
-        </select>
-
-      </div>
-
-
-      <!-- AUTOSAVE -->
-
-      <div class="flex items-center justify-between rounded-lg border border-[#eeeeee] p-3 sm:col-span-2">
-
-        <div>
-
-          <div class="text-[10px] font-medium">
-            Auto Save
-          </div>
-
-          <div class="mt-0.5 text-[9px] text-gray-400">
-            Automatically save story and rundown changes.
-          </div>
-
-        </div>
-
-
-        <label class="relative inline-flex cursor-pointer items-center">
-
-          <input
-            id="autoSave"
-            type="checkbox"
-            checked
-            class="peer sr-only"
-          >
-
-          <div class="h-4 w-8 rounded-full bg-gray-200 transition peer-checked:bg-black"></div>
-
-          <div class="absolute left-0.5 top-0.5 h-3 w-3 rounded-full bg-white transition peer-checked:translate-x-4"></div>
-
-        </label>
-
-      </div>
-
-    </div>
-
-  </section>
 
 
 
   <!-- SAVE BAR -->
 
-  <div class="flex items-center justify-between rounded-xl border border-[#e3e3e3] bg-white p-4">
+<div class="flex items-center justify-between rounded-xl border border-[#e3e3e3] bg-white p-4">
+  <div>
+    <div class="text-[10px] font-medium">AirCue Settings</div>
 
-    <div>
-
-      <div class="text-[10px] font-medium">
-        AirCue Settings
-      </div>
-
-      <div
-        id="saveStatus"
-        class="mt-0.5 text-[9px] text-gray-400"
-      >
-        Save your changes before leaving this page.
-      </div>
-
-    </div>
-
-
-    <div class="flex gap-2">
-
-      <button
-        type="button"
-        onclick="resetSettings()"
-        class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100"
-      >
-        Reset
-      </button>
-
-      <button
-        type="submit"
-        class="Outfit-Medium rounded-lg bg-black px-5 py-2.5 text-[10px] text-white hover:bg-gray-800"
-      >
-        Save Settings
-      </button>
-
-    </div>
-
+    <div id="saveStatus" class="mt-0.5 text-[9px] text-gray-400">Save your changes before leaving this page.</div>
   </div>
+
+  <div class="flex gap-2">
+    <button type="button" onclick="resetSettings()" class="rounded-lg px-4 py-2.5 cursor-pointer text-[10px] text-gray-500 hover:bg-gray-100">Reset</button>
+
+    <button type="button" onclick="saveSettings()" class="Outfit-Medium cursor-pointer rounded-lg bg-black px-5 py-2.5 text-[10px] text-white hover:bg-gray-800">Save Settings</button>
+  </div>
+</div>
+
 
 <!-- USER MANAGEMENT -->
 
 <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
-
   <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
-
     <div>
-      <div class="Outfit-Medium text-[12px]">
-        Users
-      </div>
+      <div class="Outfit-Medium text-[12px]">Users</div>
 
-      <div class="mt-0.5 text-[9px] text-gray-400">
-        Manage newsroom users and access.
-      </div>
+      <div class="mt-0.5 text-[9px] text-gray-400">Manage newsroom users and access.</div>
     </div>
 
-    <button
-      type="button"
-      onclick="openAddUser()"
-      class="Outfit-Medium rounded-lg bg-black px-4 py-2 text-[10px] text-white hover:bg-gray-800"
-    >
-      + Add User
-    </button>
-
+    <button type="button" onclick="openAddUser()" class="Outfit-Medium rounded-lg bg-black px-4 py-2 text-[10px] text-white hover:bg-gray-800">+ Add User</button>
   </div>
-
 
   <!-- TABLE HEADER -->
 
   <div class="hidden grid-cols-[1fr_140px_110px_100px] border-b border-[#eeeeee] bg-gray-50 px-5 py-2.5 sm:grid">
+    <div class="text-[9px] text-gray-400">User</div>
 
-    <div class="text-[9px] text-gray-400">
-      User
-    </div>
+    <div class="text-[9px] text-gray-400">Role</div>
 
-    <div class="text-[9px] text-gray-400">
-      Role
-    </div>
-
-    <div class="text-[9px] text-gray-400">
-      Status
-    </div>
+    <div class="text-[9px] text-gray-400">Status</div>
 
     <div></div>
-
   </div>
-
 
   <!-- USER -->
 
   <div class="grid gap-3 border-b border-[#eeeeee] px-5 py-4 sm:grid-cols-[1fr_140px_110px_100px] sm:items-center">
-
     <div class="flex items-center gap-3">
-
-      <div class="Outfit-Medium flex h-8 w-8 items-center justify-center rounded-full bg-black text-[9px] text-white">
-        HI
-      </div>
+      <div class="Outfit-Medium flex h-8 w-8 items-center justify-center rounded-full bg-black text-[9px] text-white">HI</div>
 
       <div>
+        <div class="text-[11px] font-medium">Hussain</div>
 
-        <div class="text-[11px] font-medium">
-          Hussain
-        </div>
-
-        <div class="mt-0.5 text-[9px] text-gray-400">
-          @hussain
-        </div>
-
+        <div class="mt-0.5 text-[9px] text-gray-400">@hussain</div>
       </div>
-
     </div>
 
-
-    <div class="text-[10px] text-gray-500">
-      Producer
-    </div>
-
+    <div class="text-[10px] text-gray-500">Producer</div>
 
     <div class="flex items-center gap-2">
-
       <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
 
-      <span class="text-[9px] text-green-600">
-        Active
-      </span>
-
+      <span class="text-[9px] text-green-600"> Active </span>
     </div>
 
-
     <div class="relative flex justify-end">
+      <button type="button" onclick="toggleUserMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
 
-      <button
-        type="button"
-        onclick="toggleUserMenu(this)"
-        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black"
-      >
-        ⋮
-      </button>
+      <div class="user-menu absolute top-9 right-0 z-20 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
+        <button type="button" onclick="editUser(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Edit User</button>
 
+        <button type="button" onclick="resetUserPassword(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Reset Password</button>
 
-      <div class="user-menu absolute right-0 top-9 z-20 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
-
-        <button
-          type="button"
-          onclick="editUser(1)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50"
-        >
-          Edit User
-        </button>
-
-        <button
-          type="button"
-          onclick="resetUserPassword(1)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50"
-        >
-          Reset Password
-        </button>
-
-        <button
-          type="button"
-          onclick="disableUser(1)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50"
-        >
-          Disable Account
-        </button>
+        <button type="button" onclick="disableUser(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Disable Account</button>
 
         <div class="my-1 border-t border-[#eeeeee]"></div>
 
-        <button
-          type="button"
-          onclick="deleteUser(1)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-red-500 hover:bg-red-50"
-        >
-          Delete User
-        </button>
-
+        <button type="button" onclick="deleteUser(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-red-500 hover:bg-red-50">Delete User</button>
       </div>
-
     </div>
-
   </div>
-
 
   <!-- USER -->
 
   <div class="grid gap-3 px-5 py-4 sm:grid-cols-[1fr_140px_110px_100px] sm:items-center">
-
     <div class="flex items-center gap-3">
-
-      <div class="Outfit-Medium flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-[9px] text-gray-600">
-        AH
-      </div>
+      <div class="Outfit-Medium flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-[9px] text-gray-600">AH</div>
 
       <div>
+        <div class="text-[11px] font-medium">Ahmed</div>
 
-        <div class="text-[11px] font-medium">
-          Ahmed
-        </div>
-
-        <div class="mt-0.5 text-[9px] text-gray-400">
-          @ahmed
-        </div>
-
+        <div class="mt-0.5 text-[9px] text-gray-400">@ahmed</div>
       </div>
-
     </div>
 
-
-    <div class="text-[10px] text-gray-500">
-      Journalist
-    </div>
-
+    <div class="text-[10px] text-gray-500">Journalist</div>
 
     <div class="flex items-center gap-2">
-
       <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
 
-      <span class="text-[9px] text-green-600">
-        Active
-      </span>
-
+      <span class="text-[9px] text-green-600"> Active </span>
     </div>
 
-
     <div class="relative flex justify-end">
+      <button type="button" onclick="toggleUserMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
 
-      <button
-        type="button"
-        onclick="toggleUserMenu(this)"
-        class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black"
-      >
-        ⋮
-      </button>
+      <div class="user-menu absolute top-9 right-0 z-20 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
+        <button type="button" onclick="editUser(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Edit User</button>
 
+        <button type="button" onclick="resetUserPassword(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Reset Password</button>
 
-      <div class="user-menu absolute right-0 top-9 z-20 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
-
-        <button
-          type="button"
-          onclick="editUser(2)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50"
-        >
-          Edit User
-        </button>
-
-        <button
-          type="button"
-          onclick="resetUserPassword(2)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50"
-        >
-          Reset Password
-        </button>
-
-        <button
-          type="button"
-          onclick="disableUser(2)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50"
-        >
-          Disable Account
-        </button>
+        <button type="button" onclick="disableUser(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Disable Account</button>
 
         <div class="my-1 border-t border-[#eeeeee]"></div>
 
-        <button
-          type="button"
-          onclick="deleteUser(2)"
-          class="w-full rounded-md px-3 py-2 text-left text-[10px] text-red-500 hover:bg-red-50"
-        >
-          Delete User
-        </button>
-
+        <button type="button" onclick="deleteUser(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-red-500 hover:bg-red-50">Delete User</button>
       </div>
-
     </div>
-
   </div>
-<!-- ADD USER MODAL -->
+  <!-- ADD USER MODAL -->
 
-<div
-  id="addUserModal"
-  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4"
->
+  <div id="addUserModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+    <div class="w-full max-w-[430px] overflow-hidden rounded-xl bg-white shadow-xl">
+      <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
+        <div>
+          <div class="Outfit-Medium text-[13px]">Add User</div>
 
-  <div class="w-full max-w-[430px] overflow-hidden rounded-xl bg-white shadow-xl">
-
-
-    <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
-
-      <div>
-
-        <div class="Outfit-Medium text-[13px]">
-          Add User
+          <div class="mt-0.5 text-[9px] text-gray-400">Create a new AirCue newsroom account.</div>
         </div>
 
-        <div class="mt-0.5 text-[9px] text-gray-400">
-          Create a new AirCue newsroom account.
-        </div>
-
+        <button type="button" onclick="closeAddUser()" class="text-[18px] text-gray-400 hover:text-black">×</button>
       </div>
 
+      <form id="addUserForm" class="space-y-4 p-5">
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> FULL NAME </label>
 
-      <button
-        type="button"
-        onclick="closeAddUser()"
-        class="text-[18px] text-gray-400 hover:text-black"
-      >
-        ×
-      </button>
+          <input id="newFullname" type="text" placeholder="Enter full name" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
 
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> USERNAME </label>
+
+          <input id="newUsername" type="text" placeholder="Enter username" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
+
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> PASSWORD </label>
+
+          <input id="newPassword" type="password" placeholder="Enter password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
+
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> ROLE </label>
+
+          <select id="newRole" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[11px] outline-none focus:border-black">
+            <option value="journalist">Journalist</option>
+
+            <option value="producer">Producer</option>
+
+            <option value="editor">Editor</option>
+
+            <option value="admin">Administrator</option>
+          </select>
+        </div>
+
+        <!-- PERMISSIONS -->
+
+        <div>
+          <div class="Outfit-Medium mb-2 text-[9px] text-gray-500">ACCESS</div>
+
+          <div class="space-y-2 rounded-lg border border-[#eeeeee] p-3">
+            <label class="flex cursor-pointer items-center justify-between">
+              <span class="text-[10px]"> Stories </span>
+
+              <input id="accessStories" type="checkbox" checked class="accent-black" />
+            </label>
+
+            <label class="flex cursor-pointer items-center justify-between">
+              <span class="text-[10px]"> Run Orders </span>
+
+              <input id="accessRunorders" type="checkbox" checked class="accent-black" />
+            </label>
+
+            <label class="flex cursor-pointer items-center justify-between">
+              <span class="text-[10px]"> Teleprompter Control </span>
+
+              <input id="accessPrompter" type="checkbox" class="accent-black" />
+            </label>
+
+            <label class="flex cursor-pointer items-center justify-between">
+              <span class="text-[10px]"> Graphics Control </span>
+
+              <input id="accessGraphics" type="checkbox" class="accent-black" />
+            </label>
+
+            <label class="flex cursor-pointer items-center justify-between">
+              <span class="text-[10px]"> Breaking News </span>
+
+              <input id="accessBreaking" type="checkbox" checked class="accent-black" />
+            </label>
+          </div>
+        </div>
+
+        <div class="flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
+          <button type="button" onclick="closeAddUser()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+
+          <button type="submit" class="Outfit-Medium rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800">Create User</button>
+        </div>
+      </form>
     </div>
-
-
-    <form id="addUserForm" class="space-y-4 p-5">
-
-
-      <div>
-
-        <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500">
-          FULL NAME
-        </label>
-
-        <input
-          id="newFullname"
-          type="text"
-          placeholder="Enter full name"
-          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500">
-          USERNAME
-        </label>
-
-        <input
-          id="newUsername"
-          type="text"
-          placeholder="Enter username"
-          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500">
-          PASSWORD
-        </label>
-
-        <input
-          id="newPassword"
-          type="password"
-          placeholder="Enter password"
-          class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black"
-        >
-
-      </div>
-
-
-      <div>
-
-        <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500">
-          ROLE
-        </label>
-
-        <select
-          id="newRole"
-          class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[11px] outline-none focus:border-black"
-        >
-          <option value="journalist">
-            Journalist
-          </option>
-
-          <option value="producer">
-            Producer
-          </option>
-
-          <option value="editor">
-            Editor
-          </option>
-
-          <option value="admin">
-            Administrator
-          </option>
-
-        </select>
-
-      </div>
-
-
-      <!-- PERMISSIONS -->
-
-      <div>
-
-        <div class="Outfit-Medium mb-2 text-[9px] text-gray-500">
-          ACCESS
-        </div>
-
-
-        <div class="space-y-2 rounded-lg border border-[#eeeeee] p-3">
-
-          <label class="flex cursor-pointer items-center justify-between">
-
-            <span class="text-[10px]">
-              Stories
-            </span>
-
-            <input
-              id="accessStories"
-              type="checkbox"
-              checked
-              class="accent-black"
-            >
-
-          </label>
-
-
-          <label class="flex cursor-pointer items-center justify-between">
-
-            <span class="text-[10px]">
-              Run Orders
-            </span>
-
-            <input
-              id="accessRunorders"
-              type="checkbox"
-              checked
-              class="accent-black"
-            >
-
-          </label>
-
-
-          <label class="flex cursor-pointer items-center justify-between">
-
-            <span class="text-[10px]">
-              Teleprompter Control
-            </span>
-
-            <input
-              id="accessPrompter"
-              type="checkbox"
-              class="accent-black"
-            >
-
-          </label>
-
-
-          <label class="flex cursor-pointer items-center justify-between">
-
-            <span class="text-[10px]">
-              Graphics Control
-            </span>
-
-            <input
-              id="accessGraphics"
-              type="checkbox"
-              class="accent-black"
-            >
-
-          </label>
-
-
-          <label class="flex cursor-pointer items-center justify-between">
-
-            <span class="text-[10px]">
-              Breaking News
-            </span>
-
-            <input
-              id="accessBreaking"
-              type="checkbox"
-              checked
-              class="accent-black"
-            >
-
-          </label>
-
-        </div>
-
-      </div>
-
-
-      <div class="flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
-
-        <button
-          type="button"
-          onclick="closeAddUser()"
-          class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100"
-        >
-          Cancel
-        </button>
-
-        <button
-          type="submit"
-          class="Outfit-Medium rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800"
-        >
-          Create User
-        </button>
-
-      </div>
-
-    </form>
-
   </div>
-
-</div>
 </section>
+
 </form>
 
 

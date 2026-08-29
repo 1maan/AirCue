@@ -235,10 +235,6 @@ function lineups(date){
                     <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
                     <span>Download</span>
                     </button>
-                    <button onclick="saveAsPreset('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-                    <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path></svg>
-                    <span>Save as Preset</span>
-                    </button>
                     <div class="my-1 border-t border-[#eeeeee]"></div>
                     <button ondblclick="deleteRunOrder('${ element.runorderID }')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
                     <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17 6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6ZM18 8H6V20H18V8ZM9 11H11V17H9V11ZM13 11H15V17H13V11ZM9 4V6H15V4H9Z"></path></svg>
@@ -427,10 +423,6 @@ newRunOrder.addEventListener('click', ()=>{
                     <button onclick="downloadRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
                         <span>Download</span>
-                    </button>
-                    <button onclick="saveAsPreset('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path></svg>
-                        <span>Save as Preset</span>
                     </button>
                     <div class="my-1 border-t border-[#eeeeee]"></div>
                     <button ondblclick="deleteRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
@@ -706,10 +698,6 @@ socket.on('updateSentRunOrders', (data)=>{
                     <button onclick="downloadRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
                         <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 19H21V21H3V19ZM13 13.1716L19.0711 7.1005L20.4853 8.51472L12 17L3.51472 8.51472L4.92893 7.1005L11 13.1716V2H13V13.1716Z"></path></svg>
                         <span>Download</span>
-                    </button>
-                    <button onclick="saveAsPreset('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-gray-600 hover:bg-gray-100 hover:text-black">
-                        <svg width="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 19H19V6.82843L17.1716 5H16V9H7V5H5V19H6V12H18V19ZM4 3H18L20.7071 5.70711C20.8946 5.89464 21 6.149 21 6.41421V20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3ZM8 14V19H16V14H8Z"></path></svg>
-                        <span>Save as Preset</span>
                     </button>
                     <div class="my-1 border-t border-[#eeeeee]"></div>
                     <button ondblclick="deleteRunOrder('${data.runOrderId}')" class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-[11px] text-red-500 hover:bg-red-50">
