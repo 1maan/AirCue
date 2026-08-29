@@ -324,7 +324,7 @@ function getRundownItems(date){
             storyBank.innerHTML = "";
             data.stories.forEach(story => {
                 storyBank.innerHTML += `
-<div class="flex items-center justify-between gap-4 border-b border-[#eeeeee] p-4">
+<div class="flex items-center justify-between gap-4 border-b border-[#eeeeee] p-4 alped" data-itemid="${ story.id }">
   <div class="flex items-start gap-3">
     <div class="selOne flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gray-100 text-[9px] text-gray-500">${ story.id }</div>
     <div class="min-w-0 flex-1">
@@ -341,9 +341,9 @@ function getRundownItems(date){
     </div>
   </div>
   <button onclick="addStoryToRunDown('${ story.id }', '${ story.slug }', '${formatTime( story.created_at )}')" class="rounded-lg bg-black px-3 py-2 text-[9px] text-white hover:bg-gray-800 cursor-pointer">Add</button>
-</div>
-                `
-            })
+</div>`
+})
+alped()
 
             if(data.stories.length === 0){
             storyBank.innerHTML = `
@@ -418,6 +418,10 @@ storySearch.addEventListener('input', () => {
 });
 
 
+function clearStorySearch(){
+    storySearch.value = ""
+    searchNews(dateGlobal, storySearch.value);
+}
 
 function searchNews(date, input){
   const loadingTimer = setTimeout(() => {
@@ -433,13 +437,25 @@ function searchNews(date, input){
                 return;
             }
             if (data.stories.length === 0) {
-
+storyBank.innerHTML = `
+<div id="Nostoriesfound" class="flex min-h-65 flex-col items-center justify-center px-6 py-10 text-center">
+  <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-gray-100 text-gray-400">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"></circle>
+      <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+    </svg>
+  </div>
+  <div class="Outfit-Medium mt-3 text-[12px] text-gray-700">No stories found</div>
+  <div class="mt-1 text-[10px] text-gray-400">No newsroom stories match your search.</div>
+  <button onclick="clearStorySearch()" class="mt-4 cursor-pointer rounded-lg border border-[#dddddd] px-4 py-2 text-[9px] text-gray-500 hover:bg-gray-50">Clear Search</button>
+</div>
+`
                 return;
             }
 
 data.stories.forEach(story => {
 storyBank.innerHTML += `
-<div class="flex items-center justify-between gap-4 border-b border-[#eeeeee] p-4">
+<div class="flex items-center justify-between gap-4 border-b border-[#eeeeee] p-4 alped" data-itemid="${ story.id }">
   <div class="flex items-start gap-3">
     <div class="selOne flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gray-100 text-[9px] text-gray-500">${ story.id }</div>
     <div class="min-w-0 flex-1">
@@ -459,7 +475,7 @@ storyBank.innerHTML += `
 </div>
 `
 })
-
+alped()
 
         }
   })
@@ -598,6 +614,7 @@ runOrderList.insertAdjacentHTML('beforeend', `
     </div>
 </div>`)
     runOrderCounter();
+    alped();
 }
 
 window.addEventListener('click', (e)=>{
@@ -780,5 +797,19 @@ runOrderCounter();
             'error',
             'An error occurred. Please try again.'
         );
+    })
+}
+
+
+function alped(){
+    let alped = document.querySelectorAll('.alped')
+    let runorderStory = document.querySelectorAll('.runorder-story')
+    runorderStory.forEach(element=>{
+        alped.forEach(alpedElement=>{
+            if(element.dataset.itemid == alpedElement.dataset.itemid){
+                alpedElement.querySelector('.selOne').style.setProperty('background-color', '#0dd76b', 'important');
+                alpedElement.querySelector('.selOne').style.setProperty('color', '#0f0f0f', 'important');
+            }
+        })
     })
 }

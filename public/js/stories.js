@@ -552,7 +552,7 @@ function saveStory(date){
         saveStoryController = new AbortController();
 
         let dataInput = JSON.stringify({
-            slug: slug.value,
+            slug: slug.value.replace(/['"]/g, ''),
             language: selectedLanguage,
             cg_text: cg.value,
             story_text: storyText.value,
@@ -596,7 +596,7 @@ function saveStory(date){
               <div class="selOne overflow-hidden flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[9px] bg-black text-white">${data.storyId}</div>
               <div class="min-w-0 flex-1">
               <div class="flex items-center justify-between gap-2">
-              <div class="truncate uppercase text-[12px] font-medium Outfit-Faseyha-Regular">${slug.value}</div>
+              <div class="truncate uppercase text-[12px] font-medium Outfit-Faseyha-Regular">${slug.value.replace(/['"]/g, '')}</div>
               <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500"></span>
               </div>
               <div class="flex gap-3 text-[9px] text-gray-400">
@@ -646,7 +646,7 @@ function updateStory(selectedStoryId) {
         return;
     }
     let dataInput = JSON.stringify({
-        slug: slug.value,
+        slug: slug.value.replace(/['"]/g, ''),
         language: selectedLanguage,
         cg_text: cg.value,
         story_text: storyText.value
@@ -1045,12 +1045,13 @@ function PushLiveToAir(){
         pushBreakingController = new AbortController();
 
         let dataInput = JSON.stringify({
-            slug: slug.value,
+            slug: slug.value.replace(/['"]/g, ''),
             language: selectedLanguage,
             cg_text: cg.value,
             story_text: storyText.value,
             date: date
         })
+        console.log(dataInput)
     fetch(`/api/breaking?date=${date}`, {
         method: 'POST',
         headers: {

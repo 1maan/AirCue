@@ -705,10 +705,6 @@ router.post('/controller-settings/save', authPage, (req, res) => {
     });
 });
 
-
-
-
-
 router.get('/controller-settings', authPage, (req, res) => {
     const sql = `
         SELECT
@@ -802,5 +798,33 @@ router.post('/controller-settings/remove-active', authPage, (req, res) => {
         });
     });
 });
+
+router.post('/breaking', (req, res)=>{
+    const { slug, language, cg_text, story_text } = req.body;
+    const date = req.query.date;
+    if(!slug || !language || !cg_text || !story_text){
+        return res.status(400).json({ success: false, message: 'All fields are required' });
+    }
+    if (!date || !date.trim()) {
+        return res.status(400).json({ success: false, message: 'Date is required' });
+    }
+    const created_by = req.session.userID;
+
+    if (!created_by) {
+        return res.status(401).json({ success: false, message: 'Unauthorized' });
+    }
+
+    const sql = `INSERT INTO stories ( slug, language, cg_text, story_text, created_by, story_date) VALUES (?, ?, ?, ?, ?, ?)`;
+
+     db.query(
+        sql, [ slug.trim(), language, cg_text.trim(), story_text.trim(), created_by, date], (err, result) => {
+            if (err) {
+                console.error('Story insert error:', err);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            return res.status(201).json({ success: true, message: 'Story added successfully', storyId: result.insertId });
+        }
+    );
+})
 
 module.exports = router;
