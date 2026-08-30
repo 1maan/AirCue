@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-
-const { blockUser , authPage } = require('../config/auth')
+const { blockUser , authPage } = require('../config/auth');
 
 router.get('/', (req, res)=>{
     res.redirect('/stories')
@@ -10,7 +9,6 @@ router.get('/', (req, res)=>{
 router.get('/login', blockUser , (req, res)=>{
     res.render('login')
 })
-
 router.get('/teleprompter', (req, res)=>{
         const sql = `
         SELECT * FROM run_orders WHERE status = 'live' LIMIT 1;
@@ -43,15 +41,12 @@ router.get('/teleprompter', (req, res)=>{
 
     });
 })
-
-
 function formatDatabaseDate(date) {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
     return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
-
 router.get('/runorders', authPage, (req, res)=>{
     const date = new Date();
     const sql = `
@@ -77,10 +72,6 @@ router.get('/runorders', authPage, (req, res)=>{
         res.render('runorders', { fullname: req.session.fullname, role: req.session.role, runorders: result[0], nextNews: result[1][0] })
     })
 })
-
-
-
-
 router.get('/runorder/:id', authPage, (req, res) => {
 
     const id = req.params.id;
@@ -130,13 +121,9 @@ router.get('/runorder/:id', authPage, (req, res) => {
     });
 
 });
-
-
 router.get('/stories', authPage, (req, res)=>{
     res.render('stories', { fullname: req.session.fullname, role: req.session.role })
 })
-
-
 router.get('/controller/', authPage, (req, res) => {
     const sql = `
         SELECT 
@@ -172,12 +159,6 @@ router.get('/controller/', authPage, (req, res) => {
 
     });
 });
-
-
-
-
-
-
 router.get('/controller2/', authPage, (req, res) => {
     res.render('controller2', { fullname: req.session.fullname, role: req.session.role });
 });
@@ -189,9 +170,6 @@ router.get('/settings', authPage, (req, res)=>{
 })
 router.get('/breaking', (req, res) => {
   res.render('breaking', { fullname: req.session.fullname, role: req.session.role })
-});
-router.get('/activity', (req, res) => {
-  res.render('activity');
 });
 router.get('/404', authPage, (req, res)=>{
     res.render('error_pages/404')
