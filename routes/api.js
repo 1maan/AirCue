@@ -192,7 +192,6 @@ router.put('/update-password', authPage, (req, res)=>{
     })
 })
 
-
 router.post('/logout', (req, res)=>{
     req.session = null;
     if(!req.session) {
@@ -825,7 +824,6 @@ router.get('/controller-settings', authPage, authPage, (req, res) => {
 
 router.post('/controller-settings/activate', authPage, authPage, (req, res) => {
     const { id } = req.body;
-
     if (!id) {
         return res.status(400).json({
             success: false,
@@ -976,6 +974,32 @@ router.get('/getSettings', authPage, (req, res) => {
     db.query(sql, (err, result) => {
         if (err) {
             console.error('Error fetching settings:', err);
+            return res.status(500).json({
+                success: false,
+                message: 'Database error'
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            data: result[0] || null
+        });
+    });
+});
+
+router.get('/get-active-settings', authPage, (req, res) => {
+    const sql = `
+        SELECT
+        text_size,
+        line_height,
+        side_margin,
+        mirrowed
+        FROM teleprompter_settings
+        WHERE is_active = 1
+        LIMIT 1
+    `;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Error fetching active teleprompter settings:', err);
             return res.status(500).json({
                 success: false,
                 message: 'Database error'

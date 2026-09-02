@@ -11,6 +11,8 @@
 @font-face {font-family: 'aammufk';src: url(/fonts/aammufkF.ttf);}
 @font-face {font-family: 'MVAWaheed';src: url(/fonts/MVAWaheed.ttf);}
 @font-face {font-family: 'AWaheed';src: url(/fonts/AWaheed.ttf) format('truetype');}
+@font-face {font-family: 'Roboto-Medium';src: url(/fonts/Roboto-Medium.ttf);}
+
 
 .Outfit-Black{font-family: 'Outfit-Black';}
 .Outfit-Bold{font-family: 'Outfit-Bold';}
@@ -27,3 +29,6 @@
 .aammufk{font-family: 'aammufk';}
 .MVAWaheed{font-family: 'MVAWaheed';}
 .AWaheed{font-family: 'AWaheed';}
+.Roboto-Medium{font-family: 'Roboto-Medium';}
+
+

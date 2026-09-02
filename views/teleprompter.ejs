@@ -140,6 +140,32 @@ if(localStorage.getItem('tele-mirror') == 'true'){
 }else{
     prompterPreview.style.scale = `1`;
 }
+
+
+function getActiveSettings(){
+    fetch('/api/get-active-settings')
+    .then(response => response.json())
+    .then(data => {
+        if(!data.success || !data.data) return;
+        if(data.success){
+        document.querySelectorAll('.stoy').forEach(element => {
+            element.style.setProperty('--line-fz', `${data.data.text_size}px`);
+            element.style.setProperty('--line-ht', `${data.data.line_height}px`);
+        });
+            prompterPreview.style.paddingLeft = `${data.data.side_margin}%`;
+            prompterPreview.style.paddingRight = `${data.data.side_margin}%`;
+            if(data.data.mirrowed){
+                prompterPreview.style.scale = `-1 1`;
+            }else{
+                prompterPreview.style.scale = `1`;
+            }
+        localStorage.setItem('tele-fontSize', data.data.text_size)
+        localStorage.setItem('tele-lineHeight', data.data.line_height)
+        localStorage.setItem('tele-margin', data.data.side_margin)
+        }
+    })
+}
+getActiveSettings()
 </script>
 </body>
 </html>

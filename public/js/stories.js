@@ -877,7 +877,7 @@ socket.on('recStory', (data)=>{
     console.log(data.data)
     data.data.forEach(element => {
         rtvSto.insertAdjacentHTML('beforeend', `
-      <div onclick="addNews('${element.id}')" class="cursor-pointer">
+      <div onclick="addNews('${element.id}')" class="cursor-pointer hover:bg-gray-100 active:bg-gray-200 p-2 rounded-md">
       <div class="aspect-video w-full bg-gray-300">
         <img src="${element.main_photo.thumbnail}" alt="" class="aspect-video object-cover">
       </div>
@@ -905,7 +905,7 @@ function pageChange(type){
     rtvSto.innerHTML = ""
     data.data.forEach(element => {
         rtvSto.insertAdjacentHTML('beforeend', `
-      <div class="cursor-pointer">
+      <div onclick="addNews('${element.id}')" class="cursor-pointer hover:bg-gray-100 active:bg-gray-200 p-2 rounded-md">
       <div class="aspect-video w-full bg-gray-300">
         <img src="${element.main_photo.thumbnail}" alt="" class="aspect-video object-cover">
       </div>

@@ -157,7 +157,7 @@ function renderTags(text) {
       <div onclick="jumpToStory('<%= item.id %>')" class="hidden action_jump hover:bg-red-200 p-0.5 rounded-full w-fit cursor-pointer transition-all duration-150 hover:scale-110">
         <svg width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ee4444"><path d="M19.1642 12L12.9571 5.79291L11.5429 7.20712L16.3358 12L11.5429 16.7929L12.9571 18.2071L19.1642 12ZM13.5143 12L7.30722 5.79291L5.89301 7.20712L10.6859 12L5.89301 16.7929L7.30722 18.2071L13.5143 12Z"></path></svg>
       </div>
-      <div onclick="changeCgStory('<%= item.id %>')" class="action_cgchange hover:bg-violet-200 p-0.5 rounded-full w-fit cursor-pointer transition-all duration-150 hover:scale-110">
+      <div id="changeCgStory" data-id="<%= item.id %>" class="action_cgchange hover:bg-violet-200 p-0.5 rounded-full w-fit cursor-pointer transition-all duration-150 hover:scale-110 active:scale-90">
         <svg width="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4f3de8"><path d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM10.6219 8.41459L15.5008 11.6672C15.6846 11.7897 15.7343 12.0381 15.6117 12.2219C15.5824 12.2658 15.5447 12.3035 15.5008 12.3328L10.6219 15.5854C10.4381 15.708 10.1897 15.6583 10.0672 15.4745C10.0234 15.4088 10 15.3316 10 15.2526V8.74741C10 8.52649 10.1791 8.34741 10.4 8.34741C10.479 8.34741 10.5562 8.37078 10.6219 8.41459Z"></path></svg>
       </div>
     </div>
@@ -186,6 +186,9 @@ function renderTags(text) {
     <div class="flex items-center justify-between border-b border-[#eeeeee] px-4 py-4">
       <div class="Outfit-Medium text-[12px]">Text Settings</div>
       <div class="flex items-center gap-2">
+        <button onclick="reloadTele()" class="flex cursor-pointer items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50 active:bg-gray-60 group">
+          <svg width="15" class="group-active:rotate-90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M5.46257 4.43262C7.21556 2.91688 9.5007 2 12 2C17.5228 2 22 6.47715 22 12C22 14.1361 21.3302 16.1158 20.1892 17.7406L17 12H20C20 7.58172 16.4183 4 12 4C9.84982 4 7.89777 4.84827 6.46023 6.22842L5.46257 4.43262ZM18.5374 19.5674C16.7844 21.0831 14.4993 22 12 22C6.47715 22 2 17.5228 2 12C2 9.86386 2.66979 7.88416 3.8108 6.25944L7 12H4C4 16.4183 7.58172 20 12 20C14.1502 20 16.1022 19.1517 17.5398 17.7716L18.5374 19.5674Z"></path></svg>
+        </button>
         <div class="relative flex justify-end">
           <button id="filterBtn" onclick="toggleFilterMenu()" class="flex cursor-pointer items-center gap-2 rounded-lg border border-[#dddddd] px-3 py-2 text-[10px] text-gray-500 hover:bg-gray-50">
             <span id="filterText">Select</span>
@@ -256,6 +259,12 @@ function renderTags(text) {
         </div>
       </main>
     </div>
+
+<div id="cgContextMenu" class="fixed z-50 hidden min-w-[150px] rounded-lg border border-gray-200 bg-white p-1 shadow-lg">
+  <button id="cgToBreaking" class="w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm hover:bg-gray-100">
+        CG to Breaking
+  </button>
+</div>
     <%- include('partials/alert') -%>
 
 <script src="/js/controller.js"></script>

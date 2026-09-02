@@ -280,7 +280,6 @@ function controllerSettingsSave(){
     let data = [settings.text_size, settings.line_height, settings.side_margin, settings.mirror];
     socket.emit('tele-settings', data);
     toggleFilterMenu()
-
 }
 
 function removeAllActiveTeleprompterSettings() {
@@ -318,5 +317,62 @@ function jumpToStory(id){
 }
 
 
+function reloadTele(){
+
+}
 
 
+const changeCgStory = document.querySelectorAll("#changeCgStory");
+
+changeCgStory.forEach((button) => {
+    button.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+    });
+
+    button.addEventListener("mousedown", (event) => {
+        if (event.button === 0) {
+            console.log("Left mouse button clicked");
+        }
+
+        if (event.button === 1) {
+            event.preventDefault();
+        }
+
+        if (event.button === 2) {
+            event.preventDefault();
+            console.log("Right mouse button clicked");
+        }
+    });
+});
+
+
+const cgContextMenu = document.getElementById("cgContextMenu");
+const cgToBreaking = document.getElementById("cgToBreaking");
+
+let selectedCgStory = null;
+
+changeCgStory.forEach((button) => {
+    button.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+
+        selectedCgStory = button;
+        cgContextMenu.classList.remove("hidden");
+
+        const padding = 8;
+        const menuWidth = cgContextMenu.offsetWidth;
+        const menuHeight = cgContextMenu.offsetHeight;
+
+        const x = Math.max(
+            padding,
+            Math.min(event.clientX, window.innerWidth - menuWidth - padding)
+        );
+
+        const y = Math.max(
+            padding,
+            Math.min(event.clientY, window.innerHeight - menuHeight - padding)
+        );
+
+        cgContextMenu.style.left = `${x}px`;
+        cgContextMenu.style.top = `${y}px`;
+    });
+});
