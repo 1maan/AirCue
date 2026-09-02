@@ -71,7 +71,7 @@
     <div>
       <label for="breakingNewsPath" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> BREAKING NEWS TEXT FILE PATH </label>
 
-      <input id="breakingNewsPath" name="breakingNewsPath" type="text" value="C:\AirCue\output\breaking.txt" placeholder="Example: C:\AirCue\output\breaking.txt" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
+      <input id="breakingNewsPath" name="breakingNewsPath" type="text" value="" placeholder="Example: C:\AirCue\output\breaking.txt" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
 
       <div class="mt-1.5 text-[9px] text-gray-400">Breaking news text will be written to this file.</div>
     </div>
@@ -81,7 +81,7 @@
     <div>
       <label for="chTextPath" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> CG TEXT FILE PATH </label>
 
-      <input id="chTextPath" name="chTextPath" type="text" value="C:\AirCue\output\ch.txt" placeholder="Example: C:\AirCue\output\ch.txt" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
+      <input id="chTextPath" name="chTextPath" type="text" value="" placeholder="Example: C:\AirCue\output\ch.txt" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
 
       <div class="mt-1.5 text-[9px] text-gray-400">CG text will be written to this file.</div>
     </div>
@@ -106,7 +106,7 @@
   <div class="grid gap-5 p-5 sm:grid-cols-2">
     <div>
       <label for="graphicsIp" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> GRAPHICS ENGINE IP </label>
-      <input id="graphicsIp" type="text" value="192.168.10.20" placeholder="192.168.10.20" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
+      <input id="graphicsIp" type="text" value="" placeholder="192.168.10.20" class="mono w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[10px] outline-none focus:border-black" />
     </div>
     <div class="flex items-end">
       <button type="button" onclick="testGraphics()" class="w-full rounded-lg border border-[#dddddd] px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-50 hover:text-black cursor-pointer">Test Connection</button>
@@ -514,6 +514,48 @@ passwordChangeForm.addEventListener("click", async (event) => {
         );
     });
 });
+
+const breakingNewsPathInput = document.getElementById("breakingNewsPath");
+const chTextPathInput = document.getElementById("chTextPath");
+const graphicsIpInput = document.getElementById("graphicsIp");
+
+
+function saveSettings(){
+  fetch("/api/save-settings", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      breaking_path: breakingNewsPathInput.value,
+      headline_path: chTextPathInput.value,
+      graphics_ip: graphicsIpInput.value
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if(data.success){
+      showAlert('success', data.message || "Settings saved successfully");
+    } else {
+      showAlert('error', data.message || "Failed to save settings");
+    }
+  })
+}
+
+function getSettings(){
+  fetch("/api/getSettings")
+  .then(response => response.json())
+  .then(data => {
+    if(data.success){
+      breakingNewsPathInput.value = data.data.breaking_path || "";
+      chTextPathInput.value = data.data.headline_path || "";
+      graphicsIpInput.value = data.data.graphics_ip || "";
+    } else {
+      showAlert('error', data.message || "Failed to load settings");
+    }
+  })
+}
+getSettings();
 
 </script>
   </body>

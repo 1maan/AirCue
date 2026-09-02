@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
-const { blockUser , authPage } = require('../config/auth');
+const { blockUser , authPage, adminOnly } = require('../config/auth');
 
 router.get('/', (req, res)=>{
     res.redirect('/stories')
@@ -28,12 +28,10 @@ router.get('/teleprompter', (req, res)=>{
         ORDER BY roi.position ASC;
     `;
     db.query(sql, (err, result) => {
-
         if (err) {
             console.log(err);
             return res.redirect('/500');
         }
-        console.log(result[0])
         res.render('teleprompter', {
             runDownInfo: result[0][0],
             runDown: result[1]
@@ -163,9 +161,19 @@ router.get('/controller2/', authPage, (req, res) => {
     res.render('controller2', { fullname: req.session.fullname, role: req.session.role });
 });
 router.get('/profile', authPage, (req, res)=>{
-    res.render('profile', { fullname: req.session.fullname, role: req.session.role })
+    const sql = 'SELECT * FROM users WHERE id = ?';
+    db.query(sql, [req.session.userID], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.redirect('/500');
+        }
+        if (result.length === 0) {
+            return res.redirect('/404');
+        }
+        res.render('profile', { fullname: req.session.fullname, role: req.session.role, user: result[0] });
+    });
 })
-router.get('/settings', authPage, (req, res)=>{
+router.get('/settings', authPage, adminOnly, (req, res)=>{
     res.render('settings', { fullname: req.session.fullname, role: req.session.role })
 })
 router.get('/breaking', (req, res) => {

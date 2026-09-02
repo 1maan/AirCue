@@ -45,21 +45,21 @@
 
     <div class="space-y-5">
       <!-- PROFILE CARD -->
-
       <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
         <div class="p-6">
           <div class="flex flex-col items-center text-center">
             <!-- AVATAR -->
-
-            <div class="Outfit-SemiBold flex h-20 w-20 items-center justify-center rounded-full bg-[#1f1f1f] text-[22px] text-white"></div>
-
-            <div class="mt-4">
-              <div class="Outfit-SemiBold text-[16px]">Hussain imaan imraan</div>
-
-              <div class="mt-1 text-[11px] text-gray-400">A335041</div>
+            <div class="Outfit-SemiBold flex h-20 overflow-hidden w-20 items-center justify-center rounded-full bg-[#C80005] text-[22px] text-white">
+              <svg width="80" height="80" viewBox="0 0 192 192" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="192" height="192" fill="#C80005"/>
+                <path d="M151.456 61.6036L146.951 38.45L118.345 58.0415L124.202 85.6477L87.0364 47.1326L69.0169 57.5962L76.6752 87.874L36.3564 115.48L47.8439 153.55L101.227 105.462L96.9472 86.0929L129.157 119.71L142.221 104.571L124.652 86.0929L151.456 61.6036Z" fill="white"/>
+              </svg>
             </div>
-
-            <div class="mt-3 rounded-full bg-gray-100 px-3 py-1.5 text-[9px] text-gray-600">Admin</div>
+            <div class="mt-4">
+              <div class="Outfit-SemiBold text-[16px]"><%= user.full_name %></div>
+              <div class="mt-1 text-[11px] text-gray-400"><%= user.username %></div>
+            </div>
+            <div class="mt-3 rounded-full bg-gray-100 px-3 py-1.5 text-[9px] text-gray-600"><%= user.role %></div>
           </div>
         </div>
       </section>
@@ -68,40 +68,31 @@
     <!-- RIGHT -->
 
     <div class="space-y-5">
-
       <!-- PASSWORD -->
 
       <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
         <div class="border-b border-[#eeeeee] px-5 py-4">
           <div class="Outfit-Medium text-[12px]">Change Password</div>
-
           <div class="mt-0.5 text-[9px] text-gray-400">Update your account password.</div>
         </div>
-
-        <form id="passwordForm" class="p-5">
+        <div class="p-5">
           <div class="space-y-4">
             <!-- CURRENT PASSWORD -->
-
             <div>
               <label for="currentPassword" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> CURRENT PASSWORD </label>
-
               <div class="relative">
                 <input id="currentPassword" name="currentPassword" type="password" placeholder="Enter current password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 pr-16 text-[11px] outline-none focus:border-black" />
-
-                <button type="button" onclick="togglePassword('currentPassword', this)" class="absolute top-1/2 right-3 -translate-y-1/2 text-[9px] text-gray-400 hover:text-black">Show</button>
+                <button type="button" onclick="togglePassword('currentPassword', this)" class="cursor-pointer absolute top-1/2 right-3 -translate-y-1/2 text-[9px] text-gray-400 hover:text-black">Show</button>
               </div>
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
               <!-- NEW PASSWORD -->
-
               <div>
                 <label for="newPassword" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> NEW PASSWORD </label>
-
                 <div class="relative">
                   <input id="newPassword" name="newPassword" type="password" placeholder="Enter new password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 pr-16 text-[11px] outline-none focus:border-black" />
-
-                  <button type="button" onclick="togglePassword('newPassword', this)" class="absolute top-1/2 right-3 -translate-y-1/2 text-[9px] text-gray-400 hover:text-black">Show</button>
+                  <button type="button" onclick="togglePassword('newPassword', this)" class="cursor-pointer absolute top-1/2 right-3 -translate-y-1/2 text-[9px] text-gray-400 hover:text-black">Show</button>
                 </div>
               </div>
 
@@ -109,25 +100,76 @@
 
               <div>
                 <label for="confirmPassword" class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> CONFIRM PASSWORD </label>
-
                 <div class="relative">
                   <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm new password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 pr-16 text-[11px] outline-none focus:border-black" />
-
-                  <button type="button" onclick="togglePassword('confirmPassword', this)" class="absolute top-1/2 right-3 -translate-y-1/2 text-[9px] text-gray-400 hover:text-black">Show</button>
+                  <button type="button" onclick="togglePassword('confirmPassword', this)" class="cursor-pointer absolute top-1/2 right-3 -translate-y-1/2 text-[9px] text-gray-400 hover:text-black">Show</button>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="mt-5 flex justify-end border-t border-[#eeeeee] pt-5">
-            <button type="submit" class="Outfit-Medium rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800 cursor-pointer">Update Password</button>
+            <button id="updatePasswordBtn" class="Outfit-Medium rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800 cursor-pointer">Update Password</button>
           </div>
-        </form>
+        </div>
       </section>
     </div>
   </div>
 </main>
+</div>
+<%- include('partials/alert') -%>
 
-    </div>
+<script>
+  function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+      input.type = "text";
+      button.textContent = "Hide";
+    } else {
+      input.type = "password";
+      button.textContent = "Show";
+    }
+  }
+
+   const updatePasswordBtn = document.getElementById('updatePasswordBtn');
+   updatePasswordBtn.addEventListener('click', () => {
+    
+     const currentPassword = document.getElementById('currentPassword').value;
+     const newPassword = document.getElementById('newPassword').value;
+     const confirmPassword = document.getElementById('confirmPassword').value;
+
+     if (newPassword !== confirmPassword) {
+       showAlert('error', 'New password and confirm password do not match');
+       return;
+     }
+
+fetch('/api/update-password', {
+       method: 'PUT',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({ currentPassword, newPassword, confirmPassword })
+     })
+     .then(response => response.json())
+     .then(data => {
+     if (data.success) {
+         showAlert('success', data.message);
+         document.getElementById("currentPassword").value = "";
+         document.getElementById("newPassword").value = "";
+         document.getElementById("confirmPassword").value = "";
+     } else {
+         showAlert('error', data.message);
+     }
+    })
+    .catch(error => {
+        console.error(error);
+        showAlert(
+            'error',
+            'An error occurred while resetting the password'
+        );
+    });
+})
+
+</script>
   </body>
 </html>

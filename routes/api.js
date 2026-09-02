@@ -160,6 +160,39 @@ router.post('/login', (req, res)=>{
     })
 })
 
+router.put('/update-password', authPage, (req, res)=>{
+    const { currentPassword, newPassword } = req.body;
+    const userId = req.session.userID;
+    const getUserSql = "SELECT password_hash FROM users WHERE id = ? LIMIT 1";
+    db.query(getUserSql, [userId], (err, result)=>{
+        if(err){
+            return res.status(500).json({ success: false, message: 'Database error. Please try again later.' });
+        }
+        if(result.length === 0){
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        bcrypt.compare(currentPassword, result[0].password_hash, (berror, bresult)=>{
+            if(berror){
+                return res.status(500).json({ success: false, message: 'Authentication error' });
+            }
+            if(!bresult){
+                return res.status(401).json({ success: false, message: 'Current password is incorrect' });
+            }
+            if(!validatePassword(newPassword)){
+                return res.status(400).json({ success: false, message: 'New password does not meet complexity requirements' });
+            }
+            const sql = "UPDATE users SET password_hash = ? WHERE id = ?";
+            db.query(sql, [bcrypt.hashSync(newPassword, saltRounds), userId], (updateError, updateResult)=>{
+                if(updateError){
+                    return res.status(500).json({ success: false, message: 'Database error. Please try again later.' });
+                }
+                return res.status(200).json({ success: true, message: 'Password updated successfully' });
+            });
+        })
+    })
+})
+
+
 router.post('/logout', (req, res)=>{
     req.session = null;
     if(!req.session) {
@@ -886,5 +919,73 @@ router.post('/breaking', authPage,(req, res)=>{
 })
 
 
+router.put('/save-settings', authPage, (req, res) => {
+    const {
+        breaking_path,
+        headline_path,
+        graphics_ip
+    } = req.body;
+    const created_by = req.session.userID;
+    const sql = `
+        INSERT INTO settings (
+            id,
+            breaking_path,
+            headline_path,
+            graphics_ip,
+            created_by
+        )
+        VALUES (1, ?, ?, ?, ?)
+
+        ON DUPLICATE KEY UPDATE
+            breaking_path = VALUES(breaking_path),
+            headline_path = VALUES(headline_path),
+            graphics_ip = VALUES(graphics_ip)
+    `;
+    db.query(
+        sql,
+        [
+            breaking_path,
+            headline_path,
+            graphics_ip,
+            created_by
+        ],
+        (err, result) => {
+            if (err) {
+                console.error('Error saving settings:', err);
+
+                return res.status(500).json({
+                    success: false,
+                    message: 'Database error'
+                });
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'Settings saved successfully'
+            });
+        }
+    );
+});
+
+router.get('/getSettings', authPage, (req, res) => {
+    const sql = `
+        SELECT *
+        FROM settings
+        WHERE id = 1
+        LIMIT 1
+    `;
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Error fetching settings:', err);
+            return res.status(500).json({
+                success: false,
+                message: 'Database error'
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            data: result[0] || null
+        });
+    });
+});
 
 module.exports = router;
