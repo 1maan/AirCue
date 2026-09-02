@@ -69,6 +69,64 @@ router.delete('/remove-user', (req, res)=>{
     })
 })
 
+router.get('/users', (req, res)=>{
+    const getUsers = "SELECT id, full_name, status, username, email, role FROM users"
+    db.query(getUsers, (err, result)=>{
+        if(err){
+            return res.status(500).json({ success: false, message: 'Database error. Please try again later.' });
+        }
+        return res.status(200).json({ success: true, users: result });
+    })
+})
+
+router.put('/delete-user/:id', (req, res)=>{
+    const { id } = req.params;
+    const deleteUserSql = "UPDATE users SET status = 'inactive' WHERE id = ?";
+    db.query(deleteUserSql, [id], (err, result)=>{
+        if(err){
+            return res.status(500).json({ success: false, message: 'Database error. Please try again later.' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        return res.status(200).json({ success: true, message: 'User deleted successfully' });
+    })
+})
+
+router.put('/edit-user/:id', (req, res)=>{
+    const { id } = req.params;
+    const { fullname, email, username, role } = req.body;
+    const updateUserSql = "UPDATE users SET full_name = ?, email = ?, username = ?, role = ? WHERE id = ?";
+    db.query(updateUserSql, [fullname, email, username, role, id], (err, result)=>{
+        if(err){
+            return res.status(500).json({ success: false, message: 'Database error. Please try again later.' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+        return res.status(200).json({ success: true, message: 'User updated successfully' });
+    })
+})
+
+router.put('/reset-password/:id', authPage, (req, res)=>{
+    const { id } = req.params;
+    const { newPassword } = req.body;
+    const updatePasswordSql = "UPDATE users SET password_hash = ? WHERE id = ?";
+    bcrypt.hash(newPassword, saltRounds, (hashError, hashPass)=>{
+        if (hashError) {
+            console.error(hashError);
+            return res.status(500).json({ success: false, message: 'Authentication error' });
+        }
+        db.query(updatePasswordSql, [hashPass, id], (updateError, updateResult) => {
+            if (updateError) {
+                console.error(updateError);
+                return res.status(500).json({ success: false, message: 'Database error' });
+            }
+            return res.status(200).json({ success: true, message: 'Password reset successfully' });
+        });
+    });
+});
+
 router.post('/login', (req, res)=>{
     const { username, password } = req.body;
     if( !username || !password ){
@@ -113,7 +171,7 @@ router.post('/logout', (req, res)=>{
 
 // STORIES PAGE
 
-router.post('/stories', (req, res)=>{
+router.post('/stories', authPage, (req, res)=>{
     const { slug, language, cg_text, story_text } = req.body;
     const date = req.query.date;
     if(!slug || !language || !cg_text || !story_text){
@@ -141,7 +199,7 @@ router.post('/stories', (req, res)=>{
     );
 })
 
-router.get('/stories', (req, res) => {
+router.get('/stories', authPage, authPage, (req, res) => {
     const date = req.query.date;
     let language = req.query.lan;
 
@@ -177,7 +235,7 @@ router.get('/stories', (req, res) => {
     });
 });
 
-router.get('/stories/search', (req, res) => {
+router.get('/stories/search', authPage, (req, res) => {
 
     const { q, date, lan } = req.query;
 
@@ -259,7 +317,7 @@ router.put('/stories/:id', authPage, (req, res) => {
 
 // RUN ORDERS PAGE
 
-router.post('/run-orders', (req, res) => {
+router.post('/run-orders', authPage, (req, res) => {
     const { name, run_date, air_time } = req.body;
     const created_by = req.session.userID;
     if (!name || !run_date || !air_time || !created_by) {
@@ -278,7 +336,7 @@ router.post('/run-orders', (req, res) => {
     );
 });
 
-router.get('/run-orders', (req, res) => {
+router.get('/run-orders', authPage, (req, res) => {
     const date = req.query.date;
     if (!date) {
         return res.status(400).json({ success: false, message: 'Date query parameter is required' });
@@ -305,7 +363,7 @@ router.get('/run-orders', (req, res) => {
     })
 });
 
-router.put('/run-orders/:id/active', (req, res) => {
+router.put('/run-orders/:id/active', authPage, (req, res) => {
     const id = req.params.id;
     const sql = `
         UPDATE run_orders
@@ -325,7 +383,7 @@ router.put('/run-orders/:id/active', (req, res) => {
     });
 });
 
-router.get('/run-orders/active', (req, res) => {
+router.get('/run-orders/active', authPage, (req, res) => {
     const id = req.params.id;
     const sql = `
         SELECT * FROM run_orders WHEN id = ? OR status = 'live'
@@ -339,7 +397,7 @@ router.get('/run-orders/active', (req, res) => {
     });
 });
 
-router.get('/run-order', (req, res) => {
+router.get('/run-order', authPage, (req, res) => {
     const orderID = req.query.id;
     if (!orderID) {
         return res.status(400).json({ success: false, message: 'Date query parameter is required' });
@@ -379,7 +437,7 @@ router.get('/run-order', (req, res) => {
     })
 });
 
-router.put('/run-orders/:id', (req, res) => {
+router.put('/run-orders/:id', authPage, (req, res) => {
     const id = req.params.id;
     const { name, run_date, air_time, producer_id } = req.body;
     if (!name || !run_date || !air_time) {
@@ -408,7 +466,7 @@ router.put('/run-orders/:id', (req, res) => {
     );
 });
 
-router.delete('/run-orders/:id', (req, res) => {
+router.delete('/run-orders/:id', authPage, (req, res) => {
     const id = req.params.id;
     const sql = `DELETE FROM run_orders WHERE id = ?`;
     db.query(sql, [id], (err, result) => {
@@ -423,7 +481,7 @@ router.delete('/run-orders/:id', (req, res) => {
     });
 });
 
-router.get('/run-order/live', (req, res) => {
+router.get('/run-order/live', authPage, (req, res) => {
     const sql = `
         SELECT * FROM run_orders WHERE status = 'live';
     `;
@@ -435,7 +493,7 @@ router.get('/run-order/live', (req, res) => {
     })
 });
 
-router.post('/run-order/save', (req, res) => {
+router.post('/run-order/save', authPage, (req, res) => {
 
     const { run_order_id, data } = req.body;
 
@@ -623,7 +681,7 @@ router.post('/run-order/save', (req, res) => {
 
 });
 
-router.get('/run-order/:id', authPage, (req, res) => {
+router.get('/run-order/:id', authPage, authPage, (req, res) => {
 
     const id = req.params.id;
 
@@ -652,7 +710,7 @@ router.get('/run-order/:id', authPage, (req, res) => {
 
 });
 
-router.post('/controller-settings/save', authPage, (req, res) => {
+router.post('/controller-settings/save', authPage, authPage, (req, res) => {
     const {
         name,
         text_size,
@@ -705,7 +763,7 @@ router.post('/controller-settings/save', authPage, (req, res) => {
     });
 });
 
-router.get('/controller-settings', authPage, (req, res) => {
+router.get('/controller-settings', authPage, authPage, (req, res) => {
     const sql = `
         SELECT
             id,
@@ -732,7 +790,7 @@ router.get('/controller-settings', authPage, (req, res) => {
     });
 });
 
-router.post('/controller-settings/activate', authPage, (req, res) => {
+router.post('/controller-settings/activate', authPage, authPage, (req, res) => {
     const { id } = req.body;
 
     if (!id) {
@@ -772,7 +830,7 @@ router.post('/controller-settings/activate', authPage, (req, res) => {
     });
 });
 
-router.post('/controller-settings/remove-active', authPage, (req, res) => {
+router.post('/controller-settings/remove-active', authPage, authPage, (req, res) => {
     const sql = `
         UPDATE teleprompter_settings
         SET is_active = 0
@@ -799,7 +857,7 @@ router.post('/controller-settings/remove-active', authPage, (req, res) => {
     });
 });
 
-router.post('/breaking', (req, res)=>{
+router.post('/breaking', authPage,(req, res)=>{
     const { slug, language, cg_text, story_text } = req.body;
     const date = req.query.date;
     if(!slug || !language || !cg_text || !story_text){
@@ -826,5 +884,7 @@ router.post('/breaking', (req, res)=>{
         }
     );
 })
+
+
 
 module.exports = router;

@@ -18,6 +18,9 @@
         background: #f5f5f5;
         color: #171717;
       }
+      .scrollbar{
+        scrollbar-gutter: stable;
+      }
       .scrollbar::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -50,7 +53,7 @@
 </div>
 
 
-<form id="settingsForm" class="space-y-5">
+<div class="space-y-5">
 
 
   <!-- SYSTEM PATHS -->
@@ -91,9 +94,6 @@
   </div>
 </section>
 
-
-
-
   <!-- GRAPHICS -->
 
 <section class="overflow-hidden rounded-xl border border-[#e3e3e3] bg-white">
@@ -113,11 +113,6 @@
     </div>
   </div>
 </section>
-
-
-
-
-
 
   <!-- SAVE BAR -->
 
@@ -146,7 +141,7 @@
       <div class="mt-0.5 text-[9px] text-gray-400">Manage newsroom users and access.</div>
     </div>
 
-    <button type="button" onclick="openAddUser()" class="Outfit-Medium rounded-lg bg-black px-4 py-2 text-[10px] text-white hover:bg-gray-800">+ Add User</button>
+    <button type="button" onclick="openAddUser()" class="Outfit-Medium rounded-lg bg-black px-4 py-2 text-[10px] text-white cursor-pointer hover:bg-gray-800">Add User</button>
   </div>
 
   <!-- TABLE HEADER -->
@@ -162,559 +157,363 @@
   </div>
 
   <!-- USER -->
+<div id="userTb" class="space-y-0 overflow-auto scrollbar">
 
-  <div class="grid gap-3 border-b border-[#eeeeee] px-5 py-4 sm:grid-cols-[1fr_140px_110px_100px] sm:items-center">
-    <div class="flex items-center gap-3">
-      <div class="Outfit-Medium flex h-8 w-8 items-center justify-center rounded-full bg-black text-[9px] text-white">HI</div>
+</div>
 
-      <div>
-        <div class="text-[11px] font-medium">Hussain</div>
 
-        <div class="mt-0.5 text-[9px] text-gray-400">@hussain</div>
-      </div>
-    </div>
-
-    <div class="text-[10px] text-gray-500">Producer</div>
-
-    <div class="flex items-center gap-2">
-      <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-
-      <span class="text-[9px] text-green-600"> Active </span>
-    </div>
-
-    <div class="relative flex justify-end">
-      <button type="button" onclick="toggleUserMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
-
-      <div class="user-menu absolute top-9 right-0 z-20 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
-        <button type="button" onclick="editUser(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Edit User</button>
-
-        <button type="button" onclick="resetUserPassword(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Reset Password</button>
-
-        <button type="button" onclick="disableUser(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Disable Account</button>
-
-        <div class="my-1 border-t border-[#eeeeee]"></div>
-
-        <button type="button" onclick="deleteUser(1)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-red-500 hover:bg-red-50">Delete User</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- USER -->
-
-  <div class="grid gap-3 px-5 py-4 sm:grid-cols-[1fr_140px_110px_100px] sm:items-center">
-    <div class="flex items-center gap-3">
-      <div class="Outfit-Medium flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-[9px] text-gray-600">AH</div>
-
-      <div>
-        <div class="text-[11px] font-medium">Ahmed</div>
-
-        <div class="mt-0.5 text-[9px] text-gray-400">@ahmed</div>
-      </div>
-    </div>
-
-    <div class="text-[10px] text-gray-500">Journalist</div>
-
-    <div class="flex items-center gap-2">
-      <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-
-      <span class="text-[9px] text-green-600"> Active </span>
-    </div>
-
-    <div class="relative flex justify-end">
-      <button type="button" onclick="toggleUserMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
-
-      <div class="user-menu absolute top-9 right-0 z-20 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
-        <button type="button" onclick="editUser(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Edit User</button>
-
-        <button type="button" onclick="resetUserPassword(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Reset Password</button>
-
-        <button type="button" onclick="disableUser(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Disable Account</button>
-
-        <div class="my-1 border-t border-[#eeeeee]"></div>
-
-        <button type="button" onclick="deleteUser(2)" class="w-full rounded-md px-3 py-2 text-left text-[10px] text-red-500 hover:bg-red-50">Delete User</button>
-      </div>
-    </div>
-  </div>
   <!-- ADD USER MODAL -->
-
   <div id="addUserModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
     <div class="w-full max-w-[430px] overflow-hidden rounded-xl bg-white shadow-xl">
-      <div class="flex items-center justify-between border-b border-[#eeeeee] px-5 py-4">
-        <div>
-          <div class="Outfit-Medium text-[13px]">Add User</div>
-
-          <div class="mt-0.5 text-[9px] text-gray-400">Create a new AirCue newsroom account.</div>
-        </div>
-
-        <button type="button" onclick="closeAddUser()" class="text-[18px] text-gray-400 hover:text-black">×</button>
+    <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Add User</div>
+        <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Create a new AirCue newsroom account.</div>
       </div>
-
-      <form id="addUserForm" class="space-y-4 p-5">
+      <div onclick="closeAddUser()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
+        <p class="cursor-pointer">×</p>
+      </div>
+    </div>
+      <div class="space-y-4 p-5">
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> EMAIL </label>
+          <input id="newEmail" type="email" placeholder="Enter email address" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
         <div>
           <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> FULL NAME </label>
-
           <input id="newFullname" type="text" placeholder="Enter full name" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
         </div>
-
         <div>
           <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> USERNAME </label>
-
           <input id="newUsername" type="text" placeholder="Enter username" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
         </div>
-
         <div>
           <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> PASSWORD </label>
-
-          <input id="newPassword" type="password" placeholder="Enter password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+          <input id="newPassword" type="password" value="Welcome123" placeholder="Enter password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
         </div>
-
         <div>
           <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> ROLE </label>
-
           <select id="newRole" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[11px] outline-none focus:border-black">
             <option value="journalist">Journalist</option>
-
             <option value="producer">Producer</option>
-
-            <option value="editor">Editor</option>
-
-            <option value="admin">Administrator</option>
+            <option value="admin">Admin</option>
           </select>
         </div>
-
-        <!-- PERMISSIONS -->
-
-        <div>
-          <div class="Outfit-Medium mb-2 text-[9px] text-gray-500">ACCESS</div>
-
-          <div class="space-y-2 rounded-lg border border-[#eeeeee] p-3">
-            <label class="flex cursor-pointer items-center justify-between">
-              <span class="text-[10px]"> Stories </span>
-
-              <input id="accessStories" type="checkbox" checked class="accent-black" />
-            </label>
-
-            <label class="flex cursor-pointer items-center justify-between">
-              <span class="text-[10px]"> Run Orders </span>
-
-              <input id="accessRunorders" type="checkbox" checked class="accent-black" />
-            </label>
-
-            <label class="flex cursor-pointer items-center justify-between">
-              <span class="text-[10px]"> Teleprompter Control </span>
-
-              <input id="accessPrompter" type="checkbox" class="accent-black" />
-            </label>
-
-            <label class="flex cursor-pointer items-center justify-between">
-              <span class="text-[10px]"> Graphics Control </span>
-
-              <input id="accessGraphics" type="checkbox" class="accent-black" />
-            </label>
-
-            <label class="flex cursor-pointer items-center justify-between">
-              <span class="text-[10px]"> Breaking News </span>
-
-              <input id="accessBreaking" type="checkbox" checked class="accent-black" />
-            </label>
-          </div>
-        </div>
-
         <div class="flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
-          <button type="button" onclick="closeAddUser()" class="rounded-lg px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
-
-          <button type="submit" class="Outfit-Medium rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800">Create User</button>
+          <button type="button" onclick="closeAddUser()" class="rounded-lg cursor-pointer px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+          <button id="addUserForm" class="Outfit-Medium cursor-pointer rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800">Create User</button>
         </div>
-      </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit user -->
+  <div id="editUserModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+    <div class="w-full max-w-[430px] overflow-hidden rounded-xl bg-white shadow-xl">
+    <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Add User</div>
+        <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Create a new AirCue newsroom account.</div>
+      </div>
+      <div onclick="closeEditUser()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
+        <p class="cursor-pointer">×</p>
+      </div>
+    </div>
+      <div class="space-y-4 p-5">
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> ID </label>
+          <input id="edituserid" type="text" readonly placeholder="Enter user ID" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> EMAIL </label>
+          <input id="editEmail" type="email" placeholder="Enter email address" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> FULL NAME </label>
+          <input id="editFullname" type="text" placeholder="Enter full name" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> USERNAME </label>
+          <input id="editUsername" type="text" placeholder="Enter username" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> ROLE </label>
+          <select id="editRole" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[11px] outline-none focus:border-black">
+            <option value="journalist">Journalist</option>
+            <option value="producer">Producer</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
+          <button type="button" onclick="closeEditUser()" class="rounded-lg cursor-pointer px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+          <button id="editUserForm" class="Outfit-Medium cursor-pointer rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="passwordChange" data-user-id="" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+    <div class="w-full max-w-[430px] overflow-hidden rounded-xl bg-white shadow-xl">
+    <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
+      <div>
+        <div class="Outfit-SemiBold line-clamp-1 text-[14px] break-all">Change Password</div>
+        <div class="mt-0.5 line-clamp-1 text-[10px] break-all text-gray-400">Update your password.</div>
+      </div>
+      <div onclick="closePasswordChange()" class="aspect-square h-fit w-fit cursor-pointer rounded-sm px-2 text-gray-400 hover:bg-gray-200 hover:text-black">
+        <p class="cursor-pointer">×</p>
+      </div>
+    </div>
+      <div class="space-y-4 p-5">
+        <div>
+          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> NEW PASSWORD </label>
+          <input id="newPassword" type="password" placeholder="Enter new password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
+        </div>
+        <div class="flex justify-end gap-2 border-t border-[#eeeeee] pt-4">
+          <button type="button" onclick="closePasswordChange()" class="rounded-lg cursor-pointer px-4 py-2.5 text-[10px] text-gray-500 hover:bg-gray-100">Cancel</button>
+          <button id="passwordChangeForm" class="Outfit-Medium cursor-pointer rounded-lg bg-black px-4 py-2.5 text-[10px] text-white hover:bg-gray-800">Save Changes</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-</form>
+</div>
 
 
   </main>
 
 </div>
-
+<%- include('partials/alert') -%>
 <script>
 function openAddUser() {
-
-  const modal =
-    document.getElementById("addUserModal");
-
+  const modal = document.getElementById("addUserModal");
   modal.classList.remove("hidden");
   modal.classList.add("flex");
 
 }
-
-
 function closeAddUser() {
-
-  const modal =
-    document.getElementById("addUserModal");
-
+  const modal = document.getElementById("addUserModal");
   modal.classList.add("hidden");
   modal.classList.remove("flex");
-
 }
-
-
+function openEditUser(id, fullname, email, username, role) {
+  const modal = document.getElementById("editUserModal");
+  document.getElementById("edituserid").value = id;
+  document.getElementById("editFullname").value = fullname;
+  document.getElementById("editEmail").value = email;
+  document.getElementById("editUsername").value = username;
+  document.getElementById("editRole").value = role;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+function closeEditUser() {
+  const modal = document.getElementById("editUserModal");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
+function openPasswordChange(id) {
+  const modal = document.getElementById("passwordChange");
+  modal.setAttribute("data-user-id", id);
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+function closePasswordChange() {
+  const modal = document.getElementById("passwordChange");
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
 function toggleUserMenu(button) {
-
-  const menu =
-    button.parentElement.querySelector(".user-menu");
-
-
-  document
-    .querySelectorAll(".user-menu")
-    .forEach(item => {
-
+  const menu = button.parentElement.querySelector(".user-menu");
+  document.querySelectorAll(".user-menu").forEach(item => {
       if (item !== menu) {
         item.classList.add("hidden");
       }
-
     });
-
-
   menu.classList.toggle("hidden");
-
 }
 
-
 document.addEventListener("click", event => {
-
   if (
     !event.target.closest(".user-menu") &&
     !event.target.closest("[onclick^='toggleUserMenu']")
   ) {
-
-    document
-      .querySelectorAll(".user-menu")
-      .forEach(menu => {
-        menu.classList.add("hidden");
-      });
-
+  document.querySelectorAll(".user-menu").forEach(menu => {
+    menu.classList.add("hidden");
+  });
   }
-
 });
 
 
-document
-  .getElementById("addUserModal")
-  .addEventListener("click", function(event) {
-
+document.getElementById("addUserModal").addEventListener("click", function(event) {
     if (event.target === this) {
       closeAddUser();
     }
-
   });
 
 
-document
-  .getElementById("addUserForm")
-  .addEventListener("submit", async function(event) {
-
+const addUserForm = document.getElementById("addUserForm")
+const editUserForm = document.getElementById("editUserForm")
+addUserForm.addEventListener("click", async (event) => {
     event.preventDefault();
-
-
     const user = {
-
-      fullname:
-        document
-          .getElementById("newFullname")
-          .value
-          .trim(),
-
-      username:
-        document
-          .getElementById("newUsername")
-          .value
-          .trim(),
-
-      password:
-        document
-          .getElementById("newPassword")
-          .value,
-
-      role:
-        document
-          .getElementById("newRole")
-          .value,
-
-      permissions: {
-
-        stories:
-          document
-            .getElementById("accessStories")
-            .checked,
-
-        runorders:
-          document
-            .getElementById("accessRunorders")
-            .checked,
-
-        prompter:
-          document
-            .getElementById("accessPrompter")
-            .checked,
-
-        graphics:
-          document
-            .getElementById("accessGraphics")
-            .checked,
-
-        breaking:
-          document
-            .getElementById("accessBreaking")
-            .checked
-
-      }
-
+      email: document.getElementById("newEmail").value.trim(),
+      fullname: document.getElementById("newFullname").value.trim(),
+      username: document.getElementById("newUsername").value.trim(),
+      password: document.getElementById("newPassword").value,
+      role: document.getElementById("newRole").value,
     };
-
-
-    console.log(user);
-
-
-    /*
-    const response = await fetch("/api/users", {
-
+    const response = await fetch("/api/add-user", {
       method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
+      headers: { "Content-Type": "application/json"
       },
-
       body: JSON.stringify(user)
-
     });
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
-
-      alert(
-        data.message ||
-        "Unable to create user."
-      );
-
+    const data = await response.json();
+    if(data.success) {
+      showAlert('success', data.message || "User created successfully");
+      closeAddUser();
+      document.getElementById("newEmail").value = "";
+      document.getElementById("newFullname").value = "";
+      document.getElementById("newUsername").value = "";
+      document.getElementById("newPassword").value = "";
       return;
-
     }
-    */
-
-
+    if (!response.ok) {
+      showAlert('error', data.message || "Unable to create user");
+      return;
+    }
     closeAddUser();
-
 });
 
 
-function editUser(id) {
-  console.log("Edit user:", id);
-}
-
-
-function resetUserPassword(id) {
-  console.log("Reset password:", id);
-}
-
-
-function disableUser(id) {
-  console.log("Disable user:", id);
-}
-
-
-function deleteUser(id) {
-
-  if (!confirm("Delete this user?")) {
-    return;
-  }
-
-  console.log("Delete user:", id);
-
-}
-  const defaultTextSize =
-    document.getElementById("defaultTextSize");
-
-  const defaultLineHeight =
-    document.getElementById("defaultLineHeight");
-
-
-  defaultTextSize.addEventListener("input", function() {
-
-    document.getElementById("textSizeValue").textContent =
-      this.value + "px";
-
-  });
-
-
-  defaultLineHeight.addEventListener("input", function() {
-
-    document.getElementById("lineHeightValue").textContent =
-      this.value;
-
-  });
+editUserForm.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const userId = document.getElementById("edituserid").value;
+    const user = {
+      email: document.getElementById("editEmail").value.trim(),
+      fullname: document.getElementById("editFullname").value.trim(),
+      username: document.getElementById("editUsername").value.trim(),
+      role: document.getElementById("editRole").value,
+    };
+    const response = await fetch(`/api/edit-user/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    });
+    const data = await response.json();
+    if(data.success) {
+      showAlert('success', data.message || "User updated successfully");
+      closeEditUser();
+      getUsers();
+      return;
+    }
+    if (!response.ok) {
+      showAlert('error', data.message || "Unable to update user");
+      return;
+    }
+});
 
 
 
-  document
-    .getElementById("settingsForm")
-    .addEventListener("submit", async function(event) {
-
-      event.preventDefault();
-
-
-      const settings = {
-
-        breakingNewsPath:
-          document.getElementById("breakingNewsPath").value.trim(),
-
-        chTextPath:
-          document.getElementById("chTextPath").value.trim(),
-
-        prompterIp:
-          document.getElementById("prompterIp").value.trim(),
-
-        prompterPort:
-          document.getElementById("prompterPort").value,
-
-        defaultTextSize:
-          document.getElementById("defaultTextSize").value,
-
-        defaultLineHeight:
-          document.getElementById("defaultLineHeight").value,
-
-        defaultMirror:
-          document.getElementById("defaultMirror").checked,
-
-        graphicsIp:
-          document.getElementById("graphicsIp").value.trim(),
-
-        graphicsPort:
-          document.getElementById("graphicsPort").value,
-
-        cgChannel:
-          document.getElementById("cgChannel").value.trim(),
-
-        defaultLanguage:
-          document.getElementById("defaultLanguage").value,
-
-        defaultPreset:
-          document.getElementById("defaultPreset").value,
-
-        autoSave:
-          document.getElementById("autoSave").checked
-
-      };
-
-
-      console.log(settings);
-
-
-      /*
-      const response = await fetch("/api/settings", {
-
-        method: "PUT",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify(settings)
-
-      });
-
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        alert(data.message || "Unable to save settings.");
-        return;
+function getUsers() {
+  fetch("/api/users")
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById("userTb").innerHTML = ""
+        document.getElementById("userTb").innerHTML = data.users.map(user => `
+  <div class="grid gap-3 px-5 py-4 grid-cols-[1fr_140px_110px_100px] items-center">
+    <div class="flex items-center gap-3">
+      <div class="Outfit-Medium flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-[9px] text-gray-600">${user.full_name.charAt(0).toUpperCase()}</div>
+      <div>
+        <div class="text-[11px] font-medium">${user.full_name}</div>
+        <div class="mt-0.5 text-[9px] text-gray-400">@${user.username}</div>
+      </div>
+    </div>
+    <div class="text-[10px] text-gray-500">${user.role}</div>
+    <div class="flex items-center gap-2">
+    ${user.status === 'active' ? `<span class="text-[9px] text-green-600"> Active </span>` : `</span><span class="text-[9px] text-red-600"> Deleted </span>`}
+    </div>
+    <div class="relative flex justify-end">
+      <button type="button" onclick="toggleUserMenu(this)" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-gray-400 hover:bg-gray-100 hover:text-black">⋮</button>
+      <div class="user-menu absolute top-9 right-0 z-20 hidden w-40 rounded-lg border border-[#e5e5e5] bg-white p-1.5 shadow-lg">
+        <button type="button" onclick="openEditUser(${user.id}, '${user.full_name}', '${user.email}', '${user.username}', '${user.role}')" class="w-full rounded-md px-3 cursor-pointer py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Edit User</button>
+        <button type="button" onclick="openPasswordChange(${user.id})" class="w-full rounded-md px-3 cursor-pointer py-2 text-left text-[10px] text-gray-600 hover:bg-gray-50">Reset Password</button>
+        <div class="my-1 border-t border-[#eeeeee]"></div>
+        <button type="button" onclick="deleteUser(${user.id})" class="w-full rounded-md px-3 cursor-pointer py-2 text-left text-[10px] text-red-500 hover:bg-red-50">Delete User</button>
+      </div>
+    </div>
+  </div>
+        `).join('');
+      } else {
+        console.error("Failed to fetch users:", data.message);
       }
-      */
-
-
-      document.getElementById("saveStatus").textContent =
-        "Settings saved.";
-
-  });
-
-
-
-  function testPaths() {
-
-    const breakingNewsPath =
-      document.getElementById("breakingNewsPath").value.trim();
-
-    const chTextPath =
-      document.getElementById("chTextPath").value.trim();
-
-
-    console.log({
-      breakingNewsPath,
-      chTextPath
+    })
+    .catch(error => {
+      console.error("Error fetching users:", error);
     });
+}
+getUsers()
 
 
-    /*
-    fetch("/api/settings/test-paths", {
+function deleteUser(id){
+  if(confirm("Are you sure you want to delete this user? This action cannot be undone.")){
+    fetch(`/api/delete-user/${id}`, {
+      method: "PUT"
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.success){
+        showAlert('success', data.message || "User deleted successfully");
+        getUsers();
+      } else {
+        showAlert('error', data.message || "Failed to delete user");
+      }
+    })
+    .catch(error => {
+      console.error("Error deleting user:", error);
+      showAlert('error', "An error occurred while deleting the user");
+    });
+  }
+}
 
-      method: "POST",
-
-      headers: {
+const passwordChangeForm = document.getElementById("passwordChangeForm")
+passwordChangeForm.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const userId = document.getElementById("passwordChange").getAttribute("data-user-id");
+    const newPassword = document.getElementById("newPassword").value;
+    if (!newPassword) {
+      showAlert('error', "Please enter a new password");
+      return;
+    }
+    fetch(`/api/reset-password/${userId}`, {
+    method: "PUT",
+    headers: {
         "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        breakingNewsPath,
-        chTextPath
-      })
-
+    },
+    body: JSON.stringify({
+        newPassword: newPassword
+    })
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.success) {
+        showAlert('success', data.message);
+        document.getElementById("newPassword").value = "";
+        closePasswordChange();
+    } else {
+        showAlert('error', data.message);
+    }
+    })
+    .catch(error => {
+        console.error(error);
+        showAlert(
+            'error',
+            'An error occurred while resetting the password'
+        );
     });
-    */
-
-  }
-
-
-
-  function testGraphics() {
-
-    const ip =
-      document.getElementById("graphicsIp").value.trim();
-
-    const port =
-      document.getElementById("graphicsPort").value;
-
-
-    console.log(
-      "Test graphics:",
-      ip,
-      port
-    );
-
-  }
-
-
-
-  function resetSettings() {
-
-    document
-      .getElementById("settingsForm")
-      .reset();
-
-
-    document.getElementById("textSizeValue").textContent =
-      defaultTextSize.value + "px";
-
-    document.getElementById("lineHeightValue").textContent =
-      defaultLineHeight.value;
-
-  }
+});
 
 </script>
   </body>
