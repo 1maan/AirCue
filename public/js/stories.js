@@ -135,6 +135,7 @@ function selectLanguageFilter(language, label) {
     toggleFilterMenu();
 }
 
+if(languageToggle){
 languageToggle.addEventListener("change", ()=>{
   if(languageToggle.checked){
     storyText.setAttribute('dir', 'rtl')
@@ -142,7 +143,9 @@ languageToggle.addEventListener("change", ()=>{
     storyText.setAttribute('dir', 'ltr')
   }
 })
+}
 
+if(cgToggle){
 cgToggle.addEventListener("change", ()=>{
   if(cgToggle.checked){
     cg.setAttribute('dir', 'rtl')
@@ -153,7 +156,8 @@ cgToggle.addEventListener("change", ()=>{
       cgToggle.checked ? cg_text_preview.classList.add('AWaheed') : cg_text_preview.classList.add('Outfit-Medium');
     cgToggle.checked ? cg_text_preview.classList.remove('Outfit-Medium') : cg_text_preview.classList.remove('AWaheed');
 })
-
+}
+if(cg){
 cg.addEventListener('input', ()=>{
   if(cgToggle.checked){
     cg_text_preview.textContent = transliterateDhivehiToEnglish(cg.value);
@@ -161,6 +165,7 @@ cg.addEventListener('input', ()=>{
     cg_text_preview.textContent = cg.value;
   }
 })
+}
 
 let selectedDate = new Date();
 const selectedDateText = document.getElementById('selectedDateText');
@@ -222,16 +227,20 @@ function updateSelectedDate() {
     getStories(date);
     resertStoryEditor();
 }
+if(prevDate){
 prevDate.addEventListener('click', () => {
     selectedDate.setDate(selectedDate.getDate() - 1);
     updateSelectedDate();
     searchStories.value = "";
 });
+}
+if(nextDate){
 nextDate.addEventListener('click', () => {
     selectedDate.setDate(selectedDate.getDate() + 1);
     updateSelectedDate();
     searchStories.value = "";
 });
+}
 updateSelectedDate();
 
 function loadingStories() {
@@ -383,13 +392,14 @@ function getStories(date) {
     });
 }
 let searchTimer = null;
+if(searchStories){
 searchStories.addEventListener('input', () => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
         searchNews(date, searchStories.value);
     }, 400);
 });
-
+}
 function searchNews(date, input){
   const loadingTimer = setTimeout(() => {
     loadingSearchResults();
@@ -862,10 +872,12 @@ socket.on('recStory', (data)=>{
   let rtvSto = document.getElementById("rtvSto")
   let rtvNewsBtn = document.getElementById("rtvNewsBtn")
   let rtvNewsContainer = document.getElementById("rtvNewsContainer")
-
+  if(rtvNewsBtn){
   rtvNewsBtn.addEventListener("click",()=>{
     rtvNewsContainer.classList.remove('hidden')
   })
+  }
+
   function rtvNewsContainerClose(){
     rtvNewsContainer.classList.add('hidden')
   }
@@ -874,7 +886,6 @@ socket.on('recStory', (data)=>{
   fetch('https://api.raajje.mv/articles/latest')
   .then(response => response.json())
   .then(data=>{
-    console.log(data.data)
     data.data.forEach(element => {
         rtvSto.insertAdjacentHTML('beforeend', `
       <div onclick="addNews('${element.id}')" class="cursor-pointer hover:bg-gray-100 active:bg-gray-200 p-2 rounded-md">
@@ -898,7 +909,6 @@ function pageChange(type){
     pageCount++
   }
   
-  console.log(pageCount)
   fetch(`https://api.raajje.mv/articles/latest?page=${pageCount}`)
   .then(response => response.json())
   .then(data=>{
@@ -1051,7 +1061,6 @@ function PushLiveToAir(){
             story_text: storyText.value,
             date: date
         })
-        console.log(dataInput)
     fetch(`/api/breaking?date=${date}`, {
         method: 'POST',
         headers: {

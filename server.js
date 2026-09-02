@@ -56,7 +56,6 @@ function ipMatch(userIp) {
                 console.error(err);
                 return resolve(false);
             }
-            console.log(result)
             resolve(result.length > 0);
         });
     });

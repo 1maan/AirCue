@@ -32,6 +32,7 @@ const toggle_action_1 = document.querySelector(".toggle_action_1");
 const toggle_action_2 = document.querySelector(".toggle_action_2");
 
 let showJump = false;
+if(toggleAction){
 toggleAction.addEventListener("click", (e) => {
     showJump = !showJump;
     actionJump.forEach(element => {
@@ -50,7 +51,6 @@ toggleAction.addEventListener("click", (e) => {
     toggle_action_1.classList.toggle('hidden')
     toggle_action_2.classList.toggle('hidden')
 });
-
 toggleAction.addEventListener("mousedown", (event) => {
     if (event.button === 0) {
     }
@@ -66,6 +66,7 @@ toggleAction.addEventListener("mousedown", (event) => {
 toggleAction.addEventListener("contextmenu", (event) => {
   event.preventDefault();
 });
+}
 
 const fontSize = document.getElementById("fontSize");
 const fontSizeValue = document.getElementById("fontSizeValue");
@@ -75,34 +76,23 @@ const margin = document.getElementById("margin");
 const marginValue = document.getElementById("marginValue");
 const mirror = document.getElementById("mirror");
 
-
+if(fontSize){
 fontSize.addEventListener('input', () =>{
     fontSizeValue.textContent = `${fontSize.value}px`
 })
-
-
+}
+if(lineHeight){
 lineHeight.addEventListener('input', () =>{
     lineHeightValue.textContent = `${lineHeight.value}px`
 })
+}
 
-
+if(margin){
 margin.addEventListener('input', () =>{
     marginValue.textContent = `${margin.value}%`
 })
+}
 
-
-mirror.addEventListener('change', ()=>{
-})
-// let alg = 'center'
-// function setAlign(alignment, button) {
-//   document.querySelectorAll(".align-btn").forEach((btn) => {
-//     btn.classList.remove("border-black", "bg-black", "text-white");
-//     btn.classList.add("border-[#dddddd]", "text-gray-500");
-//   });
-//   button.classList.remove("border-[#dddddd]", "text-gray-500");
-//   button.classList.add("border-black", "bg-black", "text-white");
-//   alg = alignment
-// }
 
 let toggleFilterOpen = false;
 let filterMenu = document.getElementById('filterMenu')

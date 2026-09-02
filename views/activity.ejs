@@ -34,7 +34,6 @@
 
 <div class="min-h-screen">
 
-  <%- include('partials/header') -%>
 
 
   <main class="mx-auto max-w-[1500px] p-4 md:p-7">
@@ -710,21 +709,24 @@ function filterActivity() {
 
 }
 
-
+if(searchInput){
 searchInput.addEventListener(
   "input",
   filterActivity
 );
-
+}
+if(typeFilter){
 typeFilter.addEventListener(
   "change",
   filterActivity
 );
-
+}
+if(userFilter){
 userFilter.addEventListener(
   "change",
   filterActivity
 );
+}
 
 
 function refreshActivity() {

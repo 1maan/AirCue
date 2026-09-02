@@ -186,10 +186,6 @@
           <input id="newUsername" type="text" placeholder="Enter username" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
         </div>
         <div>
-          <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> PASSWORD </label>
-          <input id="newPassword" type="password" value="Welcome123" placeholder="Enter password" class="w-full rounded-lg border border-[#dddddd] px-3 py-2.5 text-[11px] outline-none focus:border-black" />
-        </div>
-        <div>
           <label class="Outfit-Medium mb-1.5 block text-[9px] text-gray-500"> ROLE </label>
           <select id="newRole" class="w-full rounded-lg border border-[#dddddd] bg-white px-3 py-2.5 text-[11px] outline-none focus:border-black">
             <option value="journalist">Journalist</option>
@@ -251,7 +247,7 @@
   </div>
 
 
-  <div id="passwordChange" data-user-id="" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
+  <div id="passwordChange" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/30 p-4">
     <div class="w-full max-w-[430px] overflow-hidden rounded-xl bg-white shadow-xl">
     <div class="flex items-center justify-between gap-3 border-b border-[#eeeeee] px-5 py-4">
       <div>
@@ -312,7 +308,7 @@ function closeEditUser() {
 }
 function openPasswordChange(id) {
   const modal = document.getElementById("passwordChange");
-  modal.setAttribute("data-user-id", id);
+  modal.dataset.userid = id;
   modal.classList.remove("hidden");
   modal.classList.add("flex");
 }
@@ -352,6 +348,7 @@ document.getElementById("addUserModal").addEventListener("click", function(event
 
 const addUserForm = document.getElementById("addUserForm")
 const editUserForm = document.getElementById("editUserForm")
+if(addUserForm){
 addUserForm.addEventListener("click", async (event) => {
     event.preventDefault();
     const user = {
@@ -383,8 +380,9 @@ addUserForm.addEventListener("click", async (event) => {
     }
     closeAddUser();
 });
+}
 
-
+if(editUserForm){
 editUserForm.addEventListener("click", async (event) => {
     event.preventDefault();
     const userId = document.getElementById("edituserid").value;
@@ -411,6 +409,7 @@ editUserForm.addEventListener("click", async (event) => {
       return;
     }
 });
+}
 
 
 
@@ -477,21 +476,28 @@ function deleteUser(id){
 }
 
 const passwordChangeForm = document.getElementById("passwordChangeForm")
+let userId = document.getElementById("passwordChange")
+let newPassword = document.getElementById("newPassword")
+
+if(passwordChangeForm){
 passwordChangeForm.addEventListener("click", async (event) => {
     event.preventDefault();
-    const userId = document.getElementById("passwordChange").getAttribute("data-user-id");
-    const newPassword = document.getElementById("newPassword").value;
-    if (!newPassword) {
-      showAlert('error', "Please enter a new password");
+    if (!userId.dataset.userid) {
+    showAlert("error", "No user selected");
       return;
     }
-    fetch(`/api/reset-password/${userId}`, {
+    console.log(newPassword.value)
+    if (!newPassword.value) {
+      showAlert("error", "Please enter a new password");
+      return;
+    }
+    fetch(`/api/reset-password/${userId.dataset.userid}`, {
     method: "PUT",
     headers: {
         "Content-Type": "application/json"
     },
     body: JSON.stringify({
-        newPassword: newPassword
+        newPassword: newPassword.value
     })
     })
     .then(response => response.json())
@@ -512,7 +518,7 @@ passwordChangeForm.addEventListener("click", async (event) => {
         );
     });
 });
-
+}
 const breakingNewsPathInput = document.getElementById("breakingNewsPath");
 const chTextPathInput = document.getElementById("chTextPath");
 const graphicsIpInput = document.getElementById("graphicsIp");

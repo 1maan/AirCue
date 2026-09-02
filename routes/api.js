@@ -112,6 +112,9 @@ router.put('/edit-user/:id', (req, res)=>{
 router.put('/reset-password/:id', authPage, (req, res)=>{
     const { id } = req.params;
     const { newPassword } = req.body;
+     if(!validatePassword(newPassword)){
+        return res.status(400).json({ success: false, message: 'Password does not meet complexity requirements' });
+    }
     const updatePasswordSql = "UPDATE users SET password_hash = ? WHERE id = ?";
     bcrypt.hash(newPassword, saltRounds, (hashError, hashPass)=>{
         if (hashError) {
@@ -162,8 +165,14 @@ router.post('/login', (req, res)=>{
 })
 
 router.put('/update-password', authPage, (req, res)=>{
-    const { currentPassword, newPassword } = req.body;
+    const { currentPassword, newPassword, confirmPassword } = req.body;
     const userId = req.session.userID;
+    if(newPassword !== confirmPassword){
+        return res.status(400).json({ success: false, message: 'New password and confirm password do not match' });
+    }
+    if(!validatePassword(newPassword)){
+        return res.status(400).json({ success: false, message: 'Password does not meet complexity requirements' });
+    }
     const getUserSql = "SELECT password_hash FROM users WHERE id = ? LIMIT 1";
     db.query(getUserSql, [userId], (err, result)=>{
         if(err){

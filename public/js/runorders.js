@@ -81,14 +81,18 @@ function updateSelectedDate() {
     }
 lineUploaded = true;
 }
-prevDate.addEventListener('click', () => {
-    selectedDate.setDate(selectedDate.getDate() - 1);
-    updateSelectedDate();
-});
-nextDate.addEventListener('click', () => {
-    selectedDate.setDate(selectedDate.getDate() + 1);
-    updateSelectedDate();
-});
+if(prevDate){
+    prevDate.addEventListener('click', () => {
+        selectedDate.setDate(selectedDate.getDate() - 1);
+        updateSelectedDate();
+    });
+}
+if(prevDate){
+    nextDate.addEventListener('click', () => {
+        selectedDate.setDate(selectedDate.getDate() + 1);
+        updateSelectedDate();
+    });
+}
 updateSelectedDate();
 
 
@@ -351,7 +355,7 @@ document.addEventListener("click", function(event) {
     CloseUpdateModal();
   }
 });
-
+if(newRunOrder){
 newRunOrder.addEventListener('click', ()=>{
     newRunOrder.Disabled = true;
     newRunOrder.querySelector('#buttonText').classList.add('hidden')
@@ -453,6 +457,7 @@ newRunOrder.addEventListener('click', ()=>{
         newRunOrder.querySelector('#buttionLoading').classList.remove('flex')
     })
 })
+}
 
 
 function activeRunOrder(id) {
@@ -567,6 +572,7 @@ function formatDatabaseDate2(dateString) {
     return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 }
 let UpdateRunOrder = document.getElementById("UpdateRunOrder");
+if(UpdateRunOrder){
 UpdateRunOrder.addEventListener("click", () => {
     const selectedRunOrderId = document.getElementById("UpdaterunOrderName").dataset.id;
     if (!selectedRunOrderId) return;
@@ -605,7 +611,7 @@ UpdateRunOrder.addEventListener("click", () => {
         lineups(date);
     });
 });
-
+}
 function deleteRunOrder(id) {
     fetch(`/api/run-orders/${id}`, {
         method: 'DELETE'

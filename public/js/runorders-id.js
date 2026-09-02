@@ -267,11 +267,12 @@ rightBtn.onclick = () => {
         behavior: 'smooth'
     });
 };
-
+if(dateScroller){
 dateScroller.addEventListener('wheel', (e) => {
     e.preventDefault();
     dateScroller.scrollLeft += e.deltaY * 4;
 }, { passive: false });
+}
 loadDates();
 
 function getRundownItems(date){
@@ -409,13 +410,14 @@ function countWords(text) {
     return text.trim().split(/\s+/).length;
 }
 
-
+if(storySearch){
 storySearch.addEventListener('input', () => {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(() => {
         searchNews(dateGlobal, storySearch.value);
     }, 400);
 });
+}
 
 
 function clearStorySearch(){
