@@ -120,6 +120,12 @@ socket.on('tele-jump-to', (data)=>{
     window.scrollTo({ top: 0, behavior: 'smooth' })
     window.location.href = `/teleprompter#${data}`
 });
+socket.on('tele-reload', (data)=>{
+    if(data){
+        window.location.reload();
+    }
+});
+
 let prompterPreview = document.getElementById("prompterPreview")
 if(localStorage.getItem('tele-fontSize')){
     document.querySelectorAll('.stoy').forEach(element => {
@@ -140,6 +146,7 @@ if(localStorage.getItem('tele-mirror') == 'true'){
 }else{
     prompterPreview.style.scale = `1`;
 }
+window.scrollTo({ top: 0, behavior: 'smooth' })
 
 
 function getActiveSettings(){

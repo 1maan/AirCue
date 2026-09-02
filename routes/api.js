@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const db = require('../config/db');
 const { authPage } = require('../config/auth');
-
+const fs = require("fs/promises");
+const path = require("path");
 
 
 function validateEmail(email) {
@@ -1009,6 +1010,103 @@ router.get('/get-active-settings', authPage, (req, res) => {
             success: true,
             data: result[0] || null
         });
+    });
+});
+
+
+router.post("/write-headline", (req, res) => {
+    const { text } = req.body;
+    if (typeof text !== "string") {
+        return res.status(400).json({
+            success: false,
+            message: "Text is required"
+        });
+    }
+    const sql = `
+        SELECT headline_path
+        FROM settings
+        ORDER BY id DESC
+        LIMIT 1
+    `;
+    db.query(sql, async (err, result) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({
+                success: false,
+                message: "Database error"
+            });
+        }
+        const headlinePath = result[0]?.headline_path?.trim();
+        if (!headlinePath) {
+            return res.status(404).json({
+                success: false,
+                message: "No headline path found"
+            });
+        }
+        try {
+            await fs.mkdir(path.dirname(headlinePath), {
+                recursive: true
+            });
+            await fs.writeFile(headlinePath, text, "utf8");
+            return res.status(200).json({
+                success: true,
+                message: "Headline file updated"
+            });
+        } catch (error) {
+            console.error("File writing error:", error);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to write headline file"
+            });
+        }
+    });
+});
+
+router.post("/write-breaking", (req, res) => {
+    const { text } = req.body;
+    if (typeof text !== "string") {
+        return res.status(400).json({
+            success: false,
+            message: "Text is required"
+        });
+    }
+    const sql = `
+        SELECT breaking_path
+        FROM settings
+        ORDER BY id DESC
+        LIMIT 1
+    `;
+    db.query(sql, async (err, result) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({
+                success: false,
+                message: "Database error"
+            });
+        }
+        const headlinePath = result[0]?.breaking_path?.trim();
+        if (!headlinePath) {
+            return res.status(404).json({
+                success: false,
+                message: "No headline path found"
+            });
+        }
+        try {
+            await fs.mkdir(path.dirname(headlinePath), {
+                recursive: true
+            });
+            await fs.writeFile(headlinePath, text, "utf8");
+            return res.status(200).json({
+                success: true,
+                message: "Headline file updated"
+            });
+        } catch (error) {
+            console.error("File writing error:", error);
+            return res.status(500).json({
+                success: false,
+                message: "Failed to write headline file"
+            });
+        }
     });
 });
 

@@ -318,7 +318,7 @@ function jumpToStory(id){
 
 
 function reloadTele(){
-
+    socket.emit('reload-tele', true)
 }
 
 
@@ -331,48 +331,48 @@ changeCgStory.forEach((button) => {
 
     button.addEventListener("mousedown", (event) => {
         if (event.button === 0) {
-            console.log("Left mouse button clicked");
+            writeText(transliterateDhivehiToEnglish(button.parentElement.dataset.cgtext))
+            button.querySelector("svg").setAttribute("fill", "#009f32");
+
         }
 
         if (event.button === 1) {
             event.preventDefault();
+            writeTextBreaking(transliterateDhivehiToEnglish(button.parentElement.dataset.cgtext))
+            button.querySelector("svg").setAttribute("fill", "#ff0000");
         }
 
         if (event.button === 2) {
             event.preventDefault();
-            console.log("Right mouse button clicked");
         }
     });
 });
 
 
-const cgContextMenu = document.getElementById("cgContextMenu");
-const cgToBreaking = document.getElementById("cgToBreaking");
-
-let selectedCgStory = null;
-
-changeCgStory.forEach((button) => {
-    button.addEventListener("contextmenu", (event) => {
-        event.preventDefault();
-
-        selectedCgStory = button;
-        cgContextMenu.classList.remove("hidden");
-
-        const padding = 8;
-        const menuWidth = cgContextMenu.offsetWidth;
-        const menuHeight = cgContextMenu.offsetHeight;
-
-        const x = Math.max(
-            padding,
-            Math.min(event.clientX, window.innerWidth - menuWidth - padding)
-        );
-
-        const y = Math.max(
-            padding,
-            Math.min(event.clientY, window.innerHeight - menuHeight - padding)
-        );
-
-        cgContextMenu.style.left = `${x}px`;
-        cgContextMenu.style.top = `${y}px`;
+async function writeText(text) {
+    const response = await fetch("/api/write-headline", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text })
     });
-});
+    const data = await response.json();
+    if(!data.success){
+        showAlert('error', data.message)
+    }
+}
+
+async function writeTextBreaking(text) {
+    const response = await fetch("/api/write-breaking", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text })
+    });
+    const data = await response.json();
+    if(!data.success){
+        showAlert('error', data.message)
+    }
+}
