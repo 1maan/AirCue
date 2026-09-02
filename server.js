@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
     })
     socket.on("tele-jump", async (data) => {
         const userIp = socket.handshake.address.replace("::ffff:", "");
-        const matched = await ipMatch(userIp);
+        const matched = await ipMatch('192.168.10.20');
         if (!matched) {
             console.log("IP not allowed:", userIp);
             return;

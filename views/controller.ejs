@@ -53,7 +53,7 @@
           </div>
           <div class="flex items-center gap-2">
             <% if(runDown[0]){ %>
-            <a href="/runorder/<%= runDown[0].ro_id %>" target="_blank">
+            <a href="/runorder/<%= runDown[0].ro_id %>?page=controller" target="_blank">
               <button class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap gap-0.5  hover:bg-gray-50 flex items-center">Open <span class="hidden sm:block">RunDown</span></button>
             </a>
             <% } %>

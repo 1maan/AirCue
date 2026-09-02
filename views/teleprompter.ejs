@@ -99,6 +99,8 @@ window.addEventListener('pageshow', (event) => {
     }
 });
 
+let prompterPreview = document.getElementById("prompterPreview")
+
 socket.on('tele-settings-update', (data)=>{
     document.querySelectorAll('.stoy').forEach(element => {
         element.style.setProperty('--line-fz', `${data[0]}px`);
@@ -126,7 +128,6 @@ socket.on('tele-reload', (data)=>{
     }
 });
 
-let prompterPreview = document.getElementById("prompterPreview")
 if(localStorage.getItem('tele-fontSize')){
     document.querySelectorAll('.stoy').forEach(element => {
         element.style.setProperty('--line-fz', `${localStorage.getItem('tele-fontSize')}px`);

@@ -681,6 +681,8 @@ runOrderList.insertAdjacentHTML('beforeend', `
 
 
 
+const pageDire = new URLSearchParams(window.location.search).get("page");
+
 
 
 
@@ -717,9 +719,10 @@ function saveRunOrder(id){
     .then(result => {
         if (result.success) {
             showAlert('success', result.message);
-
-        socket.emit('updateRunDown', id)
-
+            socket.emit('updateRunDown', id)
+            if (pageDire === "controller") {
+                window.location.href = "/controller";
+            }
         } else {
             showAlert('error', result.message);
         }

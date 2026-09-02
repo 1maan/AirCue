@@ -51,21 +51,6 @@ toggleAction.addEventListener("click", (e) => {
     toggle_action_1.classList.toggle('hidden')
     toggle_action_2.classList.toggle('hidden')
 });
-toggleAction.addEventListener("mousedown", (event) => {
-    if (event.button === 0) {
-    }
-
-    if (event.button === 1) {
-        event.preventDefault();
-    }
-
-    if (event.button === 2) {
-        event.preventDefault()
-    }
-});
-toggleAction.addEventListener("contextmenu", (event) => {
-  event.preventDefault();
-});
 }
 
 const fontSize = document.getElementById("fontSize");
@@ -115,6 +100,7 @@ function toggleFilterMenu() {
         toggleFilterOpen = !toggleFilterOpen;
     }
 }
+
 function loadDets(){
 if(localStorage.getItem('tele-fontSize')){
     fontSize.value = localStorage.getItem('tele-fontSize');
