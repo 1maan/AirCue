@@ -17,6 +17,9 @@
         background: #f5f5f5;
         color: #171717;
       }
+      .scrollbar{
+        scrollbar-gutter: stable;
+      }
       .scrollbar::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -28,7 +31,7 @@
     </style>
   </head>
 <script src="/socket.io/socket.io.js"></script>
-<body class="Outfit-Regular">
+<body class="Outfit-Regular scrollbar">
 <div class="min-h-screen">
   <%- include('partials/header') -%>
 

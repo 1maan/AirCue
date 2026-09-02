@@ -18,6 +18,9 @@
         background: #f5f5f5;
         color: #171717;
       }
+      .scrollbar{
+        scrollbar-gutter: stable;
+      }
       .scrollbar::-webkit-scrollbar {
         width: 5px;
         height: 5px;
@@ -29,7 +32,7 @@
     </style>
   </head>
 <script src="/socket.io/socket.io.js"></script>
-  <body class="Outfit-Regular">
+  <body class="Outfit-Regular scrollbar">
     <div class="min-h-screen">
 
       <%- include('partials/header') -%>
@@ -42,8 +45,8 @@
 <!-- PAGE HEADER -->
 <div class="mb-7 flex items-end justify-between gap-3">
     <div>
-      <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Run Orders</h1>
-      <p class="mt-1 text-[12px] text-gray-400 break-all line-clamp-1">Plan and manage today's broadcasts.</p>
+      <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Rundowns</h1>
+      <p class="mt-1 text-[12px] text-gray-400 break-all line-clamp-1">Plan and manage your broadcast rundowns.</p>
     </div>
     <div class="flex items-center gap-2">
       <!-- <button onclick="openPresetModal()" class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap hover:bg-gray-50">Use Preset</button> -->

@@ -38,23 +38,34 @@
           accent-color: black;
           cursor: pointer;
       }
+      .scrollbar{
+        scrollbar-gutter: stable;
+      }
+      .scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      .scrollbar::-webkit-scrollbar-thumb {
+        background: #d4d4d4;
+        border-radius: 10px;
+      }
     </style>
   </head>
   <script src="/socket.io/socket.io.js"></script>
-  <body class="Outfit-Regular">
+  <body class="Outfit-Regular scrollbar">
     <div class="min-h-screen">
       <%- include('partials/header') -%>
       <main class="mx-auto max-w-[1500px] p-4 md:p-7">
         <!-- PAGE HEADER -->
         <div class="mb-7 flex items-end justify-between gap-3">
           <div>
-            <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Teleprompter</h1>
-            <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Final on-air story order</p>
+            <h1 class="Outfit-SemiBold text-[26px] tracking-[-0.8px] text-nowrap">Live Control</h1>
+            <p class="mt-1 line-clamp-1 text-[12px] break-all text-gray-400">Control the teleprompter and graphics.</p>
           </div>
           <div class="flex items-center gap-2">
             <% if(runDown[0]){ %>
             <a href="/runorder/<%= runDown[0].ro_id %>?page=controller" target="_blank">
-              <button class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap gap-0.5  hover:bg-gray-50 flex items-center">Open <span class="hidden sm:block">RunDown</span></button>
+              <button class="Outfit-Medium cursor-pointer rounded-lg border border-[#dddddd] bg-white px-4 py-2 text-[11px] text-nowrap gap-0.5  hover:bg-gray-50 flex items-center">Edit <span class="hidden sm:block">RunDown</span></button>
             </a>
             <% } %>
             <a href="/teleprompter" target="_blank">

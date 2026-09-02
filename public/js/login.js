@@ -43,7 +43,7 @@ loginButton.addEventListener("click", ()=>{
             username.value = "";
             password.value = "";
             setTimeout(()=>{
-               location.href = '/'
+               location.href = '/stories'
             }, 1000)
         }
         if(!data.success){

@@ -898,33 +898,131 @@ router.post('/controller-settings/remove-active', authPage, authPage, (req, res)
     });
 });
 
-router.post('/breaking', authPage,(req, res)=>{
+router.post("/breaking", authPage, (req, res) => {
     const { slug, language, cg_text, story_text } = req.body;
     const date = req.query.date;
-    if(!slug || !language || !cg_text || !story_text){
-        return res.status(400).json({ success: false, message: 'All fields are required' });
-    }
-    if (!date || !date.trim()) {
-        return res.status(400).json({ success: false, message: 'Date is required' });
-    }
-    const created_by = req.session.userID;
+    const createdBy = req.session.userID;
 
-    if (!created_by) {
-        return res.status(401).json({ success: false, message: 'Unauthorized' });
+    if (!slug?.trim() || !language || !cg_text?.trim() || !story_text?.trim()) {
+        return res.status(400).json({
+            success: false,
+            message: "All fields are required"
+        });
     }
 
-    const sql = `INSERT INTO stories ( slug, language, cg_text, story_text, created_by, story_date) VALUES (?, ?, ?, ?, ?, ?)`;
+    if (!date?.trim()) {
+        return res.status(400).json({
+            success: false,
+            message: "Date is required"
+        });
+    }
 
-     db.query(
-        sql, [ slug.trim(), language, cg_text.trim(), story_text.trim(), created_by, date], (err, result) => {
-            if (err) {
-                console.error('Story insert error:', err);
-                return res.status(500).json({ success: false, message: 'Database error' });
-            }
-            return res.status(201).json({ success: true, message: 'Story added successfully', storyId: result.insertId });
+    if (!createdBy) {
+        return res.status(401).json({
+            success: false,
+            message: "Unauthorized"
+        });
+    }
+
+    const liveOrderSql = `
+        SELECT id
+        FROM run_orders
+        WHERE status = 'live'
+        LIMIT 1
+    `;
+
+    db.query(liveOrderSql, (liveOrderError, liveOrderResult) => {
+        if (liveOrderError) {
+            console.error("Live run order error:", liveOrderError);
+
+            return res.status(500).json({
+                success: false,
+                message: "Database error"
+            });
         }
-    );
-})
+
+        if (liveOrderResult.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No live run order found"
+            });
+        }
+
+        const runOrderId = liveOrderResult[0].id;
+
+        const insertStorySql = `
+            INSERT INTO stories (
+                slug,
+                language,
+                cg_text,
+                story_text,
+                created_by,
+                story_date
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        `;
+
+        const storyValues = [
+            slug.trim(),
+            language,
+            cg_text.trim(),
+            story_text.trim(),
+            createdBy,
+            date.trim()
+        ];
+
+        db.query(insertStorySql, storyValues, (storyError, storyResult) => {
+            if (storyError) {
+                console.error("Story insert error:", storyError);
+
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to create story"
+                });
+            }
+
+            const storyId = storyResult.insertId;
+
+            const insertItemSql = `
+                INSERT INTO run_order_items (
+                    run_order_id,
+                    item_type,
+                    story_id,
+                    position
+                )
+                SELECT
+                    ?,
+                    ?,
+                    ?,
+                    COALESCE(MAX(position), 0) + 1000
+                FROM run_order_items
+                WHERE run_order_id = ?
+            `;
+
+            db.query(
+                insertItemSql,
+                [runOrderId, "story", storyId, runOrderId],
+                (itemError) => {
+                    if (itemError) {
+                        console.error("Run order item insert error:", itemError);
+
+                        return res.status(500).json({
+                            success: false,
+                            message: "Story created, but failed to add it to the run order"
+                        });
+                    }
+
+                    return res.status(201).json({
+                        success: true,
+                        message: "Breaking story added successfully",
+                        storyId,
+                        runOrderId
+                    });
+                }
+            );
+        });
+    });
+});
 
 
 router.put('/save-settings', authPage, (req, res) => {

@@ -872,6 +872,7 @@ socket.on('recStory', (data)=>{
   let rtvSto = document.getElementById("rtvSto")
   let rtvNewsBtn = document.getElementById("rtvNewsBtn")
   let rtvNewsContainer = document.getElementById("rtvNewsContainer")
+  
   if(rtvNewsBtn){
   rtvNewsBtn.addEventListener("click",()=>{
     rtvNewsContainer.classList.remove('hidden')
@@ -962,8 +963,12 @@ function addNews(id){
 // CLOSE MODALS BY CLICKING OUTSIDE
 document.addEventListener("click", function(event) {
   const rtvNewsContainer = document.getElementById("rtvNewsContainer");
+  const pushLiveSlide = document.getElementById("pushLiveSlide");
   if (event.target === rtvNewsContainer) {
     rtvNewsContainerClose()
+  }
+  if (event.target === pushLiveSlide) {
+    closePushLiveSlide()
   }
 });
 
@@ -1072,7 +1077,8 @@ function PushLiveToAir(){
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-
+          showAlert('success', data.message);
+          closePushLiveSlide()
         }
          
         if(!data.success) {

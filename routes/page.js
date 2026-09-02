@@ -4,7 +4,7 @@ const db = require('../config/db');
 const { blockUser , authPage, adminOnly } = require('../config/auth');
 
 router.get('/', (req, res)=>{
-    res.redirect('/stories')
+    res.redirect('/login')
 })
 router.get('/login', blockUser , (req, res)=>{
     res.render('login')
